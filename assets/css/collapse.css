@@ -14,3 +14,9 @@
 .container .content {
     display: none;
     padding : 5px;
+}
+
+/* 移除 Abstract 标题下的自动生成横线 */
+.page__content>h2 {
+    border-bottom: none !important;
+}

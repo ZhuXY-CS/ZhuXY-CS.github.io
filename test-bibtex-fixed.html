@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BibTeX Copy - Fixed Version Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .debug-info {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 1em;
+            margin: 1em 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>BibTeX Copy 功能 - 修复版本测试</h1>
+    
+    <div class="debug-info">
+        <h3>🔍 环境检测：</h3>
+        <p><strong>HTTPS:</strong> <span id="https-status"></span></p>
+        <p><strong>Clipboard API:</strong> <span id="clipboard-status"></span></p>
+        <p><strong>execCommand:</strong> <span id="execcommand-status"></span></p>
+        <p><strong>User Agent:</strong> <span id="user-agent"></span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>测试 1: 单 BibTeX 块</h2>
+        <div class="bibtex-box" style="margin-top:1em;border:1px solid #e0e0e0;border-radius:4px;padding:1em;background:#fafafa;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5em;">
+                <span style="font-size:smaller;color:#0066cc;font-weight:600;">
+                    <i class="fas fa-quote-left" aria-hidden="true"></i> BibTeX
+                </span>
+                <button class="bibtex-copy-btn" type="button" aria-label="Copy BibTeX"
+                    style="padding:0.3em 0.8em;background:#0066cc;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:0.85em;transition:all .2s;box-shadow:0 2px 4px rgba(0,0,0,.1);">
+                    <i class="fas fa-copy" aria-hidden="true"></i> Copy
+                </button>
+            </div>
+            <pre class="bibtex-content" style="background:#f4f4f4;padding:1em;margin:0;border-radius:4px;font-size:0.85em;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">@article{wu2024swattention,
+  title={SWattention: designing fast and memory-efficient attention for a new Sunway Supercomputer},
+  author={Wu, Ruohan and Zhu, Xianyu and Chen, Junshi and Liu, Sha and Zheng, Tianyu and Liu, Xin and An, Hong},
+  journal={The Journal of Supercomputing},
+  year={2024},
+  publisher={Springer}
+}</pre>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试 2: 多 BibTeX 块</h2>
+        
+        <div class="bibtex-box" style="margin-top:1em;border:1px solid #e0e0e0;border-radius:4px;padding:1em;background:#fafafa;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5em;">
+                <span style="font-size:smaller;color:#0066cc;font-weight:600;">
+                    <i class="fas fa-quote-left" aria-hidden="true"></i> BibTeX
+                </span>
+                <button class="bibtex-copy-btn" type="button" aria-label="Copy BibTeX"
+                    style="padding:0.3em 0.8em;background:#0066cc;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:0.85em;transition:all .2s;box-shadow:0 2px 4px rgba(0,0,0,.1);">
+                    <i class="fas fa-copy" aria-hidden="true"></i> Copy
+                </button>
+            </div>
+            <pre class="bibtex-content" style="background:#f4f4f4;padding:1em;margin:0;border-radius:4px;font-size:0.85em;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;">@article{wu2025swformer,
+  title={SwFormer: Enabling Faster Foundation Models on new Sunway Supercomputer via Holistic Kernel Tiling and Scheduling},
+  author={Wu, Ruohan and Zhu, Xianyu and Chen, Junshi and An, Hong},
+  journal={Journal of Computer Science and Technology},
+  year={2025},
+  publisher={Springer}
+}</pre>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试 3: 复制验证</h2>
+        <p>点击上面的 Copy 按钮，然后在这里粘贴 (Ctrl+V 或 Cmd+V) 来验证复制是否成功：</p>
+        <textarea id="paste-test" placeholder="在这里粘贴测试复制的内容..." 
+                  style="width: 100%; height: 120px; margin-top: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        <div id="test-result" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试 4: 控制台日志</h2>
+        <p>打开浏览器开发者工具 (F12) 查看控制台，应该能看到详细的调试信息。</p>
+        <button onclick="showConsoleInfo()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            显示控制台信息
+        </button>
+        <div id="console-info" style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; display: none;"></div>
+    </div>
+
+    <!-- 使用外链脚本 -->
+    <script src="assets/js/bibtex-copy.js" defer></script>
+
+    <script>
+        // 环境检测
+        document.getElementById('https-status').textContent = window.isSecureContext ? '✅ 是' : '❌ 否';
+        document.getElementById('clipboard-status').textContent = !!(navigator.clipboard && navigator.clipboard.writeText) ? '✅ 可用' : '❌ 不可用';
+        document.getElementById('execcommand-status').textContent = document.queryCommandSupported ? '✅ 可用' : '❌ 不可用';
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+
+        // 粘贴测试
+        document.getElementById('paste-test').addEventListener('paste', function(e) {
+            setTimeout(() => {
+                const pastedText = e.target.value;
+                const resultDiv = document.getElementById('test-result');
+                
+                if (pastedText.includes('@article{wu2024swattention') || pastedText.includes('@article{wu2025swformer')) {
+                    resultDiv.style.background = '#d4edda';
+                    resultDiv.style.border = '1px solid #c3e6cb';
+                    resultDiv.style.color = '#155724';
+                    resultDiv.innerHTML = '✅ 复制测试成功！内容已正确复制到剪贴板。';
+                } else {
+                    resultDiv.style.background = '#f8d7da';
+                    resultDiv.style.border = '1px solid #f5c6cb';
+                    resultDiv.style.color = '#721c24';
+                    resultDiv.innerHTML = '❌ 复制测试失败，内容不匹配或为空。';
+                }
+                resultDiv.style.display = 'block';
+            }, 100);
+        });
+
+        function showConsoleInfo() {
+            const info = document.getElementById('console-info');
+            info.innerHTML = `
+                <h4>控制台应该显示的信息：</h4>
+                <ul>
+                    <li>BibTeX copy button found, adding event listener</li>
+                    <li>Copy button clicked</li>
+                    <li>Using Clipboard API 或 Using fallback method</li>
+                    <li>Copy successful 或相关错误信息</li>
+                </ul>
+                <p><strong>如果没有看到这些信息，说明脚本没有正确加载或执行。</strong></p>
+            `;
+            info.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

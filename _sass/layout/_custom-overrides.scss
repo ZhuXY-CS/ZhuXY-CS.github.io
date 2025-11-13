@@ -1,0 +1,835 @@
+/* ==========================================================================
+   CUSTOM OVERRIDES - Force elegant typography
+   ========================================================================== */
+
+/* Use system fonts for elegant typography - matching Yang Zhang's Homepage */
+/* Removed Google Fonts to use Trebuchet MS as primary font */
+
+/* Force font changes globally */
+html {
+  font-size: 16px !important;
+}
+
+body {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+  color: #2c3e50 !important;
+  letter-spacing: 0.01em !important;
+  font-weight: 400 !important;
+}
+
+/* Force heading styles - Reduced spacing for better readability */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  color: #1a1a1a !important;
+  letter-spacing: -0.02em !important;
+  margin-top: 1em !important;
+  margin-bottom: 0.5em !important;
+}
+
+h1 {
+  font-size: 2em !important;
+  margin-top: 0.5em !important; /* Smaller top margin for page titles */
+}
+h2 {
+  font-size: 1.6em !important;
+  margin-top: 0.8em !important;
+  margin-bottom: 0.2em !important;
+}
+h3 {
+  font-size: 1.35em !important;
+  margin-top: 0.7em !important;
+  margin-bottom: 0.2em !important;
+}
+h4 {
+  font-size: 1.2em !important;
+  margin-top: 0.8em !important;
+  margin-bottom: 0.3em !important;
+}
+
+/* Force paragraph and list styles */
+.page__content {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+  font-size: 16px !important;
+
+  p {
+    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    margin-top: 0.5em !important;
+    margin-bottom: 0.8em !important;
+    color: #333 !important;
+  }
+
+  li {
+    font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.1em !important;
+    color: #333 !important;
+  }
+
+  ul, ol {
+    margin-top: 0.2em !important;
+    margin-bottom: 0.5em !important;
+    padding-left: 1.5em !important;
+  }
+
+  /* Nested lists should have even less spacing */
+  li ul, li ol {
+    margin-top: 0.1em !important;
+    margin-bottom: 0.1em !important;
+  }
+
+  /* Strong tags followed by lists */
+  strong + br + ul,
+  strong + ul {
+    margin-top: 0.1em !important;
+  }
+
+  /* Inline style overrides for specific lists */
+  ul[style*="list-style-type: disc"] {
+    margin-top: 0.1em !important;
+
+    li {
+      margin-bottom: 0.05em !important;
+      line-height: 1.35 !important;
+    }
+  }
+
+  /* Better link styles */
+  a {
+    color: #0066cc !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid transparent !important;
+    transition: all 0.2s ease !important;
+
+    &:hover {
+      border-bottom-color: #0066cc !important;
+    }
+  }
+
+  /* Enhanced blockquotes */
+  blockquote {
+    font-family: Georgia, Times, serif !important;
+    font-size: 1.1em !important;
+    font-style: italic !important;
+    color: #555 !important;
+    border-left: 4px solid #ddd !important;
+    padding-left: 1.5em !important;
+    margin: 2em 0 !important;
+  }
+
+  /* Code blocks */
+  pre, code {
+    font-family: Monaco, Consolas, "Lucida Console", monospace !important;
+  }
+
+  code {
+    font-size: 0.9em !important;
+    padding: 0.2em 0.4em !important;
+    background: #f4f4f4 !important;
+    border-radius: 3px !important;
+  }
+}
+
+/* Sidebar typography */
+.sidebar {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+
+  p, li {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  .author__name {
+    font-size: 1.25em !important;
+    font-weight: 600 !important;
+  }
+
+  .author__bio {
+    font-size: 0.95em !important;
+    color: #666 !important;
+  }
+}
+
+/* Archive page improvements */
+.archive__item {
+  margin-bottom: 2em !important;
+
+  .archive__item-title {
+    font-size: 1.3em !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+  }
+
+  .archive__item-excerpt {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    color: #555 !important;
+  }
+}
+
+/* Navigation typography */
+.greedy-nav {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+
+  a {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+  }
+}
+
+/* Footer typography */
+.page__footer {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+/* Make changes more visible on mobile */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px !important;
+  }
+
+  .page__content {
+    p {
+      font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.5 !important;
+      margin-bottom: 0.6em !important;
+    }
+
+    li {
+      font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.35 !important;
+      margin-bottom: 0.08em !important;
+    }
+
+    ul, ol {
+      margin-top: 0.15em !important;
+      margin-bottom: 0.4em !important;
+    }
+  }
+}
+
+/* Force font on all text elements to ensure complete coverage */
+* {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+}
+
+/* Specific overrides for common content areas */
+.page__content,
+.page__content * {
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+}
+
+/* Preserve monospace for code elements */
+pre, code, kbd, samp, .highlight {
+  font-family: Monaco, Consolas, "Lucida Console", monospace !important;
+}
+
+/* Preserve Georgia for blockquotes */
+blockquote {
+  font-family: Georgia, Times, serif !important;
+}
+
+/* Wider content area for better readability */
+.page {
+  @media (min-width: 1024px) {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Make page content use more width when sidebar is present */
+  @media (min-width: 1024px) {
+    width: calc(100% - 200px) !important;
+    float: right !important;
+    margin-right: 0 !important;
+    padding-right: 2em !important;
+  }
+}
+
+/* Specific width for publication and project pages */
+body.layout--single .page {
+  @media (min-width: 1024px) {
+    width: calc(100% - 220px) !important;
+    max-width: none !important;
+    padding-right: 3em !important;
+  }
+}
+
+/* Archive pages also need width adjustment */
+.archive {
+  @media (min-width: 1024px) {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Reduce spacing for page title and first elements */
+.page__title {
+  margin-top: 0 !important;
+  margin-bottom: 0.3em !important;
+}
+
+.page__content > h1:first-child,
+.page__content > h2:first-child {
+  margin-top: 0.2em !important;
+}
+
+/* Tighter spacing between sections */
+.page__content {
+  h2 + p,
+  h3 + p,
+  h4 + p {
+    margin-top: 0.2em !important;
+  }
+
+  h2 + ul,
+  h3 + ul,
+  h4 + ul {
+    margin-top: 0.3em !important;
+  }
+}
+
+/* Remove extra spacing from last elements in lists */
+li:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Global strong tag styling */
+strong {
+  display: inline-block !important;
+  margin-bottom: 0.1em !important;
+}
+
+/* BR tags after strong should have minimal height */
+strong + br {
+  line-height: 0.1 !important;
+  height: 0.1em !important;
+  display: block !important;
+}
+
+/* Icon styling for sidebar */
+.icon-pad-right {
+  margin-right: 0.5em !important;
+  display: inline-block !important;
+}
+
+/* Enhanced navigation for Previous/Next buttons */
+.page__navigation {
+  margin-top: 2em !important;
+  padding-top: 2em !important;
+  border-top: 1px solid #e0e0e0 !important;
+  text-align: center !important;
+
+  .page__navigation-title {
+    margin-bottom: 1em !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    color: #666 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+}
+
+/* Override old pagination styles with new button design */
+.pagination {
+  text-align: center !important;
+  margin-top: 2em !important;
+  padding-top: 2em !important;
+  border-top: 1px solid #e0e0e0 !important;
+
+  &::before {
+    content: "Navigate" !important;
+    display: block !important;
+    margin-bottom: 1em !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    color: #666 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Style for pagination--pager buttons (old style) */
+  &--pager {
+    display: inline-block !important;
+    min-width: 120px !important;
+    padding: 0.75em 1.5em !important;
+    margin: 0 0.5em !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-radius: 5px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    background-color: #0066cc !important;
+    color: white !important;
+    border: none !important;
+    float: none !important;
+    width: auto !important;
+
+    &::before {
+      content: "\f053  " !important;
+      font-family: 'Font Awesome 6 Free' !important;
+      font-weight: 900 !important;
+      margin-right: 0.3em !important;
+    }
+
+    &:last-child::before {
+      content: "" !important;
+    }
+
+    &:last-child::after {
+      content: "  \f054" !important;
+      font-family: 'Font Awesome 6 Free' !important;
+      font-weight: 900 !important;
+      margin-left: 0.3em !important;
+    }
+
+    &:hover:not(.disabled) {
+      background-color: #0052a3 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+      color: white !important;
+      text-decoration: none !important;
+    }
+
+    &.disabled {
+      background-color: #f0f0f0 !important;
+      color: #999 !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+      pointer-events: none !important;
+
+      &:hover {
+        transform: none !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+      }
+    }
+  }
+}
+
+.pagination-buttons {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 1em !important;
+  flex-wrap: wrap !important;
+
+  .btn {
+    min-width: 120px !important;
+    padding: 0.75em 1.5em !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-radius: 5px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+
+    &:hover:not(.btn--disabled) {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    }
+
+    i {
+      font-size: 14px !important;
+    }
+  }
+
+  /* Primary button style */
+  .btn--primary {
+    background-color: #0066cc !important;
+    color: white !important;
+    border: none !important;
+
+    &:hover:not(.btn--disabled) {
+      background-color: #0052a3 !important;
+      color: white !important;
+      text-decoration: none !important;
+    }
+  }
+
+  /* Disabled button style */
+  .btn--disabled {
+    background-color: #f0f0f0 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+
+    &:hover {
+      background-color: #f0f0f0 !important;
+      transform: none !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+  }
+}
+
+/* Sidebar author URLs adjustments */
+.author__urls {
+  li {
+    margin-bottom: 0.25em !important;
+    font-size: 0.9em !important;
+  }
+
+  i, .ai {
+    width: 1.5em !important;
+    text-align: center !important;
+    display: inline-block !important;
+  }
+
+  /* Ensure all icon types display properly */
+  .fa, .fas, .far, .fab, .ai {
+    &.icon-pad-right {
+      margin-right: 0.5em !important;
+    }
+  }
+}
+
+/* Further reduce spacing after headings */
+h2 + div,
+h2 + p,
+h2 + ul {
+  margin-top: 0.3em !important;
+}
+
+/* Add horizontal rule styling */
+hr {
+  margin: 1em 0 !important;
+  border: none !important;
+  border-top: 1px solid #e0e0e0 !important;
+}
+
+/* ==========================================================================
+   ICON FONTS FIX
+   ========================================================================== */
+
+/* Font Awesome 6 font-face definitions */
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url('../webfonts/fa-solid-900.woff2') format('woff2'),
+       url('../webfonts/fa-solid-900.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../webfonts/fa-regular-400.woff2') format('woff2'),
+       url('../webfonts/fa-regular-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Font Awesome 6 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../webfonts/fa-brands-400.woff2') format('woff2'),
+       url('../webfonts/fa-brands-400.ttf') format('truetype');
+}
+
+/* Academicons font-face definition */
+@font-face {
+  font-family: 'Academicons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('../fonts/academicons.eot');
+  src: url('../fonts/academicons.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/academicons.ttf') format('truetype'),
+       url('../fonts/academicons.woff') format('woff'),
+       url('../fonts/academicons.svg#academicons') format('svg');
+}
+
+/* Ensure Font Awesome icons work */
+.fa,
+.fas,
+.far,
+.fab {
+  font-style: normal !important;
+  font-variant: normal !important;
+  text-rendering: auto !important;
+  line-height: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.fa-solid,
+.fas {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 900 !important;
+}
+
+.fa-regular,
+.far {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 400 !important;
+}
+
+.fa-brands,
+.fab {
+  font-family: 'Font Awesome 6 Brands' !important;
+  font-weight: 400 !important;
+}
+
+/* Ensure Academicons work */
+.ai {
+  font-family: 'Academicons' !important;
+  speak: none !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Specific icon definitions for Academicons */
+.ai-google-scholar:before {
+  content: "\e9d4" !important;
+}
+
+.ai-orcid:before {
+  content: "\e9d9" !important;
+}
+
+.ai-arxiv:before {
+  content: "\e974" !important;
+}
+
+.ai-semantic-scholar:before {
+  content: "\e9e0" !important;
+}
+
+.ai-impactstory:before {
+  content: "\e9dd" !important;
+}
+
+.ai-pubmed:before {
+  content: "\eac8" !important;
+}
+
+.ai-scopus:before {
+  content: "\eacb" !important;
+}
+
+/* Font Awesome specific icons */
+.fa-location-dot:before {
+  content: "\f3c5" !important;
+}
+
+.fa-building-columns:before {
+  content: "\f19c" !important;
+}
+
+.fa-link:before {
+  content: "\f0c1" !important;
+}
+
+.fa-envelope:before {
+  content: "\f0e0" !important;
+}
+
+.fa-researchgate:before {
+  content: "\f4f8" !important;
+}
+
+.fa-github:before {
+  content: "\f09b" !important;
+}
+
+.fa-chevron-left:before {
+  content: "\f053" !important;
+}
+
+.fa-chevron-right:before {
+  content: "\f054" !important;
+}
+
+/* ==========================================================================
+   PAPER BOX STYLES - Based on Yang Zhang's Homepage Design
+   ========================================================================== */
+
+/* Main paper-box container */
+.paper-box {
+  display: flex !important;
+  justify-content: left !important;
+  align-items: center !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  border-bottom: 1px #efefef solid !important;
+  padding: 1em 0 1em 0 !important;
+  margin-bottom: 1em !important;
+}
+
+/* Paper box image container */
+.paper-box-image {
+  justify-content: center !important;
+  display: flex !important;
+  width: 100% !important;
+  order: 2 !important;
+
+  > div {
+    position: relative !important;
+  }
+}
+
+.paper-box-image img {
+  max-width: 400px !important;
+  width: 100% !important;
+  height: auto !important;
+  box-shadow: 3px 3px 6px #888 !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+}
+
+/* Paper box text container */
+.paper-box-text {
+  max-width: 100% !important;
+  order: 1 !important;
+}
+
+/* Responsive design for larger screens */
+@media (min-width: 48em) {
+  .paper-box-image {
+    justify-content: left !important;
+    min-width: 200px !important;
+    max-width: 40% !important;
+    order: 1 !important;
+
+    > div {
+      position: relative !important;
+    }
+  }
+
+  .paper-box-text {
+    justify-content: left !important;
+    padding-left: 2em !important;
+    max-width: 60% !important;
+    order: 2 !important;
+  }
+}
+
+/* Badge for conference/journal names */
+.badge {
+  padding: 0.3rem 0.8rem !important;
+  position: absolute !important;
+  top: 0.5em !important;
+  left: 0.5em !important;
+  color: white !important;
+  background-color: #00369f !important;
+  font-size: 0.75em !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  z-index: 10 !important;
+}
+
+/* Paper box text styling */
+.paper-box-text {
+  /* Paper title */
+  p:first-child {
+    margin-bottom: 0.5em !important;
+
+    a {
+      font-size: 1.05em !important;
+      font-weight: 600 !important;
+      color: #1a1a1a !important;
+      text-decoration: none !important;
+      border-bottom: none !important;
+
+      &:hover {
+        color: #0066cc !important;
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  /* Authors list */
+  p:nth-child(2) {
+    font-size: 0.95em !important;
+    color: #555 !important;
+    margin-bottom: 0.8em !important;
+    line-height: 1.4 !important;
+
+    strong {
+      color: #1a1a1a !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  /* Keywords */
+  p:nth-child(3) {
+    font-size: 0.9em !important;
+    color: #777 !important;
+    margin-bottom: 0.5em !important;
+
+    strong {
+      color: #555 !important;
+      font-weight: 600 !important;
+      font-style: normal !important;
+    }
+  }
+
+  /* Links section */
+  p:last-child {
+    font-size: 0.9em !important;
+    margin-bottom: 0 !important;
+
+    a {
+      color: #0066cc !important;
+      margin-right: 1em !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid transparent !important;
+      transition: all 0.2s ease !important;
+
+      &:hover {
+        border-bottom-color: #0066cc !important;
+      }
+
+      i, .fa, .fas {
+        margin-right: 0.3em !important;
+      }
+    }
+  }
+}
+
+/* Alternative badge colors for different venues */
+.badge-conference {
+  background-color: #00369f !important;
+}
+
+.badge-journal {
+  background-color: #2e7d32 !important;
+}
+
+.badge-preprint {
+  background-color: #f57c00 !important;
+}
+
+.badge-workshop {
+  background-color: #7b1fa2 !important;
+}
+
+.badge-project {
+  background-color: #c62828 !important;
+}
+
+/* Paper box hover effect */
+.paper-box:hover {
+  background-color: #fafafa !important;
+  transition: background-color 0.3s ease !important;
+}

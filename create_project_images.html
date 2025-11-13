@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目配图占位符生成器</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .project-config {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #c62828;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #a01e1e;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            display: block;
+        }
+        .download-links {
+            margin-top: 20px;
+        }
+        .download-links a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .download-links a:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 项目配图占位符生成器</h1>
+        <p>为你的研究项目快速生成专业的占位符配图（500x300像素）</p>
+
+        <div id="projects-container">
+            <div class="project-config">
+                <h3>项目1: AI苹果病害监测</h3>
+                <label>标题:</label>
+                <input type="text" id="title1" value="Apple Disease Monitoring" />
+
+                <label>颜色主题:</label>
+                <select id="color1">
+                    <option value="#c62828">项目红</option>
+                    <option value="#1565c0">深海蓝</option>
+                    <option value="#2e7d32">森林绿</option>
+                    <option value="#ef6c00">暖橙色</option>
+                    <option value="#6a1b9a">神秘紫</option>
+                </select>
+
+                <button onclick="generateImage(1)">生成图片</button>
+                <canvas id="canvas1" width="500" height="300"></canvas>
+                <div id="download1" class="download-links"></div>
+            </div>
+
+            <div class="project-config">
+                <h3>项目2: 检测机器人</h3>
+                <label>标题:</label>
+                <input type="text" id="title2" value="Inspection Robot System" />
+
+                <label>颜色主题:</label>
+                <select id="color2">
+                    <option value="#1565c0">深海蓝</option>
+                    <option value="#c62828">项目红</option>
+                    <option value="#2e7d32">森林绿</option>
+                    <option value="#ef6c00">暖橙色</option>
+                    <option value="#6a1b9a">神秘紫</option>
+                </select>
+
+                <button onclick="generateImage(2)">生成图片</button>
+                <canvas id="canvas2" width="500" height="300"></canvas>
+                <div id="download2" class="download-links"></div>
+            </div>
+
+            <div class="project-config">
+                <h3>项目3: 云协作平台</h3>
+                <label>标题:</label>
+                <input type="text" id="title3" value="Cloud Collaboration Platform" />
+
+                <label>颜色主题:</label>
+                <select id="color3">
+                    <option value="#2e7d32">森林绿</option>
+                    <option value="#c62828">项目红</option>
+                    <option value="#1565c0">深海蓝</option>
+                    <option value="#ef6c00">暖橙色</option>
+                    <option value="#6a1b9a">神秘紫</option>
+                </select>
+
+                <button onclick="generateImage(3)">生成图片</button>
+                <canvas id="canvas3" width="500" height="300"></canvas>
+                <div id="download3" class="download-links"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+            <h3>💡 使用说明</h3>
+            <ol>
+                <li>为每个项目输入标题和选择颜色主题</li>
+                <li>点击"生成图片"预览效果</li>
+                <li>点击"下载"保存图片</li>
+                <li>将图片保存到 <code>/images/projects/</code> 目录</li>
+                <li>建议文件名：apple-disease-monitoring.jpg, apple-inspection-robot.jpg, cloud-disease-detection.jpg 等</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function generateImage(projectNum) {
+            const canvas = document.getElementById(`canvas${projectNum}`);
+            const ctx = canvas.getContext('2d');
+            const title = document.getElementById(`title${projectNum}`).value;
+            const color = document.getElementById(`color${projectNum}`).value;
+
+            // 清除画布
+            ctx.clearRect(0, 0, 500, 300);
+
+            // 背景渐变
+            const gradient = ctx.createLinearGradient(0, 0, 500, 300);
+            gradient.addColorStop(0, color + '20');
+            gradient.addColorStop(1, color + '05');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 500, 300);
+
+            // 绘制装饰性六边形网格
+            ctx.strokeStyle = color + '15';
+            ctx.lineWidth = 1;
+
+            // 绘制六边形图案
+            for(let x = 0; x < 500; x += 60) {
+                for(let y = 0; y < 300; y += 50) {
+                    drawHexagon(ctx, x + ((y/50)%2)*30, y, 25);
+                }
+            }
+
+            function drawHexagon(ctx, x, y, size) {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i;
+                    const px = x + size * Math.cos(angle);
+                    const py = y + size * Math.sin(angle);
+                    if (i === 0) {
+                        ctx.moveTo(px, py);
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            // 绘制中心装饰
+            ctx.beginPath();
+            ctx.rect(150, 100, 200, 100);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.rect(160, 110, 180, 80);
+            ctx.strokeStyle = color + '80';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // 绘制标题
+            ctx.font = 'bold 24px Trebuchet MS, Arial';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.fillText(title, 250, 150);
+
+            // 绘制底部装饰线
+            ctx.beginPath();
+            ctx.moveTo(50, 250);
+            ctx.lineTo(450, 250);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 添加"Project"水印
+            ctx.font = '12px Arial';
+            ctx.fillStyle = color + '40';
+            ctx.textAlign = 'center';
+            ctx.fillText('PROJECT PLACEHOLDER', 250, 280);
+
+            // 创建下载链接
+            const downloadDiv = document.getElementById(`download${projectNum}`);
+            downloadDiv.innerHTML = '';
+
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `project${projectNum}_placeholder.png`;
+                a.textContent = '下载图片';
+                downloadDiv.appendChild(a);
+            });
+        }
+
+        // 页面加载时自动生成所有图片
+        window.onload = function() {
+            for(let i = 1; i <= 3; i++) {
+                generateImage(i);
+            }
+        }
+    </script>
+</body>
+</html>

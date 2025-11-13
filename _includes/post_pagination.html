@@ -1,16 +1,32 @@
 {% include base_path %}
 
 {% if page.previous or page.next %}
-  <nav class="pagination">
-    {% if page.previous %}
-      <a href="{{ base_path }}{{ page.previous.url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
-    {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
-    {% endif %}
-    {% if page.next %}
-      <a href="{{ base_path }}{{ page.next.url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
-    {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
-    {% endif %}
-  </nav>
+  <section class="page__navigation">
+    <h4 class="page__navigation-title">Navigate Projects</h4>
+    <nav class="pagination-buttons">
+      {% if page.previous %}
+        <a href="{{ base_path }}{{ page.previous.url }}" class="btn btn--primary btn--large" title="{{ page.previous.title | markdownify | strip_html }}">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+          <span> Previous</span>
+        </a>
+      {% else %}
+        <a href="#" class="btn btn--primary btn--large btn--disabled">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+          <span> Previous</span>
+        </a>
+      {% endif %}
+
+      {% if page.next %}
+        <a href="{{ base_path }}{{ page.next.url }}" class="btn btn--primary btn--large" title="{{ page.next.title | markdownify | strip_html }}">
+          <span>Next </span>
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      {% else %}
+        <a href="#" class="btn btn--primary btn--large btn--disabled">
+          <span>Next </span>
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      {% endif %}
+    </nav>
+  </section>
 {% endif %}

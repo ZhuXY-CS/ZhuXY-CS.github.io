@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试复制功能</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .bibtex-container {
+            margin-top: 1em;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1em;
+            background: #fafafa;
+        }
+        .bibtex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        .copy-button {
+            padding: 0.3em 0.8em;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+        .copy-button:hover {
+            background: #0052a3;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            margin: 0;
+            border-radius: 4px;
+            font-size: 0.85em;
+            overflow-x: auto;
+        }
+        .test-area {
+            margin-top: 2em;
+            padding: 1em;
+            background: #e8f4f8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>复制功能测试页面</h1>
+
+    <div class="bibtex-container">
+        <div class="bibtex-header">
+            <span style="font-size: smaller; color: #0066cc; font-weight: 600;">
+                <i class="fas fa-quote-left"></i> BibTeX
+            </span>
+            <button class="copy-button" onclick="copyBibTeX(this)">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+        <pre id="bibtex-content">@article{wu2025swformer,
+  title={SwFormer: Enabling Faster Foundation Models on new Sunway Supercomputer via Holistic Kernel Tiling and Scheduling},
+  author={Wu, Ruohan and Zhu, Xianyu and Chen, Junshi and An, Hong},
+  journal={Journal of Computer Science and Technology},
+  year={2025},
+  publisher={Springer}
+}</pre>
+    </div>
+
+    <div class="test-area">
+        <h3>测试区域</h3>
+        <p>点击上面的 Copy 按钮，然后在下面的文本框中粘贴（Ctrl+V 或 Cmd+V）来测试：</p>
+        <textarea id="test-paste" rows="8" cols="80" placeholder="在这里粘贴以测试复制功能..."></textarea>
+        <br><br>
+        <button onclick="clearTestArea()">清空测试区域</button>
+    </div>
+
+    <div style="margin-top: 2em; padding: 1em; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
+        <h3>调试信息</h3>
+        <div id="debug-log"></div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const debugLog = document.getElementById('debug-log');
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : (type === 'success' ? 'green' : 'black');
+            debugLog.innerHTML += `<div style="color: ${color}">[${time}] ${message}</div>`;
+            console.log(message);
+        }
+
+        function copyBibTeX(button) {
+            log('开始复制...');
+
+            const bibtexContent = document.getElementById('bibtex-content');
+            if (!bibtexContent) {
+                log('错误: 找不到 bibtex-content 元素', 'error');
+                return;
+            }
+
+            const bibtexText = bibtexContent.textContent || bibtexContent.innerText;
+            log(`要复制的文本长度: ${bibtexText.length} 字符`);
+
+            // 方法1: 尝试使用现代 Clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                log('尝试使用 Clipboard API...');
+                navigator.clipboard.writeText(bibtexText)
+                    .then(() => {
+                        log('Clipboard API 复制成功!', 'success');
+                        showCopySuccess(button);
+                    })
+                    .catch((err) => {
+                        log(`Clipboard API 失败: ${err.message}`, 'error');
+                        log('尝试备用方法...');
+                        fallbackCopy(bibtexText, button);
+                    });
+            } else {
+                log('Clipboard API 不可用，使用备用方法...');
+                fallbackCopy(bibtexText, button);
+            }
+        }
+
+        function fallbackCopy(text, button) {
+            log('使用 document.execCommand 方法...');
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '0';
+            textarea.setAttribute('readonly', '');
+            document.body.appendChild(textarea);
+
+            // 保存当前选择
+            const selected = document.getSelection().rangeCount > 0
+                ? document.getSelection().getRangeAt(0)
+                : false;
+
+            // 选择文本
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+                if (success) {
+                    log('document.execCommand 复制成功!', 'success');
+                } else {
+                    log('document.execCommand 返回 false', 'error');
+                }
+            } catch (err) {
+                log(`document.execCommand 抛出错误: ${err.message}`, 'error');
+            }
+
+            // 恢复之前的选择
+            if (selected) {
+                document.getSelection().removeAllRanges();
+                document.getSelection().addRange(selected);
+            }
+
+            document.body.removeChild(textarea);
+
+            if (success) {
+                showCopySuccess(button);
+            } else {
+                log('所有自动复制方法都失败了', 'error');
+                selectBibTeXText();
+                alert('自动复制失败，文本已选中，请按 Ctrl+C (或 Cmd+C) 手动复制');
+            }
+        }
+
+        function showCopySuccess(button) {
+            const originalHTML = button.innerHTML;
+            const originalBg = button.style.background;
+
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.style.background = '#28a745';
+
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = originalBg || '#0066cc';
+            }, 2000);
+        }
+
+        function selectBibTeXText() {
+            const bibtexContent = document.getElementById('bibtex-content');
+            if (bibtexContent) {
+                if (window.getSelection) {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    range.selectNodeContents(bibtexContent);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    log('文本已选中，请手动复制');
+                }
+            }
+        }
+
+        function clearTestArea() {
+            document.getElementById('test-paste').value = '';
+            log('测试区域已清空');
+        }
+
+        // 页面加载时的检查
+        window.onload = function() {
+            log('页面加载完成');
+            log(`浏览器: ${navigator.userAgent.substring(0, 50)}...`);
+            log(`Clipboard API 可用: ${!!(navigator.clipboard && navigator.clipboard.writeText)}`);
+            log(`document.execCommand 可用: ${!!document.execCommand}`);
+            log(`当前协议: ${window.location.protocol}`);
+            log(`安全上下文: ${window.isSecureContext}`);
+        };
+    </script>
+</body>
+</html>

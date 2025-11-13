@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>论文配图占位符生成器</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .paper-config {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            display: block;
+        }
+        .download-links {
+            margin-top: 20px;
+        }
+        .download-links a {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .download-links a:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 论文配图占位符生成器</h1>
+        <p>为你的论文快速生成专业的占位符配图（500x300像素）</p>
+
+        <div id="papers-container">
+            <div class="paper-config">
+                <h3>论文1: SwFormer</h3>
+                <label>标题:</label>
+                <input type="text" id="title1" value="SwFormer Architecture" />
+
+                <label>颜色主题:</label>
+                <select id="color1">
+                    <option value="#1e88e5">科技蓝</option>
+                    <option value="#43a047">自然绿</option>
+                    <option value="#e53935">热情红</option>
+                    <option value="#8e24aa">优雅紫</option>
+                    <option value="#fb8c00">活力橙</option>
+                </select>
+
+                <button onclick="generateImage(1)">生成图片</button>
+                <canvas id="canvas1" width="500" height="300"></canvas>
+                <div id="download1" class="download-links"></div>
+            </div>
+
+            <div class="paper-config">
+                <h3>论文2: SWattention</h3>
+                <label>标题:</label>
+                <input type="text" id="title2" value="SWattention Architecture" />
+
+                <label>颜色主题:</label>
+                <select id="color2">
+                    <option value="#43a047">自然绿</option>
+                    <option value="#1e88e5">科技蓝</option>
+                    <option value="#e53935">热情红</option>
+                    <option value="#8e24aa">优雅紫</option>
+                    <option value="#fb8c00">活力橙</option>
+                </select>
+
+                <button onclick="generateImage(2)">生成图片</button>
+                <canvas id="canvas2" width="500" height="300"></canvas>
+                <div id="download2" class="download-links"></div>
+            </div>
+
+            <div class="paper-config">
+                <h3>论文3: LAD-Net</h3>
+                <label>标题:</label>
+                <input type="text" id="title3" value="LAD-Net Architecture" />
+
+                <label>颜色主题:</label>
+                <select id="color3">
+                    <option value="#e53935">热情红</option>
+                    <option value="#1e88e5">科技蓝</option>
+                    <option value="#43a047">自然绿</option>
+                    <option value="#8e24aa">优雅紫</option>
+                    <option value="#fb8c00">活力橙</option>
+                </select>
+
+                <button onclick="generateImage(3)">生成图片</button>
+                <canvas id="canvas3" width="500" height="300"></canvas>
+                <div id="download3" class="download-links"></div>
+            </div>
+
+            <div class="paper-config">
+                <h3>论文4: Apple-YOLO</h3>
+                <label>标题:</label>
+                <input type="text" id="title4" value="Apple-YOLO Detection" />
+
+                <label>颜色主题:</label>
+                <select id="color4">
+                    <option value="#8e24aa">优雅紫</option>
+                    <option value="#1e88e5">科技蓝</option>
+                    <option value="#43a047">自然绿</option>
+                    <option value="#e53935">热情红</option>
+                    <option value="#fb8c00">活力橙</option>
+                </select>
+
+                <button onclick="generateImage(4)">生成图片</button>
+                <canvas id="canvas4" width="500" height="300"></canvas>
+                <div id="download4" class="download-links"></div>
+            </div>
+
+            <div class="paper-config">
+                <h3>论文5: CGAN-IRB</h3>
+                <label>标题:</label>
+                <input type="text" id="title5" value="CGAN-IRB Data Augmentation" />
+
+                <label>颜色主题:</label>
+                <select id="color5">
+                    <option value="#fb8c00">活力橙</option>
+                    <option value="#1e88e5">科技蓝</option>
+                    <option value="#43a047">自然绿</option>
+                    <option value="#e53935">热情红</option>
+                    <option value="#8e24aa">优雅紫</option>
+                </select>
+
+                <button onclick="generateImage(5)">生成图片</button>
+                <canvas id="canvas5" width="500" height="300"></canvas>
+                <div id="download5" class="download-links"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+            <h3>💡 使用说明</h3>
+            <ol>
+                <li>为每篇论文输入标题和选择颜色主题</li>
+                <li>点击"生成图片"预览效果</li>
+                <li>点击"下载"保存图片</li>
+                <li>将图片保存到 <code>/images/publications/</code> 目录</li>
+                <li>建议文件名：swformer.png, swattention.png, lad-net.png 等</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function generateImage(paperNum) {
+            const canvas = document.getElementById(`canvas${paperNum}`);
+            const ctx = canvas.getContext('2d');
+            const title = document.getElementById(`title${paperNum}`).value;
+            const color = document.getElementById(`color${paperNum}`).value;
+
+            // 清除画布
+            ctx.clearRect(0, 0, 500, 300);
+
+            // 背景渐变
+            const gradient = ctx.createLinearGradient(0, 0, 500, 300);
+            gradient.addColorStop(0, color + '20');
+            gradient.addColorStop(1, color + '05');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 500, 300);
+
+            // 绘制装饰性网格
+            ctx.strokeStyle = color + '10';
+            ctx.lineWidth = 1;
+            for(let i = 0; i < 500; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, 300);
+                ctx.stroke();
+            }
+            for(let i = 0; i < 300; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(500, i);
+                ctx.stroke();
+            }
+
+            // 绘制中心装饰圆
+            ctx.beginPath();
+            ctx.arc(250, 150, 80, 0, Math.PI * 2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(250, 150, 60, 0, Math.PI * 2);
+            ctx.strokeStyle = color + '80';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(250, 150, 40, 0, Math.PI * 2);
+            ctx.strokeStyle = color + '60';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // 绘制标题
+            ctx.font = 'bold 24px Trebuchet MS, Arial';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.fillText(title, 250, 150);
+
+            // 绘制底部装饰线
+            ctx.beginPath();
+            ctx.moveTo(50, 250);
+            ctx.lineTo(450, 250);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // 添加"Placeholder"水印
+            ctx.font = '12px Arial';
+            ctx.fillStyle = color + '40';
+            ctx.textAlign = 'center';
+            ctx.fillText('PLACEHOLDER IMAGE', 250, 280);
+
+            // 创建下载链接
+            const downloadDiv = document.getElementById(`download${paperNum}`);
+            downloadDiv.innerHTML = '';
+
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `paper${paperNum}_placeholder.png`;
+                a.textContent = '下载图片';
+                downloadDiv.appendChild(a);
+            });
+        }
+
+        // 页面加载时自动生成所有图片
+        window.onload = function() {
+            for(let i = 1; i <= 5; i++) {
+                generateImage(i);
+            }
+        }
+    </script>
+</body>
+</html>

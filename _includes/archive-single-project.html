@@ -1,0 +1,56 @@
+{% include base_path %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="paper-box">
+  <div class="paper-box-image">
+    <div>
+      {% if post.badge %}
+        <div class="badge {{ post.badge_class | default: 'badge-project' }}">{{ post.badge }}</div>
+      {% endif %}
+      {% if post.image %}
+        <img src="{{ post.image }}" alt="{{ title }}" width="100%">
+      {% elsif post.thumbnail %}
+        <img src="{{ post.thumbnail }}" alt="{{ title }}" width="100%">
+      {% else %}
+        <!-- 默认项目占位图片 -->
+        <img src="/images/projects/placeholder.svg" alt="{{ title }}" width="100%">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="paper-box-text">
+    <!-- 项目标题 -->
+    <p>
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+    </p>
+
+    <!-- 项目信息 -->
+    {% if post.project_type %}
+      <p style="font-size: 0.95em; color: #555;">{{ post.project_type }}</p>
+    {% endif %}
+
+    <!-- 关键技术/关键词 -->
+    {% if post.keywords %}
+      <p>Keywords: {{ post.keywords }}</p>
+    {% endif %}
+
+    <!-- 链接 -->
+    <p>
+      {% if post.github %}
+        <a href="{{ post.github }}"><i class="fab fa-github"></i> GitHub</a>
+      {% endif %}
+      {% if post.demo %}
+        <a href="{{ base_path }}{{ post.url }}{{ post.demo }}"><i class="fas fa-play-circle"></i> Demo</a>
+      {% endif %}
+      {% if post.paper %}
+        <a href="{{ post.paper }}"><i class="fas fa-file-pdf"></i> Paper</a>
+      {% endif %}
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fas fa-info-circle"></i> Details</a>
+    </p>
+  </div>
+</div>

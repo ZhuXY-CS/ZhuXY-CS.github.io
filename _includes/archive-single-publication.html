@@ -1,0 +1,62 @@
+{% include base_path %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="paper-box">
+  <div class="paper-box-image">
+    <div>
+      {% if post.badge %}
+        <div class="badge {{ post.badge_class | default: 'badge-conference' }}">{{ post.badge }}</div>
+      {% endif %}
+      {% if post.image %}
+        <img src="{{ post.image }}" alt="{{ title }}" width="100%">
+      {% else %}
+        <!-- 默认占位图片 -->
+        <img src="/images/publications/placeholder.svg" alt="{{ title }}" width="100%">
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="paper-box-text">
+    <!-- 论文标题 -->
+    <p>
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+    </p>
+
+    <!-- 作者列表（从citation中提取） -->
+    {% if post.authors %}
+      <p>{{ post.authors | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+    {% elsif post.citation %}
+      {% assign citation_parts = post.citation | split: '"' %}
+      {% if citation_parts[0] %}
+        <p>{{ citation_parts[0] | strip }}</p>
+      {% endif %}
+    {% endif %}
+
+    <!-- 关键词 -->
+    {% if post.keywords %}
+      <p>Keywords: {{ post.keywords }}</p>
+    {% endif %}
+
+    <!-- 链接 -->
+    <p>
+      {% if post.paperurl %}
+        <a href="{{ post.paperurl }}"><i class="fas fa-file-pdf"></i> PDF</a>
+      {% endif %}
+      {% if post.posterurl %}
+        <a href="{{ post.posterurl }}"><i class="fas fa-image"></i> Poster</a>
+      {% endif %}
+      {% if post.doi %}
+        <a href="{{ post.doi }}"><i class="fas fa-link"></i> DOI</a>
+      {% endif %}
+      {% if post.googlescholar %}
+        <a href="{{ post.googlescholar }}"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+      {% endif %}
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fas fa-info-circle"></i> Details</a>
+    </p>
+  </div>
+</div>

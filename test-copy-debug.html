@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BibTeX Copy Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .bibtex-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 1em;
+            background: #fafafa;
+            margin: 20px 0;
+        }
+        .bibtex-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        .copy-button {
+            padding: 0.3em 0.8em;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .copy-button:hover {
+            background: #0052a3;
+        }
+        .copy-button.success {
+            background: #28a745;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            margin: 0;
+            border-radius: 4px;
+            font-size: 0.85em;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .debug-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 1em;
+            margin: 1em 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>BibTeX Copy 功能测试</h1>
+    
+    <div class="debug-info">
+        <h3>调试信息：</h3>
+        <p>浏览器: <span id="browser-info"></span></p>
+        <p>HTTPS: <span id="https-info"></span></p>
+        <p>Clipboard API 可用: <span id="clipboard-info"></span></p>
+        <p>execCommand 可用: <span id="execcommand-info"></span></p>
+    </div>
+
+    <div class="bibtex-container">
+        <div class="bibtex-header">
+            <span style="font-size: smaller; color: #0066cc; font-weight: 600;">
+                <i class="fas fa-quote-left"></i> BibTeX
+            </span>
+            <button id="bibtex-copy-btn" class="copy-button">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+        <pre id="bibtex-content">@article{wu2024swattention,
+  title={SWattention: designing fast and memory-efficient attention for a new Sunway Supercomputer},
+  author={Wu, Ruohan and Zhu, Xianyu and Chen, Junshi and Liu, Sha and Zheng, Tianyu and Liu, Xin and An, Hong},
+  journal={The Journal of Supercomputing},
+  year={2024},
+  publisher={Springer}
+}</pre>
+    </div>
+
+    <div class="debug-info">
+        <h3>测试结果：</h3>
+        <p>点击下面的按钮测试复制功能，然后在这里粘贴 (Ctrl+V 或 Cmd+V)：</p>
+        <textarea id="test-paste" placeholder="在这里粘贴测试复制的内容..." style="width: 100%; height: 100px; margin-top: 10px;"></textarea>
+    </div>
+
+    <script>
+        // 显示调试信息
+        document.getElementById('browser-info').textContent = navigator.userAgent;
+        document.getElementById('https-info').textContent = window.isSecureContext ? '是' : '否';
+        document.getElementById('clipboard-info').textContent = !!(navigator.clipboard && navigator.clipboard.writeText) ? '是' : '否';
+        document.getElementById('execcommand-info').textContent = document.queryCommandSupported ? '是' : '否';
+
+        function log(message, type = 'info') {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function initCopyButton() {
+            const copyBtn = document.getElementById('bibtex-copy-btn');
+            if (!copyBtn) {
+                log('复制按钮未找到', 'error');
+                return;
+            }
+
+            log('初始化复制按钮');
+
+            copyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                log('复制按钮被点击');
+                copyBibTeX(this);
+            });
+
+            copyBtn.addEventListener('mouseover', function() {
+                this.style.background = '#0052a3';
+            });
+
+            copyBtn.addEventListener('mouseout', function() {
+                this.style.background = '#0066cc';
+            });
+        }
+
+        function copyBibTeX(button) {
+            log('开始复制 BibTeX');
+
+            const bibtexContent = document.getElementById('bibtex-content');
+            if (!bibtexContent) {
+                log('BibTeX 内容元素未找到', 'error');
+                alert('错误: BibTeX内容未找到');
+                return;
+            }
+
+            const bibtexText = bibtexContent.textContent || bibtexContent.innerText;
+            log(`BibTeX 文本长度: ${bibtexText.length}`);
+            log(`BibTeX 文本预览: ${bibtexText.substring(0, 100)}...`);
+
+            // 方法1: 尝试现代 Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                log('尝试使用 Clipboard API...');
+                navigator.clipboard.writeText(bibtexText)
+                    .then(() => {
+                        log('Clipboard API 复制成功!', 'success');
+                        showCopySuccess(button);
+                    })
+                    .catch((err) => {
+                        log(`Clipboard API 失败: ${err.message}`, 'error');
+                        fallbackCopy(bibtexText, button);
+                    });
+            } else {
+                log('Clipboard API 不可用，使用备用方法...');
+                fallbackCopy(bibtexText, button);
+            }
+        }
+
+        function fallbackCopy(text, button) {
+            log('尝试备用复制方法');
+
+            // 创建临时文本区域
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '0';
+            textarea.style.width = '2em';
+            textarea.style.height = '2em';
+            textarea.style.padding = '0';
+            textarea.style.border = 'none';
+            textarea.style.outline = 'none';
+            textarea.style.boxShadow = 'none';
+            textarea.style.background = 'transparent';
+            textarea.style.opacity = '0';
+            textarea.style.zIndex = '-1';
+
+            document.body.appendChild(textarea);
+            
+            try {
+                textarea.focus();
+                textarea.select();
+                textarea.setSelectionRange(0, text.length);
+                
+                const successful = document.execCommand('copy');
+                log(`execCommand 结果: ${successful}`);
+                
+                if (successful) {
+                    log('备用方法复制成功!', 'success');
+                    showCopySuccess(button);
+                } else {
+                    log('备用方法复制失败', 'error');
+                    selectBibTeXText();
+                    alert('自动复制失败，请按 Ctrl+C (或 Cmd+C) 复制选中的文本');
+                }
+            } catch (err) {
+                log(`execCommand 错误: ${err.message}`, 'error');
+                selectBibTeXText();
+                alert('复制功能不可用，请按 Ctrl+C (或 Cmd+C) 复制选中的文本');
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function showCopySuccess(button) {
+            log('显示复制成功状态');
+
+            const originalHTML = button.innerHTML;
+            const originalBg = button.style.background || '#0066cc';
+
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.style.background = '#28a745';
+            button.classList.add('success');
+
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = originalBg;
+                button.classList.remove('success');
+            }, 2000);
+        }
+
+        function selectBibTeXText() {
+            log('选择 BibTeX 文本供手动复制');
+
+            const bibtexContent = document.getElementById('bibtex-content');
+            if (bibtexContent && window.getSelection) {
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(bibtexContent);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        }
+
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCopyButton);
+        } else {
+            initCopyButton();
+        }
+
+        // 监听粘贴事件来测试复制是否成功
+        document.getElementById('test-paste').addEventListener('paste', function(e) {
+            setTimeout(() => {
+                const pastedText = e.target.value;
+                if (pastedText.includes('@article{wu2024swattention')) {
+                    log('复制测试成功! 内容已正确复制到剪贴板', 'success');
+                } else {
+                    log('复制测试失败，内容不匹配', 'error');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
