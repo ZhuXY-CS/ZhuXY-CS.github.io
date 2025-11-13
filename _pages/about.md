@@ -39,7 +39,7 @@ h2 {
 <!-- ==================== About Me Section ==================== -->
 <section id="about">
 
-## 🎃 About Me
+<h2>🎃 About Me</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: justify; line-height: 1.6;">
 
@@ -87,6 +87,11 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 </div>
 
+</section>
+
+<!-- ==================== Internships Section ==================== -->
+<section id="internships">
+
 <h2>⭐ Internships</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
@@ -102,6 +107,11 @@ focusing on designing a more effective distributed training framework for the un
 </ul>
 
 </div>
+
+</section>
+
+<!-- ==================== Awards Section ==================== -->
+<section id="awards">
 
 <h2>🏆 Awards</h2>
 
@@ -124,6 +134,11 @@ focusing on designing a more effective distributed training framework for the un
 
 </div>
 
+</section>
+
+<!-- ==================== Competitions Section ==================== -->
+<section id="competitions">
+
 <h2>✅ Competitions</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
@@ -138,6 +153,11 @@ focusing on designing a more effective distributed training framework for the un
 </ul>
 
 </div>
+
+</section>
+
+<!-- ==================== Technical Skills Section ==================== -->
+<section id="skills">
 
 <h2>⚙️ Technical Skills</h2>
 
