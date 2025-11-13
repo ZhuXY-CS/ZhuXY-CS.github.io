@@ -15,14 +15,14 @@ html {
 
 /* 区块间距 */
 section {
-  padding-top: 40px;
-  margin-top: -40px;
+  padding-top: 20px;
+  margin-top: -20px;
 }
 
 /* 标题样式 */
 h2 {
-  margin-top: 20px;
-  padding-top: 10px;
+  margin-top: 0px;
+  padding-top: 0px;
   border-bottom: 2px solid #f0f0f0;
   padding-bottom: 10px;
 }
@@ -30,8 +30,8 @@ h2 {
 /* 响应式间距 */
 @media (max-width: 768px) {
   section {
-    padding-top: 30px;
-    margin-top: -30px;
+    padding-top: 15px;
+    margin-top: -15px;
   }
 }
 </style>
