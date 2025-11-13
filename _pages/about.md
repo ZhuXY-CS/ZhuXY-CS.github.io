@@ -71,18 +71,18 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <h2>📖 Education</h2>
 
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
 <strong><img src="http://zhuxy-cs.github.io/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to Now<br>
-<ul style="list-style-type: disc; margin-left: 20px;">
-    <li>Master of Computer Science and Technology in School of Computer Science and Technology</li>
-    <li>Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
+<ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
+    <li style="margin-bottom: 8px; line-height: 1.8;">Master of Computer Science and Technology in School of Computer Science and Technology</li>
+    <li style="margin-bottom: 8px; line-height: 1.8;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
 <strong><img src="http://zhuxy-cs.github.io/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
-<ul style="list-style-type: disc; margin-left: 20px;">
-    <li>Bachelor of Computer Science and Technology in College of Information Engineering</li>
-    <li>Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
+<ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
+    <li style="margin-bottom: 8px; line-height: 1.8;">Bachelor of Computer Science and Technology in College of Information Engineering</li>
+    <li style="margin-bottom: 8px; line-height: 1.8;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
 </ul>
 
 </div>
