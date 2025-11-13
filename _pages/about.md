@@ -115,11 +115,11 @@ My research interests lie at the intersection of <strong>high-performance comput
 <!-- ==================== Project Section ==================== -->
 <section id="project">
 
-<h2>🚀 Research Project</h2>
+<h2>📽️ Research Project</h2>
 
 <div style="font-family: 'Times New Roman', Times, serif;">
 
-<h3>Ongoing Project</h3>
+<h3>🚀 Ongoing Project</h3>
 <ul>
     <li>
         <strong>Dataflow Programming and Runtime System Framework Adapted to Domestic Heterogeneous System Architectures</strong><br>
@@ -129,7 +129,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     </li>
 </ul>
 
-<h3>Completed Project</h3>
+<h3>🎉 Completed Project</h3>
 
 {% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
 {% for post in sorted_projects %}
