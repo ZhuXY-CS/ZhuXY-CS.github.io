@@ -11,23 +11,23 @@ main:
   - title: "Education"
     url: /#education
 
-  - title: "Internships"
-    url: /#internships
+  - title: "Publication"
+    url: /#publication
 
-  - title: "Awards"
-    url: /#awards
+  - title: "Project"
+    url: /#project
 
-  - title: "Competitions"
-    url: /#competitions
+  - title: "Internship"
+    url: /#internship
 
-  - title: "Skills"
-    url: /#skills
+  - title: "Award"
+    url: /#award
 
-  - title: "Publications"
-    url: /#publications
+  - title: "Competition"
+    url: /#competition
 
-  - title: "Projects"
-    url: /#projects    
+  - title: "Skill"
+    url: /#skill    
 
   # - title: "Project"
   #   url: /teaching/    

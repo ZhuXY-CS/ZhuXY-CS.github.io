@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Xianyu Zhu"
+title: ""
 author_profile: true
 redirect_from:
   - /about/
@@ -89,10 +89,61 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 </section>
 
-<!-- ==================== Internships Section ==================== -->
-<section id="internships">
+<!-- ==================== Publication Section ==================== -->
+<section id="publication">
 
-<h2>⭐ Internships</h2>
+<h2>📝 Publication</h2>
+
+<div style="font-family: 'Times New Roman', Times, serif;">
+
+<h3>📨 Submitted Paper</h3>
+<ul>
+<li>As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST)</strong></li>
+</ul>
+
+<h3>📚 Published Paper</h3>
+
+{% assign sorted_publications = site.publications | sort: 'rank' | reverse %}
+{% for post in sorted_publications %}
+  {% include archive-single-publication.html %}
+{% endfor %}
+
+</div>
+
+</section>
+
+<!-- ==================== Project Section ==================== -->
+<section id="project">
+
+<h2>🚀 Research Project</h2>
+
+<div style="font-family: 'Times New Roman', Times, serif;">
+
+<h3>Ongoing Project</h3>
+<ul>
+    <li>
+        <strong>Dataflow Programming and Runtime System Framework Adapted to Domestic Heterogeneous System Architectures</strong><br>
+        <em>Strategic Priority Research Program of Chinese Academy of Sciences</em><br>
+        Role: Project Member | Duration: 2023 - Present<br>
+        Focus: Gradient compression algorithms for efficient distributed training on heterogeneous architectures
+    </li>
+</ul>
+
+<h3>Completed Project</h3>
+
+{% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
+{% for post in sorted_projects %}
+  {% include archive-single-project.html %}
+{% endfor %}
+
+</div>
+
+</section>
+
+<!-- ==================== Internship Section ==================== -->
+<section id="internship">
+
+<h2>⭐ Internship</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
@@ -110,14 +161,14 @@ focusing on designing a more effective distributed training framework for the un
 
 </section>
 
-<!-- ==================== Awards Section ==================== -->
-<section id="awards">
+<!-- ==================== Award Section ==================== -->
+<section id="award">
 
-<h2>🏆 Awards</h2>
+<h2>🏆 Award</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
-<h3>🔥 Scholarships</h3>
+<h3>🔥 Scholarship</h3>
 <ul>
     <li>National Scholarship</li>
     <li>President Scholarship</li>
@@ -125,7 +176,7 @@ focusing on designing a more effective distributed training framework for the un
     <li>First-Class Professional Scholarship</li>
 </ul>
 
-<h3>✨ Honors</h3>
+<h3>✨ Honor</h3>
 <ul>
     <li>Outstanding Graduate</li>
     <li>Excellent College Student</li>
@@ -136,10 +187,10 @@ focusing on designing a more effective distributed training framework for the un
 
 </section>
 
-<!-- ==================== Competitions Section ==================== -->
-<section id="competitions">
+<!-- ==================== Competition Section ==================== -->
+<section id="competition">
 
-<h2>✅ Competitions</h2>
+<h2>✅ Competition</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
@@ -156,70 +207,19 @@ focusing on designing a more effective distributed training framework for the un
 
 </section>
 
-<!-- ==================== Technical Skills Section ==================== -->
-<section id="skills">
+<!-- ==================== Skill Section ==================== -->
+<section id="skill">
 
-<h2>⚙️ Technical Skills</h2>
+<h2>⚙️ Technical Skill</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 <ul>
-    <li><strong>Programming Languages:</strong> C/C++, Python, CUDA, MPI</li>
-    <li><strong>Machine Learning:</strong> PyTorch, TensorFlow, Distributed Training Frameworks</li>
+    <li><strong>Programming Language:</strong> C/C++, Python, CUDA, MPI</li>
+    <li><strong>Machine Learning:</strong> PyTorch, TensorFlow, Distributed Training Framework</li>
     <li><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming</li>
-    <li><strong>Tools & Platforms:</strong> Git, Linux, Sunway OceanLight Supercomputer</li>
+    <li><strong>Tool & Platform:</strong> Git, Linux, Sunway OceanLight Supercomputer</li>
 </ul>
-
-</div>
-
-</section>
-
-<!-- ==================== Publications Section ==================== -->
-<section id="publications">
-
-<h2>📝 Publications</h2>
-
-<div style="font-family: 'Times New Roman', Times, serif;">
-
-<h3>📨 Submitted Paper</h3>
-<ul>
-<li>As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST)</strong></li>
-</ul>
-
-<h3>📚 Published Papers</h3>
-
-{% assign sorted_publications = site.publications | sort: 'rank' | reverse %}
-{% for post in sorted_publications %}
-  {% include archive-single-publication.html %}
-{% endfor %}
-
-</div>
-
-</section>
-
-<!-- ==================== Projects Section ==================== -->
-<section id="projects">
-
-<h2>🚀 Research Projects</h2>
-
-<div style="font-family: 'Times New Roman', Times, serif;">
-
-<h3>Ongoing Projects</h3>
-<ul>
-    <li>
-        <strong>Dataflow Programming and Runtime System Framework Adapted to Domestic Heterogeneous System Architectures</strong><br>
-        <em>Strategic Priority Research Program of Chinese Academy of Sciences</em><br>
-        Role: Project Member | Duration: 2023 - Present<br>
-        Focus: Gradient compression algorithms for efficient distributed training on heterogeneous architectures
-    </li>
-</ul>
-
-<h3>Completed Projects</h3>
-
-{% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
-{% for post in sorted_projects %}
-  {% include archive-single-project.html %}
-{% endfor %}
 
 </div>
 
