@@ -833,3 +833,37 @@ hr {
   background-color: #fafafa !important;
   transition: background-color 0.3s ease !important;
 }
+
+/* ==========================================================================
+   SINGLE-PAGE NAVIGATION STYLES
+   ========================================================================== */
+
+/* 导航项激活状态高亮 */
+.greedy-nav .visible-links li.active a {
+  color: #0066cc !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #0066cc !important;
+}
+
+/* 平滑滚动行为 */
+html {
+  scroll-behavior: smooth !important;
+}
+
+/* 区块间距 - 为锚点跳转留出导航栏高度 */
+section[id] {
+  scroll-margin-top: 70px !important;
+}
+
+/* 区块标题样式增强 */
+section[id] > h2 {
+  border-bottom: 2px solid #e8e8e8 !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+/* 导航链接hover效果 */
+.greedy-nav .visible-links a:hover {
+  color: #0066cc !important;
+  transition: color 0.2s ease !important;
+}
