@@ -174,6 +174,7 @@ focusing on designing a more effective distributed training framework for the un
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">President Scholarship</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Thanksgiving Scholarship for Modern and Contemporary Chinese Scientists (the highest-paying scholarship)</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Professional Scholarship</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Academic Scholarship</li>
 </ul>
 
 <h3>✨ Honor</h3>
@@ -181,6 +182,7 @@ focusing on designing a more effective distributed training framework for the un
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Outstanding Graduate</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Excellent College Student</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Advanced Individual in Social Practice</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">One of the 100 Campus Stars - Top Ten Scientific Research Stars </li>
 </ul>
 
 </div>
