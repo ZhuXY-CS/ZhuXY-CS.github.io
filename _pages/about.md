@@ -221,7 +221,7 @@ focusing on designing a more effective distributed training framework for the un
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Language:</strong> C/C++, Python, CUDA, MPI</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, DeepSpeed</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Tool & Platform:</strong> Git, Linux, Sunway OceanLight Supercomputer</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Tool & Platform:</strong> Git, Linux, NVIDIA Jetson Nano/TX2, Sunway OceanLight Supercomputer</li>
 </ul>
 
 </div>
