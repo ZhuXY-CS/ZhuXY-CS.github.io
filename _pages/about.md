@@ -152,7 +152,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019--2020 Summer, Baidu AI Talents Camp, learning machine learning and AI framework PaddlePaddle</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019 Winter and 2020 Winter, the event about outstanding student coming back to Alma Mater</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Summer, Tedu Group's Artificial Intelligence Training Project</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Fall, Student Teaching Assistant for Parallel Computing Course</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Fall, Teaching Assistant for Parallel Computing Course</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07, Hong Kong PhD Fellowship Summer Workshop in CUHK<img src="http://zhuxy-cs.github.io/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07--09, Research Assistant in Systems and Networking Lab in HKU<img src="http://zhuxy-cs.github.io/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
 focusing on designing a more effective distributed training framework for the unified multimodal large model </li>
