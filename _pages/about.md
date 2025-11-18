@@ -39,7 +39,7 @@ h2 {
 <!-- ==================== About Me Section ==================== -->
 <section id="about">
 
-<h2>🎃 About Me</h2>
+<h2>👨🏻‍🎓 About Me</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: justify; line-height: 1.6;">
 
