@@ -218,10 +218,10 @@ focusing on designing a more effective distributed training framework for the un
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 <ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Language:</strong> C/C++, Python, CUDA, MPI</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, DeepSpeed</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Tool & Platform:</strong> Git, Linux, NVIDIA Jetson Nano/TX2, Sunway OceanLight Supercomputer</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Language:</strong> C/C++, Python, CUDA C, JAVA, LaTeX, Assembly Language</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, PaddlePaddle, DeepSpeed</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming, SACA Programming</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Platform:</strong> Linux, NVIDIA Jetson Nano/TX2, NVIDIA DGX-H800, Sunway OceanLight Supercomputer</li>
 </ul>
 
 </div>
