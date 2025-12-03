@@ -9,7 +9,7 @@ hide_title: true
 <h2 >📨 Submitted Paper</h2>
 <div style="font-family: 'Times New Roman', Times, serif;">
 <ul>
-<li>As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Major Revision</strong></li>
+<li>As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Major Revision in 1st Review</strong></li>
 </ul>
 </div>
 
