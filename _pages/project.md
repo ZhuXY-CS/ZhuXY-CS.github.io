@@ -15,6 +15,12 @@ hide_title: true
             Role: Project Member | Duration: 2023 - Present<br>
             Focus: Gradient compression algorithms for efficient distributed training on heterogeneous architectures
         </li>
+        <li>
+            <strong>Effective distributed training and inference framework for the unified multimodal large model</strong><br>
+            <em>Project for Networking and Systems Lab at HKU</em><br>
+            Role: Project Member | Duration: 2025 - Present<br>
+            Focus: designing a more effective distributed training framework for the unified multimodal large model
+        </li>
     </ul>
 </div>
 
