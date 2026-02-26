@@ -98,7 +98,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <h3>📨 Submitted Paper</h3>
 <ul style="margin-bottom: 1.5em;">
-<li style="margin-bottom: 12px; line-height: 2.0 !important;">As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST)</strong></li>
+<li style="margin-bottom: 12px; line-height: 2.0 !important;">As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Second Review (Major Revision)</strong></li>
 </ul>
 
 <h3>📚 Published Paper</h3>
