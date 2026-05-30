@@ -61,7 +61,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <br>
 
-<strong>Now, I am seeking related PhD opportunities in 2026 Fall🍂🍂🍂</strong>
+<strong>Now, I am seeking related PhD opportunities in 2026 Fall🍂🍂🍂/2027 Spring🌿🌿🌿</strong>
 
 </div>
 
