@@ -55,6 +55,7 @@
     var memory = canvas.parentElement;
     var blooms = [];
     var nextPoint = 0;
+    var heartCompletedAt = null;
     var animationFrame;
     var startDelay = reducedMotion ? 0 : 3000;
 
@@ -107,8 +108,45 @@
       context.restore();
     }
 
-    function render() {
+    function drawHeartWave(elapsed) {
+      for (var ring = 0; ring < 4; ring += 1) {
+        var cycle = elapsed / 3000 - ring * 0.23;
+        if (cycle < 0) continue;
+
+        var progress = cycle % 1;
+        var expansion = 1 + progress * 0.3;
+        var opacity = 0.34 * (1 - progress);
+        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.9;
+
+        context.save();
+        context.beginPath();
+
+        for (var pointIndex = 0; pointIndex <= 140; pointIndex += 1) {
+          var angle = (Math.PI * 2 * pointIndex) / 140;
+          var wave = 1 + Math.sin(angle * 7 - progress * Math.PI * 2) * 0.025 * (1 - progress);
+          var x = 16 * Math.pow(Math.sin(angle), 3);
+          var y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+          var drawX = memory.clientWidth / 2 + x * scale * expansion * wave;
+          var drawY = memory.clientHeight / 2 - 18 + y * scale * expansion * wave;
+
+          if (pointIndex === 0) context.moveTo(drawX, drawY);
+          else context.lineTo(drawX, drawY);
+        }
+
+        context.closePath();
+        context.strokeStyle = "rgba(255, 182, 222, " + opacity.toFixed(3) + ")";
+        context.shadowColor = "rgba(139, 47, 114, " + (opacity * 0.7).toFixed(3) + ")";
+        context.shadowBlur = 3;
+        context.lineWidth = 1.6;
+        context.stroke();
+        context.restore();
+      }
+    }
+
+    function render(currentTime) {
       context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
+
+      if (heartCompletedAt !== null) drawHeartWave(currentTime - heartCompletedAt);
 
       for (var index = 0; index < blooms.length; index += 1) {
         var bloom = blooms[index];
@@ -121,11 +159,10 @@
         nextPoint += reducedMotion ? 0.22 : 0.07;
       } else {
         message.classList.add("is-visible");
+        if (heartCompletedAt === null) heartCompletedAt = currentTime;
       }
 
-      if (nextPoint <= 20 || blooms.some(function (bloom) { return bloom.radius < bloom.target; })) {
-        animationFrame = window.requestAnimationFrame(render);
-      }
+      animationFrame = window.requestAnimationFrame(render);
     }
 
     resize();
@@ -145,7 +182,8 @@
       resize();
       blooms = [];
       nextPoint = reducedMotion ? 20 : 0;
-      render();
+      heartCompletedAt = null;
+      render(window.performance.now());
     }, { passive: true });
 
     window.setTimeout(render, startDelay);
@@ -200,6 +238,7 @@
     if (!tangbao) return;
 
     var bubble = tangbao.querySelector(".tangbao-witness__bubble");
+    var sprite = tangbao.querySelector(".tangbao-witness__sprite");
     var messages = [
       "糖宝会一直替你们见证 ♡",
       "你们负责相爱，糖宝负责见证！",
@@ -214,6 +253,34 @@
     ];
     var messageIndex = 0;
     var bubbleTimer;
+    var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-01\.webp(?:\?.*)?$/, "frame-");
+    var frameSources = [];
+    var frameSequence = [1, 2, 3, 2];
+    var frameDuration = 145;
+    var frameStartedAt = window.performance.now();
+    var displayedFrame = 0;
+
+    for (var frameNumber = 1; frameNumber <= 9; frameNumber += 1) {
+      var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
+      frameSources.push(frameSource);
+      var preload = new Image();
+      preload.src = frameSource;
+    }
+
+    function setFrameAction(action) {
+      var sequences = {
+        "is-action-trot": { frames: [1, 2, 3, 2], duration: 155 },
+        "is-action-dash": { frames: [1, 2, 3, 2], duration: 95 },
+        "is-action-leap": { frames: [4, 5, 5, 6], duration: 205 },
+        "is-action-look": { frames: [7, 8, 8, 7], duration: 310 },
+        "is-action-celebrate": { frames: [8, 9, 9, 8], duration: 170 }
+      };
+      var selected = sequences[action] || sequences["is-action-trot"];
+      frameSequence = selected.frames;
+      frameDuration = selected.duration;
+      frameStartedAt = window.performance.now();
+      displayedFrame = 0;
+    }
 
     function speak() {
       messageIndex = (messageIndex + 1) % messages.length;
@@ -282,6 +349,7 @@
       }
 
       tangbao.classList.add(action);
+      setFrameAction(action);
       actionTimer = window.setTimeout(chooseAction, duration);
     }
 
@@ -298,6 +366,13 @@
       var maxX = Math.max(padding, window.innerWidth - tangbao.offsetWidth - padding);
       var maxY = Math.max(padding, window.innerHeight - tangbao.offsetHeight - padding);
       previousTime = currentTime;
+
+      var framePosition = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration) % frameSequence.length;
+      var nextFrame = frameSequence[framePosition];
+      if (nextFrame !== displayedFrame) {
+        sprite.src = frameSources[nextFrame - 1];
+        displayedFrame = nextFrame;
+      }
 
       velocityX += (targetVelocityX - velocityX) * Math.min(1, elapsed * 3.2);
       velocityY += (targetVelocityY - velocityY) * Math.min(1, elapsed * 3.2);

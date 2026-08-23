@@ -87,12 +87,13 @@ body.love-page {
 .love-music[aria-pressed="true"] .love-music__bars i:nth-child(3) { animation-delay: -175ms; }
 
 .tangbao-witness {
+  --tangbao-size: clamp(4.6rem, 6.8vw, 6rem);
   position: fixed;
   left: 0;
   top: 0;
   z-index: 16;
-  width: clamp(6.5rem, 10vw, 8.5rem);
-  height: clamp(4.7rem, 7.2vw, 6.15rem);
+  width: var(--tangbao-size);
+  height: var(--tangbao-size);
   padding: 0;
   border: 0;
   background: transparent;
@@ -114,7 +115,7 @@ body.love-page {
   pointer-events: none;
   filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));
   --tangbao-direction: 1;
-  animation: tangbao-trot 780ms ease-in-out infinite;
+  animation: tangbao-trot 620ms ease-in-out infinite;
   transform-origin: center bottom;
 }
 
@@ -122,10 +123,10 @@ body.love-page {
   --tangbao-direction: -1;
 }
 
-.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 430ms ease-in-out infinite; }
-.tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 920ms cubic-bezier(0.32, 0.05, 0.3, 1) infinite; }
-.tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.45s ease-in-out infinite; }
-.tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 760ms ease-in-out infinite; }
+.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 360ms ease-in-out infinite; }
+.tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 820ms ease-in-out infinite; }
+.tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.2s ease-in-out infinite; }
+.tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 680ms ease-in-out infinite; }
 
 .tangbao-witness__bubble {
   position: absolute;
@@ -347,34 +348,27 @@ body.love-page {
 
 @keyframes tangbao-trot {
   0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
-  28% { transform: scaleX(var(--tangbao-direction)) translateY(-0.38rem) rotate(1.5deg); }
-  58% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(-1deg); }
-  78% { transform: scaleX(var(--tangbao-direction)) translateY(-0.55rem) rotate(2deg); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.14rem) rotate(1deg); }
 }
 
 @keyframes tangbao-dash {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) scaleY(0.97) translateY(0) rotate(-2deg); }
-  50% { transform: scaleX(var(--tangbao-direction)) scaleY(1.03) translateY(-0.32rem) rotate(3deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(1deg); }
 }
 
 @keyframes tangbao-leap {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-2deg); }
-  24% { transform: scaleX(var(--tangbao-direction)) scaleY(0.92) translateY(0.12rem) rotate(-4deg); }
-  56% { transform: scaleX(var(--tangbao-direction)) scaleY(1.04) translateY(-1.65rem) rotate(6deg); }
-  78% { transform: scaleX(var(--tangbao-direction)) translateY(-0.28rem) rotate(-3deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.35rem); }
 }
 
 @keyframes tangbao-look {
-  0%, 32%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
-  48%, 72% { transform: scaleX(var(--tangbao-direction)) translateY(-0.08rem) rotate(7deg); }
-  60% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(3deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.06rem); }
 }
 
 @keyframes tangbao-celebrate {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-3deg); }
-  22% { transform: scaleX(var(--tangbao-direction)) translateY(-0.9rem) rotate(6deg); }
-  44% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-5deg); }
-  67% { transform: scaleX(var(--tangbao-direction)) translateY(-1.15rem) rotate(7deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.28rem) rotate(2deg); }
 }
 
 @media (max-width: 900px) {
@@ -407,8 +401,7 @@ body.love-page {
   .love-message p { font-size: clamp(1.75rem, 10vw, 2.6rem); }
 
   .tangbao-witness {
-    width: 5.8rem;
-    height: 4.2rem;
+    --tangbao-size: 4.35rem;
   }
 }
 
