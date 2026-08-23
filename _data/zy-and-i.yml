@@ -2,6 +2,7 @@
 # Set emphasis: true for the mulberry-colored lines.
 story:
   - text: "To ZY，"
+    emphasis: true
   - text: "人海茫茫，有幸遇见。"
   - text: "不早不晚，刚好是你。"
   - text: "平生一顾，至此终年。"
@@ -50,4 +51,4 @@ started_at: "2026-08-19T17:20:00+08:00"
 center_message: "ZXY💗ZZY"
 
 # Optional local audio file, for example: "/audio/zy-and-i.mp3".
-music: ""
+music: "/audio/灰蒙蒙,橡木 - 同进退.mp3"
