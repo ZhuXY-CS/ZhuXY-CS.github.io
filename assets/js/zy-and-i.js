@@ -202,21 +202,30 @@
     var bubble = tangbao.querySelector(".tangbao-witness__bubble");
     var messages = [
       "糖宝会一直替你们见证 ♡",
-      "要一直一直幸福哦！",
-      "糖宝巡逻中：爱情状态良好 ♡"
+      "你们负责相爱，糖宝负责见证！",
+      "今天也要比昨天更爱一点哦！",
+      "糖宝认证：你们就是天生一对 ♡",
+      "以后每一个四季，都要一起过呀！",
+      "世界很大，你们要一直牵着手哦！",
+      "偶尔闹别扭，也要记得抱抱呀！",
+      "这份喜欢，糖宝批准长期有效！",
+      "你看她的时候，眼睛里有星星 ♡",
+      "糖宝巡逻中：爱情状态非常好！"
     ];
     var messageIndex = 0;
     var bubbleTimer;
 
-    tangbao.addEventListener("click", function () {
+    function speak() {
       messageIndex = (messageIndex + 1) % messages.length;
       bubble.textContent = messages[messageIndex];
       tangbao.classList.add("is-speaking");
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
-      }, 2200);
-    });
+      }, 3200);
+    }
+
+    tangbao.addEventListener("click", speak);
 
     if (reducedMotion) {
       tangbao.classList.add("is-resting");
@@ -225,9 +234,63 @@
 
     var x = Math.max(18, window.innerWidth * 0.08);
     var y = Math.max(80, window.innerHeight * 0.68);
-    var velocityX = 92;
-    var velocityY = -64;
+    var velocityX = 65;
+    var velocityY = -18;
+    var targetVelocityX = velocityX;
+    var targetVelocityY = velocityY;
     var previousTime = window.performance.now();
+    var actionTimer;
+    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate"];
+
+    function between(minimum, maximum) {
+      return minimum + Math.random() * (maximum - minimum);
+    }
+
+    function chooseAction() {
+      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+
+      var roll = Math.random();
+      var action = "is-action-trot";
+      var duration = between(1800, 3600);
+      var direction = targetVelocityX < 0 ? -1 : 1;
+
+      if (Math.random() < 0.28) direction *= -1;
+
+      if (roll < 0.19) {
+        action = "is-action-look";
+        duration = between(1250, 2100);
+        targetVelocityX = 0;
+        targetVelocityY = 0;
+      } else if (roll < 0.36) {
+        action = "is-action-leap";
+        duration = between(900, 1500);
+        targetVelocityX = direction * between(70, 115);
+        targetVelocityY = between(-52, 52);
+      } else if (roll < 0.52) {
+        action = "is-action-dash";
+        duration = between(950, 1650);
+        targetVelocityX = direction * between(145, 205);
+        targetVelocityY = between(-40, 40);
+      } else if (roll < 0.66) {
+        action = "is-action-celebrate";
+        duration = between(1100, 1750);
+        targetVelocityX = direction * between(18, 42);
+        targetVelocityY = between(-12, 12);
+      } else {
+        targetVelocityX = direction * between(52, 92);
+        targetVelocityY = between(-32, 32);
+      }
+
+      tangbao.classList.add(action);
+      actionTimer = window.setTimeout(chooseAction, duration);
+    }
+
+    function scheduleSweetWords() {
+      window.setTimeout(function () {
+        if (!document.hidden) speak();
+        scheduleSweetWords();
+      }, between(13000, 21000));
+    }
 
     function move(currentTime) {
       var elapsed = Math.min((currentTime - previousTime) / 1000, 0.05);
@@ -236,24 +299,31 @@
       var maxY = Math.max(padding, window.innerHeight - tangbao.offsetHeight - padding);
       previousTime = currentTime;
 
+      velocityX += (targetVelocityX - velocityX) * Math.min(1, elapsed * 3.2);
+      velocityY += (targetVelocityY - velocityY) * Math.min(1, elapsed * 3.2);
+
       x += velocityX * elapsed;
       y += velocityY * elapsed;
 
       if (x <= padding || x >= maxX) {
         x = Math.min(maxX, Math.max(padding, x));
         velocityX *= -1;
+        targetVelocityX = (targetVelocityX || velocityX) * -1;
       }
 
       if (y <= padding || y >= maxY) {
         y = Math.min(maxY, Math.max(padding, y));
         velocityY *= -1;
+        targetVelocityY = (targetVelocityY || velocityY) * -1;
       }
 
-      tangbao.classList.toggle("is-facing-left", velocityX < 0);
+      if (Math.abs(velocityX) > 5) tangbao.classList.toggle("is-facing-left", velocityX < 0);
       tangbao.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
       window.requestAnimationFrame(move);
     }
 
+    chooseAction();
+    scheduleSweetWords();
     window.requestAnimationFrame(move);
   }
 
