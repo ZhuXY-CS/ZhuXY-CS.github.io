@@ -161,6 +161,30 @@ body.love-page {
   transform: translate(-50%, 0) scale(1);
 }
 
+.tangbao-witness.is-near-left .tangbao-witness__bubble {
+  left: 0;
+  transform: translate(0, 0.35rem) scale(0.96);
+}
+
+.tangbao-witness.is-near-left.is-speaking .tangbao-witness__bubble {
+  transform: translate(0, 0) scale(1);
+}
+
+.tangbao-witness.is-near-right .tangbao-witness__bubble {
+  right: 0;
+  left: auto;
+  transform: translate(0, 0.35rem) scale(0.96);
+}
+
+.tangbao-witness.is-near-right.is-speaking .tangbao-witness__bubble {
+  transform: translate(0, 0) scale(1);
+}
+
+.tangbao-witness.is-near-right .tangbao-witness__bubble::after {
+  right: 1rem;
+  left: auto;
+}
+
 .tangbao-witness.is-resting {
   left: auto;
   right: 0.8rem;

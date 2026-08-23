@@ -34,12 +34,12 @@
 
       for (var characterIndex = 0; characterIndex < characters.length; characterIndex += 1) {
         line.textContent += characters[characterIndex];
-        await wait(68);
+        await wait(42);
       }
 
       line.classList.remove("is-active");
       line.classList.add("is-complete");
-      await wait(240);
+      await wait(140);
     }
 
     copy.classList.remove("is-typing");
@@ -69,7 +69,7 @@
 
     function heartPoint(step) {
       var angle = step / Math.PI;
-      var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.9;
+      var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.98;
       var x = 16 * Math.pow(Math.sin(angle), 3);
       var y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
       return { x: memory.clientWidth / 2 + x * scale, y: memory.clientHeight / 2 - 18 + y * scale };
@@ -88,9 +88,14 @@
       });
     }
 
-    function drawBloom(bloom) {
+    function drawBloom(bloom, pulseScale) {
+      var centerX = memory.clientWidth / 2;
+      var centerY = memory.clientHeight / 2 - 18;
+
       context.save();
-      context.translate(bloom.x, bloom.y);
+      context.translate(centerX, centerY);
+      context.scale(pulseScale, pulseScale);
+      context.translate(bloom.x - centerX, bloom.y - centerY);
       context.rotate(bloom.rotation);
       context.strokeStyle = "hsla(" + bloom.hue + ", 76%, 48%, " + bloom.alpha + ")";
       context.lineWidth = 1;
@@ -108,7 +113,7 @@
       context.restore();
     }
 
-    function drawHeartWave(elapsed) {
+    function drawHeartWave(elapsed, pulseScale) {
       for (var ring = 0; ring < 4; ring += 1) {
         var cycle = elapsed / 3000 - ring * 0.23;
         if (cycle < 0) continue;
@@ -116,7 +121,7 @@
         var progress = cycle % 1;
         var expansion = 1 + progress * 0.3;
         var opacity = 0.34 * (1 - progress);
-        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.9;
+        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.98 * pulseScale;
 
         context.save();
         context.beginPath();
@@ -146,12 +151,17 @@
     function render(currentTime) {
       context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
 
-      if (heartCompletedAt !== null) drawHeartWave(currentTime - heartCompletedAt);
+      var pulseScale = 1;
+      if (heartCompletedAt !== null) {
+        var pulseElapsed = currentTime - heartCompletedAt;
+        pulseScale = 1.01 + Math.sin((pulseElapsed / 1650) * Math.PI * 2) * 0.04;
+        drawHeartWave(pulseElapsed, pulseScale);
+      }
 
       for (var index = 0; index < blooms.length; index += 1) {
         var bloom = blooms[index];
         bloom.radius = Math.min(bloom.target, bloom.radius + 0.13);
-        drawBloom(bloom);
+        drawBloom(bloom, pulseScale);
       }
 
       if (nextPoint <= 20) {
@@ -172,7 +182,7 @@
         addBloom(heartPoint(staticStep));
       }
       context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
-      blooms.forEach(drawBloom);
+      blooms.forEach(function (bloom) { drawBloom(bloom, 1); });
       message.classList.add("is-visible");
       return;
     }
@@ -249,7 +259,19 @@
       "偶尔闹别扭，也要记得抱抱呀！",
       "这份喜欢，糖宝批准长期有效！",
       "你看她的时候，眼睛里有星星 ♡",
-      "糖宝巡逻中：爱情状态非常好！"
+      "糖宝巡逻中：爱情状态非常好！",
+      "往后的晴天雨天，都要把手牵紧呀！",
+      "认真地偏爱彼此，就是最好的浪漫 ♡",
+      "糖宝偷偷告诉你：她也在很认真地爱你。",
+      "被坚定选择的感觉，要珍惜很久很久哦！",
+      "愿你们把普通的日子，过成最喜欢的故事。",
+      "见面时要抱久一点，想念才会慢一点呀！",
+      "答案很长，糖宝陪你们用一生慢慢写。",
+      "今天、明天，还有很多很多年，都不要走散。",
+      "你们的故事，糖宝想一直蹲在旁边听 ♡",
+      "所谓浪漫，就是每一天都再选择一次彼此。",
+      "糖宝许愿：你们的以后，比今天还要甜！",
+      "所有温柔的日子，都想留给彼此呀。"
     ];
     var messageIndex = 0;
     var bubbleTimer;
@@ -289,7 +311,7 @@
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
-      }, 3200);
+      }, 3600);
     }
 
     tangbao.addEventListener("click", speak);
@@ -353,11 +375,11 @@
       actionTimer = window.setTimeout(chooseAction, duration);
     }
 
-    function scheduleSweetWords() {
+    function scheduleSweetWords(delay) {
       window.setTimeout(function () {
         if (!document.hidden) speak();
-        scheduleSweetWords();
-      }, between(13000, 21000));
+        scheduleSweetWords(between(9000, 15000));
+      }, delay);
     }
 
     function move(currentTime) {
@@ -393,12 +415,14 @@
       }
 
       if (Math.abs(velocityX) > 5) tangbao.classList.toggle("is-facing-left", velocityX < 0);
+      tangbao.classList.toggle("is-near-left", x < 150);
+      tangbao.classList.toggle("is-near-right", x > window.innerWidth - tangbao.offsetWidth - 150);
       tangbao.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
       window.requestAnimationFrame(move);
     }
 
     chooseAction();
-    scheduleSweetWords();
+    scheduleSweetWords(5200);
     window.requestAnimationFrame(move);
   }
 
