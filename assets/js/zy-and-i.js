@@ -195,11 +195,74 @@
     });
   }
 
+  function setupTangbao() {
+    var tangbao = document.getElementById("tangbao-witness");
+    if (!tangbao) return;
+
+    var bubble = tangbao.querySelector(".tangbao-witness__bubble");
+    var messages = [
+      "糖宝会一直替你们见证 ♡",
+      "要一直一直幸福哦！",
+      "糖宝巡逻中：爱情状态良好 ♡"
+    ];
+    var messageIndex = 0;
+    var bubbleTimer;
+
+    tangbao.addEventListener("click", function () {
+      messageIndex = (messageIndex + 1) % messages.length;
+      bubble.textContent = messages[messageIndex];
+      tangbao.classList.add("is-speaking");
+      window.clearTimeout(bubbleTimer);
+      bubbleTimer = window.setTimeout(function () {
+        tangbao.classList.remove("is-speaking");
+      }, 2200);
+    });
+
+    if (reducedMotion) {
+      tangbao.classList.add("is-resting");
+      return;
+    }
+
+    var x = Math.max(18, window.innerWidth * 0.08);
+    var y = Math.max(80, window.innerHeight * 0.68);
+    var velocityX = 92;
+    var velocityY = -64;
+    var previousTime = window.performance.now();
+
+    function move(currentTime) {
+      var elapsed = Math.min((currentTime - previousTime) / 1000, 0.05);
+      var padding = 8;
+      var maxX = Math.max(padding, window.innerWidth - tangbao.offsetWidth - padding);
+      var maxY = Math.max(padding, window.innerHeight - tangbao.offsetHeight - padding);
+      previousTime = currentTime;
+
+      x += velocityX * elapsed;
+      y += velocityY * elapsed;
+
+      if (x <= padding || x >= maxX) {
+        x = Math.min(maxX, Math.max(padding, x));
+        velocityX *= -1;
+      }
+
+      if (y <= padding || y >= maxY) {
+        y = Math.min(maxY, Math.max(padding, y));
+        velocityY *= -1;
+      }
+
+      tangbao.classList.toggle("is-facing-left", velocityX < 0);
+      tangbao.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
+      window.requestAnimationFrame(move);
+    }
+
+    window.requestAnimationFrame(move);
+  }
+
   function initialize() {
     runTypewriter();
     createHeartAnimation();
     startClock();
     setupMusic();
+    setupTangbao();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initialize);

@@ -13,6 +13,11 @@ comments: false
 
 <a class="love-home" href="{{ '/' | relative_url }}" aria-label="返回学术主页">←</a>
 
+<button class="tangbao-witness" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
+  <img class="tangbao-witness__sprite" src="{{ '/images/zy-and-i/tangbao-mascot.webp' | relative_url }}" alt="">
+  <span class="tangbao-witness__bubble" aria-live="polite">糖宝会一直替你们见证 ♡</span>
+</button>
+
 {% if love.music and love.music != "" %}
   <audio id="love-audio" src="{{ love.music | relative_url }}" loop preload="metadata"></audio>
   <button class="love-music" type="button" aria-label="播放音乐" aria-pressed="false">

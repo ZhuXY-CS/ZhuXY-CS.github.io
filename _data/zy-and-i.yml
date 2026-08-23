@@ -3,19 +3,16 @@
 story:
   - text: "ZY，"
   - text: "很幸运，在人海里遇见你。"
-  - text: "虽然不算太早，但也不算太迟。"
-  - text: "而我想分享的每一个明天，"
+  - text: "虽然相遇不算太早，但幸好也不算太迟。"
+  - text: "从遇见你的那天起，"
+  - text: "我想分享的每一个明天，"
   - text: "都有你的名字。"
-  - text: "你让我明白，真正的心安，"
+  - text: "往后岁月很长，"
     new_paragraph: true
-  - text: "不是从此再无风雨，"
-  - text: "而是无论世界如何喧嚣，"
-  - text: "回头看见你，我就知道自己有了归处。"
-  - text: "如果岁月很长，我愿把每一个清晨与黄昏，"
-    new_paragraph: true
-  - text: "每一次欣喜、失落与重新出发，都认真交给你。"
-  - text: "愿我们不只分享晴朗，也一起走过风雨；"
-  - text: "不只收藏相遇的心动，也守住岁月里的安心。"
+  - text: "我愿把每一个清晨与黄昏，"
+  - text: "每一次欣喜与失落，都认真地交给你。"
+  - text: "愿我们不只分享晴天，也并肩走过风雨；"
+  - text: "不只珍藏初见时的心动，也守住岁月里的安心。"
   - text: "我们慢慢走，走很久很久。"
     emphasis: true
   - text: "Whatever comes, wherever life takes us,"
@@ -29,7 +26,9 @@ story:
 #     emphasis: true
 
 # Put the photographs in /images/zy-and-i/ and list them here in display order.
-photos: []
+photos:
+  - src: "/images/zy-and-i/photo-01.png"
+    alt: "ZXY and ZZY sitting together by a restaurant window"
 # Example:
 # photos:
 #   - src: "/images/zy-and-i/photo-01.jpg"
@@ -40,7 +39,7 @@ photos: []
 signature: ""
 
 # Optional. Use an ISO timestamp such as "2024-04-01T12:00:00+08:00".
-started_at: ""
+started_at: "2026-08-19T17:20:00+08:00"
 
 # Text that fades into the centre of the flower heart.
 center_message: "ZXY💗ZZY"
