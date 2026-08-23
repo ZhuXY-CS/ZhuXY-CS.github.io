@@ -1,7 +1,7 @@
 # Add the final copy here when it is ready. Each item is revealed in order.
 # Set emphasis: true for the mulberry-colored lines.
 story:
-  - text: "ZY，"
+  - text: "To ZY，"
   - text: "人海茫茫，有幸遇见。"
   - text: "不早不晚，刚好是你。"
   - text: "平生一顾，至此终年。"
@@ -20,7 +20,7 @@ story:
     new_paragraph: true
   - text: "I will keep choosing you"
   - text: "in every season, in every lifetime."
-  - text: "一直爱你的 小庸"
+  - text: "By 爱你的 小庸"
     emphasis: true
     new_paragraph: true
 
