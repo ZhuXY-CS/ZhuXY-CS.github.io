@@ -1,0 +1,49 @@
+# Add the final copy here when it is ready. Each item is revealed in order.
+# Set emphasis: true for the mulberry-colored lines.
+story:
+  - text: "ZY，"
+  - text: "很幸运，在人海里遇见你。"
+  - text: "虽然不算太早，但也不算太迟。"
+  - text: "而我想分享的每一个明天，"
+  - text: "都有你的名字。"
+  - text: "你让我明白，真正的心安，"
+    new_paragraph: true
+  - text: "不是从此再无风雨，"
+  - text: "而是无论世界如何喧嚣，"
+  - text: "回头看见你，我就知道自己有了归处。"
+  - text: "如果岁月很长，我愿把每一个清晨与黄昏，"
+    new_paragraph: true
+  - text: "每一次欣喜、失落与重新出发，都认真交给你。"
+  - text: "愿我们不只分享晴朗，也一起走过风雨；"
+  - text: "不只收藏相遇的心动，也守住岁月里的安心。"
+  - text: "我们慢慢走，走很久很久。"
+    emphasis: true
+  - text: "Whatever comes, wherever life takes us,"
+    new_paragraph: true
+  - text: "I will keep choosing you—"
+  - text: "in every season, in every lifetime."
+# Example:
+# story:
+#   - text: "The first line of our story."
+#   - text: "A line to emphasize."
+#     emphasis: true
+
+# Put the photographs in /images/zy-and-i/ and list them here in display order.
+photos: []
+# Example:
+# photos:
+#   - src: "/images/zy-and-i/photo-01.jpg"
+#     alt: "A short description of the photograph"
+#   - src: "/images/zy-and-i/photo-02.jpg"
+#     alt: "A short description of the photograph"
+
+signature: ""
+
+# Optional. Use an ISO timestamp such as "2024-04-01T12:00:00+08:00".
+started_at: ""
+
+# Text that fades into the centre of the flower heart.
+center_message: "ZXY💗ZZY"
+
+# Optional local audio file, for example: "/audio/zy-and-i.mp3".
+music: ""

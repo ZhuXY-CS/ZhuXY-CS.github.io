@@ -155,7 +155,15 @@
       {% endif %}
       {% if author.zhihu %}
       <li><a href="https://www.zhihu.com/people/{{ author.zhihu }}"><i class="fab fa-fw fa-zhihu icon-pad-right" aria-hidden="true"></i>Zhihu</a></li>
-      {% endif %}      
+      {% endif %}
+
+      {% if author.zy_and_i %}
+        <li class="author__personal-link">
+          <a href="{{ author.zy_and_i | relative_url }}"{% if page.url == author.zy_and_i %} aria-current="page"{% endif %}>
+            <i class="fas fa-fw fa-heart icon-pad-right" aria-hidden="true"></i>ZY and I
+          </a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 </div>
