@@ -69,10 +69,10 @@
 
     function heartPoint(step) {
       var angle = step / Math.PI;
-      var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.98;
+      var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 1.32;
       var x = 16 * Math.pow(Math.sin(angle), 3);
       var y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
-      return { x: memory.clientWidth / 2 + x * scale, y: memory.clientHeight / 2 - 18 + y * scale };
+      return { x: memory.clientWidth / 2 + x * scale, y: memory.clientHeight / 2 - 55 + y * scale };
     }
 
     function addBloom(point) {
@@ -90,7 +90,7 @@
 
     function drawBloom(bloom, pulseScale) {
       var centerX = memory.clientWidth / 2;
-      var centerY = memory.clientHeight / 2 - 18;
+      var centerY = memory.clientHeight / 2 - 55;
 
       context.save();
       context.translate(centerX, centerY);
@@ -121,7 +121,7 @@
         var progress = cycle % 1;
         var expansion = 1 + progress * 0.3;
         var opacity = 0.34 * (1 - progress);
-        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 0.98 * pulseScale;
+        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 1.32 * pulseScale;
 
         context.save();
         context.beginPath();
@@ -132,7 +132,7 @@
           var x = 16 * Math.pow(Math.sin(angle), 3);
           var y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
           var drawX = memory.clientWidth / 2 + x * scale * expansion * wave;
-          var drawY = memory.clientHeight / 2 - 18 + y * scale * expansion * wave;
+          var drawY = memory.clientHeight / 2 - 55 + y * scale * expansion * wave;
 
           if (pointIndex === 0) context.moveTo(drawX, drawY);
           else context.lineTo(drawX, drawY);
