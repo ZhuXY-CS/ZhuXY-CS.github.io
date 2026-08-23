@@ -2,23 +2,29 @@
 # Set emphasis: true for the mulberry-colored lines.
 story:
   - text: "ZY，"
-  - text: "很幸运，在人海里遇见你。"
-  - text: "虽然相遇不算太早，但幸好也不算太迟。"
-  - text: "从遇见你的那天起，"
-  - text: "我想分享的每一个明天，"
-  - text: "都有你的名字。"
+  - text: "人海茫茫，很幸运能遇见你。"
+  - text: "相遇不算太早，但幸好不算太迟。"
+  - text: "自相逢那日起，"
+  - text: "我期盼的每一个明天，"
+  - text: "都刻着你的名字。"
   - text: "往后岁月很长，"
     new_paragraph: true
   - text: "我愿把每一个清晨与黄昏，"
-  - text: "每一次欣喜与失落，都认真地交给你。"
-  - text: "愿我们不只分享晴天，也并肩走过风雨；"
+  - text: "每一次欣喜与失落，都悉数交付予你。"
+  - text: "愿我们不只共享晴天，也并肩走过风雨；"
   - text: "不只珍藏初见时的心动，也守住岁月里的安心。"
   - text: "我们慢慢走，走很久很久。"
     emphasis: true
+  - text: "我爱你，ZY"
+    emphasis: true
   - text: "Whatever comes, wherever life takes us,"
     new_paragraph: true
-  - text: "I will keep choosing you—"
+  - text: "I will keep choosing you"
   - text: "in every season, in every lifetime."
+  - text: "一直一直爱着你的小庸"
+    emphasis: true
+    new_paragraph: true
+
 # Example:
 # story:
 #   - text: "The first line of our story."
