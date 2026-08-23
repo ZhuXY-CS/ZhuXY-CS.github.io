@@ -15,13 +15,14 @@ story:
   - text: "不只珍藏初见时的心动，也守住岁月里的安心。"
   - text: "我们慢慢走，走很久很久。"
     emphasis: true
+    new_paragraph: true
   - text: "我爱你，ZY"
     emphasis: true
   - text: "Whatever comes, wherever life takes us,"
     new_paragraph: true
   - text: "I will keep choosing you"
   - text: "in every season, in every lifetime."
-  - text: "一直一直爱着你的小庸"
+  - text: "一直爱你的 小庸"
     emphasis: true
     new_paragraph: true
 
