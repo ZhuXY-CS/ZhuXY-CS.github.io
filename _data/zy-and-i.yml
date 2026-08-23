@@ -9,9 +9,13 @@ story:
     new_paragraph: true
   - text: "心动是你，心安亦然。"
   - text: "岁月为笔，相思入墨。"
+  - text: "不辞青山，相随与共。"
     new_paragraph: true
   - text: "但心坚定，天长地久。"
   - text: "何愁意在，朝雨暮云。"
+  - text: "生死契阔，与子成说。"
+  - text: "执子之手，与子偕老。"
+    new_paragraph: true
   - text: "Whatever comes, wherever life takes us,"
     new_paragraph: true
   - text: "I will keep choosing you"
