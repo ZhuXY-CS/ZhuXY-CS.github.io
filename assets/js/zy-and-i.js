@@ -252,35 +252,58 @@
     var messages = [
       "糖宝会一直替你们见证 ♡",
       "你们负责相爱，糖宝负责见证！",
+      "隔着一段路，也要好好爱彼此呀 ♡",
       "今天也要比昨天更爱一点哦！",
       "糖宝认证：你们就是天生一对 ♡",
+      "距离只是地图上的，想念一直住在心里。",
       "以后每一个四季，都要一起过呀！",
       "世界很大，你们要一直牵着手哦！",
+      "暂时不能见面的日子，也是在奔向彼此。",
       "偶尔闹别扭，也要记得抱抱呀！",
       "这份喜欢，糖宝批准长期有效！",
+      "忙的时候各自努力，想的时候就说想你。",
       "你看她的时候，眼睛里有星星 ♡",
       "糖宝巡逻中：爱情状态非常好！",
+      "不在同一座城市，也在分享同一片月光。",
       "往后的晴天雨天，都要把手牵紧呀！",
       "认真地偏爱彼此，就是最好的浪漫 ♡",
+      "慢一点回复没关系，爱从来没有离线。",
       "糖宝偷偷告诉你：她也在很认真地爱你。",
       "被坚定选择的感觉，要珍惜很久很久哦！",
+      "今天的想念，先替你们存进下次的拥抱里。",
       "愿你们把普通的日子，过成最喜欢的故事。",
       "见面时要抱久一点，想念才会慢一点呀！",
+      "每一次晚安，都是跨过距离的小小拥抱。",
       "答案很长，糖宝陪你们用一生慢慢写。",
       "今天、明天，还有很多很多年，都不要走散。",
+      "你认真生活的样子，也是她喜欢你的理由。",
       "你们的故事，糖宝想一直蹲在旁边听 ♡",
       "所谓浪漫，就是每一天都再选择一次彼此。",
+      "异地不是暂停，是两个人一起积攒更好的未来。",
       "糖宝许愿：你们的以后，比今天还要甜！",
       "所有温柔的日子，都想留给彼此呀。",
+      "把今天过好一点，就离下一次见面近一点。",
       "球可以滚远，你们可不许走散哦！",
-      "糖宝把今天的快乐，也分给你们一半 ♡"
+      "糖宝把今天的快乐，也分给你们一半 ♡",
+      "想念不会把你们推远，只会让拥抱更有意义。",
+      "累了就告诉彼此，不必一个人假装坚强呀。",
+      "两座城市，两份努力，同一个想要抵达的以后。",
+      "糖宝守着倒计时，等你们下一次紧紧见面！",
+      "见不到的日子里，也要把爱说得清清楚楚。",
+      "真正的陪伴，是隔着距离也始终把你放在心上。",
+      "愿每一次分别，都有一个确定的重逢在等候。",
+      "你们只管坚定相爱，路途交给时间慢慢缩短 ♡",
+      "等见面的那天，记得把欠下的抱抱全部补回来！",
+      "好好吃饭，好好睡觉，也是在认真爱对方呀。"
     ];
     var messageIndex = 0;
     var bubbleTimer;
+    var speechPoseTimer;
     var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-01\.webp(?:\?.*)?$/, "frame-");
     var frameSources = [];
-    var frameSequence = [1, 2, 3, 2];
+    var frameSequence = [2, 3, 2, 6];
     var frameDuration = 145;
+    var frameLoops = true;
     var frameStartedAt = window.performance.now();
     var displayedFrame = 0;
     var framePreloads = [];
@@ -295,37 +318,56 @@
 
     function setFrameAction(action) {
       var sequences = {
-        "is-action-trot": { frames: [1, 2, 3, 2], duration: 155 },
-        "is-action-dash": { frames: [1, 2, 3, 2], duration: 95 },
-        "is-action-leap": { frames: [4, 5, 5, 6], duration: 205 },
+        "is-action-trot": { frames: [2, 3, 2, 6], duration: 155 },
+        "is-action-dash": { frames: [2, 3, 6, 3], duration: 105 },
+        "is-action-leap": { frames: [4, 1, 5, 5, 6, 7], duration: 155, loop: false },
         "is-action-look": { frames: [7, 8, 8, 7], duration: 310 },
-        "is-action-celebrate": { frames: [8, 9, 9, 8], duration: 170 },
-        "is-action-ball": { frames: [10, 11, 10, 11, 12, 12, 13, 13], duration: 235 }
+        "is-action-celebrate": { frames: [7, 8, 9, 9, 8, 7], duration: 185, loop: false },
+        "is-action-ball": { frames: [10, 11, 10, 11, 12, 6, 13, 13], duration: 225, loop: false },
+        "is-action-settle": { frames: [6, 7, 7], duration: 190, loop: false }
       };
       var selected = sequences[action] || sequences["is-action-trot"];
       frameSequence = selected.frames;
       frameDuration = selected.duration;
+      frameLoops = selected.loop !== false;
       frameStartedAt = window.performance.now();
       displayedFrame = 0;
     }
 
-    function speak() {
+    function revealMessage() {
       messageIndex = (messageIndex + 1) % messages.length;
       bubble.textContent = messages[messageIndex];
       tangbao.classList.add("is-speaking");
-      if (!reducedMotion && actionClasses) {
-        window.clearTimeout(actionTimer);
-        actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
-        tangbao.classList.add("is-action-look");
-        setFrameAction("is-action-look");
-        targetVelocityX = 0;
-        targetVelocityY = 0;
-        actionTimer = window.setTimeout(chooseAction, 3800);
-      }
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
       }, 3600);
+    }
+
+    function speak() {
+      window.clearTimeout(speechPoseTimer);
+
+      if (reducedMotion || !actionClasses) {
+        revealMessage();
+        return;
+      }
+
+      window.clearTimeout(actionTimer);
+      window.clearTimeout(bubbleTimer);
+      tangbao.classList.remove("is-speaking");
+      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+      tangbao.classList.add("is-action-settle");
+      setFrameAction("is-action-settle");
+      targetVelocityX = 0;
+      targetVelocityY = 0;
+
+      speechPoseTimer = window.setTimeout(function () {
+        actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+        tangbao.classList.add("is-action-look");
+        setFrameAction("is-action-look");
+        revealMessage();
+        actionTimer = window.setTimeout(settleThenChoose, 3800);
+      }, 560);
     }
 
     tangbao.addEventListener("click", speak);
@@ -343,7 +385,8 @@
     var targetVelocityY = velocityY;
     var previousTime = window.performance.now();
     var actionTimer;
-    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate", "is-action-ball"];
+    var lastAction = "is-action-trot";
+    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate", "is-action-ball", "is-action-settle"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
@@ -389,9 +432,26 @@
         targetVelocityY = between(-32, 32);
       }
 
+      if (action === lastAction) {
+        action = action === "is-action-trot" ? "is-action-look" : "is-action-trot";
+        duration = action === "is-action-look" ? between(1250, 1900) : between(1900, 3200);
+        targetVelocityX = action === "is-action-look" ? 0 : direction * between(52, 82);
+        targetVelocityY = action === "is-action-look" ? 0 : between(-24, 24);
+      }
+
       tangbao.classList.add(action);
       setFrameAction(action);
-      actionTimer = window.setTimeout(chooseAction, duration);
+      lastAction = action;
+      actionTimer = window.setTimeout(settleThenChoose, duration);
+    }
+
+    function settleThenChoose() {
+      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+      tangbao.classList.add("is-action-settle");
+      setFrameAction("is-action-settle");
+      targetVelocityX = 0;
+      targetVelocityY = 0;
+      actionTimer = window.setTimeout(chooseAction, between(520, 820));
     }
 
     function scheduleSweetWords(delay) {
@@ -408,7 +468,8 @@
       var maxY = Math.max(padding, window.innerHeight - tangbao.offsetHeight - padding);
       previousTime = currentTime;
 
-      var framePosition = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration) % frameSequence.length;
+      var elapsedFrames = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration);
+      var framePosition = frameLoops ? elapsedFrames % frameSequence.length : Math.min(elapsedFrames, frameSequence.length - 1);
       var nextFrame = frameSequence[framePosition];
       if (nextFrame !== displayedFrame) {
         sprite.src = frameSources[nextFrame - 1];
@@ -454,7 +515,7 @@
       tangbao.classList.add("is-action-trot");
       setFrameAction("is-action-trot");
       previousTime = window.performance.now();
-      actionTimer = window.setTimeout(chooseAction, 2600);
+      actionTimer = window.setTimeout(settleThenChoose, 2600);
       window.requestAnimationFrame(move);
     });
   }
