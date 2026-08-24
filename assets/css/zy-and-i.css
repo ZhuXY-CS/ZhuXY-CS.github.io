@@ -183,11 +183,14 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 .tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: none; }
-.tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 920ms cubic-bezier(0.32, 0.02, 0.25, 1) 1 both; }
-.tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.2s ease-in-out infinite; }
-.tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 780ms ease-in-out 1 both; }
-.tangbao-witness.is-action-ball .tangbao-witness__sprite { animation: tangbao-ball 1.8s ease-in-out 1 both; }
-.tangbao-witness.is-action-settle .tangbao-witness__sprite { animation: tangbao-settle 620ms ease-out 1 both; }
+.tangbao-witness.is-action-leap .tangbao-witness__sprite,
+.tangbao-witness.is-action-look .tangbao-witness__sprite,
+.tangbao-witness.is-action-sniff .tangbao-witness__sprite,
+.tangbao-witness.is-action-stretch .tangbao-witness__sprite,
+.tangbao-witness.is-action-celebrate .tangbao-witness__sprite,
+.tangbao-witness.is-action-ball .tangbao-witness__sprite,
+.tangbao-witness.is-action-settle .tangbao-witness__sprite,
+.tangbao-witness.is-action-rise .tangbao-witness__sprite { animation: none; }
 
 .tangbao-witness__bubble {
   position: absolute;
