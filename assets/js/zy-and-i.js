@@ -25,21 +25,23 @@
 
     for (var lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
       var line = lines[lineIndex];
+      if (lineIndex > 0) await wait(line.classList.contains("love-copy__line--paragraph") ? 420 : 90);
       var characters = Array.from(line.textContent.trim());
       var accessibleText = characters.join("");
 
       line.setAttribute("aria-label", accessibleText);
       line.textContent = "";
       line.classList.add("is-active");
+      line.classList.add("is-entering");
 
       for (var characterIndex = 0; characterIndex < characters.length; characterIndex += 1) {
         line.textContent += characters[characterIndex];
-        await wait(42);
+        await wait(38);
       }
 
       line.classList.remove("is-active");
       line.classList.add("is-complete");
-      await wait(140);
+      await wait(80);
     }
 
     copy.classList.remove("is-typing");
@@ -58,6 +60,8 @@
     var heartCompletedAt = null;
     var animationFrame;
     var startDelay = reducedMotion ? 0 : 3000;
+    var sparkles = [];
+    var lastSparkleAt = 0;
 
     function resize() {
       var rectangle = memory.getBoundingClientRect();
@@ -148,6 +152,43 @@
       }
     }
 
+    function addSparkle(currentTime) {
+      var onLeft = Math.random() < 0.5;
+      sparkles.push({
+        bornAt: currentTime,
+        duration: 4400 + Math.random() * 1800,
+        x: memory.clientWidth * (onLeft ? 0.12 + Math.random() * 0.16 : 0.72 + Math.random() * 0.16),
+        y: memory.clientHeight * (0.76 + Math.random() * 0.16),
+        drift: (Math.random() - 0.5) * 30,
+        rise: 90 + Math.random() * 80,
+        size: 7 + Math.random() * 5
+      });
+    }
+
+    function drawSparkles(currentTime) {
+      if (currentTime - lastSparkleAt > 1050 && sparkles.length < 7) {
+        addSparkle(currentTime);
+        lastSparkleAt = currentTime;
+      }
+
+      sparkles = sparkles.filter(function (sparkle) {
+        var progress = (currentTime - sparkle.bornAt) / sparkle.duration;
+        if (progress >= 1) return false;
+
+        var opacity = Math.sin(progress * Math.PI) * 0.24;
+        context.save();
+        context.translate(sparkle.x + sparkle.drift * progress, sparkle.y - sparkle.rise * progress);
+        context.rotate(Math.sin(progress * Math.PI * 2) * 0.12);
+        context.fillStyle = "rgba(255, 208, 232, " + opacity.toFixed(3) + ")";
+        context.font = sparkle.size.toFixed(1) + "px Georgia, serif";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText("♥", 0, 0);
+        context.restore();
+        return true;
+      });
+    }
+
     function render(currentTime) {
       context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
 
@@ -156,6 +197,7 @@
         var pulseElapsed = currentTime - heartCompletedAt;
         pulseScale = 1.01 + Math.sin((pulseElapsed / 1650) * Math.PI * 2) * 0.04;
         drawHeartWave(pulseElapsed, pulseScale);
+        drawSparkles(currentTime);
       }
 
       for (var index = 0; index < blooms.length; index += 1) {
@@ -191,12 +233,32 @@
       window.cancelAnimationFrame(animationFrame);
       resize();
       blooms = [];
+      sparkles = [];
       nextPoint = reducedMotion ? 20 : 0;
       heartCompletedAt = null;
       render(window.performance.now());
     }, { passive: true });
 
     window.setTimeout(render, startDelay);
+  }
+
+  function setupPhotoLoading() {
+    var photos = document.querySelectorAll(".love-photo img");
+
+    Array.prototype.forEach.call(photos, function (image) {
+      var frame = image.closest(".love-photo");
+      if (!frame) return;
+
+      function reveal() {
+        window.requestAnimationFrame(function () { frame.classList.add("is-loaded"); });
+      }
+
+      if (image.complete && image.naturalWidth > 0) reveal();
+      else {
+        image.addEventListener("load", reveal, { once: true });
+        image.addEventListener("error", reveal, { once: true });
+      }
+    });
   }
 
   function startClock() {
@@ -603,6 +665,7 @@
 
   function initialize() {
     runTypewriter();
+    setupPhotoLoading();
     createHeartAnimation();
     startClock();
     setupMusic();

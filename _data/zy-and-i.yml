@@ -19,8 +19,11 @@ story:
   - text: "执子之手，与子偕老。"
   - text: "Whatever comes, wherever life takes us,"
     new_paragraph: true
+    lang: en
   - text: "I will keep choosing you"
+    lang: en
   - text: "in every season, in every lifetime."
+    lang: en
   - text: "By 爱你的 小庸"
     emphasis: true
     new_paragraph: true
@@ -33,7 +36,10 @@ story:
 
 # Put the photographs in /images/zy-and-i/ and list them here in display order.
 photos:
-  - src: "/images/zy-and-i/photo-01.png"
+  - src: "/images/zy-and-i/photo-01.webp"
+    preview: "/images/zy-and-i/photo-01-preview.webp"
+    width: 1448
+    height: 1086
     alt: "ZXY and ZZY sitting together by a restaurant window"
 # Example:
 # photos:
