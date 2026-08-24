@@ -1,10 +1,12 @@
 :root {
-  --love-paper: #f3eef9;
-  --love-surface: #faf7fd;
-  --love-ink: #352f3d;
+  --love-paper: #fffdfd;
+  --love-surface: #ffffff;
+  --love-ink: #3b3138;
   --love-accent: #8b2f72;
-  --love-soft: #e4d9ef;
-  --love-shadow: rgba(54, 38, 64, 0.22);
+  --love-soft: #f8e1eb;
+  --love-lace: #e9a1bf;
+  --love-lace-deep: #ce6d98;
+  --love-shadow: rgba(102, 55, 78, 0.17);
 }
 
 * { box-sizing: border-box; }
@@ -20,8 +22,8 @@ body.love-page {
   margin: 0;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 76% 18%, rgba(139, 47, 114, 0.07), transparent 25rem),
-    radial-gradient(circle at 14% 82%, rgba(126, 92, 166, 0.06), transparent 28rem),
+    radial-gradient(circle at 78% 16%, rgba(233, 161, 191, 0.09), transparent 27rem),
+    radial-gradient(circle at 12% 84%, rgba(248, 225, 235, 0.25), transparent 30rem),
     var(--love-paper);
   color: var(--love-ink);
   font-family: Consolas, Monaco, "Courier New", monospace;
@@ -38,7 +40,7 @@ body.love-page {
   place-items: center;
   border: 1px solid rgba(51, 51, 47, 0.17);
   border-radius: 50%;
-  background: rgba(250, 247, 253, 0.84);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--love-ink);
   text-decoration: none;
   -webkit-backdrop-filter: blur(8px);
@@ -87,7 +89,7 @@ body.love-page {
 .love-music[aria-pressed="true"] .love-music__bars i:nth-child(3) { animation-delay: -175ms; }
 
 .tangbao-witness {
-  --tangbao-size: clamp(4.6rem, 6.8vw, 6rem);
+  --tangbao-size: clamp(5.2rem, 7.5vw, 6.7rem);
   position: fixed;
   left: 0;
   top: 0;
@@ -127,6 +129,7 @@ body.love-page {
 .tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 820ms ease-in-out infinite; }
 .tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.2s ease-in-out infinite; }
 .tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 680ms ease-in-out infinite; }
+.tangbao-witness.is-action-ball .tangbao-witness__sprite { animation: tangbao-ball 1.05s ease-in-out infinite; }
 
 .tangbao-witness__bubble {
   position: absolute;
@@ -137,7 +140,7 @@ body.love-page {
   padding: 0.5rem 0.7rem;
   border: 1px solid rgba(139, 47, 114, 0.18);
   border-radius: 0.75rem 0.75rem 0.75rem 0.2rem;
-  background: rgba(250, 247, 253, 0.96);
+  background: rgba(255, 253, 253, 0.97);
   box-shadow: 0 6px 18px rgba(51, 34, 42, 0.12);
   color: var(--love-accent);
   font: 0.72rem/1.45 Consolas, Monaco, "Courier New", monospace;
@@ -153,7 +156,7 @@ body.love-page {
   left: 1rem;
   top: 100%;
   border: 0.35rem solid transparent;
-  border-top-color: rgba(250, 247, 253, 0.96);
+  border-top-color: rgba(255, 253, 253, 0.97);
 }
 
 .tangbao-witness.is-speaking .tangbao-witness__bubble {
@@ -185,6 +188,19 @@ body.love-page {
   left: auto;
 }
 
+.tangbao-witness.is-near-top .tangbao-witness__bubble {
+  top: calc(100% - 0.1rem);
+  bottom: auto;
+  border-radius: 0.2rem 0.75rem 0.75rem;
+}
+
+.tangbao-witness.is-near-top .tangbao-witness__bubble::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: rgba(255, 253, 253, 0.97);
+}
+
 .tangbao-witness.is-resting {
   left: auto;
   right: 0.8rem;
@@ -194,19 +210,51 @@ body.love-page {
 }
 
 .love-stage {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  width: min(1110px, calc(100vw - 3rem));
-  min-height: 625px;
-  margin: max(3rem, calc((100vh - 625px) / 2)) auto 1.5rem;
-  grid-template-columns: 440px minmax(0, 670px);
+  width: min(1180px, calc(100vw - 5rem));
+  min-height: 665px;
+  margin: max(4rem, calc((100vh - 665px) / 2)) auto 2rem;
+  padding: 2rem;
+  grid-template-columns: 410px minmax(0, 1fr);
+  gap: 2.1rem;
   align-items: stretch;
+  border: 1px solid rgba(206, 109, 152, 0.36);
+  border-radius: 0.2rem;
+  background: var(--love-surface);
+  box-shadow: 0 22px 65px var(--love-shadow), 0 2px 8px rgba(139, 47, 114, 0.08);
+}
+
+.love-stage::before {
+  content: "";
+  position: absolute;
+  inset: -1.05rem;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0.5rem 0, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top left / 1rem 0.7rem repeat-x,
+    radial-gradient(circle at 0.5rem 100%, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) bottom left / 1rem 0.7rem repeat-x,
+    radial-gradient(circle at 0 0.5rem, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top left / 0.7rem 1rem repeat-y,
+    radial-gradient(circle at 100% 0.5rem, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top right / 0.7rem 1rem repeat-y;
+  filter: drop-shadow(0 3px 3px rgba(139, 47, 114, 0.1));
+}
+
+.love-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0.55rem;
+  z-index: 5;
+  border: 1px dashed rgba(206, 109, 152, 0.34);
+  pointer-events: none;
 }
 
 .love-letter {
   display: flex;
   min-width: 0;
   align-items: center;
-  padding: 2.5rem 2.4rem 2.5rem 0;
+  padding: 2.2rem 1.8rem 2.2rem 1.25rem;
+  border-right: 1px solid rgba(233, 161, 191, 0.35);
 }
 
 .love-copy { width: 100%; }
@@ -260,7 +308,8 @@ body.love-page {
   min-height: 625px;
   overflow: hidden;
   background: #e7e1dd;
-  box-shadow: 0 18px 60px var(--love-shadow);
+  border: 1px solid rgba(206, 109, 152, 0.25);
+  box-shadow: 0 12px 32px rgba(83, 48, 66, 0.14);
   isolation: isolate;
 }
 
@@ -395,15 +444,27 @@ body.love-page {
   50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.28rem) rotate(2deg); }
 }
 
+@keyframes tangbao-ball {
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-0.5deg); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(1deg); }
+}
+
 @media (max-width: 900px) {
   .love-stage {
-    width: min(670px, calc(100vw - 2rem));
+    width: min(700px, calc(100vw - 3rem));
     min-height: auto;
-    margin-top: 5.25rem;
+    margin-top: 5.5rem;
+    padding: 1.5rem;
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
-  .love-letter { min-height: 43vh; padding: 2rem 0 2.5rem; }
+  .love-letter {
+    min-height: 43vh;
+    padding: 2rem 1rem 2.5rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(233, 161, 191, 0.35);
+  }
   .love-memory { min-height: min(92vw, 625px); }
   .love-copy__line { font-size: clamp(0.92rem, 3.6vw, 1.05rem); }
 }
@@ -413,8 +474,15 @@ body.love-page {
   .love-home { left: 0.8rem; }
   .love-music { right: 0.8rem; }
 
-  .love-stage { width: calc(100vw - 1.25rem); margin-top: 4.5rem; }
-  .love-letter { min-height: 48vh; padding: 1.5rem 0.6rem 2rem; }
+  .love-stage {
+    width: calc(100vw - 2.25rem);
+    margin-top: 5rem;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .love-stage::before { inset: -0.72rem; }
+  .love-stage::after { inset: 0.35rem; }
+  .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
 
   .love-photos {
@@ -425,7 +493,7 @@ body.love-page {
   .love-message p { font-size: clamp(1.75rem, 10vw, 2.6rem); }
 
   .tangbao-witness {
-    --tangbao-size: 4.35rem;
+    --tangbao-size: 4.8rem;
   }
 }
 

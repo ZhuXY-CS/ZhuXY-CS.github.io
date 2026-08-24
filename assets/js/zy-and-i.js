@@ -271,7 +271,9 @@
       "你们的故事，糖宝想一直蹲在旁边听 ♡",
       "所谓浪漫，就是每一天都再选择一次彼此。",
       "糖宝许愿：你们的以后，比今天还要甜！",
-      "所有温柔的日子，都想留给彼此呀。"
+      "所有温柔的日子，都想留给彼此呀。",
+      "球可以滚远，你们可不许走散哦！",
+      "糖宝把今天的快乐，也分给你们一半 ♡"
     ];
     var messageIndex = 0;
     var bubbleTimer;
@@ -281,12 +283,14 @@
     var frameDuration = 145;
     var frameStartedAt = window.performance.now();
     var displayedFrame = 0;
+    var framePreloads = [];
 
-    for (var frameNumber = 1; frameNumber <= 9; frameNumber += 1) {
+    for (var frameNumber = 1; frameNumber <= 13; frameNumber += 1) {
       var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
       frameSources.push(frameSource);
       var preload = new Image();
       preload.src = frameSource;
+      framePreloads.push(preload);
     }
 
     function setFrameAction(action) {
@@ -295,7 +299,8 @@
         "is-action-dash": { frames: [1, 2, 3, 2], duration: 95 },
         "is-action-leap": { frames: [4, 5, 5, 6], duration: 205 },
         "is-action-look": { frames: [7, 8, 8, 7], duration: 310 },
-        "is-action-celebrate": { frames: [8, 9, 9, 8], duration: 170 }
+        "is-action-celebrate": { frames: [8, 9, 9, 8], duration: 170 },
+        "is-action-ball": { frames: [10, 11, 10, 11, 12, 12, 13, 13], duration: 235 }
       };
       var selected = sequences[action] || sequences["is-action-trot"];
       frameSequence = selected.frames;
@@ -308,6 +313,15 @@
       messageIndex = (messageIndex + 1) % messages.length;
       bubble.textContent = messages[messageIndex];
       tangbao.classList.add("is-speaking");
+      if (!reducedMotion && actionClasses) {
+        window.clearTimeout(actionTimer);
+        actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+        tangbao.classList.add("is-action-look");
+        setFrameAction("is-action-look");
+        targetVelocityX = 0;
+        targetVelocityY = 0;
+        actionTimer = window.setTimeout(chooseAction, 3800);
+      }
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
@@ -322,14 +336,14 @@
     }
 
     var x = Math.max(18, window.innerWidth * 0.08);
-    var y = Math.max(80, window.innerHeight * 0.68);
+    var y = Math.max(80, window.innerHeight * 0.72);
     var velocityX = 65;
-    var velocityY = -18;
+    var velocityY = 0;
     var targetVelocityX = velocityX;
     var targetVelocityY = velocityY;
     var previousTime = window.performance.now();
     var actionTimer;
-    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate"];
+    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate", "is-action-ball"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
@@ -345,26 +359,31 @@
 
       if (Math.random() < 0.28) direction *= -1;
 
-      if (roll < 0.19) {
+      if (roll < 0.16) {
         action = "is-action-look";
         duration = between(1250, 2100);
         targetVelocityX = 0;
         targetVelocityY = 0;
-      } else if (roll < 0.36) {
+      } else if (roll < 0.3) {
         action = "is-action-leap";
         duration = between(900, 1500);
         targetVelocityX = direction * between(70, 115);
         targetVelocityY = between(-52, 52);
-      } else if (roll < 0.52) {
+      } else if (roll < 0.43) {
         action = "is-action-dash";
         duration = between(950, 1650);
         targetVelocityX = direction * between(145, 205);
         targetVelocityY = between(-40, 40);
-      } else if (roll < 0.66) {
+      } else if (roll < 0.56) {
         action = "is-action-celebrate";
         duration = between(1100, 1750);
         targetVelocityX = direction * between(18, 42);
         targetVelocityY = between(-12, 12);
+      } else if (roll < 0.76) {
+        action = "is-action-ball";
+        duration = between(3200, 4800);
+        targetVelocityX = direction * between(22, 48);
+        targetVelocityY = between(-8, 8);
       } else {
         targetVelocityX = direction * between(52, 92);
         targetVelocityY = between(-32, 32);
@@ -417,13 +436,27 @@
       if (Math.abs(velocityX) > 5) tangbao.classList.toggle("is-facing-left", velocityX < 0);
       tangbao.classList.toggle("is-near-left", x < 150);
       tangbao.classList.toggle("is-near-right", x > window.innerWidth - tangbao.offsetWidth - 150);
+      tangbao.classList.toggle("is-near-top", y < 115);
       tangbao.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0)";
       window.requestAnimationFrame(move);
     }
 
-    chooseAction();
     scheduleSweetWords(5200);
-    window.requestAnimationFrame(move);
+
+    Promise.all(framePreloads.map(function (image) {
+      if (image.complete) return Promise.resolve();
+      return new Promise(function (resolve) {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
+      });
+    })).then(function () {
+      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+      tangbao.classList.add("is-action-trot");
+      setFrameAction("is-action-trot");
+      previousTime = window.performance.now();
+      actionTimer = window.setTimeout(chooseAction, 2600);
+      window.requestAnimationFrame(move);
+    });
   }
 
   function initialize() {
