@@ -12,19 +12,17 @@ comments: false
 {% assign photos = love.photos %}
 {% assign audio_tracks = site.static_files | where_exp: "track", "track.path contains '/audio/'" %}
 
-<a class="love-home" href="{{ '/' | relative_url }}" aria-label="返回学术主页">←</a>
-
 <button class="tangbao-witness" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
   <img class="tangbao-witness__sprite" src="{{ '/images/zy-and-i/tangbao-frames/frame-14.webp' | relative_url }}" alt="">
   <span class="tangbao-witness__bubble" aria-live="polite">糖宝会一直替你们见证 ♡</span>
 </button>
 
 <main class="love-stage">
+  <a class="love-home" href="{{ '/' | relative_url }}" aria-label="返回学术主页" title="返回学术主页">←</a>
   <span class="love-stage__flower love-stage__flower--top" aria-hidden="true">❦　✿　❦</span>
   <span class="love-stage__flower love-stage__flower--bottom" aria-hidden="true">❦　✿　❦</span>
   <span class="love-stage__flower love-stage__flower--side love-stage__flower--left" aria-hidden="true">❀</span>
   <span class="love-stage__flower love-stage__flower--side love-stage__flower--right" aria-hidden="true">❀</span>
-  <span class="love-stage__flower love-stage__flower--corner love-stage__flower--tl" aria-hidden="true">❀</span>
   <span class="love-stage__flower love-stage__flower--corner love-stage__flower--tr" aria-hidden="true">❀</span>
   <span class="love-stage__flower love-stage__flower--corner love-stage__flower--bl" aria-hidden="true">❀</span>
   <span class="love-stage__flower love-stage__flower--corner love-stage__flower--br" aria-hidden="true">❀</span>
