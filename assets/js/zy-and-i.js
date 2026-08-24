@@ -14,10 +14,10 @@
     if (!copy) return;
 
     var lines = Array.prototype.slice.call(copy.querySelectorAll("[data-love-type]"));
-    var reveal = copy.querySelector("[data-love-reveal]");
+    var reveals = Array.prototype.slice.call(copy.querySelectorAll("[data-love-reveal]"));
 
     if (reducedMotion) {
-      if (reveal) reveal.classList.add("is-visible");
+      reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
       return;
     }
 
@@ -45,7 +45,7 @@
     }
 
     copy.classList.remove("is-typing");
-    if (reveal) reveal.classList.add("is-visible");
+    reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
   }
 
   function createHeartAnimation() {
@@ -84,11 +84,11 @@
         x: point.x,
         y: point.y,
         radius: reducedMotion ? 8 : 0.8,
-        target: 5 + Math.random() * 4,
-        petals: 7 + Math.floor(Math.random() * 6),
+        target: 4 + Math.random() * 3,
+        petals: 5 + Math.floor(Math.random() * 5),
         rotation: Math.random() * Math.PI,
         hue: 322 + Math.random() * 32,
-        alpha: 0.22 + Math.random() * 0.22
+        alpha: 0.14 + Math.random() * 0.16
       });
     }
 
@@ -102,7 +102,7 @@
       context.translate(bloom.x - centerX, bloom.y - centerY);
       context.rotate(bloom.rotation);
       context.strokeStyle = "hsla(" + bloom.hue + ", 76%, 48%, " + bloom.alpha + ")";
-      context.lineWidth = 1;
+      context.lineWidth = 0.82;
 
       for (var petal = 0; petal < bloom.petals; petal += 1) {
         context.save();
@@ -124,7 +124,7 @@
 
         var progress = cycle % 1;
         var expansion = 1 + progress * 0.3;
-        var opacity = 0.34 * (1 - progress);
+        var opacity = 0.23 * (1 - progress);
         var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 1.32 * pulseScale;
 
         context.save();
@@ -145,8 +145,8 @@
         context.closePath();
         context.strokeStyle = "rgba(255, 182, 222, " + opacity.toFixed(3) + ")";
         context.shadowColor = "rgba(139, 47, 114, " + (opacity * 0.7).toFixed(3) + ")";
-        context.shadowBlur = 3;
-        context.lineWidth = 1.6;
+        context.shadowBlur = 2;
+        context.lineWidth = 1.15;
         context.stroke();
         context.restore();
       }
@@ -288,17 +288,79 @@
 
   function setupMusic() {
     var audio = document.getElementById("love-audio");
-    var button = document.querySelector(".love-music");
-    if (!audio || !button) return;
+    var player = document.querySelector(".love-player");
+    var button = document.querySelector(".love-player__toggle");
+    if (!audio || !player || !button) return;
 
-    var icon = button.querySelector(".love-music__note");
+    var icon = button.querySelector(".love-player__note");
+    var progress = player.querySelector(".love-player__progress");
+    var currentTimeLabel = player.querySelector("[data-current-time]");
+    var durationLabel = player.querySelector("[data-duration]");
+    var previousLyric = player.querySelector(".love-player__lyric--previous");
+    var currentLyric = player.querySelector(".love-player__lyric--current");
+    var nextLyric = player.querySelector(".love-player__lyric--next");
+    var lyricLines = [];
+    var activeLyricIndex = -1;
+    var progressFrame;
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds)) return "00:00";
+      var minutes = Math.floor(seconds / 60);
+      var remainder = Math.floor(seconds % 60);
+      return String(minutes).padStart(2, "0") + ":" + String(remainder).padStart(2, "0");
+    }
+
+    function parseLyrics(content) {
+      var parsed = [];
+      content.split(/\r?\n/).forEach(function (line) {
+        var match;
+        var timestampPattern = /\[(\d{1,2}):(\d{2}(?:\.\d{1,3})?)\]/g;
+        var text = line.replace(timestampPattern, "").trim();
+        while ((match = timestampPattern.exec(line)) !== null) {
+          if (text) parsed.push({ time: Number(match[1]) * 60 + Number(match[2]), text: text });
+        }
+      });
+      return parsed.sort(function (left, right) { return left.time - right.time; });
+    }
+
+    function renderLyric(force) {
+      if (!lyricLines.length) return;
+
+      var nextIndex = -1;
+      for (var index = 0; index < lyricLines.length; index += 1) {
+        if (audio.currentTime + 0.05 >= lyricLines[index].time) nextIndex = index;
+        else break;
+      }
+
+      if (!force && nextIndex === activeLyricIndex) return;
+      activeLyricIndex = nextIndex;
+      previousLyric.textContent = nextIndex > 0 ? lyricLines[nextIndex - 1].text : "";
+      currentLyric.textContent = nextIndex >= 0 ? lyricLines[nextIndex].text : "前奏响起，故事慢慢开始";
+      nextLyric.textContent = lyricLines[nextIndex + 1] ? lyricLines[nextIndex + 1].text : "";
+    }
+
+    function updateProgress() {
+      var ratio = audio.duration ? Math.min(1, audio.currentTime / audio.duration) : 0;
+      progress.value = Math.round(ratio * 1000);
+      progress.style.setProperty("--love-progress", (ratio * 100).toFixed(2) + "%");
+      currentTimeLabel.textContent = formatTime(audio.currentTime);
+      durationLabel.textContent = formatTime(audio.duration);
+      renderLyric(false);
+    }
+
+    function followPlayback() {
+      updateProgress();
+      if (!audio.paused) progressFrame = window.requestAnimationFrame(followPlayback);
+    }
 
     function updateButton(isPlaying) {
       var tooltip = isPlaying ? "暂停背景音乐" : "播放背景音乐";
       button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
       button.setAttribute("aria-label", tooltip);
       button.setAttribute("data-tooltip", tooltip);
+      button.setAttribute("title", tooltip);
       if (icon) icon.textContent = isPlaying ? "🎵" : "🔇";
+      player.classList.toggle("is-playing", isPlaying);
     }
 
     button.addEventListener("click", function () {
@@ -310,8 +372,173 @@
     });
 
     audio.addEventListener("play", function () { updateButton(true); });
-    audio.addEventListener("pause", function () { updateButton(false); });
+    audio.addEventListener("play", function () {
+      window.cancelAnimationFrame(progressFrame);
+      progressFrame = window.requestAnimationFrame(followPlayback);
+    });
+    audio.addEventListener("pause", function () {
+      updateButton(false);
+      window.cancelAnimationFrame(progressFrame);
+      updateProgress();
+    });
+    audio.addEventListener("loadedmetadata", updateProgress);
+
+    progress.addEventListener("input", function () {
+      if (!audio.duration) return;
+      audio.currentTime = (Number(progress.value) / 1000) * audio.duration;
+      updateProgress();
+      renderLyric(true);
+    });
+
+    if (audio.dataset.lyrics) {
+      fetch(audio.dataset.lyrics)
+        .then(function (response) {
+          if (!response.ok) throw new Error("Lyrics unavailable");
+          return response.text();
+        })
+        .then(function (content) {
+          lyricLines = parseLyrics(content);
+          renderLyric(true);
+        })
+        .catch(function () {
+          currentLyric.textContent = "歌词暂时藏进旋律里了";
+        });
+    }
+
+    updateProgress();
     updateButton(!audio.paused);
+  }
+
+  function setupWeather() {
+    var widget = document.getElementById("love-weather");
+    if (!widget) return;
+
+    var cityElements = Array.prototype.slice.call(widget.querySelectorAll("[data-weather-city]"));
+    var message = document.getElementById("love-weather-message");
+    var cacheDuration = 30 * 60 * 1000;
+    window.loveWeatherMessages = window.loveWeatherMessages || [];
+
+    function describeWeather(code, isDay) {
+      if (code === 0) return { icon: isDay ? "☀️" : "🌙", label: "晴朗", type: "clear" };
+      if (code === 1 || code === 2) return { icon: isDay ? "🌤️" : "☁️", label: "晴间多云", type: "cloud" };
+      if (code === 3) return { icon: "☁️", label: "多云", type: "cloud" };
+      if (code === 45 || code === 48) return { icon: "🌫️", label: "有雾", type: "fog" };
+      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { icon: "🌧️", label: "有雨", type: "rain" };
+      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return { icon: "🌨️", label: "有雪", type: "snow" };
+      if (code >= 95) return { icon: "⛈️", label: "雷雨", type: "storm" };
+      return { icon: "☁️", label: "天气温柔", type: "cloud" };
+    }
+
+    function formatLocalTime(timezone) {
+      try {
+        return new Intl.DateTimeFormat("zh-CN", {
+          timeZone: timezone,
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        }).format(new Date());
+      } catch (error) {
+        return "--:--";
+      }
+    }
+
+    function readCache(key) {
+      try {
+        var cached = JSON.parse(window.localStorage.getItem(key));
+        if (cached && Date.now() - cached.savedAt < cacheDuration) return cached.data;
+      } catch (error) {
+        return null;
+      }
+      return null;
+    }
+
+    function writeCache(key, data) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), data: data }));
+      } catch (error) {
+        return;
+      }
+    }
+
+    function fetchCity(city) {
+      var latitude = city.dataset.latitude;
+      var longitude = city.dataset.longitude;
+      var timezone = city.dataset.timezone;
+      var cacheKey = "zy-weather-" + latitude + "-" + longitude;
+      var cached = readCache(cacheKey);
+      if (cached) return Promise.resolve(cached);
+
+      var parameters = new URLSearchParams({
+        latitude: latitude,
+        longitude: longitude,
+        current: "temperature_2m,apparent_temperature,weather_code,is_day,precipitation,wind_speed_10m",
+        timezone: timezone,
+        forecast_days: "1"
+      });
+
+      return fetch("https://api.open-meteo.com/v1/forecast?" + parameters.toString())
+        .then(function (response) {
+          if (!response.ok) throw new Error("Weather unavailable");
+          return response.json();
+        })
+        .then(function (data) {
+          writeCache(cacheKey, data);
+          return data;
+        });
+    }
+
+    function renderCity(city, data) {
+      var current = data.current || {};
+      var weather = describeWeather(Number(current.weather_code), Number(current.is_day) === 1);
+      var temperature = Number(current.temperature_2m);
+      var apparent = Number(current.apparent_temperature);
+
+      city.querySelector(".love-weather__local-time").textContent = "当地 " + formatLocalTime(city.dataset.timezone);
+      city.querySelector(".love-weather__icon").textContent = weather.icon;
+      city.querySelector(".love-weather__temperature").textContent = Number.isFinite(temperature) ? Math.round(temperature) + "°" : "--°";
+      city.querySelector(".love-weather__condition").textContent = weather.label;
+      city.querySelector(".love-weather__feels").textContent = Number.isFinite(apparent) ? "体感 " + Math.round(apparent) + "°" : "体感 --°";
+
+      return {
+        name: city.dataset.name,
+        temperature: temperature,
+        type: weather.type
+      };
+    }
+
+    function chooseWeatherMessage(cities) {
+      var first = cities[0];
+      var second = cities[1];
+      if (!first || !second) return "相隔很远，也在分享同一个今天。";
+
+      if (first.type === "clear" && second.type === "clear") return "今天的阳光，同时落在我们身上。";
+      if (first.type === "rain" && second.type === "rain") return "原来今天，我们听见的是同一场雨。";
+      if (first.type === "rain") return "都柏林有雨，合肥替你留着一盏晴天。";
+      if (second.type === "rain") return "合肥有雨，都柏林把思念寄进了云里。";
+      if (first.type === "snow" || second.type === "snow") return "天气各有冷暖，牵挂始终温热。";
+      if (Math.abs(first.temperature - second.temperature) >= 12) return "隔着不同的温度，也在走向同一个以后。";
+      return "相隔很远，也在分享同一个今天。";
+    }
+
+    Promise.all(cityElements.map(function (city) {
+      return fetchCity(city).then(function (data) { return renderCity(city, data); });
+    })).then(function (cities) {
+      var weatherMessage = chooseWeatherMessage(cities);
+      message.textContent = weatherMessage;
+      window.loveWeatherMessages = [
+        weatherMessage,
+        cities[0].type === "rain" ? "糖宝提醒：ZY今天记得带伞呀！" : "糖宝播报：都柏林今天也要好好生活！",
+        "两座城市，两份天气，同一个想要抵达的以后。"
+      ];
+    }).catch(function () {
+      message.textContent = "两地天气暂时藏进云里了，晚一点再来看。";
+    });
+
+    window.setInterval(function () {
+      cityElements.forEach(function (city) {
+        city.querySelector(".love-weather__local-time").textContent = "当地 " + formatLocalTime(city.dataset.timezone);
+      });
+    }, 60000);
   }
 
   function setupHeartClicks() {
@@ -444,8 +671,9 @@
     }
 
     function revealMessage() {
-      messageIndex = (messageIndex + 1) % messages.length;
-      bubble.textContent = messages[messageIndex];
+      var availableMessages = messages.concat(window.loveWeatherMessages || []);
+      messageIndex = (messageIndex + 1) % availableMessages.length;
+      bubble.textContent = availableMessages[messageIndex];
       tangbao.classList.add("is-speaking");
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
@@ -669,6 +897,7 @@
     createHeartAnimation();
     startClock();
     setupMusic();
+    setupWeather();
     setupHeartClicks();
     setupTangbao();
   }

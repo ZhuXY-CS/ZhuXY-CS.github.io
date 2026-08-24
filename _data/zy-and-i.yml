@@ -58,3 +58,19 @@ center_message: "ZXY💗ZZY"
 
 # Optional local audio file, for example: "/audio/zy-and-i.mp3".
 music: "/audio/灰蒙蒙,橡木 - 同进退.mp3"
+lyrics: "/audio/灰蒙蒙,橡木 - 同进退.lrc"
+music_title: "同进退"
+music_artist: "灰蒙蒙 / 橡木"
+
+# Fixed places for the two-city weather postcard.
+weather:
+  - id: "dublin"
+    name: "Dublin · TCD"
+    latitude: 53.3438
+    longitude: -6.2546
+    timezone: "Europe/Dublin"
+  - id: "hefei"
+    name: "Hefei · 合肥"
+    latitude: 31.8206
+    longitude: 117.2272
+    timezone: "Asia/Shanghai"
