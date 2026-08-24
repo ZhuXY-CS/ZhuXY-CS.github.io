@@ -148,7 +148,7 @@ comments: false
         {% for place in love.weather limit: 2 %}
           <article class="love-weather__place" data-weather-place data-latitude="{{ place.latitude }}" data-longitude="{{ place.longitude }}" data-timezone="{{ place.timezone }}">
             <div class="love-weather__now">
-              <span class="love-weather__anonymous">{% if forloop.first %}第一片天空{% else %}第二片天空{% endif %}</span>
+              <span class="love-weather__anonymous">{% if forloop.first %}ZY♌️{% else %}小庸♏️{% endif %}</span>
               <span class="love-weather__icon" aria-hidden="true">⋯</span>
               <strong class="love-weather__temperature">--°</strong>
               <small class="love-weather__condition">天气正在赶来</small>
@@ -170,7 +170,6 @@ comments: false
       </div>
 
       <p class="love-weather__message" id="love-weather-message">无论是高新和东区，抑或是合肥与太原，还是陆地与海洋，我们的心始终在一起</p>
-      <a class="love-weather__source" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo</a>
     </section>
   </aside>
 </main>

@@ -57,11 +57,10 @@
     var memory = canvas.parentElement;
     var blooms = [];
     var nextPoint = 0;
-    var heartCompletedAt = null;
     var animationFrame;
     var startDelay = reducedMotion ? 0 : 3000;
-    var sparkles = [];
-    var lastSparkleAt = 0;
+    var heartIsStatic = false;
+    canvas.dataset.animationState = "waiting";
 
     function resize() {
       var rectangle = memory.getBoundingClientRect();
@@ -80,11 +79,12 @@
     }
 
     function addBloom(point) {
+      var target = 4.6 + Math.random() * 3.2;
       blooms.push({
         x: point.x,
         y: point.y,
-        radius: reducedMotion ? 8 : 0.8,
-        target: 4.6 + Math.random() * 3.2,
+        radius: reducedMotion ? target : 0.8,
+        target: target,
         petals: 6 + Math.floor(Math.random() * 5),
         rotation: Math.random() * Math.PI,
         hue: 322 + Math.random() * 32,
@@ -119,101 +119,48 @@
       context.restore();
     }
 
-    function drawHeartWave(elapsed, pulseScale) {
-      for (var ring = 0; ring < 4; ring += 1) {
-        var cycle = elapsed / 3000 - ring * 0.23;
-        if (cycle < 0) continue;
-
-        var progress = cycle % 1;
-        var expansion = 1 + progress * 0.3;
-        var opacity = 0.29 * (1 - progress);
-        var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 1.32 * pulseScale;
-
-        context.save();
-        context.beginPath();
-
-        for (var pointIndex = 0; pointIndex <= 140; pointIndex += 1) {
-          var angle = (Math.PI * 2 * pointIndex) / 140;
-          var wave = 1 + Math.sin(angle * 7 - progress * Math.PI * 2) * 0.025 * (1 - progress);
-          var x = 16 * Math.pow(Math.sin(angle), 3);
-          var y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
-          var drawX = memory.clientWidth / 2 + x * scale * expansion * wave;
-          var drawY = memory.clientHeight / 2 - 55 + y * scale * expansion * wave;
-
-          if (pointIndex === 0) context.moveTo(drawX, drawY);
-          else context.lineTo(drawX, drawY);
-        }
-
-        context.closePath();
-        context.strokeStyle = "rgba(255, 182, 222, " + opacity.toFixed(3) + ")";
-        context.shadowColor = "rgba(139, 47, 114, " + (opacity * 0.7).toFixed(3) + ")";
-        context.shadowBlur = 2.6;
-        context.lineWidth = 1.3;
-        context.stroke();
-        context.restore();
+    function drawStaticHeart() {
+      blooms = [];
+      for (var staticStep = 10; staticStep <= 30; staticStep += 0.2) {
+        addBloom(heartPoint(staticStep));
       }
-    }
-
-    function addSparkle(currentTime) {
-      var onLeft = Math.random() < 0.5;
-      sparkles.push({
-        bornAt: currentTime,
-        duration: 4400 + Math.random() * 1800,
-        x: memory.clientWidth * (onLeft ? 0.12 + Math.random() * 0.16 : 0.72 + Math.random() * 0.16),
-        y: memory.clientHeight * (0.76 + Math.random() * 0.16),
-        drift: (Math.random() - 0.5) * 30,
-        rise: 90 + Math.random() * 80,
-        size: 7 + Math.random() * 5
+      context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
+      blooms.forEach(function (bloom) {
+        bloom.radius = bloom.target;
+        drawBloom(bloom, 1);
       });
+      message.classList.add("is-visible");
+      heartIsStatic = true;
+      animationFrame = null;
+      canvas.dataset.animationState = "static";
     }
 
-    function drawSparkles(currentTime) {
-      if (currentTime - lastSparkleAt > 1050 && sparkles.length < 7) {
-        addSparkle(currentTime);
-        lastSparkleAt = currentTime;
-      }
-
-      sparkles = sparkles.filter(function (sparkle) {
-        var progress = (currentTime - sparkle.bornAt) / sparkle.duration;
-        if (progress >= 1) return false;
-
-        var opacity = Math.sin(progress * Math.PI) * 0.24;
-        context.save();
-        context.translate(sparkle.x + sparkle.drift * progress, sparkle.y - sparkle.rise * progress);
-        context.rotate(Math.sin(progress * Math.PI * 2) * 0.12);
-        context.fillStyle = "rgba(255, 208, 232, " + opacity.toFixed(3) + ")";
-        context.font = sparkle.size.toFixed(1) + "px Georgia, serif";
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.fillText("♥", 0, 0);
-        context.restore();
-        return true;
-      });
-    }
-
-    function render(currentTime) {
+    function render() {
+      canvas.dataset.animationState = "drawing";
       context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
 
-      var pulseScale = 1;
-      if (heartCompletedAt !== null) {
-        var pulseElapsed = currentTime - heartCompletedAt;
-        pulseScale = 1.01 + Math.sin((pulseElapsed / 1650) * Math.PI * 2) * 0.04;
-        drawHeartWave(pulseElapsed, pulseScale);
-        drawSparkles(currentTime);
-      }
+      var allBloomsSettled = nextPoint > 20;
 
       for (var index = 0; index < blooms.length; index += 1) {
         var bloom = blooms[index];
         bloom.radius = Math.min(bloom.target, bloom.radius + 0.13);
-        drawBloom(bloom, pulseScale);
+        if (bloom.radius < bloom.target) allBloomsSettled = false;
+        drawBloom(bloom, 1);
       }
 
       if (nextPoint <= 20) {
         addBloom(heartPoint(10 + nextPoint));
-        nextPoint += reducedMotion ? 0.22 : 0.07;
+        nextPoint += 0.07;
+        allBloomsSettled = false;
       } else {
         message.classList.add("is-visible");
-        if (heartCompletedAt === null) heartCompletedAt = currentTime;
+      }
+
+      if (allBloomsSettled) {
+        heartIsStatic = true;
+        animationFrame = null;
+        canvas.dataset.animationState = "static";
+        return;
       }
 
       animationFrame = window.requestAnimationFrame(render);
@@ -222,23 +169,20 @@
     resize();
 
     if (reducedMotion) {
-      for (var staticStep = 10; staticStep <= 30; staticStep += 0.2) {
-        addBloom(heartPoint(staticStep));
-      }
-      context.clearRect(0, 0, memory.clientWidth, memory.clientHeight);
-      blooms.forEach(function (bloom) { drawBloom(bloom, 1); });
-      message.classList.add("is-visible");
+      drawStaticHeart();
       return;
     }
 
     window.addEventListener("resize", function () {
       window.cancelAnimationFrame(animationFrame);
       resize();
+      if (heartIsStatic) {
+        drawStaticHeart();
+        return;
+      }
       blooms = [];
-      sparkles = [];
-      nextPoint = reducedMotion ? 20 : 0;
-      heartCompletedAt = null;
-      render(window.performance.now());
+      nextPoint = 0;
+      render();
     }, { passive: true });
 
     window.setTimeout(render, startDelay);

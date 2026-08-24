@@ -599,18 +599,6 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-photo.is-loaded img { opacity: 1; }
 .love-photo.is-loaded::before { opacity: 0; }
 
-.love-photo.is-loaded::after {
-  content: "";
-  position: absolute;
-  inset: -20% -45%;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(108deg, transparent 38%, rgba(255, 241, 249, 0.12) 47%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 241, 249, 0.1) 53%, transparent 62%);
-  mix-blend-mode: screen;
-  transform: translateX(-42%) rotate(2deg);
-  animation: love-photo-light 15s 2s ease-in-out infinite;
-}
-
 .love-photo:only-child.is-loaded img {
   animation: love-photo-breathe 16s ease-in-out infinite alternate;
 }
@@ -980,7 +968,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   min-height: 285px;
   padding: 0 0.68rem 0.42rem;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto;
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.98), rgba(255, 246, 251, 0.95));
 }
 
@@ -1069,18 +1057,6 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   text-align: center;
 }
 
-.love-weather__source {
-  position: relative;
-  z-index: 3;
-  color: rgba(59, 49, 56, 0.48);
-  font: 0.43rem/1.2 var(--love-font-utility);
-  text-align: center;
-  text-decoration: none;
-}
-
-.love-weather__source:hover,
-.love-weather__source:focus-visible { color: var(--love-accent); }
-
 .love-footer {
   display: flex;
   justify-content: center;
@@ -1098,11 +1074,6 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 @keyframes love-photo-breathe {
   from { transform: scale(1.015); }
   to { transform: scale(1.032); }
-}
-@keyframes love-photo-light {
-  0%, 18% { opacity: 0; transform: translateX(-42%) rotate(2deg); }
-  36% { opacity: 0.72; }
-  58%, 100% { opacity: 0; transform: translateX(42%) rotate(2deg); }
 }
 @keyframes love-name-heart {
   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 185, 220, 0)); }
