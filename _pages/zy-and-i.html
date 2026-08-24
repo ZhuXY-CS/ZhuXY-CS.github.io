@@ -12,8 +12,8 @@ comments: false
 {% assign photos = love.photos %}
 {% assign audio_tracks = site.static_files | where_exp: "track", "track.path contains '/audio/'" %}
 
-<button class="tangbao-witness" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
-  <img class="tangbao-witness__sprite" src="{{ '/images/zy-and-i/tangbao-frames/frame-14.webp' | relative_url }}" alt="">
+<button class="tangbao-witness is-action-look" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
+  <img class="tangbao-witness__sprite" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="">
   <span class="tangbao-witness__bubble" aria-live="polite">糖宝会一直替你们见证 ♡</span>
 </button>
 
@@ -138,25 +138,39 @@ comments: false
       </section>
     {% endif %}
 
-    <section class="love-widget love-cosmos" id="love-cosmos" aria-label="狮子座与天蝎座的星空连线" tabindex="0">
+    <section class="love-widget love-weather" id="love-weather" aria-label="两地今天与明天的天气">
       <header class="love-widget__header">
-        <span class="love-widget__eyebrow">UNDER THE SAME SKY</span>
-        <span class="love-widget__ornament" aria-hidden="true">✦</span>
+        <span class="love-widget__eyebrow">TWO SKIES · ONE HEART</span>
+        <span class="love-widget__ornament" aria-hidden="true">♡</span>
       </header>
 
-      <div class="love-cosmos__sky">
-        <canvas id="love-constellations" aria-hidden="true"></canvas>
-        <span class="love-cosmos__sign love-cosmos__sign--leo"><b>♌</b><small>她 · 狮子座</small></span>
-        <span class="love-cosmos__sign love-cosmos__sign--scorpio"><b>♏</b><small>我 · 天蝎座</small></span>
-        <span class="love-cosmos__heart" aria-hidden="true">♥</span>
+      <div class="love-weather__places">
+        {% for place in love.weather limit: 2 %}
+          <article class="love-weather__place" data-weather-place data-latitude="{{ place.latitude }}" data-longitude="{{ place.longitude }}" data-timezone="{{ place.timezone }}">
+            <div class="love-weather__now">
+              <span class="love-weather__anonymous">{% if forloop.first %}第一片天空{% else %}第二片天空{% endif %}</span>
+              <span class="love-weather__icon" aria-hidden="true">⋯</span>
+              <strong class="love-weather__temperature">--°</strong>
+              <small class="love-weather__condition">天气正在赶来</small>
+            </div>
+
+            <div class="love-weather__trend">
+              <canvas class="love-weather__chart" aria-label="今天从清晨到夜晚的温度变化"></canvas>
+              <div class="love-weather__hours" aria-hidden="true"><span>06</span><span>12</span><span>18</span><span>24</span></div>
+            </div>
+
+            <div class="love-weather__tomorrow">
+              <span>明日</span>
+              <b class="love-weather__tomorrow-icon" aria-hidden="true">⋯</b>
+              <strong class="love-weather__tomorrow-temperature">--° / --°</strong>
+              <small class="love-weather__tomorrow-condition">等待预报</small>
+            </div>
+          </article>
+        {% endfor %}
       </div>
 
-      <p class="love-cosmos__message">隔着星河，<br>我们仍在同一片天空下。</p>
-      <div class="love-cosmos__dayline">
-        <span id="love-celestial-icon" aria-hidden="true">☀︎</span>
-        <span>从早安到晚安，都在想着你</span>
-        <time id="love-sky-time" aria-label="当前时间"></time>
-      </div>
+      <p class="love-weather__message" id="love-weather-message">无论是高新和东区，抑或是合肥与太原，还是陆地与海洋，我们的心始终在一起</p>
+      <a class="love-weather__source" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo</a>
     </section>
   </aside>
 </main>

@@ -61,3 +61,12 @@ music: "/audio/灰蒙蒙,橡木 - 同进退.mp3"
 lyrics: "/audio/灰蒙蒙,橡木 - 同进退.lrc"
 music_title: "同进退"
 music_artist: "灰蒙蒙 / 橡木"
+
+# Weather locations are intentionally anonymous in the rendered card.
+weather:
+  - latitude: 53.3438
+    longitude: -6.2546
+    timezone: "Europe/Dublin"
+  - latitude: 31.8206
+    longitude: 117.2272
+    timezone: "Asia/Shanghai"

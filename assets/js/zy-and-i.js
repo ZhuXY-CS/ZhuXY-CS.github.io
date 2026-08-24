@@ -489,171 +489,184 @@
     updateButton(!audio.paused);
   }
 
-  function setupCosmos() {
-    var widget = document.getElementById("love-cosmos");
-    var canvas = document.getElementById("love-constellations");
-    var sky = widget && widget.querySelector(".love-cosmos__sky");
-    var celestialIcon = document.getElementById("love-celestial-icon");
-    var timeLabel = document.getElementById("love-sky-time");
-    if (!widget || !canvas || !sky) return;
+  function setupWeatherForecast() {
+    var widget = document.getElementById("love-weather");
+    if (!widget) return;
 
-    var context = canvas.getContext("2d");
-    if (!context) return;
+    var places = Array.prototype.slice.call(widget.querySelectorAll("[data-weather-place]"));
+    var cacheDuration = 30 * 60 * 1000;
 
-    var width = 0;
-    var height = 0;
-    var pointer = null;
-    var burst = null;
-    var burstUntil = 0;
-    var leo = [
-      { x: 0.09, y: 0.56, s: 1.5, p: 0.1 }, { x: 0.15, y: 0.45, s: 1.9, p: 1.2 },
-      { x: 0.21, y: 0.35, s: 1.5, p: 2.3 }, { x: 0.27, y: 0.23, s: 2.1, p: 0.8 },
-      { x: 0.34, y: 0.28, s: 1.6, p: 3.1 }, { x: 0.36, y: 0.41, s: 2, p: 1.7 },
-      { x: 0.29, y: 0.49, s: 1.45, p: 2.7 }, { x: 0.20, y: 0.50, s: 1.6, p: 4.1 }
-    ];
-    var scorpio = [
-      { x: 0.64, y: 0.30, s: 1.8, p: 0.6 }, { x: 0.70, y: 0.36, s: 1.5, p: 2.1 },
-      { x: 0.76, y: 0.34, s: 2.1, p: 3.3 }, { x: 0.80, y: 0.43, s: 1.5, p: 1.4 },
-      { x: 0.79, y: 0.53, s: 1.8, p: 2.8 }, { x: 0.75, y: 0.62, s: 1.5, p: 4.2 },
-      { x: 0.81, y: 0.68, s: 2, p: 0.3 }, { x: 0.88, y: 0.62, s: 1.55, p: 3.7 },
-      { x: 0.91, y: 0.53, s: 1.75, p: 2.5 }
-    ];
-    var ambient = [
-      { x: 0.04, y: 0.18, s: 0.7, p: 0.2 }, { x: 0.45, y: 0.18, s: 0.65, p: 1.8 },
-      { x: 0.55, y: 0.60, s: 0.75, p: 2.9 }, { x: 0.95, y: 0.24, s: 0.65, p: 4.1 },
-      { x: 0.48, y: 0.72, s: 0.6, p: 3.5 }, { x: 0.58, y: 0.12, s: 0.7, p: 1.1 }
+    window.loveWeatherMessages = [
+      "不管今天是哪一种天气，记得把牵挂好好带在身边呀。",
+      "两片天空各有晴雨，两颗心一直朝着同一个方向。",
+      "糖宝播报：距离会变，天气会变，坚定喜欢彼此不会变 ♡"
     ];
 
-    window.loveCosmosMessages = [
-      "糖宝仰头看见啦：狮子座和天蝎座正偷偷牵着手 ♡",
-      "隔着星河也不怕，你们始终在同一片天空下。",
-      "从早安到晚安，糖宝替你们把想念好好收着。"
-    ];
+    function describeWeather(code, isDay) {
+      if (code === 0) return { icon: isDay ? "☀️" : "🌙", label: "晴朗" };
+      if (code === 1 || code === 2) return { icon: isDay ? "🌤️" : "☁️", label: "晴间多云" };
+      if (code === 3) return { icon: "☁️", label: "多云" };
+      if (code === 45 || code === 48) return { icon: "🌫️", label: "有雾" };
+      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { icon: "🌧️", label: "有雨" };
+      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return { icon: "🌨️", label: "有雪" };
+      if (code >= 95) return { icon: "⛈️", label: "雷雨" };
+      return { icon: "☁️", label: "天气温柔" };
+    }
 
-    function fitCanvas() {
-      var rectangle = sky.getBoundingClientRect();
+    function readCache(key) {
+      try {
+        var cached = JSON.parse(window.localStorage.getItem(key));
+        if (cached && Date.now() - cached.savedAt < cacheDuration) return cached.data;
+      } catch (error) {
+        return null;
+      }
+      return null;
+    }
+
+    function writeCache(key, data) {
+      try {
+        window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), data: data }));
+      } catch (error) {
+        return;
+      }
+    }
+
+    function fetchPlace(place) {
+      var latitude = place.dataset.latitude;
+      var longitude = place.dataset.longitude;
+      var timezone = place.dataset.timezone;
+      var cacheKey = "zy-weather-v2-" + latitude + "-" + longitude;
+      var cached = readCache(cacheKey);
+      if (cached) return Promise.resolve(cached);
+
+      var parameters = new URLSearchParams({
+        latitude: latitude,
+        longitude: longitude,
+        current: "temperature_2m,weather_code,is_day",
+        hourly: "temperature_2m,weather_code",
+        daily: "weather_code,temperature_2m_max,temperature_2m_min",
+        timezone: timezone,
+        forecast_days: "2"
+      });
+
+      return fetch("https://api.open-meteo.com/v1/forecast?" + parameters.toString())
+        .then(function (response) {
+          if (!response.ok) throw new Error("Weather unavailable");
+          return response.json();
+        })
+        .then(function (data) {
+          writeCache(cacheKey, data);
+          return data;
+        });
+    }
+
+    function drawTemperatureChart(canvas, temperatures) {
+      var context = canvas.getContext("2d");
+      if (!context || !temperatures.length) return;
+
+      var rectangle = canvas.getBoundingClientRect();
       var ratio = Math.min(window.devicePixelRatio || 1, 2);
-      width = Math.max(1, rectangle.width);
-      height = Math.max(1, rectangle.height);
+      var width = Math.max(1, rectangle.width);
+      var height = Math.max(1, rectangle.height);
+      var minimum = Math.min.apply(Math, temperatures);
+      var maximum = Math.max.apply(Math, temperatures);
+      var spread = Math.max(3, maximum - minimum);
+      var paddingX = 4;
+      var paddingY = 6;
+
       canvas.width = Math.round(width * ratio);
       canvas.height = Math.round(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    }
-
-    function drawLine(points, color) {
-      context.beginPath();
-      points.forEach(function (star, index) {
-        var x = star.x * width;
-        var y = star.y * height;
-        if (index === 0) context.moveTo(x, y);
-        else context.lineTo(x, y);
-      });
-      context.strokeStyle = color;
-      context.lineWidth = 0.85;
-      context.stroke();
-    }
-
-    function drawStar(star, timestamp, isAmbient) {
-      var x = star.x * width;
-      var y = star.y * height;
-      var twinkle = reducedMotion ? 0.72 : 0.64 + Math.sin(timestamp * 0.0022 + star.p) * 0.24;
-      var pointerDistance = pointer ? Math.hypot(pointer.x - x, pointer.y - y) : Infinity;
-      var burstDistance = burst ? Math.hypot(burst.x - x, burst.y - y) : Infinity;
-      var glow = pointerDistance < 58 ? 1 - pointerDistance / 58 : 0;
-      if (timestamp < burstUntil && burstDistance < 96) glow = Math.max(glow, 1 - burstDistance / 96);
-      var radius = star.s * (1 + glow * 0.62);
-      var alpha = Math.min(1, twinkle + glow * 0.48) * (isAmbient ? 0.46 : 1);
-
-      context.beginPath();
-      context.arc(x, y, radius + glow * 1.8, 0, Math.PI * 2);
-      context.fillStyle = "rgba(214, 112, 162," + (alpha * 0.16) + ")";
-      context.fill();
-      context.beginPath();
-      context.arc(x, y, radius, 0, Math.PI * 2);
-      context.fillStyle = "rgba(151, 65, 119," + alpha + ")";
-      context.fill();
-    }
-
-    function drawBridge() {
-      context.save();
-      context.beginPath();
-      context.moveTo(0.38 * width, 0.4 * height);
-      context.bezierCurveTo(0.44 * width, 0.31 * height, 0.56 * width, 0.47 * height, 0.62 * width, 0.32 * height);
-      context.setLineDash([2.5, 4.5]);
-      context.strokeStyle = "rgba(190, 76, 137, 0.48)";
-      context.lineWidth = 0.9;
-      context.stroke();
-      context.restore();
-    }
-
-    function drawOrbit(now) {
-      var hours = now.getHours() + now.getMinutes() / 60;
-      var isDay = hours >= 6 && hours < 18;
-      var progress = isDay ? (hours - 6) / 12 : ((hours >= 18 ? hours - 18 : hours + 6) / 12);
-      var startX = 0.11 * width;
-      var endX = 0.89 * width;
-      var baseline = 0.91 * height;
-      var apex = 0.72 * height;
-      var controlX = 0.5 * width;
-      var controlY = apex - (baseline - apex);
-      var x = Math.pow(1 - progress, 2) * startX + 2 * (1 - progress) * progress * controlX + Math.pow(progress, 2) * endX;
-      var y = Math.pow(1 - progress, 2) * baseline + 2 * (1 - progress) * progress * controlY + Math.pow(progress, 2) * baseline;
-
-      context.beginPath();
-      context.moveTo(startX, baseline);
-      context.quadraticCurveTo(controlX, controlY, endX, baseline);
-      context.strokeStyle = isDay ? "rgba(200, 143, 90, 0.22)" : "rgba(114, 92, 155, 0.24)";
-      context.lineWidth = 0.8;
-      context.stroke();
-      context.beginPath();
-      context.arc(x, y, isDay ? 2.6 : 2.3, 0, Math.PI * 2);
-      context.fillStyle = isDay ? "rgba(202, 139, 72, 0.9)" : "rgba(113, 92, 157, 0.88)";
-      context.shadowColor = isDay ? "rgba(231, 178, 103, 0.68)" : "rgba(160, 139, 198, 0.62)";
-      context.shadowBlur = 7;
-      context.fill();
-      context.shadowBlur = 0;
-    }
-
-    function updateSkyTime() {
-      var now = new Date();
-      var isDay = now.getHours() >= 6 && now.getHours() < 18;
-      widget.classList.toggle("is-night", !isDay);
-      if (celestialIcon) celestialIcon.textContent = isDay ? "☀︎" : "☾";
-      if (timeLabel) timeLabel.textContent = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
-    }
-
-    function draw(timestamp) {
       context.clearRect(0, 0, width, height);
-      drawLine(leo, "rgba(166, 89, 137, 0.34)");
-      drawLine(scorpio, "rgba(130, 94, 157, 0.34)");
-      drawBridge();
-      ambient.forEach(function (star) { drawStar(star, timestamp, true); });
-      leo.forEach(function (star) { drawStar(star, timestamp, false); });
-      scorpio.forEach(function (star) { drawStar(star, timestamp, false); });
-      drawOrbit(new Date());
-      if (!reducedMotion) window.requestAnimationFrame(draw);
+
+      var points = temperatures.map(function (temperature, index) {
+        return {
+          x: paddingX + index * (width - paddingX * 2) / Math.max(1, temperatures.length - 1),
+          y: paddingY + (maximum - temperature) / spread * (height - paddingY * 2)
+        };
+      });
+
+      var gradient = context.createLinearGradient(0, 0, 0, height);
+      gradient.addColorStop(0, "rgba(213, 103, 156, 0.24)");
+      gradient.addColorStop(1, "rgba(213, 103, 156, 0.01)");
+      context.beginPath();
+      context.moveTo(points[0].x, height - 2);
+      points.forEach(function (point) { context.lineTo(point.x, point.y); });
+      context.lineTo(points[points.length - 1].x, height - 2);
+      context.closePath();
+      context.fillStyle = gradient;
+      context.fill();
+
+      context.beginPath();
+      points.forEach(function (point, index) {
+        if (index === 0) context.moveTo(point.x, point.y);
+        else context.lineTo(point.x, point.y);
+      });
+      context.strokeStyle = "rgba(165, 61, 118, 0.72)";
+      context.lineWidth = 1.25;
+      context.lineJoin = "round";
+      context.lineCap = "round";
+      context.stroke();
+
+      points.forEach(function (point, index) {
+        if (index !== 0 && index !== points.length - 1 && index % 2 !== 0) return;
+        context.beginPath();
+        context.arc(point.x, point.y, 1.6, 0, Math.PI * 2);
+        context.fillStyle = "#b84380";
+        context.fill();
+      });
     }
 
-    function locatePointer(event) {
-      var rectangle = sky.getBoundingClientRect();
-      return { x: event.clientX - rectangle.left, y: event.clientY - rectangle.top };
+    function renderPlace(place, data) {
+      var current = data.current || {};
+      var daily = data.daily || {};
+      var hourly = data.hourly || {};
+      var currentWeather = describeWeather(Number(current.weather_code), Number(current.is_day) === 1);
+      var tomorrowWeather = describeWeather(Number((daily.weather_code || [])[1]), true);
+      var todayDate = (daily.time || [])[0] || "";
+      var chartTemperatures = [];
+
+      (hourly.time || []).forEach(function (time, index) {
+        var hour = Number(String(time).slice(11, 13));
+        var temperature = Number((hourly.temperature_2m || [])[index]);
+        if (String(time).slice(0, 10) === todayDate && hour >= 6 && hour <= 23 && (hour % 3 === 0 || hour === 23) && Number.isFinite(temperature)) {
+          chartTemperatures.push(temperature);
+        }
+      });
+
+      var currentTemperature = Number(current.temperature_2m);
+      var tomorrowHigh = Number((daily.temperature_2m_max || [])[1]);
+      var tomorrowLow = Number((daily.temperature_2m_min || [])[1]);
+      var chart = place.querySelector(".love-weather__chart");
+
+      place.querySelector(".love-weather__icon").textContent = currentWeather.icon;
+      place.querySelector(".love-weather__temperature").textContent = Number.isFinite(currentTemperature) ? Math.round(currentTemperature) + "°" : "--°";
+      place.querySelector(".love-weather__condition").textContent = currentWeather.label;
+      place.querySelector(".love-weather__tomorrow-icon").textContent = tomorrowWeather.icon;
+      place.querySelector(".love-weather__tomorrow-temperature").textContent = Number.isFinite(tomorrowLow) && Number.isFinite(tomorrowHigh) ? Math.round(tomorrowLow) + "° / " + Math.round(tomorrowHigh) + "°" : "--° / --°";
+      place.querySelector(".love-weather__tomorrow-condition").textContent = tomorrowWeather.label;
+      chart.setAttribute("aria-label", "今天从清晨到夜晚的温度变化：" + chartTemperatures.map(function (temperature) { return Math.round(temperature) + "度"; }).join("、"));
+      place._loveWeatherTemperatures = chartTemperatures;
+      drawTemperatureChart(chart, chartTemperatures);
     }
 
-    sky.addEventListener("pointermove", function (event) { pointer = locatePointer(event); }, { passive: true });
-    sky.addEventListener("pointerleave", function () { pointer = null; }, { passive: true });
-    widget.addEventListener("pointerdown", function (event) {
-      var rectangle = sky.getBoundingClientRect();
-      burst = { x: event.clientX - rectangle.left, y: event.clientY - rectangle.top };
-      burstUntil = window.performance.now() + 850;
-      if (reducedMotion) draw(window.performance.now());
-    }, { passive: true });
+    Promise.all(places.map(function (place) {
+      return fetchPlace(place).then(function (data) { renderPlace(place, data); });
+    })).catch(function () {
+      places.forEach(function (place) {
+        place.querySelector(".love-weather__condition").textContent = "天气暂时藏进云里";
+        place.querySelector(".love-weather__tomorrow-condition").textContent = "晚一点再来看";
+      });
+    });
 
-    fitCanvas();
-    updateSkyTime();
-    draw(window.performance.now());
-    window.setInterval(updateSkyTime, 60000);
-    if (window.ResizeObserver) new window.ResizeObserver(function () { fitCanvas(); if (reducedMotion) draw(window.performance.now()); }).observe(sky);
-    else window.addEventListener("resize", function () { fitCanvas(); if (reducedMotion) draw(window.performance.now()); });
+    if (window.ResizeObserver) {
+      places.forEach(function (place) {
+        var chart = place.querySelector(".love-weather__chart");
+        new window.ResizeObserver(function () {
+          if (place._loveWeatherTemperatures) drawTemperatureChart(chart, place._loveWeatherTemperatures);
+        }).observe(chart);
+      });
+    }
   }
 
   function setupHeartClicks() {
@@ -734,7 +747,35 @@
       "愿每一次分别，都有一个确定的重逢在等候。",
       "你们只管坚定相爱，路途交给时间慢慢缩短 ♡",
       "等见面的那天，记得把欠下的抱抱全部补回来！",
-      "好好吃饭，好好睡觉，也是在认真爱对方呀。"
+      "好好吃饭，好好睡觉，也是在认真爱对方呀。",
+      "今天有没有好好想她？糖宝可是有认真监督哦！",
+      "你们的爱不会被距离稀释，只会被时间酿得更甜。",
+      "忙碌的缝隙里想起彼此，就是藏不住的偏爱呀。",
+      "哪怕今天只说了几句话，心也一直在彼此身边。",
+      "糖宝把思念装进小球里，滚呀滚，滚到她身边啦！",
+      "日子一天天向前，重逢也在一步步靠近。",
+      "不用每一天都轰轰烈烈，安稳惦记就是长久的浪漫。",
+      "她在认真奔赴未来，你也要成为她安心的后盾呀。",
+      "委屈不要藏太久，最爱你的人也想被你需要。",
+      "异地最甜的秘密，是两个人都在偷偷规划同一个以后。",
+      "早安是今天的第一份牵挂，晚安是跨越距离的拥抱。",
+      "糖宝知道，你想分享的每一件小事，最后都想讲给她听。",
+      "不能随时见面，就把每一次见面都抱得更认真一点。",
+      "你们各自发光，也在照亮彼此前行的路。",
+      "距离会考验耐心，却带不走坚定的偏爱 ♡",
+      "今天辛苦啦，别忘了你们一直都是彼此的底气。",
+      "等风把想念送到，她抬头的时候一定能收到。",
+      "每一个忍住没见面的今天，都在兑换更长久的明天。",
+      "糖宝盖章：这份双向奔赴，比星星还要闪亮！",
+      "想她就告诉她呀，被惦记本身就是很甜的礼物。",
+      "你们不是隔着很远，而是在从两个方向走向同一个家。",
+      "愿视频里的晚安，很快变成枕边轻轻的一句晚安。",
+      "今天也给彼此多一点耐心，爱会在理解里慢慢长大。",
+      "平淡的问候、认真的回应，都是异地里珍贵的拥抱。",
+      "下次见面之前，先带着对方的爱把生活过得亮晶晶。",
+      "糖宝最喜欢看你们：一个坚定，一个也坚定 ♡",
+      "就算隔着屏幕，也要让她知道，她始终是你的特别关注。",
+      "所有说出口的想念，都会在重逢那天变成真的拥抱。"
     ];
     var messageIndex = 0;
     var bubbleTimer;
@@ -760,22 +801,24 @@
       framePreloads.push(preload);
     }
 
+    var actionDefinitions = {
+      "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 118, stepDistance: 8.5, moving: true, minimum: 2300, maximum: 3900 },
+      "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 82, stepDistance: 11.5, moving: true, minimum: 1050, maximum: 1650 },
+      "is-action-bound": { frames: [2, 3, 5, 1, 6, 7, 2], frameDuration: 132, loop: false, moving: true, minimum: 980, maximum: 1080 },
+      "is-action-leap": { frames: [32, 33, 34, 35, 36, 37], frameDuration: 145, loop: false, moving: true, minimum: 900, maximum: 990 },
+      "is-action-look": { frames: [22, 23, 24, 25, 24, 23, 22], frameDuration: 220, loop: false, minimum: 1750, maximum: 2050 },
+      "is-action-sniff": { frames: [26, 27, 28, 29, 28, 27, 26], frameDuration: 185, loop: false, minimum: 1500, maximum: 1750 },
+      "is-action-stretch": { frames: [26, 27, 28, 29, 30, 31, 30, 29, 28, 27, 26], frameDuration: 160, loop: false, minimum: 1900, maximum: 2200 },
+      "is-action-celebrate": { frames: [22, 23, 24, 25, 8, 9, 8, 25, 24, 23, 22], frameDuration: 150, loop: false, minimum: 1800, maximum: 2050 },
+      "is-action-ball": { frames: [38, 39, 40, 41, 42, 13, 12, 10, 11, 12, 13, 42, 41, 40, 39, 38, 43], frameDuration: 150, loop: false, minimum: 2750, maximum: 3100 },
+      "is-action-settle": { frames: [19, 20, 21, 22], frameDuration: 135, loop: false, minimum: 620, maximum: 720 },
+      "is-action-rise": { frames: [25, 24, 23, 22, 21, 20, 19], frameDuration: 110, loop: false, minimum: 820, maximum: 920 }
+    };
+
     function setFrameAction(action) {
-      var sequences = {
-        "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], duration: 125, stepDistance: 9.5 },
-        "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], duration: 88, stepDistance: 13 },
-        "is-action-leap": { frames: [32, 33, 34, 35, 36, 37], duration: 165, loop: false },
-        "is-action-look": { frames: [22, 23, 24, 25], duration: 270, loop: false },
-        "is-action-sniff": { frames: [26, 27, 28, 27, 26], duration: 245, loop: false },
-        "is-action-stretch": { frames: [26, 27, 28, 29, 30, 31], duration: 255, loop: false },
-        "is-action-celebrate": { frames: [26, 30, 31, 30, 31, 26], duration: 220, loop: false },
-        "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 43], duration: 275, loop: false },
-        "is-action-settle": { frames: [20, 21, 22], duration: 190, loop: false },
-        "is-action-rise": { frames: [25, 24, 23, 22], duration: 220, loop: false }
-      };
-      var selected = sequences[action] || sequences["is-action-trot"];
+      var selected = actionDefinitions[action] || actionDefinitions["is-action-trot"];
       frameSequence = selected.frames;
-      frameDuration = selected.duration;
+      frameDuration = selected.frameDuration;
       frameLoops = selected.loop !== false;
       frameStepDistance = selected.stepDistance || 0;
       frameDistanceTravelled = 0;
@@ -786,14 +829,14 @@
     }
 
     function revealMessage() {
-      var availableMessages = messages.concat(window.loveCosmosMessages || []);
+      var availableMessages = messages.concat(window.loveWeatherMessages || []);
       messageIndex = (messageIndex + 1) % availableMessages.length;
       bubble.textContent = availableMessages[messageIndex];
       tangbao.classList.add("is-speaking");
       window.clearTimeout(bubbleTimer);
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
-      }, 3600);
+      }, 4600);
     }
 
     function speak() {
@@ -807,20 +850,15 @@
       window.clearTimeout(actionTimer);
       window.clearTimeout(bubbleTimer);
       tangbao.classList.remove("is-speaking");
-      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
-      tangbao.classList.add("is-action-settle");
-      setFrameAction("is-action-settle");
-      targetVelocityX = 0;
-      targetVelocityY = 0;
+      applyAction("is-action-settle");
 
       speechPoseTimer = window.setTimeout(function () {
-        velocityX = 0;
-        velocityY = 0;
-        actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
-        tangbao.classList.add("is-action-look");
-        setFrameAction("is-action-look");
+        applyAction(Math.random() < 0.28 ? "is-action-celebrate" : "is-action-look");
         revealMessage();
-        actionTimer = window.setTimeout(settleThenChoose, 3800);
+        actionTimer = window.setTimeout(function () {
+          queuedAction = pickAction(movingActions);
+          startAction("is-action-rise");
+        }, 3800);
       }, 640);
     }
 
@@ -841,84 +879,76 @@
     var actionTimer;
     var lastAction = "is-action-trot";
     var forcedDirection = 0;
-    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-rise"];
+    var queuedAction = "";
+    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-bound", "is-action-leap", "is-action-look", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-rise"];
+    var movingActions = ["is-action-trot", "is-action-trot", "is-action-dash", "is-action-bound", "is-action-leap"];
+    var playfulActions = ["is-action-look", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
     }
 
-    function chooseAction() {
+    function pickAction(actions) {
+      var candidates = actions.filter(function (action) { return action !== lastAction; });
+      return candidates[Math.floor(Math.random() * candidates.length)] || actions[0];
+    }
+
+    function applyAction(action) {
       actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
+      tangbao.classList.add(action);
+      setFrameAction(action);
+      if (action !== "is-action-settle" && action !== "is-action-rise") lastAction = action;
 
-      var roll = Math.random();
-      var action = "is-action-trot";
-      var duration = between(1800, 3600);
-      var pendingDirection = forcedDirection;
-      var direction = pendingDirection || (targetVelocityX < 0 ? -1 : 1);
-      forcedDirection = 0;
+      var definition = actionDefinitions[action];
+      var direction = targetVelocityX < 0 ? -1 : 1;
 
-      if (Math.random() < 0.28) direction *= -1;
-
-      if (roll < 0.12) {
-        action = "is-action-look";
-        duration = between(1900, 2500);
-      } else if (roll < 0.24) {
-        action = "is-action-sniff";
-        duration = between(1700, 2400);
-      } else if (roll < 0.34) {
-        action = "is-action-stretch";
-        duration = between(2100, 2800);
-      } else if (roll < 0.46) {
-        action = "is-action-leap";
-        duration = between(1150, 1450);
-        targetVelocityX = direction * between(70, 115);
-        targetVelocityY = 0;
-      } else if (roll < 0.58) {
-        action = "is-action-dash";
-        duration = between(950, 1650);
-        targetVelocityX = direction * between(145, 205);
-        targetVelocityY = 0;
-      } else if (roll < 0.7) {
-        action = "is-action-celebrate";
-        duration = between(1700, 2400);
-      } else if (roll < 0.86) {
-        action = "is-action-ball";
-        duration = between(3000, 4200);
-      } else {
-        targetVelocityX = direction * between(52, 92);
-        targetVelocityY = 0;
-      }
-
-      if (action === lastAction) {
-        action = action === "is-action-trot" ? "is-action-look" : "is-action-trot";
-        duration = action === "is-action-look" ? between(1250, 1900) : between(1900, 3200);
-        targetVelocityX = action === "is-action-look" ? 0 : direction * between(52, 82);
-        targetVelocityY = 0;
-      }
-
-      var locomotionAction = action === "is-action-trot" || action === "is-action-dash" || action === "is-action-leap";
-      if (!locomotionAction) {
+      if (definition.moving) {
+        var hadForcedDirection = forcedDirection !== 0;
+        direction = forcedDirection || direction;
+        forcedDirection = 0;
+        if (!hadForcedDirection && Math.random() < 0.3) direction *= -1;
+        if (action === "is-action-dash") targetVelocityX = direction * between(150, 205);
+        else if (action === "is-action-bound") targetVelocityX = direction * between(95, 132);
+        else if (action === "is-action-leap") targetVelocityX = direction * between(78, 112);
+        else targetVelocityX = direction * between(54, 88);
+        targetVelocityY = between(-20, 20);
+      } else if (action !== "is-action-settle") {
         velocityX = 0;
         velocityY = 0;
         targetVelocityX = 0;
         targetVelocityY = 0;
-        if (pendingDirection) forcedDirection = pendingDirection;
+      } else {
+        targetVelocityX = 0;
+        targetVelocityY = 0;
+      }
+    }
+
+    function startAction(action) {
+      var definition = actionDefinitions[action];
+      applyAction(action);
+      actionTimer = window.setTimeout(finishAction, between(definition.minimum, definition.maximum));
+    }
+
+    function finishAction() {
+      if (currentAction === "is-action-settle" || currentAction === "is-action-rise") {
+        var nextAction = queuedAction || pickAction(currentAction === "is-action-settle" ? playfulActions : movingActions);
+        queuedAction = "";
+        startAction(nextAction);
+        return;
       }
 
-      tangbao.classList.add(action);
-      setFrameAction(action);
-      lastAction = action;
-      actionTimer = window.setTimeout(settleThenChoose, duration);
+      if (actionDefinitions[currentAction] && actionDefinitions[currentAction].moving) {
+        queuedAction = pickAction(playfulActions);
+        startAction("is-action-settle");
+      } else {
+        queuedAction = pickAction(movingActions);
+        startAction("is-action-rise");
+      }
     }
 
     function settleThenChoose() {
-      var transitionAction = currentAction === "is-action-look" ? "is-action-rise" : "is-action-settle";
-      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
-      tangbao.classList.add(transitionAction);
-      setFrameAction(transitionAction);
-      targetVelocityX = 0;
-      targetVelocityY = 0;
-      actionTimer = window.setTimeout(chooseAction, transitionAction === "is-action-rise" ? 980 : between(650, 900));
+      queuedAction = pickAction(playfulActions);
+      startAction("is-action-settle");
     }
 
     function scheduleSweetWords(delay) {
@@ -965,7 +995,7 @@
 
       if (x <= padding || x >= maxX) {
         x = Math.min(maxX, Math.max(padding, x));
-        if (currentAction === "is-action-trot" || currentAction === "is-action-dash" || currentAction === "is-action-leap") {
+        if (currentAction === "is-action-trot" || currentAction === "is-action-dash" || currentAction === "is-action-bound" || currentAction === "is-action-leap") {
           forcedDirection = x <= padding ? 1 : -1;
           velocityX = 0;
           targetVelocityX = 0;
@@ -990,18 +1020,15 @@
 
     scheduleSweetWords(5200);
 
-    Promise.all(framePreloads.map(function (image) {
+    Promise.all(framePreloads.slice(13, 22).map(function (image) {
       if (image.complete) return Promise.resolve();
       return new Promise(function (resolve) {
         image.addEventListener("load", resolve, { once: true });
         image.addEventListener("error", resolve, { once: true });
       });
     })).then(function () {
-      actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
-      tangbao.classList.add("is-action-trot");
-      setFrameAction("is-action-trot");
       previousTime = window.performance.now();
-      actionTimer = window.setTimeout(settleThenChoose, 2600);
+      startAction("is-action-trot");
       window.requestAnimationFrame(move);
     });
   }
@@ -1012,7 +1039,7 @@
     createHeartAnimation();
     startClock();
     setupMusic();
-    setupCosmos();
+    setupWeatherForecast();
     setupHeartClicks();
     setupTangbao();
   }
