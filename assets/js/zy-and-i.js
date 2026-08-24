@@ -229,18 +229,27 @@
     var button = document.querySelector(".love-music");
     if (!audio || !button) return;
 
+    var icon = button.querySelector(".love-music__note");
+
+    function updateButton(isPlaying) {
+      var tooltip = isPlaying ? "暂停背景音乐" : "播放背景音乐";
+      button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+      button.setAttribute("aria-label", tooltip);
+      button.setAttribute("data-tooltip", tooltip);
+      if (icon) icon.textContent = isPlaying ? "🎵" : "🔇";
+    }
+
     button.addEventListener("click", function () {
       if (audio.paused) {
-        audio.play().then(function () {
-          button.setAttribute("aria-pressed", "true");
-          button.setAttribute("aria-label", "暂停音乐");
-        }).catch(function () {});
+        audio.play().catch(function () { updateButton(false); });
       } else {
         audio.pause();
-        button.setAttribute("aria-pressed", "false");
-        button.setAttribute("aria-label", "播放音乐");
       }
     });
+
+    audio.addEventListener("play", function () { updateButton(true); });
+    audio.addEventListener("pause", function () { updateButton(false); });
+    updateButton(!audio.paused);
   }
 
   function setupHeartClicks() {

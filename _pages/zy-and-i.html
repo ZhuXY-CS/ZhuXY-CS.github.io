@@ -19,9 +19,9 @@ comments: false
 </button>
 
 {% if love.music and love.music != "" %}
-  <audio id="love-audio" src="{{ love.music | relative_url }}" loop preload="metadata"></audio>
-  <button class="love-music" type="button" aria-label="播放音乐" aria-pressed="false">
-    <span class="love-music__note" aria-hidden="true">🎵</span>
+  <audio id="love-audio" src="{{ love.music | relative_url }}" loop preload="metadata" playsinline></audio>
+  <button class="love-music" type="button" aria-label="播放背景音乐" aria-pressed="false" data-tooltip="播放背景音乐">
+    <span class="love-music__note" aria-hidden="true">🔇</span>
   </button>
 {% endif %}
 

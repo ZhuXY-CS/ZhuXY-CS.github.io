@@ -62,6 +62,33 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   cursor: pointer;
 }
 
+.love-music::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  right: 0;
+  width: max-content;
+  max-width: 11rem;
+  padding: 0.38rem 0.58rem;
+  border: 1px solid rgba(139, 47, 114, 0.16);
+  border-radius: 0.42rem;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 5px 16px rgba(72, 43, 58, 0.12);
+  color: var(--love-accent);
+  font: 0.72rem/1.35 Consolas, Monaco, "Courier New", monospace;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.2rem);
+  transition: opacity 160ms ease, transform 160ms ease;
+  white-space: nowrap;
+}
+
+.love-music:hover::after,
+.love-music:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .love-home:hover,
 .love-home:focus-visible,
 .love-music:hover,
