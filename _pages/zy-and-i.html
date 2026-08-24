@@ -21,11 +21,18 @@ comments: false
 {% if love.music and love.music != "" %}
   <audio id="love-audio" src="{{ love.music | relative_url }}" loop preload="metadata"></audio>
   <button class="love-music" type="button" aria-label="播放音乐" aria-pressed="false">
-    <span class="love-music__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="love-music__note" aria-hidden="true">🎵</span>
   </button>
 {% endif %}
 
 <main class="love-stage">
+  <span class="love-stage__flower love-stage__flower--top" aria-hidden="true">✿　❀　✿</span>
+  <span class="love-stage__flower love-stage__flower--bottom" aria-hidden="true">✿　❀　✿</span>
+  <span class="love-stage__flower love-stage__flower--corner love-stage__flower--tl" aria-hidden="true">❀</span>
+  <span class="love-stage__flower love-stage__flower--corner love-stage__flower--tr" aria-hidden="true">❀</span>
+  <span class="love-stage__flower love-stage__flower--corner love-stage__flower--bl" aria-hidden="true">❀</span>
+  <span class="love-stage__flower love-stage__flower--corner love-stage__flower--br" aria-hidden="true">❀</span>
+
   <section class="love-letter" aria-label="我们的文字">
     <div class="love-copy" id="love-copy">
       {% if story and story.size > 0 %}

@@ -1,5 +1,5 @@
 :root {
-  --love-paper: #fffdfd;
+  --love-paper: #ffffff;
   --love-surface: #ffffff;
   --love-ink: #3b3138;
   --love-accent: #8b2f72;
@@ -21,10 +21,7 @@ body.love-page {
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 78% 16%, rgba(233, 161, 191, 0.09), transparent 27rem),
-    radial-gradient(circle at 12% 84%, rgba(248, 225, 235, 0.25), transparent 30rem),
-    var(--love-paper);
+  background: #ffffff;
   color: var(--love-ink);
   font-family: Consolas, Monaco, "Courier New", monospace;
 }
@@ -70,23 +67,13 @@ body.love-page {
   transform: translateY(-1px);
 }
 
-.love-music__bars {
-  display: flex;
-  height: 0.9rem;
-  align-items: flex-end;
-  gap: 0.14rem;
-}
-
-.love-music__bars i {
+.love-music__note {
   display: block;
-  width: 0.13rem;
-  height: 35%;
-  background: currentColor;
+  font: 1.25rem/1 "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  transform-origin: 50% 80%;
 }
 
-.love-music[aria-pressed="true"] .love-music__bars i { animation: love-equalizer 700ms ease-in-out infinite alternate; }
-.love-music[aria-pressed="true"] .love-music__bars i:nth-child(2) { animation-delay: -350ms; }
-.love-music[aria-pressed="true"] .love-music__bars i:nth-child(3) { animation-delay: -175ms; }
+.love-music[aria-pressed="true"] .love-music__note { animation: love-note-pulse 900ms ease-in-out infinite; }
 
 .tangbao-witness {
   --tangbao-size: clamp(5.2rem, 7.5vw, 6.7rem);
@@ -214,12 +201,12 @@ body.love-page {
   position: relative;
   isolation: isolate;
   display: grid;
-  width: min(1180px, calc(100vw - 5rem));
+  width: min(1320px, calc(100vw - 3.5rem));
   min-height: 665px;
   margin: max(4rem, calc((100vh - 665px) / 2)) auto 2rem;
   padding: 2rem;
-  grid-template-columns: 410px minmax(0, 1fr);
-  gap: 2.1rem;
+  grid-template-columns: minmax(450px, 0.9fr) minmax(0, 1.35fr);
+  gap: 2.4rem;
   align-items: stretch;
   border: 1px solid rgba(206, 109, 152, 0.36);
   border-radius: 0.2rem;
@@ -240,6 +227,46 @@ body.love-page {
     radial-gradient(circle at 100% 0.5rem, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top right / 0.7rem 1rem repeat-y;
   filter: drop-shadow(0 3px 3px rgba(139, 47, 114, 0.1));
 }
+
+.love-stage__flower {
+  position: absolute;
+  z-index: 7;
+  color: var(--love-lace-deep);
+  pointer-events: none;
+  user-select: none;
+}
+
+.love-stage__flower--top,
+.love-stage__flower--bottom {
+  left: 50%;
+  padding: 0.1rem 0.75rem;
+  background: #ffffff;
+  color: var(--love-lace-deep);
+  font: 0.9rem/1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.05em;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.love-stage__flower--top { top: -0.55rem; }
+.love-stage__flower--bottom { bottom: -0.55rem; transform: translateX(-50%) rotate(180deg); }
+
+.love-stage__flower--corner {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid rgba(206, 109, 152, 0.5);
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 7px rgba(139, 47, 114, 0.12);
+  font-size: 0.95rem;
+}
+
+.love-stage__flower--tl { top: -0.85rem; left: -0.85rem; }
+.love-stage__flower--tr { top: -0.85rem; right: -0.85rem; }
+.love-stage__flower--bl { bottom: -0.85rem; left: -0.85rem; }
+.love-stage__flower--br { right: -0.85rem; bottom: -0.85rem; }
 
 .love-stage::after {
   content: "";
@@ -264,8 +291,8 @@ body.love-page {
   position: relative;
   min-height: 1.5em;
   margin: 0 0 0.22rem;
-  font-size: clamp(0.9rem, 1.25vw, 1rem);
-  line-height: 1.5;
+  font-size: clamp(1.02rem, 1.35vw, 1.14rem);
+  line-height: 1.52;
 }
 
 .love-copy__line--emphasis {
@@ -294,7 +321,7 @@ body.love-page {
   padding-top: 1rem;
   border-top: 1px solid rgba(51, 51, 47, 0.32);
   color: var(--love-accent);
-  font-size: 1.05rem;
+  font-size: 1.14rem;
   line-height: 1.7;
   opacity: 0;
   transform: translateY(8px);
@@ -418,7 +445,10 @@ body.love-page {
 }
 
 @keyframes love-blink { 0%, 48% { opacity: 1; } 49%, 100% { opacity: 0; } }
-@keyframes love-equalizer { from { height: 25%; } to { height: 100%; } }
+@keyframes love-note-pulse {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.08); }
+}
 
 @keyframes tangbao-trot {
   0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
@@ -480,7 +510,7 @@ body.love-page {
     border-bottom: 1px solid rgba(233, 161, 191, 0.35);
   }
   .love-memory { min-height: min(92vw, 625px); }
-  .love-copy__line { font-size: clamp(0.92rem, 3.6vw, 1.05rem); }
+  .love-copy__line { font-size: clamp(1.02rem, 3.8vw, 1.13rem); }
 }
 
 @media (max-width: 520px) {
@@ -496,6 +526,11 @@ body.love-page {
   }
   .love-stage::before { inset: -0.72rem; }
   .love-stage::after { inset: 0.35rem; }
+  .love-stage__flower--corner { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
+  .love-stage__flower--tl { top: -0.72rem; left: -0.72rem; }
+  .love-stage__flower--tr { top: -0.72rem; right: -0.72rem; }
+  .love-stage__flower--bl { bottom: -0.72rem; left: -0.72rem; }
+  .love-stage__flower--br { right: -0.72rem; bottom: -0.72rem; }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
 
