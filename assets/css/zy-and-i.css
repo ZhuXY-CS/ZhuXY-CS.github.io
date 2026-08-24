@@ -7,8 +7,8 @@
   --love-lace: #e9a1bf;
   --love-lace-deep: #ce6d98;
   --love-shadow: rgba(102, 55, 78, 0.17);
-  --love-font-cn: "Kaiti SC", STKaiti, KaiTi, "Songti SC", SimSun, serif;
-  --love-font-en: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+  --love-font-cn: "Noto Serif SC", "Songti SC", STSong, "Source Han Serif SC", SimSun, serif;
+  --love-font-en: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --love-font-utility: Consolas, Monaco, "Courier New", monospace;
   --love-heart-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 27.2S3.4 19.6 3.4 10.8C3.4 5.2 10.4 2.8 16 8.4c5.6-5.6 12.6-3.2 12.6 2.4C28.6 19.6 16 27.2 16 27.2Z' fill='%23e477a6' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E") 16 14, auto;
 }
@@ -284,8 +284,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   grid-template-columns: minmax(340px, 0.86fr) minmax(520px, 1.36fr) minmax(270px, 0.62fr);
   gap: 1.45rem;
   align-items: stretch;
-  border: 1px solid rgba(206, 109, 152, 0.36);
-  border-radius: 0.2rem;
+  border: 1px solid rgba(206, 109, 152, 0.42);
+  border-radius: 0.42rem;
   background: var(--love-surface);
   box-shadow: 0 22px 65px var(--love-shadow), 0 2px 8px rgba(139, 47, 114, 0.08);
 }
@@ -293,17 +293,21 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-stage::before {
   content: "";
   position: absolute;
-  inset: -0.85rem;
+  inset: -0.92rem;
   z-index: -1;
-  border: 1px solid rgba(206, 109, 152, 0.58);
-  border-radius: 0.35rem;
+  border: 1px solid rgba(206, 109, 152, 0.62);
+  border-radius: 0.58rem;
   pointer-events: none;
   background:
-    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top 0.22rem left / 0.7rem 0.45rem repeat-x,
-    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) bottom 0.22rem left / 0.7rem 0.45rem repeat-x,
-    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top left 0.22rem / 0.45rem 0.7rem repeat-y,
-    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top right 0.22rem / 0.45rem 0.7rem repeat-y;
-  box-shadow: 0 5px 16px rgba(139, 47, 114, 0.09);
+    radial-gradient(circle at 50% 100%, transparent 0 3.7px, rgba(206, 109, 152, 0.42) 4px 5px, transparent 5.35px) top left / 0.95rem 0.56rem repeat-x,
+    radial-gradient(circle at 50% 0, transparent 0 3.7px, rgba(206, 109, 152, 0.42) 4px 5px, transparent 5.35px) bottom left / 0.95rem 0.56rem repeat-x,
+    radial-gradient(circle at 100% 50%, transparent 0 3.7px, rgba(206, 109, 152, 0.42) 4px 5px, transparent 5.35px) top left / 0.56rem 0.95rem repeat-y,
+    radial-gradient(circle at 0 50%, transparent 0 3.7px, rgba(206, 109, 152, 0.42) 4px 5px, transparent 5.35px) top right / 0.56rem 0.95rem repeat-y,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.1px, transparent 1.42px) top 0.18rem left / 0.72rem 0.46rem repeat-x,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.1px, transparent 1.42px) bottom 0.18rem left / 0.72rem 0.46rem repeat-x,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.1px, transparent 1.42px) top left 0.18rem / 0.46rem 0.72rem repeat-y,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.1px, transparent 1.42px) top right 0.18rem / 0.46rem 0.72rem repeat-y;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.24), 0 7px 20px rgba(139, 47, 114, 0.11);
 }
 
 .love-stage__flower {
@@ -317,40 +321,61 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-stage__flower--top,
 .love-stage__flower--bottom {
   left: 50%;
-  padding: 0.12rem 1rem;
+  padding: 0.18rem 1.25rem;
   background: #ffffff;
   color: var(--love-lace-deep);
-  font: 0.9rem/1 Georgia, "Times New Roman", serif;
-  letter-spacing: 0.05em;
+  font: 1rem/1 Georgia, "Times New Roman", serif;
+  letter-spacing: 0.08em;
+  text-shadow: 0 3px 8px rgba(139, 47, 114, 0.17);
   transform: translateX(-50%);
   white-space: nowrap;
 }
 
-.love-stage__flower--top { top: -0.48rem; }
-.love-stage__flower--bottom { bottom: -0.48rem; transform: translateX(-50%) rotate(180deg); }
+.love-stage__flower--top { top: -0.54rem; }
+.love-stage__flower--bottom { bottom: -0.54rem; transform: translateX(-50%) rotate(180deg); }
+
+.love-stage__flower--side {
+  display: grid;
+  top: 50%;
+  width: 1.52rem;
+  height: 1.52rem;
+  place-items: center;
+  border: 1px solid rgba(206, 109, 152, 0.42);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 44%, #fff5fa 45% 70%, #fff 71%);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.24), 0 4px 10px rgba(139, 47, 114, 0.11);
+  font: 0.82rem/1 Georgia, serif;
+}
+
+.love-stage__flower--left { left: -1.32rem; transform: translateY(-50%) rotate(-12deg); }
+.love-stage__flower--right { right: -1.32rem; transform: translateY(-50%) rotate(12deg); }
 
 .love-stage__flower--corner {
   display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.05rem;
+  height: 2.05rem;
   place-items: center;
-  background: #ffffff;
-  font-size: 1.15rem;
-  text-shadow: 0 3px 7px rgba(139, 47, 114, 0.16);
+  border: 1px solid rgba(206, 109, 152, 0.44);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 40%, #fff4f9 41% 66%, #fff 67%);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.26), 0 5px 13px rgba(139, 47, 114, 0.13);
+  font-size: 1.12rem;
+  text-shadow: 0 3px 7px rgba(139, 47, 114, 0.18);
 }
 
-.love-stage__flower--tl { top: -0.88rem; left: -0.88rem; transform: rotate(-18deg); }
-.love-stage__flower--tr { top: -0.88rem; right: -0.88rem; transform: rotate(18deg); }
-.love-stage__flower--bl { bottom: -0.88rem; left: -0.88rem; transform: rotate(18deg); }
-.love-stage__flower--br { right: -0.88rem; bottom: -0.88rem; transform: rotate(-18deg); }
+.love-stage__flower--tl { top: -1.05rem; left: -1.05rem; transform: rotate(-18deg); }
+.love-stage__flower--tr { top: -1.05rem; right: -1.05rem; transform: rotate(18deg); }
+.love-stage__flower--bl { bottom: -1.05rem; left: -1.05rem; transform: rotate(18deg); }
+.love-stage__flower--br { right: -1.05rem; bottom: -1.05rem; transform: rotate(-18deg); }
 
 .love-stage::after {
   content: "";
   position: absolute;
-  inset: 0.55rem;
+  inset: 0.62rem;
   z-index: 5;
-  border: 1px solid rgba(206, 109, 152, 0.28);
-  box-shadow: inset 0 0 0 3px #ffffff, inset 0 0 0 4px rgba(233, 161, 191, 0.16);
+  border: 1px solid rgba(206, 109, 152, 0.32);
+  border-radius: 0.18rem;
+  box-shadow: inset 0 0 0 3px #ffffff, inset 0 0 0 4px rgba(233, 161, 191, 0.2), inset 0 0 0 7px #fff, inset 0 0 0 8px rgba(233, 161, 191, 0.1);
   pointer-events: none;
 }
 
@@ -383,9 +408,11 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-copy__line--english {
   font-family: var(--love-font-en);
-  font-size: clamp(1.02rem, 1.45vw, 1.2rem);
-  line-height: 1.55;
-  letter-spacing: 0.015em;
+  font-size: clamp(1.08rem, 1.52vw, 1.28rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.48;
+  letter-spacing: 0.01em;
 }
 
 .love-copy__line--emphasis {
@@ -1155,6 +1182,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
   .love-stage::before { inset: -0.62rem; }
   .love-stage::after { inset: 0.35rem; }
+  .love-stage__flower--side { display: none; }
   .love-stage__flower--corner { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
   .love-stage__flower--tl { top: -0.72rem; left: -0.72rem; }
   .love-stage__flower--tr { top: -0.72rem; right: -0.72rem; }

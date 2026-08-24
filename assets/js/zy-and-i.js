@@ -84,11 +84,11 @@
         x: point.x,
         y: point.y,
         radius: reducedMotion ? 8 : 0.8,
-        target: 4 + Math.random() * 3,
-        petals: 5 + Math.floor(Math.random() * 5),
+        target: 4.6 + Math.random() * 3.2,
+        petals: 6 + Math.floor(Math.random() * 5),
         rotation: Math.random() * Math.PI,
         hue: 322 + Math.random() * 32,
-        alpha: 0.14 + Math.random() * 0.16
+        alpha: 0.21 + Math.random() * 0.18
       });
     }
 
@@ -102,7 +102,9 @@
       context.translate(bloom.x - centerX, bloom.y - centerY);
       context.rotate(bloom.rotation);
       context.strokeStyle = "hsla(" + bloom.hue + ", 76%, 48%, " + bloom.alpha + ")";
-      context.lineWidth = 0.82;
+      context.shadowColor = "rgba(139, 47, 114, " + (bloom.alpha * 0.42).toFixed(3) + ")";
+      context.shadowBlur = 1.6;
+      context.lineWidth = 0.96;
 
       for (var petal = 0; petal < bloom.petals; petal += 1) {
         context.save();
@@ -124,7 +126,7 @@
 
         var progress = cycle % 1;
         var expansion = 1 + progress * 0.3;
-        var opacity = 0.23 * (1 - progress);
+        var opacity = 0.29 * (1 - progress);
         var scale = Math.min(memory.clientWidth / 39, memory.clientHeight / 42) * 1.32 * pulseScale;
 
         context.save();
@@ -145,8 +147,8 @@
         context.closePath();
         context.strokeStyle = "rgba(255, 182, 222, " + opacity.toFixed(3) + ")";
         context.shadowColor = "rgba(139, 47, 114, " + (opacity * 0.7).toFixed(3) + ")";
-        context.shadowBlur = 2;
-        context.lineWidth = 1.15;
+        context.shadowBlur = 2.6;
+        context.lineWidth = 1.3;
         context.stroke();
         context.restore();
       }
