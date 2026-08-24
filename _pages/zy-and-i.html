@@ -78,7 +78,7 @@ comments: false
     </div>
   </section>
 
-  <aside class="love-sidecar" aria-label="我们的音乐与两地天气">
+  <aside class="love-sidecar" aria-label="我们的音乐与星空">
     {% if love.music and love.music != "" %}
       <section class="love-widget love-player" aria-label="背景音乐播放器">
         <audio id="love-audio" src="{{ love.music | relative_url }}" preload="metadata" playsinline data-lyrics="{{ love.lyrics | relative_url }}"></audio>
@@ -138,32 +138,26 @@ comments: false
       </section>
     {% endif %}
 
-    {% if love.weather and love.weather.size > 0 %}
-      <section class="love-widget love-weather" id="love-weather" aria-label="都柏林和合肥今日天气">
-        <header class="love-widget__header">
-          <span class="love-widget__eyebrow">TWO CITIES · ONE DAY</span>
-          <span class="love-widget__ornament" aria-hidden="true">♡</span>
-        </header>
-        <h2>两座城市，同一个今天</h2>
+    <section class="love-widget love-cosmos" id="love-cosmos" aria-label="狮子座与天蝎座的星空连线" tabindex="0">
+      <header class="love-widget__header">
+        <span class="love-widget__eyebrow">UNDER THE SAME SKY</span>
+        <span class="love-widget__ornament" aria-hidden="true">✦</span>
+      </header>
 
-        <div class="love-weather__cities">
-          {% for city in love.weather limit: 2 %}
-            <article class="love-weather__city" data-weather-city data-name="{{ city.name }}" data-latitude="{{ city.latitude }}" data-longitude="{{ city.longitude }}" data-timezone="{{ city.timezone }}">
-              <span class="love-weather__place">{{ city.name }}</span>
-              <span class="love-weather__local-time">当地 --:--</span>
-              <span class="love-weather__icon" aria-hidden="true">☁️</span>
-              <strong class="love-weather__temperature">--°</strong>
-              <span class="love-weather__condition">天气正在赶来</span>
-              <span class="love-weather__feels">体感 --°</span>
-            </article>
-          {% endfor %}
-          <span class="love-weather__route" aria-hidden="true"><i>♥</i></span>
-        </div>
+      <div class="love-cosmos__sky">
+        <canvas id="love-constellations" aria-hidden="true"></canvas>
+        <span class="love-cosmos__sign love-cosmos__sign--leo"><b>♌</b><small>她 · 狮子座</small></span>
+        <span class="love-cosmos__sign love-cosmos__sign--scorpio"><b>♏</b><small>我 · 天蝎座</small></span>
+        <span class="love-cosmos__heart" aria-hidden="true">♥</span>
+      </div>
 
-        <p class="love-weather__message" id="love-weather-message">相隔很远，也在分享同一个今天。</p>
-        <a class="love-weather__source" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo</a>
-      </section>
-    {% endif %}
+      <p class="love-cosmos__message">隔着星河，<br>我们仍在同一片天空下。</p>
+      <div class="love-cosmos__dayline">
+        <span id="love-celestial-icon" aria-hidden="true">☀︎</span>
+        <span>从早安到晚安，都在想着你</span>
+        <time id="love-sky-time" aria-label="当前时间"></time>
+      </div>
+    </section>
   </aside>
 </main>
 

@@ -489,136 +489,171 @@
     updateButton(!audio.paused);
   }
 
-  function setupWeather() {
-    var widget = document.getElementById("love-weather");
-    if (!widget) return;
+  function setupCosmos() {
+    var widget = document.getElementById("love-cosmos");
+    var canvas = document.getElementById("love-constellations");
+    var sky = widget && widget.querySelector(".love-cosmos__sky");
+    var celestialIcon = document.getElementById("love-celestial-icon");
+    var timeLabel = document.getElementById("love-sky-time");
+    if (!widget || !canvas || !sky) return;
 
-    var cityElements = Array.prototype.slice.call(widget.querySelectorAll("[data-weather-city]"));
-    var message = document.getElementById("love-weather-message");
-    var cacheDuration = 30 * 60 * 1000;
-    window.loveWeatherMessages = window.loveWeatherMessages || [];
+    var context = canvas.getContext("2d");
+    if (!context) return;
 
-    function describeWeather(code, isDay) {
-      if (code === 0) return { icon: isDay ? "☀️" : "🌙", label: "晴朗", type: "clear" };
-      if (code === 1 || code === 2) return { icon: isDay ? "🌤️" : "☁️", label: "晴间多云", type: "cloud" };
-      if (code === 3) return { icon: "☁️", label: "多云", type: "cloud" };
-      if (code === 45 || code === 48) return { icon: "🌫️", label: "有雾", type: "fog" };
-      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { icon: "🌧️", label: "有雨", type: "rain" };
-      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return { icon: "🌨️", label: "有雪", type: "snow" };
-      if (code >= 95) return { icon: "⛈️", label: "雷雨", type: "storm" };
-      return { icon: "☁️", label: "天气温柔", type: "cloud" };
+    var width = 0;
+    var height = 0;
+    var pointer = null;
+    var burst = null;
+    var burstUntil = 0;
+    var leo = [
+      { x: 0.09, y: 0.56, s: 1.5, p: 0.1 }, { x: 0.15, y: 0.45, s: 1.9, p: 1.2 },
+      { x: 0.21, y: 0.35, s: 1.5, p: 2.3 }, { x: 0.27, y: 0.23, s: 2.1, p: 0.8 },
+      { x: 0.34, y: 0.28, s: 1.6, p: 3.1 }, { x: 0.36, y: 0.41, s: 2, p: 1.7 },
+      { x: 0.29, y: 0.49, s: 1.45, p: 2.7 }, { x: 0.20, y: 0.50, s: 1.6, p: 4.1 }
+    ];
+    var scorpio = [
+      { x: 0.64, y: 0.30, s: 1.8, p: 0.6 }, { x: 0.70, y: 0.36, s: 1.5, p: 2.1 },
+      { x: 0.76, y: 0.34, s: 2.1, p: 3.3 }, { x: 0.80, y: 0.43, s: 1.5, p: 1.4 },
+      { x: 0.79, y: 0.53, s: 1.8, p: 2.8 }, { x: 0.75, y: 0.62, s: 1.5, p: 4.2 },
+      { x: 0.81, y: 0.68, s: 2, p: 0.3 }, { x: 0.88, y: 0.62, s: 1.55, p: 3.7 },
+      { x: 0.91, y: 0.53, s: 1.75, p: 2.5 }
+    ];
+    var ambient = [
+      { x: 0.04, y: 0.18, s: 0.7, p: 0.2 }, { x: 0.45, y: 0.18, s: 0.65, p: 1.8 },
+      { x: 0.55, y: 0.60, s: 0.75, p: 2.9 }, { x: 0.95, y: 0.24, s: 0.65, p: 4.1 },
+      { x: 0.48, y: 0.72, s: 0.6, p: 3.5 }, { x: 0.58, y: 0.12, s: 0.7, p: 1.1 }
+    ];
+
+    window.loveCosmosMessages = [
+      "糖宝仰头看见啦：狮子座和天蝎座正偷偷牵着手 ♡",
+      "隔着星河也不怕，你们始终在同一片天空下。",
+      "从早安到晚安，糖宝替你们把想念好好收着。"
+    ];
+
+    function fitCanvas() {
+      var rectangle = sky.getBoundingClientRect();
+      var ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(1, rectangle.width);
+      height = Math.max(1, rectangle.height);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
     }
 
-    function formatLocalTime(timezone) {
-      try {
-        return new Intl.DateTimeFormat("zh-CN", {
-          timeZone: timezone,
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false
-        }).format(new Date());
-      } catch (error) {
-        return "--:--";
-      }
-    }
-
-    function readCache(key) {
-      try {
-        var cached = JSON.parse(window.localStorage.getItem(key));
-        if (cached && Date.now() - cached.savedAt < cacheDuration) return cached.data;
-      } catch (error) {
-        return null;
-      }
-      return null;
-    }
-
-    function writeCache(key, data) {
-      try {
-        window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), data: data }));
-      } catch (error) {
-        return;
-      }
-    }
-
-    function fetchCity(city) {
-      var latitude = city.dataset.latitude;
-      var longitude = city.dataset.longitude;
-      var timezone = city.dataset.timezone;
-      var cacheKey = "zy-weather-" + latitude + "-" + longitude;
-      var cached = readCache(cacheKey);
-      if (cached) return Promise.resolve(cached);
-
-      var parameters = new URLSearchParams({
-        latitude: latitude,
-        longitude: longitude,
-        current: "temperature_2m,apparent_temperature,weather_code,is_day,precipitation,wind_speed_10m",
-        timezone: timezone,
-        forecast_days: "1"
+    function drawLine(points, color) {
+      context.beginPath();
+      points.forEach(function (star, index) {
+        var x = star.x * width;
+        var y = star.y * height;
+        if (index === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
       });
-
-      return fetch("https://api.open-meteo.com/v1/forecast?" + parameters.toString())
-        .then(function (response) {
-          if (!response.ok) throw new Error("Weather unavailable");
-          return response.json();
-        })
-        .then(function (data) {
-          writeCache(cacheKey, data);
-          return data;
-        });
+      context.strokeStyle = color;
+      context.lineWidth = 0.85;
+      context.stroke();
     }
 
-    function renderCity(city, data) {
-      var current = data.current || {};
-      var weather = describeWeather(Number(current.weather_code), Number(current.is_day) === 1);
-      var temperature = Number(current.temperature_2m);
-      var apparent = Number(current.apparent_temperature);
+    function drawStar(star, timestamp, isAmbient) {
+      var x = star.x * width;
+      var y = star.y * height;
+      var twinkle = reducedMotion ? 0.72 : 0.64 + Math.sin(timestamp * 0.0022 + star.p) * 0.24;
+      var pointerDistance = pointer ? Math.hypot(pointer.x - x, pointer.y - y) : Infinity;
+      var burstDistance = burst ? Math.hypot(burst.x - x, burst.y - y) : Infinity;
+      var glow = pointerDistance < 58 ? 1 - pointerDistance / 58 : 0;
+      if (timestamp < burstUntil && burstDistance < 96) glow = Math.max(glow, 1 - burstDistance / 96);
+      var radius = star.s * (1 + glow * 0.62);
+      var alpha = Math.min(1, twinkle + glow * 0.48) * (isAmbient ? 0.46 : 1);
 
-      city.querySelector(".love-weather__local-time").textContent = "当地 " + formatLocalTime(city.dataset.timezone);
-      city.querySelector(".love-weather__icon").textContent = weather.icon;
-      city.querySelector(".love-weather__temperature").textContent = Number.isFinite(temperature) ? Math.round(temperature) + "°" : "--°";
-      city.querySelector(".love-weather__condition").textContent = weather.label;
-      city.querySelector(".love-weather__feels").textContent = Number.isFinite(apparent) ? "体感 " + Math.round(apparent) + "°" : "体感 --°";
-
-      return {
-        name: city.dataset.name,
-        temperature: temperature,
-        type: weather.type
-      };
+      context.beginPath();
+      context.arc(x, y, radius + glow * 1.8, 0, Math.PI * 2);
+      context.fillStyle = "rgba(214, 112, 162," + (alpha * 0.16) + ")";
+      context.fill();
+      context.beginPath();
+      context.arc(x, y, radius, 0, Math.PI * 2);
+      context.fillStyle = "rgba(151, 65, 119," + alpha + ")";
+      context.fill();
     }
 
-    function chooseWeatherMessage(cities) {
-      var first = cities[0];
-      var second = cities[1];
-      if (!first || !second) return "相隔很远，也在分享同一个今天。";
-
-      if (first.type === "clear" && second.type === "clear") return "今天的阳光，同时落在我们身上。";
-      if (first.type === "rain" && second.type === "rain") return "原来今天，我们听见的是同一场雨。";
-      if (first.type === "rain") return "都柏林有雨，合肥替你留着一盏晴天。";
-      if (second.type === "rain") return "合肥有雨，都柏林把思念寄进了云里。";
-      if (first.type === "snow" || second.type === "snow") return "天气各有冷暖，牵挂始终温热。";
-      if (Math.abs(first.temperature - second.temperature) >= 12) return "隔着不同的温度，也在走向同一个以后。";
-      return "相隔很远，也在分享同一个今天。";
+    function drawBridge() {
+      context.save();
+      context.beginPath();
+      context.moveTo(0.38 * width, 0.4 * height);
+      context.bezierCurveTo(0.44 * width, 0.31 * height, 0.56 * width, 0.47 * height, 0.62 * width, 0.32 * height);
+      context.setLineDash([2.5, 4.5]);
+      context.strokeStyle = "rgba(190, 76, 137, 0.48)";
+      context.lineWidth = 0.9;
+      context.stroke();
+      context.restore();
     }
 
-    Promise.all(cityElements.map(function (city) {
-      return fetchCity(city).then(function (data) { return renderCity(city, data); });
-    })).then(function (cities) {
-      var weatherMessage = chooseWeatherMessage(cities);
-      message.textContent = weatherMessage;
-      window.loveWeatherMessages = [
-        weatherMessage,
-        cities[0].type === "rain" ? "糖宝提醒：ZY今天记得带伞呀！" : "糖宝播报：都柏林今天也要好好生活！",
-        "两座城市，两份天气，同一个想要抵达的以后。"
-      ];
-    }).catch(function () {
-      message.textContent = "两地天气暂时藏进云里了，晚一点再来看。";
-    });
+    function drawOrbit(now) {
+      var hours = now.getHours() + now.getMinutes() / 60;
+      var isDay = hours >= 6 && hours < 18;
+      var progress = isDay ? (hours - 6) / 12 : ((hours >= 18 ? hours - 18 : hours + 6) / 12);
+      var startX = 0.11 * width;
+      var endX = 0.89 * width;
+      var baseline = 0.91 * height;
+      var apex = 0.72 * height;
+      var controlX = 0.5 * width;
+      var controlY = apex - (baseline - apex);
+      var x = Math.pow(1 - progress, 2) * startX + 2 * (1 - progress) * progress * controlX + Math.pow(progress, 2) * endX;
+      var y = Math.pow(1 - progress, 2) * baseline + 2 * (1 - progress) * progress * controlY + Math.pow(progress, 2) * baseline;
 
-    window.setInterval(function () {
-      cityElements.forEach(function (city) {
-        city.querySelector(".love-weather__local-time").textContent = "当地 " + formatLocalTime(city.dataset.timezone);
-      });
-    }, 60000);
+      context.beginPath();
+      context.moveTo(startX, baseline);
+      context.quadraticCurveTo(controlX, controlY, endX, baseline);
+      context.strokeStyle = isDay ? "rgba(200, 143, 90, 0.22)" : "rgba(114, 92, 155, 0.24)";
+      context.lineWidth = 0.8;
+      context.stroke();
+      context.beginPath();
+      context.arc(x, y, isDay ? 2.6 : 2.3, 0, Math.PI * 2);
+      context.fillStyle = isDay ? "rgba(202, 139, 72, 0.9)" : "rgba(113, 92, 157, 0.88)";
+      context.shadowColor = isDay ? "rgba(231, 178, 103, 0.68)" : "rgba(160, 139, 198, 0.62)";
+      context.shadowBlur = 7;
+      context.fill();
+      context.shadowBlur = 0;
+    }
+
+    function updateSkyTime() {
+      var now = new Date();
+      var isDay = now.getHours() >= 6 && now.getHours() < 18;
+      widget.classList.toggle("is-night", !isDay);
+      if (celestialIcon) celestialIcon.textContent = isDay ? "☀︎" : "☾";
+      if (timeLabel) timeLabel.textContent = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+    }
+
+    function draw(timestamp) {
+      context.clearRect(0, 0, width, height);
+      drawLine(leo, "rgba(166, 89, 137, 0.34)");
+      drawLine(scorpio, "rgba(130, 94, 157, 0.34)");
+      drawBridge();
+      ambient.forEach(function (star) { drawStar(star, timestamp, true); });
+      leo.forEach(function (star) { drawStar(star, timestamp, false); });
+      scorpio.forEach(function (star) { drawStar(star, timestamp, false); });
+      drawOrbit(new Date());
+      if (!reducedMotion) window.requestAnimationFrame(draw);
+    }
+
+    function locatePointer(event) {
+      var rectangle = sky.getBoundingClientRect();
+      return { x: event.clientX - rectangle.left, y: event.clientY - rectangle.top };
+    }
+
+    sky.addEventListener("pointermove", function (event) { pointer = locatePointer(event); }, { passive: true });
+    sky.addEventListener("pointerleave", function () { pointer = null; }, { passive: true });
+    widget.addEventListener("pointerdown", function (event) {
+      var rectangle = sky.getBoundingClientRect();
+      burst = { x: event.clientX - rectangle.left, y: event.clientY - rectangle.top };
+      burstUntil = window.performance.now() + 850;
+      if (reducedMotion) draw(window.performance.now());
+    }, { passive: true });
+
+    fitCanvas();
+    updateSkyTime();
+    draw(window.performance.now());
+    window.setInterval(updateSkyTime, 60000);
+    if (window.ResizeObserver) new window.ResizeObserver(function () { fitCanvas(); if (reducedMotion) draw(window.performance.now()); }).observe(sky);
+    else window.addEventListener("resize", function () { fitCanvas(); if (reducedMotion) draw(window.performance.now()); });
   }
 
   function setupHeartClicks() {
@@ -751,7 +786,7 @@
     }
 
     function revealMessage() {
-      var availableMessages = messages.concat(window.loveWeatherMessages || []);
+      var availableMessages = messages.concat(window.loveCosmosMessages || []);
       messageIndex = (messageIndex + 1) % availableMessages.length;
       bubble.textContent = availableMessages[messageIndex];
       tangbao.classList.add("is-speaking");
@@ -977,7 +1012,7 @@
     createHeartAnimation();
     startClock();
     setupMusic();
-    setupWeather();
+    setupCosmos();
     setupHeartClicks();
     setupTangbao();
   }
