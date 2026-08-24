@@ -299,16 +299,16 @@
     var messageIndex = 0;
     var bubbleTimer;
     var speechPoseTimer;
-    var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-01\.webp(?:\?.*)?$/, "frame-");
+    var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
     var frameSources = [];
-    var frameSequence = [2, 3, 2, 6];
+    var frameSequence = [14, 15, 16, 17, 18, 19];
     var frameDuration = 145;
     var frameLoops = true;
     var frameStartedAt = window.performance.now();
     var displayedFrame = 0;
     var framePreloads = [];
 
-    for (var frameNumber = 1; frameNumber <= 13; frameNumber += 1) {
+    for (var frameNumber = 1; frameNumber <= 19; frameNumber += 1) {
       var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
       frameSources.push(frameSource);
       var preload = new Image();
@@ -318,13 +318,13 @@
 
     function setFrameAction(action) {
       var sequences = {
-        "is-action-trot": { frames: [2, 3, 2, 6], duration: 155 },
-        "is-action-dash": { frames: [2, 3, 6, 3], duration: 105 },
+        "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], duration: 125 },
+        "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], duration: 88 },
         "is-action-leap": { frames: [4, 1, 5, 5, 6, 7], duration: 155, loop: false },
         "is-action-look": { frames: [7, 8, 8, 7], duration: 310 },
         "is-action-celebrate": { frames: [7, 8, 9, 9, 8, 7], duration: 185, loop: false },
         "is-action-ball": { frames: [10, 11, 10, 11, 12, 6, 13, 13], duration: 225, loop: false },
-        "is-action-settle": { frames: [6, 7, 7], duration: 190, loop: false }
+        "is-action-settle": { frames: [18, 19, 15], duration: 175, loop: false }
       };
       var selected = sequences[action] || sequences["is-action-trot"];
       frameSequence = selected.frames;

@@ -104,7 +104,7 @@ body.love-page {
   pointer-events: none;
   filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));
   --tangbao-direction: 1;
-  animation: tangbao-trot 620ms ease-in-out infinite;
+  animation: tangbao-trot 750ms linear infinite;
   transform-origin: center bottom;
 }
 
@@ -112,7 +112,7 @@ body.love-page {
   --tangbao-direction: -1;
 }
 
-.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 360ms ease-in-out infinite; }
+.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 528ms linear infinite; }
 .tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 920ms cubic-bezier(0.32, 0.02, 0.25, 1) 1 both; }
 .tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.2s ease-in-out infinite; }
 .tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 780ms ease-in-out 1 both; }
@@ -217,15 +217,17 @@ body.love-page {
 .love-stage::before {
   content: "";
   position: absolute;
-  inset: -1.05rem;
+  inset: -0.85rem;
   z-index: -1;
+  border: 1px solid rgba(206, 109, 152, 0.58);
+  border-radius: 0.35rem;
   pointer-events: none;
   background:
-    radial-gradient(circle at 0.5rem 0, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top left / 1rem 0.7rem repeat-x,
-    radial-gradient(circle at 0.5rem 100%, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) bottom left / 1rem 0.7rem repeat-x,
-    radial-gradient(circle at 0 0.5rem, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top left / 0.7rem 1rem repeat-y,
-    radial-gradient(circle at 100% 0.5rem, transparent 0 0.3rem, var(--love-lace) 0.33rem 0.47rem, transparent 0.5rem) top right / 0.7rem 1rem repeat-y;
-  filter: drop-shadow(0 3px 3px rgba(139, 47, 114, 0.1));
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top 0.22rem left / 0.7rem 0.45rem repeat-x,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) bottom 0.22rem left / 0.7rem 0.45rem repeat-x,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top left 0.22rem / 0.45rem 0.7rem repeat-y,
+    radial-gradient(circle, rgba(206, 109, 152, 0.72) 0 1.25px, transparent 1.55px) top right 0.22rem / 0.45rem 0.7rem repeat-y;
+  box-shadow: 0 5px 16px rgba(139, 47, 114, 0.09);
 }
 
 .love-stage__flower {
@@ -239,7 +241,7 @@ body.love-page {
 .love-stage__flower--top,
 .love-stage__flower--bottom {
   left: 50%;
-  padding: 0.1rem 0.75rem;
+  padding: 0.12rem 1rem;
   background: #ffffff;
   color: var(--love-lace-deep);
   font: 0.9rem/1 Georgia, "Times New Roman", serif;
@@ -248,32 +250,31 @@ body.love-page {
   white-space: nowrap;
 }
 
-.love-stage__flower--top { top: -0.55rem; }
-.love-stage__flower--bottom { bottom: -0.55rem; transform: translateX(-50%) rotate(180deg); }
+.love-stage__flower--top { top: -0.48rem; }
+.love-stage__flower--bottom { bottom: -0.48rem; transform: translateX(-50%) rotate(180deg); }
 
 .love-stage__flower--corner {
   display: grid;
   width: 1.75rem;
   height: 1.75rem;
   place-items: center;
-  border: 1px solid rgba(206, 109, 152, 0.5);
-  border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 2px 7px rgba(139, 47, 114, 0.12);
-  font-size: 0.95rem;
+  font-size: 1.15rem;
+  text-shadow: 0 3px 7px rgba(139, 47, 114, 0.16);
 }
 
-.love-stage__flower--tl { top: -0.85rem; left: -0.85rem; }
-.love-stage__flower--tr { top: -0.85rem; right: -0.85rem; }
-.love-stage__flower--bl { bottom: -0.85rem; left: -0.85rem; }
-.love-stage__flower--br { right: -0.85rem; bottom: -0.85rem; }
+.love-stage__flower--tl { top: -0.88rem; left: -0.88rem; transform: rotate(-18deg); }
+.love-stage__flower--tr { top: -0.88rem; right: -0.88rem; transform: rotate(18deg); }
+.love-stage__flower--bl { bottom: -0.88rem; left: -0.88rem; transform: rotate(18deg); }
+.love-stage__flower--br { right: -0.88rem; bottom: -0.88rem; transform: rotate(-18deg); }
 
 .love-stage::after {
   content: "";
   position: absolute;
   inset: 0.55rem;
   z-index: 5;
-  border: 1px dashed rgba(206, 109, 152, 0.34);
+  border: 1px solid rgba(206, 109, 152, 0.28);
+  box-shadow: inset 0 0 0 3px #ffffff, inset 0 0 0 4px rgba(233, 161, 191, 0.16);
   pointer-events: none;
 }
 
@@ -451,13 +452,13 @@ body.love-page {
 }
 
 @keyframes tangbao-trot {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
-  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.14rem) rotate(1deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.035rem); }
 }
 
 @keyframes tangbao-dash {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
-  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(1deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-0.35deg); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.07rem) rotate(0.35deg); }
 }
 
 @keyframes tangbao-leap {
@@ -524,7 +525,7 @@ body.love-page {
     padding: 1rem;
     gap: 1rem;
   }
-  .love-stage::before { inset: -0.72rem; }
+  .love-stage::before { inset: -0.62rem; }
   .love-stage::after { inset: 0.35rem; }
   .love-stage__flower--corner { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
   .love-stage__flower--tl { top: -0.72rem; left: -0.72rem; }
