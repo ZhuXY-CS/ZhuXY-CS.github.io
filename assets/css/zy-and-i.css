@@ -745,6 +745,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 .love-player .love-widget__header { grid-column: 1 / -1; margin: 0 -0.9rem; }
+.love-player .love-widget__eyebrow { font-size: 0.74rem; }
 
 .love-player__record {
   position: relative;
@@ -774,7 +775,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-player__meta strong {
   overflow: hidden;
   color: var(--love-accent);
-  font: 1.08rem/1.35 var(--love-font-cn);
+  font: 1.18rem/1.35 var(--love-font-cn);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -783,7 +784,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   margin-top: 0.18rem;
   overflow: hidden;
   color: rgba(59, 49, 56, 0.58);
-  font: 0.66rem/1.4 var(--love-font-utility);
+  font: 0.78rem/1.4 var(--love-font-utility);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -807,7 +808,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   margin: 0.12rem 0;
   overflow: hidden;
   color: rgba(59, 49, 56, 0.38);
-  font: 0.72rem/1.35 var(--love-font-cn);
+  font: 0.82rem/1.35 var(--love-font-cn);
   text-overflow: ellipsis;
   transition: color 280ms ease, transform 280ms ease, opacity 280ms ease;
   white-space: nowrap;
@@ -815,7 +816,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-player__lyric--current {
   color: var(--love-accent);
-  font-size: 0.88rem;
+  font-size: 1rem;
   font-weight: 600;
   transform: scale(1.02);
 }
@@ -843,7 +844,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   justify-content: space-between;
   margin-bottom: 0.2rem;
   color: rgba(139, 47, 114, 0.56);
-  font: 0.5rem/1.2 var(--love-font-utility);
+  font: 0.66rem/1.2 var(--love-font-utility);
   letter-spacing: 0.1em;
 }
 
@@ -864,9 +865,9 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   width: 100%;
   min-width: 0;
-  padding: 0.3rem 0.38rem;
-  grid-template-columns: 1.3rem minmax(0, 1fr) 1rem;
-  gap: 0.32rem;
+  padding: 0.36rem 0.42rem;
+  grid-template-columns: 1.5rem minmax(0, 1fr) 1.1rem;
+  gap: 0.36rem;
   align-items: center;
   border: 0;
   border-bottom: 1px solid rgba(233, 161, 191, 0.14);
@@ -887,7 +888,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-player__track-index::before {
   content: counter(love-track, decimal-leading-zero);
   color: rgba(59, 49, 56, 0.38);
-  font: 0.5rem/1 var(--love-font-utility);
+  font: 0.62rem/1 var(--love-font-utility);
 }
 
 .love-player__track-copy { display: flex; min-width: 0; flex-direction: column; }
@@ -899,9 +900,9 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   white-space: nowrap;
 }
 
-.love-player__track-copy strong { font: 0.68rem/1.25 var(--love-font-cn); }
-.love-player__track-copy small { color: rgba(59, 49, 56, 0.46); font: 0.48rem/1.25 var(--love-font-utility); }
-.love-player__track-state { color: transparent; font: 0.7rem/1 Georgia, serif; text-align: center; }
+.love-player__track-copy strong { font: 0.8rem/1.3 var(--love-font-cn); }
+.love-player__track-copy small { color: rgba(59, 49, 56, 0.5); font: 0.62rem/1.3 var(--love-font-utility); }
+.love-player__track-state { color: transparent; font: 0.85rem/1 Georgia, serif; text-align: center; }
 .love-player__track.is-active .love-player__track-state { color: var(--love-lace-deep); }
 
 .love-player__toggle {
@@ -931,7 +932,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-player__skip:hover,
 .love-player__skip:focus-visible { color: var(--love-accent); outline: none; transform: scale(1.08); }
 
-.love-player__note { font: 1rem/1 "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
+.love-player__note { font: 1.08rem/1 "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
 .love-player__timeline { min-width: 0; flex: 1; }
 
 .love-player__progress {
@@ -968,7 +969,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   justify-content: space-between;
   margin-top: 0.18rem;
   color: rgba(59, 49, 56, 0.5);
-  font: 0.55rem/1 var(--love-font-utility);
+  font: 0.68rem/1 var(--love-font-utility);
 }
 
 .love-weather {
