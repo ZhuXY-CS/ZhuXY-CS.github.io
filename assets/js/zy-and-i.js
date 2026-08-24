@@ -457,6 +457,68 @@
       return { icon: "☁️", label: "天气温柔" };
     }
 
+    function weatherKind(code) {
+      if (code === 0) return "晴";
+      if (code === 1 || code === 2) return "多云";
+      if (code === 3) return "阴";
+      if (code === 45 || code === 48) return "雾";
+      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "雨";
+      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "雪";
+      if (code >= 95) return "雷雨";
+      return "多云";
+    }
+
+    function describeDay(codes, fallbackCode) {
+      var sequence = [];
+
+      codes.forEach(function (code) {
+        var kind = weatherKind(Number(code));
+        if (sequence[sequence.length - 1] !== kind) sequence.push(kind);
+      });
+
+      if (!sequence.length) sequence.push(weatherKind(Number(fallbackCode)));
+
+      var uniqueKinds = sequence.filter(function (kind, index) {
+        return sequence.indexOf(kind) === index;
+      });
+
+      if (uniqueKinds.length === 1) {
+        return {
+          "晴": "晴朗一整天",
+          "多云": "多云为主",
+          "阴": "阴天为主",
+          "雾": "有雾，出门慢一点",
+          "雨": "全天有雨",
+          "雪": "全天有雪",
+          "雷雨": "可能有雷雨"
+        }[uniqueKinds[0]];
+      }
+
+      var first = sequence[0];
+      var last = sequence[sequence.length - 1];
+
+      if (uniqueKinds.length === 2) {
+        if (uniqueKinds.indexOf("晴") !== -1 && uniqueKinds.indexOf("多云") !== -1) return "晴间多云";
+        if (first !== last) return first + "转" + last;
+        return first + "为主，间有" + uniqueKinds.filter(function (kind) { return kind !== first; })[0];
+      }
+
+      var changingWeather = ["雷雨", "雪", "雨", "雾"].filter(function (kind) {
+        return uniqueKinds.indexOf(kind) !== -1;
+      })[0];
+
+      if (changingWeather) {
+        var changeIndex = sequence.indexOf(changingWeather);
+        var beforeChange = changeIndex > 0 ? sequence[changeIndex - 1] : changingWeather;
+        var summary = beforeChange === changingWeather ? changingWeather + "为主" : beforeChange + "转" + changingWeather;
+        if (last !== changingWeather && last !== beforeChange) summary += "，随后转" + last;
+        return summary;
+      }
+
+      if (first !== last) return first + "转" + last;
+      return first + "为主，云量有变化";
+    }
+
     function readCache(key) {
       try {
         var cached = JSON.parse(window.localStorage.getItem(key));
@@ -479,15 +541,14 @@
       var latitude = place.dataset.latitude;
       var longitude = place.dataset.longitude;
       var timezone = place.dataset.timezone;
-      var cacheKey = "zy-weather-v2-" + latitude + "-" + longitude;
+      var cacheKey = "zy-weather-v3-" + latitude + "-" + longitude;
       var cached = readCache(cacheKey);
       if (cached) return Promise.resolve(cached);
 
       var parameters = new URLSearchParams({
         latitude: latitude,
         longitude: longitude,
-        current: "temperature_2m,weather_code,is_day",
-        hourly: "temperature_2m,weather_code",
+        hourly: "weather_code",
         daily: "weather_code,temperature_2m_max,temperature_2m_min",
         timezone: timezone,
         forecast_days: "2"
@@ -504,113 +565,44 @@
         });
     }
 
-    function drawTemperatureChart(canvas, temperatures) {
-      var context = canvas.getContext("2d");
-      if (!context || !temperatures.length) return;
-
-      var rectangle = canvas.getBoundingClientRect();
-      var ratio = Math.min(window.devicePixelRatio || 1, 2);
-      var width = Math.max(1, rectangle.width);
-      var height = Math.max(1, rectangle.height);
-      var minimum = Math.min.apply(Math, temperatures);
-      var maximum = Math.max.apply(Math, temperatures);
-      var spread = Math.max(3, maximum - minimum);
-      var paddingX = 4;
-      var paddingY = 6;
-
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
-      context.clearRect(0, 0, width, height);
-
-      var points = temperatures.map(function (temperature, index) {
-        return {
-          x: paddingX + index * (width - paddingX * 2) / Math.max(1, temperatures.length - 1),
-          y: paddingY + (maximum - temperature) / spread * (height - paddingY * 2)
-        };
-      });
-
-      var gradient = context.createLinearGradient(0, 0, 0, height);
-      gradient.addColorStop(0, "rgba(213, 103, 156, 0.24)");
-      gradient.addColorStop(1, "rgba(213, 103, 156, 0.01)");
-      context.beginPath();
-      context.moveTo(points[0].x, height - 2);
-      points.forEach(function (point) { context.lineTo(point.x, point.y); });
-      context.lineTo(points[points.length - 1].x, height - 2);
-      context.closePath();
-      context.fillStyle = gradient;
-      context.fill();
-
-      context.beginPath();
-      points.forEach(function (point, index) {
-        if (index === 0) context.moveTo(point.x, point.y);
-        else context.lineTo(point.x, point.y);
-      });
-      context.strokeStyle = "rgba(165, 61, 118, 0.72)";
-      context.lineWidth = 1.25;
-      context.lineJoin = "round";
-      context.lineCap = "round";
-      context.stroke();
-
-      points.forEach(function (point, index) {
-        if (index !== 0 && index !== points.length - 1 && index % 2 !== 0) return;
-        context.beginPath();
-        context.arc(point.x, point.y, 1.6, 0, Math.PI * 2);
-        context.fillStyle = "#b84380";
-        context.fill();
-      });
-    }
-
     function renderPlace(place, data) {
-      var current = data.current || {};
       var daily = data.daily || {};
       var hourly = data.hourly || {};
-      var currentWeather = describeWeather(Number(current.weather_code), Number(current.is_day) === 1);
+      var todayWeather = describeWeather(Number((daily.weather_code || [])[0]), true);
       var tomorrowWeather = describeWeather(Number((daily.weather_code || [])[1]), true);
       var todayDate = (daily.time || [])[0] || "";
-      var chartTemperatures = [];
+      var todayCodes = [];
 
       (hourly.time || []).forEach(function (time, index) {
         var hour = Number(String(time).slice(11, 13));
-        var temperature = Number((hourly.temperature_2m || [])[index]);
-        if (String(time).slice(0, 10) === todayDate && hour >= 6 && hour <= 23 && (hour % 3 === 0 || hour === 23) && Number.isFinite(temperature)) {
-          chartTemperatures.push(temperature);
+        if (String(time).slice(0, 10) === todayDate && hour >= 6 && hour <= 23 && hour % 3 === 0) {
+          todayCodes.push(Number((hourly.weather_code || [])[index]));
         }
       });
 
-      var currentTemperature = Number(current.temperature_2m);
+      var todayHigh = Number((daily.temperature_2m_max || [])[0]);
+      var todayLow = Number((daily.temperature_2m_min || [])[0]);
       var tomorrowHigh = Number((daily.temperature_2m_max || [])[1]);
       var tomorrowLow = Number((daily.temperature_2m_min || [])[1]);
-      var chart = place.querySelector(".love-weather__chart");
+      var today = place.querySelector(".love-weather__day--today");
+      var tomorrow = place.querySelector(".love-weather__day--tomorrow");
 
-      place.querySelector(".love-weather__icon").textContent = currentWeather.icon;
-      place.querySelector(".love-weather__temperature").textContent = Number.isFinite(currentTemperature) ? Math.round(currentTemperature) + "°" : "--°";
-      place.querySelector(".love-weather__condition").textContent = currentWeather.label;
-      place.querySelector(".love-weather__tomorrow-icon").textContent = tomorrowWeather.icon;
-      place.querySelector(".love-weather__tomorrow-temperature").textContent = Number.isFinite(tomorrowLow) && Number.isFinite(tomorrowHigh) ? Math.round(tomorrowLow) + "° / " + Math.round(tomorrowHigh) + "°" : "--° / --°";
-      place.querySelector(".love-weather__tomorrow-condition").textContent = tomorrowWeather.label;
-      chart.setAttribute("aria-label", "今天从清晨到夜晚的温度变化：" + chartTemperatures.map(function (temperature) { return Math.round(temperature) + "度"; }).join("、"));
-      place._loveWeatherTemperatures = chartTemperatures;
-      drawTemperatureChart(chart, chartTemperatures);
+      today.querySelector(".love-weather__day-icon").textContent = todayWeather.icon;
+      today.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(todayLow) && Number.isFinite(todayHigh) ? Math.round(todayLow) + "° / " + Math.round(todayHigh) + "°" : "--° / --°";
+      today.querySelector(".love-weather__day-condition").textContent = describeDay(todayCodes, (daily.weather_code || [])[0]);
+      tomorrow.querySelector(".love-weather__day-icon").textContent = tomorrowWeather.icon;
+      tomorrow.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(tomorrowLow) && Number.isFinite(tomorrowHigh) ? Math.round(tomorrowLow) + "° / " + Math.round(tomorrowHigh) + "°" : "--° / --°";
+      tomorrow.querySelector(".love-weather__day-condition").textContent = tomorrowWeather.label;
     }
 
     Promise.all(places.map(function (place) {
       return fetchPlace(place).then(function (data) { renderPlace(place, data); });
     })).catch(function () {
       places.forEach(function (place) {
-        place.querySelector(".love-weather__condition").textContent = "天气暂时藏进云里";
-        place.querySelector(".love-weather__tomorrow-condition").textContent = "晚一点再来看";
+        place.querySelector(".love-weather__day--today .love-weather__day-condition").textContent = "天气暂时藏进云里";
+        place.querySelector(".love-weather__day--tomorrow .love-weather__day-condition").textContent = "晚一点再来看";
       });
     });
-
-    if (window.ResizeObserver) {
-      places.forEach(function (place) {
-        var chart = place.querySelector(".love-weather__chart");
-        new window.ResizeObserver(function () {
-          if (place._loveWeatherTemperatures) drawTemperatureChart(chart, place._loveWeatherTemperatures);
-        }).observe(chart);
-      });
-    }
   }
 
   function setupHeartClicks() {

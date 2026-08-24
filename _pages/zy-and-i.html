@@ -147,29 +147,28 @@ comments: false
       <div class="love-weather__places">
         {% for place in love.weather limit: 2 %}
           <article class="love-weather__place" data-weather-place data-latitude="{{ place.latitude }}" data-longitude="{{ place.longitude }}" data-timezone="{{ place.timezone }}">
-            <div class="love-weather__now">
-              <span class="love-weather__anonymous">{% if forloop.first %}ZY♌️{% else %}小庸♏️{% endif %}</span>
-              <span class="love-weather__icon" aria-hidden="true">⋯</span>
-              <strong class="love-weather__temperature">--°</strong>
-              <small class="love-weather__condition">天气正在赶来</small>
-            </div>
+            <span class="love-weather__anonymous">{% if forloop.first %}ZY♌️{% else %}小庸♏️{% endif %}</span>
 
-            <div class="love-weather__trend">
-              <canvas class="love-weather__chart" aria-label="今天从清晨到夜晚的温度变化"></canvas>
-              <div class="love-weather__hours" aria-hidden="true"><span>06</span><span>12</span><span>18</span><span>24</span></div>
-            </div>
+            <div class="love-weather__days">
+              <div class="love-weather__day love-weather__day--today">
+                <span class="love-weather__day-label">今天</span>
+                <span class="love-weather__day-icon" aria-hidden="true">⋯</span>
+                <strong class="love-weather__day-temperature">--° / --°</strong>
+                <small class="love-weather__day-condition">天气正在赶来</small>
+              </div>
 
-            <div class="love-weather__tomorrow">
-              <span>明日</span>
-              <b class="love-weather__tomorrow-icon" aria-hidden="true">⋯</b>
-              <strong class="love-weather__tomorrow-temperature">--° / --°</strong>
-              <small class="love-weather__tomorrow-condition">等待预报</small>
+              <div class="love-weather__day love-weather__day--tomorrow">
+                <span class="love-weather__day-label">明天</span>
+                <span class="love-weather__day-icon" aria-hidden="true">⋯</span>
+                <strong class="love-weather__day-temperature">--° / --°</strong>
+                <small class="love-weather__day-condition">等待预报</small>
+              </div>
             </div>
           </article>
         {% endfor %}
       </div>
 
-      <p class="love-weather__message" id="love-weather-message">无论是高新和东区，抑或是合肥与太原，还是陆地与海洋，我们的心始终在一起</p>
+      <p class="love-weather__message" id="love-weather-message">无论是高新和东区，抑或是合肥与太原，还是陆地与海洋，<br><strong>我们的心始终在一起</strong></p>
     </section>
   </aside>
 </main>
