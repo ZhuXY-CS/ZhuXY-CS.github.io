@@ -10,6 +10,7 @@ comments: false
 {% assign love = site.data["zy-and-i"] %}
 {% assign story = love.story %}
 {% assign photos = love.photos %}
+{% assign audio_tracks = site.static_files | where_exp: "track", "track.path contains '/audio/'" %}
 
 <a class="love-home" href="{{ '/' | relative_url }}" aria-label="返回学术主页">←</a>
 
@@ -80,7 +81,7 @@ comments: false
   <aside class="love-sidecar" aria-label="我们的音乐与两地天气">
     {% if love.music and love.music != "" %}
       <section class="love-widget love-player" aria-label="背景音乐播放器">
-        <audio id="love-audio" src="{{ love.music | relative_url }}" loop preload="metadata" playsinline data-lyrics="{{ love.lyrics | relative_url }}"></audio>
+        <audio id="love-audio" src="{{ love.music | relative_url }}" preload="metadata" playsinline data-lyrics="{{ love.lyrics | relative_url }}"></audio>
         <header class="love-widget__header">
           <span class="love-widget__eyebrow">OUR SONG</span>
           <span class="love-widget__ornament" aria-hidden="true">♫</span>
@@ -88,8 +89,8 @@ comments: false
 
         <div class="love-player__record" aria-hidden="true"><span>♪</span></div>
         <div class="love-player__meta">
-          <strong>{{ love.music_title | default: "背景音乐" }}</strong>
-          <span>{{ love.music_artist }}</span>
+          <strong data-track-title>{{ love.music_title | default: "背景音乐" }}</strong>
+          <span data-track-artist>{{ love.music_artist }}</span>
         </div>
 
         <div class="love-player__lyrics" id="love-lyrics" aria-live="off">
@@ -98,10 +99,37 @@ comments: false
           <p class="love-player__lyric love-player__lyric--next"></p>
         </div>
 
+        <div class="love-player__playlist" aria-label="歌曲列表">
+          <div class="love-player__playlist-title"><span>PLAYLIST</span><span data-track-count></span></div>
+          <ol>
+            {% for track in audio_tracks %}
+              {% assign track_extension = track.extname | downcase %}
+              {% if track_extension == ".mp3" or track_extension == ".m4a" or track_extension == ".ogg" or track_extension == ".wav" %}
+                {% assign track_stem = track.name | remove: track.extname %}
+                {% assign track_parts = track_stem | split: " - " %}
+                {% assign track_artist = track_parts[0] %}
+                {% assign track_prefix = track_artist | append: " - " %}
+                {% assign track_title = track_stem | remove_first: track_prefix | default: track_stem %}
+                {% if track_parts.size == 1 %}{% assign track_artist = "我们的歌" %}{% endif %}
+                {% assign lyric_path = track.path | replace: track.extname, ".lrc" %}
+                <li>
+                  <button class="love-player__track{% if track.path == love.music %} is-active{% endif %}" type="button" data-track-src="{{ track.path | relative_url }}" data-track-lyrics="{{ lyric_path | relative_url }}" data-track-title="{{ track_title | escape }}" data-track-artist="{{ track_artist | escape }}"{% if track.path == love.music %} aria-current="true"{% endif %}>
+                    <span class="love-player__track-index" aria-hidden="true"></span>
+                    <span class="love-player__track-copy"><strong>{{ track_title }}</strong><small>{{ track_artist }}</small></span>
+                    <span class="love-player__track-state" aria-hidden="true">♪</span>
+                  </button>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+        </div>
+
         <div class="love-player__controls">
+          <button class="love-player__skip love-player__previous" type="button" aria-label="上一首歌曲">‹</button>
           <button class="love-player__toggle" type="button" aria-label="播放背景音乐" aria-pressed="false" data-tooltip="播放背景音乐">
             <span class="love-player__note" aria-hidden="true">🔇</span>
           </button>
+          <button class="love-player__skip love-player__next" type="button" aria-label="下一首歌曲">›</button>
           <div class="love-player__timeline">
             <input class="love-player__progress" type="range" min="0" max="1000" value="0" aria-label="音乐播放进度">
             <div class="love-player__time"><span data-current-time>00:00</span><span data-duration>00:00</span></div>

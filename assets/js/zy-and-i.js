@@ -299,9 +299,21 @@
     var previousLyric = player.querySelector(".love-player__lyric--previous");
     var currentLyric = player.querySelector(".love-player__lyric--current");
     var nextLyric = player.querySelector(".love-player__lyric--next");
+    var titleLabel = player.querySelector("[data-track-title]");
+    var artistLabel = player.querySelector("[data-track-artist]");
+    var trackCountLabel = player.querySelector("[data-track-count]");
+    var trackButtons = Array.prototype.slice.call(player.querySelectorAll(".love-player__track"));
+    var previousButton = player.querySelector(".love-player__previous");
+    var nextButton = player.querySelector(".love-player__next");
     var lyricLines = [];
     var activeLyricIndex = -1;
+    var activeTrackIndex = trackButtons.findIndex(function (track) {
+      return new URL(track.dataset.trackSrc, document.baseURI).pathname === new URL(audio.src, document.baseURI).pathname;
+    });
     var progressFrame;
+
+    if (activeTrackIndex < 0 && trackButtons.length) activeTrackIndex = 0;
+    if (trackCountLabel) trackCountLabel.textContent = trackButtons.length + " SONG" + (trackButtons.length === 1 ? "" : "S");
 
     function formatTime(seconds) {
       if (!Number.isFinite(seconds)) return "00:00";
@@ -321,6 +333,36 @@
         }
       });
       return parsed.sort(function (left, right) { return left.time - right.time; });
+    }
+
+    function resetLyrics(message) {
+      lyricLines = [];
+      activeLyricIndex = -1;
+      previousLyric.textContent = "";
+      currentLyric.textContent = message || "歌词正在赶来";
+      nextLyric.textContent = "";
+    }
+
+    function loadLyrics(source) {
+      resetLyrics("歌词正在赶来");
+      if (!source) {
+        currentLyric.textContent = "这一首暂时没有同步歌词";
+        return;
+      }
+
+      fetch(source)
+        .then(function (response) {
+          if (!response.ok) throw new Error("Lyrics unavailable");
+          return response.text();
+        })
+        .then(function (content) {
+          lyricLines = parseLyrics(content);
+          if (!lyricLines.length) throw new Error("Lyrics empty");
+          renderLyric(true);
+        })
+        .catch(function () {
+          currentLyric.textContent = "这一首暂时没有同步歌词";
+        });
     }
 
     function renderLyric(force) {
@@ -363,6 +405,47 @@
       player.classList.toggle("is-playing", isPlaying);
     }
 
+    function markActiveTrack() {
+      trackButtons.forEach(function (track, index) {
+        var isActive = index === activeTrackIndex;
+        track.classList.toggle("is-active", isActive);
+        if (isActive) {
+          track.setAttribute("aria-current", "true");
+          var list = track.closest("ol");
+          var item = track.parentElement;
+          if (list && item && (item.offsetTop < list.scrollTop || item.offsetTop + item.offsetHeight > list.scrollTop + list.clientHeight)) {
+            list.scrollTop = Math.max(0, item.offsetTop - list.clientHeight / 2 + item.offsetHeight / 2);
+          }
+        } else {
+          track.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function selectTrack(index, shouldPlay) {
+      if (!trackButtons.length) return;
+
+      activeTrackIndex = (index + trackButtons.length) % trackButtons.length;
+      var track = trackButtons[activeTrackIndex];
+      var wasPlaying = shouldPlay === undefined ? !audio.paused : shouldPlay;
+
+      window.cancelAnimationFrame(progressFrame);
+      audio.pause();
+      audio.src = track.dataset.trackSrc;
+      audio.dataset.lyrics = track.dataset.trackLyrics || "";
+      titleLabel.textContent = track.dataset.trackTitle || "背景音乐";
+      artistLabel.textContent = track.dataset.trackArtist || "";
+      progress.value = 0;
+      progress.style.setProperty("--love-progress", "0%");
+      currentTimeLabel.textContent = "00:00";
+      durationLabel.textContent = "00:00";
+      markActiveTrack();
+      loadLyrics(audio.dataset.lyrics);
+      audio.load();
+
+      if (wasPlaying) audio.play().catch(function () { updateButton(false); });
+    }
+
     button.addEventListener("click", function () {
       if (audio.paused) {
         audio.play().catch(function () { updateButton(false); });
@@ -390,20 +473,15 @@
       renderLyric(true);
     });
 
-    if (audio.dataset.lyrics) {
-      fetch(audio.dataset.lyrics)
-        .then(function (response) {
-          if (!response.ok) throw new Error("Lyrics unavailable");
-          return response.text();
-        })
-        .then(function (content) {
-          lyricLines = parseLyrics(content);
-          renderLyric(true);
-        })
-        .catch(function () {
-          currentLyric.textContent = "歌词暂时藏进旋律里了";
-        });
-    }
+    trackButtons.forEach(function (track, index) {
+      track.addEventListener("click", function () { selectTrack(index); });
+    });
+    if (previousButton) previousButton.addEventListener("click", function () { selectTrack(activeTrackIndex - 1); });
+    if (nextButton) nextButton.addEventListener("click", function () { selectTrack(activeTrackIndex + 1); });
+    audio.addEventListener("ended", function () { selectTrack(activeTrackIndex + 1, true); });
+
+    markActiveTrack();
+    loadLyrics(audio.dataset.lyrics);
 
     updateProgress();
     updateButton(!audio.paused);

@@ -632,7 +632,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   min-width: 0;
   min-height: 625px;
-  grid-template-rows: minmax(285px, 0.94fr) minmax(315px, 1.06fr);
+  grid-template-rows: minmax(390px, 2fr) minmax(220px, 1fr);
   gap: 1rem;
 }
 
@@ -766,6 +766,80 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   align-items: center;
 }
 
+.love-player__playlist {
+  position: relative;
+  z-index: 3;
+  min-height: 0;
+  margin-top: 0.58rem;
+  grid-column: 1 / -1;
+}
+
+.love-player__playlist-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+  color: rgba(139, 47, 114, 0.56);
+  font: 0.5rem/1.2 var(--love-font-utility);
+  letter-spacing: 0.1em;
+}
+
+.love-player__playlist ol {
+  max-height: 5.15rem;
+  margin: 0;
+  padding: 0 0.18rem 0 0;
+  overflow-y: auto;
+  list-style: none;
+  counter-reset: love-track;
+  scrollbar-color: rgba(206, 109, 152, 0.42) transparent;
+  scrollbar-width: thin;
+}
+
+.love-player__playlist li { counter-increment: love-track; }
+
+.love-player__track {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  padding: 0.3rem 0.38rem;
+  grid-template-columns: 1.3rem minmax(0, 1fr) 1rem;
+  gap: 0.32rem;
+  align-items: center;
+  border: 0;
+  border-bottom: 1px solid rgba(233, 161, 191, 0.14);
+  background: transparent;
+  color: var(--love-ink);
+  text-align: left;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.love-player__track:hover,
+.love-player__track:focus-visible,
+.love-player__track.is-active {
+  outline: none;
+  background: rgba(248, 225, 235, 0.42);
+  color: var(--love-accent);
+}
+
+.love-player__track-index::before {
+  content: counter(love-track, decimal-leading-zero);
+  color: rgba(59, 49, 56, 0.38);
+  font: 0.5rem/1 var(--love-font-utility);
+}
+
+.love-player__track-copy { display: flex; min-width: 0; flex-direction: column; }
+
+.love-player__track-copy strong,
+.love-player__track-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.love-player__track-copy strong { font: 0.68rem/1.25 var(--love-font-cn); }
+.love-player__track-copy small { color: rgba(59, 49, 56, 0.46); font: 0.48rem/1.25 var(--love-font-utility); }
+.love-player__track-state { color: transparent; font: 0.7rem/1 Georgia, serif; text-align: center; }
+.love-player__track.is-active .love-player__track-state { color: var(--love-lace-deep); }
+
 .love-player__toggle {
   display: grid;
   width: 2.25rem;
@@ -778,6 +852,20 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   background: #fff;
   box-shadow: 0 5px 14px rgba(102, 55, 78, 0.11);
 }
+
+.love-player__skip {
+  width: 1.6rem;
+  height: 1.9rem;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(139, 47, 114, 0.68);
+  font: 1.35rem/1 Georgia, serif;
+}
+
+.love-player__skip:hover,
+.love-player__skip:focus-visible { color: var(--love-accent); outline: none; transform: scale(1.08); }
 
 .love-player__note { font: 1rem/1 "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
 .love-player__timeline { min-width: 0; flex: 1; }
@@ -819,15 +907,16 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   font: 0.55rem/1 var(--love-font-utility);
 }
 
-.love-weather { padding: 0 0.9rem 0.75rem; }
+.love-weather { padding: 0 0.78rem 0.48rem; }
 .love-weather .love-widget__header { margin: 0 -0.9rem; }
+.love-weather .love-widget__header { padding-top: 0.58rem; padding-bottom: 0.2rem; }
 
 .love-weather h2 {
   position: relative;
   z-index: 2;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.28rem;
   color: var(--love-accent);
-  font: 0.98rem/1.35 var(--love-font-cn);
+  font: 0.88rem/1.25 var(--love-font-cn);
   text-align: center;
 }
 
@@ -836,7 +925,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.5rem;
 }
 
 .love-weather__city {
@@ -844,7 +933,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   z-index: 1;
   display: grid;
   min-width: 0;
-  padding: 0.55rem 0.42rem;
+  padding: 0.34rem 0.3rem;
   justify-items: center;
   border: 1px solid rgba(206, 109, 152, 0.18);
   background: rgba(255, 255, 255, 0.78);
@@ -857,8 +946,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-weather__place {
   max-width: 100%;
   overflow: hidden;
-  color: rgba(59, 49, 56, 0.78);
-  font: 0.62rem/1.3 var(--love-font-utility);
+  color: rgba(59, 49, 56, 0.92);
+  font: 0.68rem/1.3 var(--love-font-utility);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -866,12 +955,12 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-weather__local-time,
 .love-weather__condition,
 .love-weather__feels {
-  color: rgba(59, 49, 56, 0.5);
-  font: 0.58rem/1.3 var(--love-font-cn);
+  color: rgba(59, 49, 56, 0.74);
+  font: 0.68rem/1.3 var(--love-font-cn);
 }
 
-.love-weather__icon { margin-top: 0.25rem; font-size: 1.35rem; }
-.love-weather__temperature { color: var(--love-accent); font: 1.28rem/1.15 Georgia, serif; }
+.love-weather__icon { margin-top: 0.12rem; font-size: 1.18rem; }
+.love-weather__temperature { color: #7b285f; font: 1.3rem/1.12 Georgia, serif; }
 
 .love-weather__route {
   position: absolute;
@@ -895,10 +984,10 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-weather__message {
   position: relative;
   z-index: 2;
-  min-height: 2.7em;
-  margin: 0.58rem 0 0.22rem;
-  color: rgba(139, 47, 114, 0.78);
-  font: 0.7rem/1.45 var(--love-font-cn);
+  min-height: 2.5em;
+  margin: 0.36rem 0 0.12rem;
+  color: rgba(111, 34, 86, 0.9);
+  font: 0.74rem/1.35 var(--love-font-cn);
   text-align: center;
 }
 
@@ -906,8 +995,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   position: relative;
   z-index: 3;
   display: block;
-  color: rgba(59, 49, 56, 0.36);
-  font: 0.48rem/1.2 var(--love-font-utility);
+  color: rgba(59, 49, 56, 0.56);
+  font: 0.52rem/1.2 var(--love-font-utility);
   text-align: center;
   text-decoration: none;
 }
@@ -1016,12 +1105,12 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   .love-sidecar {
     min-height: auto;
     grid-column: 1 / -1;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(285px, 1fr);
     grid-template-rows: none;
   }
 
-  .love-player,
-  .love-weather { min-height: 315px; }
+  .love-player { min-height: 390px; }
+  .love-weather { min-height: 285px; }
 }
 
 @media (max-width: 900px) {
@@ -1042,12 +1131,15 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
   .love-memory { min-height: min(92vw, 625px); }
   .love-copy__line { font-size: clamp(1.02rem, 3.8vw, 1.13rem); }
+  .love-sidecar { grid-template-columns: 1fr; }
+  .love-player { min-height: 390px; }
+  .love-weather { min-height: 235px; }
 }
 
 @media (max-width: 700px) {
   .love-sidecar { grid-template-columns: 1fr; }
-  .love-player,
-  .love-weather { min-height: 310px; }
+  .love-player { min-height: 390px; }
+  .love-weather { min-height: 235px; }
 }
 
 @media (max-width: 520px) {
@@ -1071,7 +1163,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
   .love-sidecar { gap: 0.8rem; }
-  .love-widget { min-height: 300px; }
+  .love-player { min-height: 390px; }
+  .love-weather { min-height: 235px; }
 
   .love-photos {
     grid-template-columns: repeat(2, 1fr);
