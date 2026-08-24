@@ -7,6 +7,7 @@
   --love-lace: #e9a1bf;
   --love-lace-deep: #ce6d98;
   --love-shadow: rgba(102, 55, 78, 0.17);
+  --love-heart-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 27.2S3.4 19.6 3.4 10.8C3.4 5.2 10.4 2.8 16 8.4c5.6-5.6 12.6-3.2 12.6 2.4C28.6 19.6 16 27.2 16 27.2Z' fill='%23e477a6' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E") 16 14, auto;
 }
 
 * { box-sizing: border-box; }
@@ -24,7 +25,11 @@ body.love-page {
   background: #ffffff;
   color: var(--love-ink);
   font-family: Consolas, Monaco, "Courier New", monospace;
+  cursor: var(--love-heart-cursor);
 }
+
+body.love-page a,
+body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-home,
 .love-music {
@@ -75,6 +80,43 @@ body.love-page {
 
 .love-music[aria-pressed="true"] .love-music__note { animation: love-note-pulse 900ms ease-in-out infinite; }
 
+.love-click-ripple {
+  position: fixed;
+  z-index: 1000;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.love-click-ripple__wave,
+.love-click-ripple__heart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  color: #df6f9f;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+
+.love-click-ripple__wave {
+  width: 2rem;
+  height: 2rem;
+  font-size: 2rem;
+  opacity: 0;
+  animation: love-click-wave 900ms cubic-bezier(0.18, 0.7, 0.25, 1) forwards;
+}
+
+.love-click-ripple__wave::before { content: "♡"; }
+.love-click-ripple__wave--2 { animation-delay: 110ms; }
+
+.love-click-ripple__heart {
+  font-size: 0.8rem;
+  animation: love-click-heart 720ms ease-out forwards;
+}
+
 .tangbao-witness {
   --tangbao-size: clamp(5.2rem, 7.5vw, 6.7rem);
   position: fixed;
@@ -104,7 +146,8 @@ body.love-page {
   pointer-events: none;
   filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));
   --tangbao-direction: 1;
-  animation: tangbao-trot 750ms linear infinite;
+  animation: none;
+  transform: scaleX(var(--tangbao-direction));
   transform-origin: center bottom;
 }
 
@@ -112,7 +155,7 @@ body.love-page {
   --tangbao-direction: -1;
 }
 
-.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 528ms linear infinite; }
+.tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: none; }
 .tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 920ms cubic-bezier(0.32, 0.02, 0.25, 1) 1 both; }
 .tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.2s ease-in-out infinite; }
 .tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 780ms ease-in-out 1 both; }
@@ -449,6 +492,18 @@ body.love-page {
 @keyframes love-note-pulse {
   0%, 100% { transform: rotate(-4deg) scale(1); }
   50% { transform: rotate(5deg) scale(1.08); }
+}
+
+@keyframes love-click-wave {
+  0% { opacity: 0.72; transform: translate(-50%, -50%) scale(0.35); }
+  72% { opacity: 0.26; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.35); }
+}
+
+@keyframes love-click-heart {
+  0% { opacity: 0; transform: translate(-50%, -42%) scale(0.5); }
+  22% { opacity: 1; transform: translate(-50%, -58%) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -145%) scale(0.85); }
 }
 
 @keyframes tangbao-trot {

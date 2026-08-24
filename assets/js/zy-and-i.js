@@ -243,6 +243,33 @@
     });
   }
 
+  function setupHeartClicks() {
+    document.addEventListener("pointerdown", function (event) {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+
+      var ripple = document.createElement("span");
+      ripple.className = "love-click-ripple";
+      ripple.style.left = event.clientX + "px";
+      ripple.style.top = event.clientY + "px";
+      ripple.setAttribute("aria-hidden", "true");
+
+      var waveCount = reducedMotion ? 0 : 2;
+      for (var waveIndex = 0; waveIndex < waveCount; waveIndex += 1) {
+        var wave = document.createElement("span");
+        wave.className = "love-click-ripple__wave love-click-ripple__wave--" + (waveIndex + 1);
+        ripple.appendChild(wave);
+      }
+
+      var heart = document.createElement("span");
+      heart.className = "love-click-ripple__heart";
+      heart.textContent = "♥";
+      ripple.appendChild(heart);
+      document.body.appendChild(ripple);
+
+      window.setTimeout(function () { ripple.remove(); }, reducedMotion ? 420 : 1100);
+    }, { passive: true });
+  }
+
   function setupTangbao() {
     var tangbao = document.getElementById("tangbao-witness");
     if (!tangbao) return;
@@ -304,6 +331,10 @@
     var frameSequence = [14, 15, 16, 17, 18, 19];
     var frameDuration = 145;
     var frameLoops = true;
+    var frameStepDistance = 0;
+    var frameDistanceTravelled = 0;
+    var frameIndex = 0;
+    var currentAction = "is-action-trot";
     var frameStartedAt = window.performance.now();
     var displayedFrame = 0;
     var framePreloads = [];
@@ -318,8 +349,8 @@
 
     function setFrameAction(action) {
       var sequences = {
-        "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], duration: 125 },
-        "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], duration: 88 },
+        "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], duration: 125, stepDistance: 9.5 },
+        "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], duration: 88, stepDistance: 13 },
         "is-action-leap": { frames: [4, 1, 5, 5, 6, 7], duration: 155, loop: false },
         "is-action-look": { frames: [7, 8, 8, 7], duration: 310 },
         "is-action-celebrate": { frames: [7, 8, 9, 9, 8, 7], duration: 185, loop: false },
@@ -330,6 +361,10 @@
       frameSequence = selected.frames;
       frameDuration = selected.duration;
       frameLoops = selected.loop !== false;
+      frameStepDistance = selected.stepDistance || 0;
+      frameDistanceTravelled = 0;
+      frameIndex = 0;
+      currentAction = action;
       frameStartedAt = window.performance.now();
       displayedFrame = 0;
     }
@@ -362,6 +397,8 @@
       targetVelocityY = 0;
 
       speechPoseTimer = window.setTimeout(function () {
+        velocityX = 0;
+        velocityY = 0;
         actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
         tangbao.classList.add("is-action-look");
         setFrameAction("is-action-look");
@@ -386,6 +423,7 @@
     var previousTime = window.performance.now();
     var actionTimer;
     var lastAction = "is-action-trot";
+    var forcedDirection = 0;
     var actionClasses = ["is-action-trot", "is-action-dash", "is-action-leap", "is-action-look", "is-action-celebrate", "is-action-ball", "is-action-settle"];
 
     function between(minimum, maximum) {
@@ -398,7 +436,9 @@
       var roll = Math.random();
       var action = "is-action-trot";
       var duration = between(1800, 3600);
-      var direction = targetVelocityX < 0 ? -1 : 1;
+      var pendingDirection = forcedDirection;
+      var direction = pendingDirection || (targetVelocityX < 0 ? -1 : 1);
+      forcedDirection = 0;
 
       if (Math.random() < 0.28) direction *= -1;
 
@@ -409,34 +449,43 @@
         targetVelocityY = 0;
       } else if (roll < 0.3) {
         action = "is-action-leap";
-        duration = between(900, 1500);
+        duration = between(1050, 1350);
         targetVelocityX = direction * between(70, 115);
-        targetVelocityY = between(-52, 52);
+        targetVelocityY = 0;
       } else if (roll < 0.43) {
         action = "is-action-dash";
         duration = between(950, 1650);
         targetVelocityX = direction * between(145, 205);
-        targetVelocityY = between(-40, 40);
+        targetVelocityY = 0;
       } else if (roll < 0.56) {
         action = "is-action-celebrate";
         duration = between(1100, 1750);
-        targetVelocityX = direction * between(18, 42);
-        targetVelocityY = between(-12, 12);
+        targetVelocityX = 0;
+        targetVelocityY = 0;
       } else if (roll < 0.76) {
         action = "is-action-ball";
         duration = between(3200, 4800);
-        targetVelocityX = direction * between(22, 48);
-        targetVelocityY = between(-8, 8);
+        targetVelocityX = 0;
+        targetVelocityY = 0;
       } else {
         targetVelocityX = direction * between(52, 92);
-        targetVelocityY = between(-32, 32);
+        targetVelocityY = 0;
       }
 
       if (action === lastAction) {
         action = action === "is-action-trot" ? "is-action-look" : "is-action-trot";
         duration = action === "is-action-look" ? between(1250, 1900) : between(1900, 3200);
         targetVelocityX = action === "is-action-look" ? 0 : direction * between(52, 82);
-        targetVelocityY = action === "is-action-look" ? 0 : between(-24, 24);
+        targetVelocityY = 0;
+      }
+
+      var locomotionAction = action === "is-action-trot" || action === "is-action-dash" || action === "is-action-leap";
+      if (!locomotionAction) {
+        velocityX = 0;
+        velocityY = 0;
+        targetVelocityX = 0;
+        targetVelocityY = 0;
+        if (pendingDirection) forcedDirection = pendingDirection;
       }
 
       tangbao.classList.add(action);
@@ -468,24 +517,43 @@
       var maxY = Math.max(padding, window.innerHeight - tangbao.offsetHeight - padding);
       previousTime = currentTime;
 
-      var elapsedFrames = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration);
-      var framePosition = frameLoops ? elapsedFrames % frameSequence.length : Math.min(elapsedFrames, frameSequence.length - 1);
-      var nextFrame = frameSequence[framePosition];
+      var responsiveness = currentAction === "is-action-settle" ? 7.5 : 3.8;
+      velocityX += (targetVelocityX - velocityX) * Math.min(1, elapsed * responsiveness);
+      velocityY += (targetVelocityY - velocityY) * Math.min(1, elapsed * responsiveness);
+
+      var movementX = velocityX * elapsed;
+      var movementY = velocityY * elapsed;
+      x += movementX;
+      y += movementY;
+
+      var nextFrame;
+      if (frameStepDistance > 0) {
+        frameDistanceTravelled += Math.abs(movementX);
+        while (frameDistanceTravelled >= frameStepDistance) {
+          frameDistanceTravelled -= frameStepDistance;
+          frameIndex = (frameIndex + 1) % frameSequence.length;
+        }
+        nextFrame = frameSequence[frameIndex];
+      } else {
+        var elapsedFrames = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration);
+        var framePosition = frameLoops ? elapsedFrames % frameSequence.length : Math.min(elapsedFrames, frameSequence.length - 1);
+        nextFrame = frameSequence[framePosition];
+      }
+
       if (nextFrame !== displayedFrame) {
         sprite.src = frameSources[nextFrame - 1];
         displayedFrame = nextFrame;
       }
 
-      velocityX += (targetVelocityX - velocityX) * Math.min(1, elapsed * 3.2);
-      velocityY += (targetVelocityY - velocityY) * Math.min(1, elapsed * 3.2);
-
-      x += velocityX * elapsed;
-      y += velocityY * elapsed;
-
       if (x <= padding || x >= maxX) {
         x = Math.min(maxX, Math.max(padding, x));
-        velocityX *= -1;
-        targetVelocityX = (targetVelocityX || velocityX) * -1;
+        if (currentAction === "is-action-trot" || currentAction === "is-action-dash" || currentAction === "is-action-leap") {
+          forcedDirection = x <= padding ? 1 : -1;
+          velocityX = 0;
+          targetVelocityX = 0;
+          window.clearTimeout(actionTimer);
+          settleThenChoose();
+        }
       }
 
       if (y <= padding || y >= maxY) {
@@ -525,6 +593,7 @@
     createHeartAnimation();
     startClock();
     setupMusic();
+    setupHeartClicks();
     setupTangbao();
   }
 
