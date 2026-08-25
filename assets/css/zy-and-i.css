@@ -418,30 +418,6 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.24), 0 7px 20px rgba(139, 47, 114, 0.11);
 }
 
-.love-stage__flower {
-  position: absolute;
-  z-index: 7;
-  color: var(--love-lace-deep);
-  pointer-events: none;
-  user-select: none;
-}
-
-.love-stage__flower--top,
-.love-stage__flower--bottom {
-  left: 50%;
-  padding: 0.18rem 1.25rem;
-  background: #ffffff;
-  color: var(--love-lace-deep);
-  font: 1rem/1 Georgia, "Times New Roman", serif;
-  letter-spacing: 0.08em;
-  text-shadow: 0 3px 8px rgba(139, 47, 114, 0.17);
-  transform: translateX(-50%);
-  white-space: nowrap;
-}
-
-.love-stage__flower--top { top: -0.54rem; }
-.love-stage__flower--bottom { bottom: -0.54rem; transform: translateX(-50%) rotate(180deg); }
-
 .love-stage::after {
   content: "";
   position: absolute;
