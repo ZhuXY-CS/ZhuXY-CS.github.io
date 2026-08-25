@@ -9,43 +9,118 @@
     });
   }
 
-  async function runTypewriter() {
-    var copy = document.getElementById("love-copy");
-    if (!copy) return;
+  function setupLetterBook() {
+    var book = document.getElementById("love-letter-pages");
+    if (!book) return;
 
-    var lines = Array.prototype.slice.call(copy.querySelectorAll("[data-love-type]"));
-    var reveals = Array.prototype.slice.call(copy.querySelectorAll("[data-love-reveal]"));
+    var pages = Array.prototype.slice.call(book.querySelectorAll("[data-letter-page]"));
+    var previousButton = document.querySelector(".love-letter__turn--previous");
+    var nextButton = document.querySelector(".love-letter__turn--next");
+    var currentCounter = document.querySelector("[data-letter-current]");
+    var activeIndex = Math.max(0, pages.findIndex(function (page) { return !page.hidden; }));
+    var typingVersion = 0;
 
-    if (reducedMotion) {
-      reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
-      return;
+    function twoDigits(value) {
+      return value < 10 ? "0" + value : String(value);
     }
 
-    copy.classList.add("is-typing");
+    function preparePage(page) {
+      var copy = page.querySelector("[data-love-copy]");
+      if (!copy) return null;
 
-    for (var lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
-      var line = lines[lineIndex];
-      if (lineIndex > 0) await wait(line.classList.contains("love-copy__line--paragraph") ? 420 : 90);
-      var characters = Array.from(line.textContent.trim());
-      var accessibleText = characters.join("");
+      copy.classList.remove("is-typing");
+      Array.prototype.forEach.call(copy.querySelectorAll("[data-love-type]"), function (line) {
+        if (!line.dataset.fullText) line.dataset.fullText = line.textContent.trim();
+        line.textContent = line.dataset.fullText;
+        line.setAttribute("aria-label", line.dataset.fullText);
+        line.classList.remove("is-active", "is-complete", "is-entering");
+      });
+      Array.prototype.forEach.call(copy.querySelectorAll("[data-love-reveal]"), function (reveal) {
+        reveal.classList.remove("is-visible");
+      });
+      return copy;
+    }
 
-      line.setAttribute("aria-label", accessibleText);
-      line.textContent = "";
-      line.classList.add("is-active");
-      line.classList.add("is-entering");
+    async function typePage(page) {
+      var version = ++typingVersion;
+      var copy = preparePage(page);
+      if (!copy) return;
 
-      for (var characterIndex = 0; characterIndex < characters.length; characterIndex += 1) {
-        line.textContent += characters[characterIndex];
-        await wait(38);
+      var lines = Array.prototype.slice.call(copy.querySelectorAll("[data-love-type]"));
+      var reveals = Array.prototype.slice.call(copy.querySelectorAll("[data-love-reveal]"));
+
+      if (reducedMotion) {
+        reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
+        return;
       }
 
-      line.classList.remove("is-active");
-      line.classList.add("is-complete");
-      await wait(80);
+      copy.classList.add("is-typing");
+
+      for (var lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+        var line = lines[lineIndex];
+        if (lineIndex > 0) {
+          await wait(line.classList.contains("love-copy__line--paragraph") ? 330 : 70);
+          if (version !== typingVersion) return;
+        }
+
+        var characters = Array.from(line.dataset.fullText);
+        line.textContent = "";
+        line.classList.add("is-active", "is-entering");
+
+        for (var characterIndex = 0; characterIndex < characters.length; characterIndex += 1) {
+          if (version !== typingVersion) return;
+          line.textContent += characters[characterIndex];
+          await wait(30);
+        }
+
+        line.classList.remove("is-active");
+        line.classList.add("is-complete");
+        await wait(60);
+        if (version !== typingVersion) return;
+      }
+
+      copy.classList.remove("is-typing");
+      reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
     }
 
-    copy.classList.remove("is-typing");
-    reveals.forEach(function (reveal) { reveal.classList.add("is-visible"); });
+    function updateNavigation() {
+      if (previousButton) previousButton.disabled = activeIndex === 0;
+      if (nextButton) nextButton.disabled = activeIndex === pages.length - 1;
+      if (currentCounter) currentCounter.textContent = twoDigits(activeIndex + 1);
+    }
+
+    function showPage(nextIndex) {
+      if (nextIndex < 0 || nextIndex >= pages.length || nextIndex === activeIndex) return;
+
+      var directionClass = nextIndex > activeIndex ? "is-turning-forward" : "is-turning-backward";
+      typingVersion += 1;
+      pages[activeIndex].hidden = true;
+      pages[activeIndex].classList.remove("is-active", "is-turning-forward", "is-turning-backward");
+
+      activeIndex = nextIndex;
+      pages[activeIndex].hidden = false;
+      pages[activeIndex].classList.remove("is-turning-forward", "is-turning-backward");
+      pages[activeIndex].offsetWidth;
+      pages[activeIndex].classList.add("is-active", directionClass);
+      updateNavigation();
+
+      if (window.matchMedia("(max-width: 1050px)").matches) {
+        var letter = book.closest(".love-letter");
+        if (letter) {
+          window.requestAnimationFrame(function () {
+            letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+          });
+        }
+      }
+
+      typePage(pages[activeIndex]);
+    }
+
+    pages.forEach(preparePage);
+    if (previousButton) previousButton.addEventListener("click", function () { showPage(activeIndex - 1); });
+    if (nextButton) nextButton.addEventListener("click", function () { showPage(activeIndex + 1); });
+    updateNavigation();
+    typePage(pages[activeIndex]);
   }
 
   function createHeartAnimation() {
@@ -1167,7 +1242,7 @@
   }
 
   function initialize() {
-    runTypewriter();
+    setupLetterBook();
     setupPhotoLoading();
     createHeartAnimation();
     startClock();

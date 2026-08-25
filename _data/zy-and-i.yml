@@ -1,39 +1,83 @@
-# Add the final copy here when it is ready. Each item is revealed in order.
-# Set emphasis: true for the mulberry-colored lines.
-story:
-  - text: "To ZY，"
-    emphasis: true
-  - text: "人海茫茫，有幸遇见。"
-  - text: "不早不晚，刚好是你。"
-  - text: "平生一顾，至此终年。"
-  - text: "晴时并肩，雨时撑伞；"
-    new_paragraph: true
-  - text: "心动是你，心安亦然。"
-  - text: "岁月为笔，相思入墨。"
-  - text: "不辞青山，相随与共。"
-    new_paragraph: true
-  - text: "但心坚定，天长地久。"
-  - text: "何愁意在，朝雨暮云。"
-  - text: "心之所向，皆为卿往。"
-    new_paragraph: true
-  - text: "生死契阔，与子成说。"
-  - text: "执子之手，与子偕老。"
-  - text: "Whatever comes, wherever life takes us,"
-    new_paragraph: true
-    lang: en
-  - text: "I will keep choosing you"
-    lang: en
-  - text: "in every season, in every lifetime."
-    lang: en
-  - text: "By 爱你的 小庸"
-    emphasis: true
-    new_paragraph: true
+# Each letter is a separate page. Its lines are revealed again whenever the page is opened.
+letters:
+  - postmark: true
+    lines:
+      - text: "To ZY，"
+        emphasis: true
+      - text: "人海茫茫，有幸遇见。"
+      - text: "不早不晚，刚好是你。"
+      - text: "平生一顾，至此终年。"
+      - text: "晴时并肩，雨时撑伞；"
+        new_paragraph: true
+      - text: "心动是你，心安亦然。"
+      - text: "岁月为笔，相思入墨。"
+      - text: "不辞青山，相随与共。"
+        new_paragraph: true
+      - text: "但心坚定，天长地久。"
+      - text: "何愁意在，朝雨暮云。"
+      - text: "心之所向，皆为卿往。"
+        new_paragraph: true
+      - text: "生死契阔，与子成说。"
+      - text: "执子之手，与子偕老。"
+      - text: "Whatever comes, wherever life takes us,"
+        new_paragraph: true
+        lang: en
+      - text: "I will keep choosing you"
+        lang: en
+      - text: "in every season, in every lifetime."
+        lang: en
+      - text: "By 爱你的 小庸"
+        emphasis: true
+        new_paragraph: true
 
-# Example:
-# story:
-#   - text: "The first line of our story."
-#   - text: "A line to emphasize."
-#     emphasis: true
+  - lines:
+      - text: "To ZY："
+        emphasis: true
+      - text: "18岁的小庸，会爱上17岁的ZY。"
+      - text: "只是那时，他们刚刚走进各自的大学生活。"
+      - text: "一个从南到北，一个从北到南；"
+      - text: "西安与南京相隔很远，"
+      - text: "他们还不知道彼此的名字。"
+      - text: "22岁的小庸，也会爱上21岁的ZY。"
+        new_paragraph: true
+      - text: "那一年，他们从大学毕业，"
+      - text: "一个从西向东，一个从东向西。"
+      - text: "命运让他们一起来到合肥，"
+      - text: "可羽毛球馆与舞蹈房之间，"
+      - text: "还隔着一场尚未到来的相遇。"
+      - text: "他们生活在同一座城市，"
+      - text: "却依然不认识彼此。"
+
+  - lines:
+      - text: "直到25岁的小庸遇见24岁的ZY。"
+        emphasis: true
+      - text: "那时，他们即将从蜗壳毕业。"
+      - text: "一场宴会，两张相邻的座位，"
+      - text: "把那些错过的岁月轻轻接在了一起。"
+      - text: "仿佛命运终于在那一刻告诉他们："
+      - text: "这一次，不要再错过了。"
+        emphasis: true
+      - text: "于是，他们终于认识了。"
+      - text: "小庸也终于有机会，"
+      - text: "毫无保留、无法自拔地爱上ZY。"
+      - text: "所以，你问我的那个问题，"
+        new_paragraph: true
+      - text: "答案一直都是：会。"
+        emphasis: true
+      - text: "18岁的我会喜欢17岁的你，"
+      - text: "22岁的我也会喜欢21岁的你。"
+      - text: "无论在哪一年、哪一座城市相遇，"
+      - text: "只要遇见的人是你，我都会爱上你。"
+      - text: "我们的相遇不早，也不晚。"
+        new_paragraph: true
+      - text: "因为来的人是你，所以一切都刚刚好。"
+      - text: "虽然没能从18岁开始爱你，"
+      - text: "但我想从现在开始，"
+      - text: "把往后的八十年，都认真地用来爱你。"
+        emphasis: true
+      - text: "爱你的 小庸"
+        emphasis: true
+        new_paragraph: true
 
 # Put the photographs in /images/zy-and-i/ and list them here in display order.
 photos:

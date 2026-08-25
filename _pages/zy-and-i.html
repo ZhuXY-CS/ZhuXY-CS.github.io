@@ -8,6 +8,7 @@ comments: false
 ---
 
 {% assign love = site.data["zy-and-i"] %}
+{% assign letters = love.letters %}
 {% assign story = love.story %}
 {% assign photos = love.photos %}
 {% assign audio_tracks = site.static_files | where_exp: "track", "track.path contains '/audio/'" %}
@@ -23,26 +24,50 @@ comments: false
   <span class="love-stage__flower love-stage__flower--bottom" aria-hidden="true">❦　✿　❦</span>
 
   <section class="love-letter" aria-label="我们的文字">
-    <div class="love-copy" id="love-copy">
-      {% if story and story.size > 0 %}
-        {% for line in story %}
-          <p class="love-copy__line{% if line.emphasis %} love-copy__line--emphasis{% endif %}{% if line.new_paragraph %} love-copy__line--paragraph{% endif %}{% if line.lang == 'en' %} love-copy__line--english{% endif %}"{% if line.lang %} lang="{{ line.lang }}"{% endif %} data-love-type>{{ line.text }}</p>
+    <div class="love-letter__pages" id="love-letter-pages" aria-live="off">
+      {% if letters and letters.size > 0 %}
+        {% for letter in letters %}
+          <article class="love-letter__page{% if forloop.first %} is-active{% endif %}" data-letter-page data-letter-index="{{ forloop.index0 }}"{% unless forloop.first %} hidden{% endunless %}>
+            <span class="love-letter__folio" aria-hidden="true">LETTER 0{{ forloop.index }}</span>
+            <div class="love-copy" data-love-copy>
+              {% for line in letter.lines %}
+                <p class="love-copy__line{% if line.emphasis %} love-copy__line--emphasis{% endif %}{% if line.new_paragraph %} love-copy__line--paragraph{% endif %}{% if line.lang == 'en' %} love-copy__line--english{% endif %}"{% if line.lang %} lang="{{ line.lang }}"{% endif %} data-love-type>{{ line.text }}</p>
+              {% endfor %}
+
+              {% if letter.postmark %}
+                <div class="love-postmark" aria-label="ZXY &amp; ZZY 午马年 七夕" data-love-reveal>
+                  <span>ZXY &amp; ZZY</span>
+                  <strong>午马年</strong>
+                  <span>七夕</span>
+                </div>
+              {% endif %}
+            </div>
+          </article>
         {% endfor %}
       {% else %}
-        <p class="love-copy__line" data-love-type>这里会逐字出现我们的文字……</p>
-        <p class="love-copy__line love-copy__line--emphasis" data-love-type>ZY and I</p>
+        <article class="love-letter__page is-active" data-letter-page data-letter-index="0">
+          <span class="love-letter__folio" aria-hidden="true">LETTER 01</span>
+          <div class="love-copy" data-love-copy>
+            {% if story and story.size > 0 %}
+              {% for line in story %}
+                <p class="love-copy__line{% if line.emphasis %} love-copy__line--emphasis{% endif %}{% if line.new_paragraph %} love-copy__line--paragraph{% endif %}{% if line.lang == 'en' %} love-copy__line--english{% endif %}"{% if line.lang %} lang="{{ line.lang }}"{% endif %} data-love-type>{{ line.text }}</p>
+              {% endfor %}
+            {% else %}
+              <p class="love-copy__line" data-love-type>这里会逐字出现我们的文字……</p>
+              <p class="love-copy__line love-copy__line--emphasis" data-love-type>ZY and I</p>
+            {% endif %}
+          </div>
+        </article>
       {% endif %}
-
-      {% if love.signature and love.signature != "" %}
-        <p class="love-signature" data-love-reveal>{{ love.signature }}</p>
-      {% endif %}
-
-      <div class="love-postmark" aria-label="ZXY &amp; ZZY 午马年 七夕" data-love-reveal>
-        <span>ZXY &amp; ZZY</span>
-        <strong>午马年</strong>
-        <span>七夕</span>
-      </div>
     </div>
+
+    {% if letters and letters.size > 1 %}
+      <nav class="love-letter__nav" aria-label="信件翻页">
+        <button class="love-letter__turn love-letter__turn--previous" type="button" aria-label="上一封信" disabled>‹</button>
+        <span class="love-letter__counter" aria-live="polite"><strong data-letter-current>01</strong><span aria-hidden="true"> / </span><span>0{{ letters.size }}</span></span>
+        <button class="love-letter__turn love-letter__turn--next" type="button" aria-label="下一封信">›</button>
+      </nav>
+    {% endif %}
   </section>
 
   <section class="love-memory" aria-label="我们的照片">
