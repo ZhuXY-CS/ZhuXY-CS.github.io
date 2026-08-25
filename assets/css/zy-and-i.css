@@ -399,45 +399,37 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   width: 100%;
   height: auto;
   opacity: var(--love-season-opacity);
-  filter: drop-shadow(0 5px 6px rgba(83, 48, 66, 0.1));
+  mix-blend-mode: multiply;
   transform-origin: var(--love-season-origin);
   animation: love-season-unfold 1.25s cubic-bezier(0.2, 0.72, 0.25, 1) both;
 }
 
 .love-season--spring {
-  --love-season-origin: 0 0;
-  top: -2.35rem;
-  left: -2.15rem;
-  width: clamp(10.5rem, 14vw, 14.5rem);
-  -webkit-mask-image: linear-gradient(135deg, #000 0 72%, transparent 100%);
-  mask-image: linear-gradient(135deg, #000 0 72%, transparent 100%);
+  --love-season-origin: 100% 100%;
+  top: -7.6rem;
+  left: -7.6rem;
+  width: clamp(11.8rem, 14vw, 14rem);
 }
 
 .love-season--summer {
-  --love-season-origin: 0 100%;
-  bottom: -3.1rem;
-  left: -2.35rem;
-  width: clamp(8.2rem, 10.5vw, 11.2rem);
-  -webkit-mask-image: linear-gradient(45deg, #000 0 78%, transparent 100%);
-  mask-image: linear-gradient(45deg, #000 0 78%, transparent 100%);
+  --love-season-origin: 100% 0;
+  bottom: -7.3rem;
+  left: -7.4rem;
+  width: clamp(11.5rem, 13.5vw, 13.6rem);
 }
 
 .love-season--autumn {
-  --love-season-origin: 100% 0;
-  top: -2.45rem;
-  right: -2.25rem;
-  width: clamp(10.2rem, 13.5vw, 14rem);
-  -webkit-mask-image: linear-gradient(225deg, #000 0 76%, transparent 100%);
-  mask-image: linear-gradient(225deg, #000 0 76%, transparent 100%);
+  --love-season-origin: 0 100%;
+  top: -7.6rem;
+  right: -7.5rem;
+  width: clamp(11.8rem, 14vw, 14rem);
 }
 
 .love-season--winter {
-  --love-season-origin: 100% 100%;
-  right: -2.7rem;
-  bottom: -2.45rem;
-  width: clamp(13rem, 18vw, 19rem);
-  -webkit-mask-image: linear-gradient(315deg, #000 0 78%, transparent 100%);
-  mask-image: linear-gradient(315deg, #000 0 78%, transparent 100%);
+  --love-season-origin: 0 0;
+  right: -8.8rem;
+  bottom: -8.1rem;
+  width: clamp(13.5rem, 17vw, 17rem);
 }
 
 .love-stage::after {
@@ -1282,10 +1274,10 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   .love-stage::before { inset: -0.62rem; }
   .love-stage::after { inset: 0.35rem; }
   .love-season { --love-season-opacity: 0.84; }
-  .love-season--spring { top: -1.55rem; left: -1.4rem; width: 8.8rem; }
-  .love-season--summer { bottom: -2rem; left: -1.5rem; width: 7.2rem; }
-  .love-season--autumn { top: -1.6rem; right: -1.45rem; width: 8.6rem; }
-  .love-season--winter { right: -1.7rem; bottom: -1.65rem; width: 10.5rem; }
+  .love-season--spring { top: -4.65rem; left: -4.65rem; width: 8.2rem; }
+  .love-season--summer { bottom: -4.5rem; left: -4.55rem; width: 8rem; }
+  .love-season--autumn { top: -4.65rem; right: -4.6rem; width: 8.2rem; }
+  .love-season--winter { right: -5.15rem; bottom: -4.9rem; width: 9.3rem; }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
   .love-sidecar { gap: 0.8rem; }
