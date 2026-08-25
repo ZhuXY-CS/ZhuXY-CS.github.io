@@ -138,9 +138,16 @@ comments: false
         </div>
 
         <div class="love-player__lyrics" id="love-lyrics" aria-live="off">
-          <p class="love-player__lyric love-player__lyric--previous"></p>
-          <p class="love-player__lyric love-player__lyric--current">点击播放，让音乐慢慢响起</p>
-          <p class="love-player__lyric love-player__lyric--next"></p>
+          <div class="love-player__lyric-set is-active" data-lyric-set>
+            <p class="love-player__lyric love-player__lyric--previous"></p>
+            <p class="love-player__lyric love-player__lyric--current">点击播放，让音乐慢慢响起</p>
+            <p class="love-player__lyric love-player__lyric--next"></p>
+          </div>
+          <div class="love-player__lyric-set" data-lyric-set aria-hidden="true">
+            <p class="love-player__lyric love-player__lyric--previous"></p>
+            <p class="love-player__lyric love-player__lyric--current"></p>
+            <p class="love-player__lyric love-player__lyric--next"></p>
+          </div>
         </div>
 
         <div class="love-player__playlist" aria-label="歌曲列表">

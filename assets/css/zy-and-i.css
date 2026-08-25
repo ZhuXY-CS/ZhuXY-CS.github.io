@@ -1006,15 +1006,49 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-player__lyrics {
   position: relative;
   z-index: 2;
-  display: grid;
+  display: block;
   min-height: 6.1rem;
   margin-top: 0.7rem;
   padding: 0.55rem 0.5rem;
   grid-column: 1 / -1;
-  align-content: center;
+  overflow: hidden;
   border-top: 1px solid rgba(233, 161, 191, 0.2);
   border-bottom: 1px solid rgba(233, 161, 191, 0.2);
   text-align: center;
+}
+
+.love-player__lyric-set {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  z-index: 0;
+  box-sizing: border-box;
+  padding: inherit;
+  grid-template-rows: repeat(3, minmax(1.35em, auto));
+  align-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, 0.62rem, 0) scale(0.99);
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.2, 0.72, 0.24, 1);
+  will-change: opacity, transform;
+}
+
+.love-player__lyric-set.is-active {
+  z-index: 2;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.love-player__lyric-set.is-leaving {
+  z-index: 1;
+  opacity: 0;
+  transform: translate3d(0, -0.52rem, 0) scale(0.992);
+}
+
+.love-player__lyric-set.is-resetting {
+  transition: none;
 }
 
 .love-player__lyric {
@@ -1024,7 +1058,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   color: rgba(59, 49, 56, 0.38);
   font: 0.82rem/1.35 var(--love-font-cn);
   text-overflow: ellipsis;
-  transition: color 280ms ease, transform 280ms ease, opacity 280ms ease;
+  transition: color 320ms ease, transform 320ms ease;
   white-space: nowrap;
 }
 

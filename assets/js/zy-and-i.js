@@ -317,9 +317,14 @@
     var progress = player.querySelector(".love-player__progress");
     var currentTimeLabel = player.querySelector("[data-current-time]");
     var durationLabel = player.querySelector("[data-duration]");
-    var previousLyric = player.querySelector(".love-player__lyric--previous");
-    var currentLyric = player.querySelector(".love-player__lyric--current");
-    var nextLyric = player.querySelector(".love-player__lyric--next");
+    var lyricSets = Array.prototype.slice.call(player.querySelectorAll("[data-lyric-set]")).map(function (set) {
+      return {
+        root: set,
+        previous: set.querySelector(".love-player__lyric--previous"),
+        current: set.querySelector(".love-player__lyric--current"),
+        next: set.querySelector(".love-player__lyric--next")
+      };
+    });
     var titleLabel = player.querySelector("[data-track-title]");
     var artistLabel = player.querySelector("[data-track-artist]");
     var trackCountLabel = player.querySelector("[data-track-count]");
@@ -328,6 +333,9 @@
     var nextButton = player.querySelector(".love-player__next");
     var lyricLines = [];
     var activeLyricIndex = -1;
+    var activeLyricSetIndex = 0;
+    var lyricTransitionTimer;
+    var lyricRequestId = 0;
     var activeTrackIndex = trackButtons.findIndex(function (track) {
       return new URL(track.dataset.trackSrc, document.baseURI).pathname === new URL(audio.src, document.baseURI).pathname;
     });
@@ -353,21 +361,45 @@
           if (text) parsed.push({ time: Number(match[1]) * 60 + Number(match[2]), text: text });
         }
       });
-      return parsed.sort(function (left, right) { return left.time - right.time; });
+      return parsed
+        .sort(function (left, right) { return left.time - right.time; })
+        .reduce(function (lines, line) {
+          var previous = lines[lines.length - 1];
+          if (previous && line.time - previous.time < 0.7) {
+            lines[lines.length - 1] = line;
+          } else {
+            lines.push(line);
+          }
+          return lines;
+        }, []);
+    }
+
+    function writeLyricSet(set, lyricIndex, message) {
+      set.previous.textContent = lyricIndex > 0 ? lyricLines[lyricIndex - 1].text : "";
+      set.current.textContent = lyricIndex >= 0 ? lyricLines[lyricIndex].text : (message || "前奏响起，故事慢慢开始");
+      set.next.textContent = lyricLines[lyricIndex + 1] ? lyricLines[lyricIndex + 1].text : "";
     }
 
     function resetLyrics(message) {
+      window.clearTimeout(lyricTransitionTimer);
       lyricLines = [];
       activeLyricIndex = -1;
-      previousLyric.textContent = "";
-      currentLyric.textContent = message || "歌词正在赶来";
-      nextLyric.textContent = "";
+      activeLyricSetIndex = 0;
+      lyricSets.forEach(function (set, index) {
+        set.root.classList.remove("is-active", "is-leaving", "is-resetting");
+        set.root.toggleAttribute("aria-hidden", index !== activeLyricSetIndex);
+        set.previous.textContent = "";
+        set.current.textContent = index === activeLyricSetIndex ? (message || "歌词正在赶来") : "";
+        set.next.textContent = "";
+      });
+      lyricSets[activeLyricSetIndex].root.classList.add("is-active");
     }
 
     function loadLyrics(source) {
+      var requestId = ++lyricRequestId;
       resetLyrics("歌词正在赶来");
       if (!source) {
-        currentLyric.textContent = "这一首暂时没有同步歌词";
+        resetLyrics("这一首暂时没有同步歌词");
         return;
       }
 
@@ -377,12 +409,14 @@
           return response.text();
         })
         .then(function (content) {
+          if (requestId !== lyricRequestId) return;
           lyricLines = parseLyrics(content);
           if (!lyricLines.length) throw new Error("Lyrics empty");
           renderLyric(true);
         })
         .catch(function () {
-          currentLyric.textContent = "这一首暂时没有同步歌词";
+          if (requestId !== lyricRequestId) return;
+          resetLyrics("这一首暂时没有同步歌词");
         });
     }
 
@@ -396,19 +430,51 @@
       }
 
       if (!force && nextIndex === activeLyricIndex) return;
+
+      if (force || lyricSets.length < 2) {
+        window.clearTimeout(lyricTransitionTimer);
+        var immediateSet = lyricSets[activeLyricSetIndex];
+        lyricSets.forEach(function (set, index) {
+          set.root.classList.remove("is-active", "is-leaving", "is-resetting");
+          set.root.toggleAttribute("aria-hidden", index !== activeLyricSetIndex);
+        });
+        writeLyricSet(immediateSet, nextIndex);
+        immediateSet.root.classList.add("is-active");
+        activeLyricIndex = nextIndex;
+        return;
+      }
+
+      window.clearTimeout(lyricTransitionTimer);
+      var outgoingSet = lyricSets[activeLyricSetIndex];
+      var incomingSetIndex = activeLyricSetIndex === 0 ? 1 : 0;
+      var incomingSet = lyricSets[incomingSetIndex];
+
+      incomingSet.root.classList.add("is-resetting");
+      incomingSet.root.classList.remove("is-active", "is-leaving");
+      writeLyricSet(incomingSet, nextIndex);
+      void incomingSet.root.offsetWidth;
+      incomingSet.root.classList.remove("is-resetting");
+      incomingSet.root.removeAttribute("aria-hidden");
+
+      outgoingSet.root.classList.remove("is-active");
+      outgoingSet.root.classList.add("is-leaving");
+      incomingSet.root.classList.add("is-active");
+      activeLyricSetIndex = incomingSetIndex;
       activeLyricIndex = nextIndex;
-      previousLyric.textContent = nextIndex > 0 ? lyricLines[nextIndex - 1].text : "";
-      currentLyric.textContent = nextIndex >= 0 ? lyricLines[nextIndex].text : "前奏响起，故事慢慢开始";
-      nextLyric.textContent = lyricLines[nextIndex + 1] ? lyricLines[nextIndex + 1].text : "";
+
+      lyricTransitionTimer = window.setTimeout(function () {
+        outgoingSet.root.classList.remove("is-leaving");
+        outgoingSet.root.setAttribute("aria-hidden", "true");
+      }, 440);
     }
 
-    function updateProgress() {
+    function updateProgress(forceLyrics) {
       var ratio = audio.duration ? Math.min(1, audio.currentTime / audio.duration) : 0;
       progress.value = Math.round(ratio * 1000);
       progress.style.setProperty("--love-progress", (ratio * 100).toFixed(2) + "%");
       currentTimeLabel.textContent = formatTime(audio.currentTime);
       durationLabel.textContent = formatTime(audio.duration);
-      renderLyric(false);
+      renderLyric(Boolean(forceLyrics));
     }
 
     function followPlayback() {
@@ -490,8 +556,7 @@
     progress.addEventListener("input", function () {
       if (!audio.duration) return;
       audio.currentTime = (Number(progress.value) / 1000) * audio.duration;
-      updateProgress();
-      renderLyric(true);
+      updateProgress(true);
     });
 
     trackButtons.forEach(function (track, index) {
