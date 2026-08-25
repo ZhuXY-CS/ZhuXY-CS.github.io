@@ -707,6 +707,80 @@
     }, { passive: true });
   }
 
+  function setupHeartCursorTrail() {
+    var finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reducedMotion || !finePointer) return;
+
+    var colors = ["#ff6285", "#f59a45", "#e6c447", "#4fbe83", "#4da9d8", "#7475df", "#b86bce"];
+    var activeHearts = [];
+    var colorIndex = 0;
+    var lastX = -100;
+    var lastY = -100;
+    var lastTime = 0;
+    var pendingPoint = null;
+    var animationFrame = 0;
+
+    function forgetHeart(heart) {
+      var index = activeHearts.indexOf(heart);
+      if (index !== -1) activeHearts.splice(index, 1);
+      heart.remove();
+    }
+
+    function spawnHeart(x, y) {
+      if (activeHearts.length >= 20) forgetHeart(activeHearts[0]);
+
+      var heart = document.createElement("span");
+      heart.className = "love-cursor-trail__heart";
+      heart.textContent = colorIndex % 4 === 3 ? "♡" : "♥";
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      heart.style.setProperty("--trail-color", colors[colorIndex % colors.length]);
+      heart.style.setProperty("--trail-size", (0.54 + Math.random() * 0.32).toFixed(2) + "rem");
+      heart.style.setProperty("--trail-drift-x", ((Math.random() - 0.5) * 22).toFixed(1) + "px");
+      heart.style.setProperty("--trail-drift-y", (-20 - Math.random() * 20).toFixed(1) + "px");
+      heart.style.setProperty("--trail-rotate", ((Math.random() - 0.5) * 32).toFixed(1) + "deg");
+      heart.setAttribute("aria-hidden", "true");
+      document.body.appendChild(heart);
+      activeHearts.push(heart);
+      colorIndex += 1;
+
+      window.setTimeout(function () { forgetHeart(heart); }, 820);
+    }
+
+    document.addEventListener("pointermove", function (event) {
+      if (event.pointerType && event.pointerType !== "mouse") return;
+
+      pendingPoint = {
+        x: event.clientX,
+        y: event.clientY,
+        time: window.performance.now()
+      };
+      if (animationFrame) return;
+
+      animationFrame = window.requestAnimationFrame(function () {
+        animationFrame = 0;
+        var point = pendingPoint;
+        pendingPoint = null;
+        if (!point) return;
+
+        var distance = Math.hypot(point.x - lastX, point.y - lastY);
+        if (distance < 12 || point.time - lastTime < 40) return;
+        lastX = point.x;
+        lastY = point.y;
+        lastTime = point.time;
+        spawnHeart(point.x, point.y);
+      });
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) return;
+      pendingPoint = null;
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      activeHearts.slice().forEach(forgetHeart);
+    });
+  }
+
   function setupTangbao() {
     var tangbao = document.getElementById("tangbao-witness");
     if (!tangbao) return;
@@ -1296,6 +1370,7 @@
     setupMusic();
     setupWeatherForecast();
     setupHeartClicks();
+    setupHeartCursorTrail();
     setupTangbao();
   }
 
