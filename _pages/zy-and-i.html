@@ -95,7 +95,11 @@ comments: false
         </div>
 
         <div class="love-player__playlist" aria-label="歌曲列表">
-          <div class="love-player__playlist-title"><span>PLAYLIST</span><span data-track-count></span></div>
+          <div class="love-player__playlist-title">
+            <span>PLAYLIST</span>
+            <span class="love-player__playlist-hint" aria-hidden="true">↕ 上下滑动切歌</span>
+            <span data-track-count></span>
+          </div>
           <ol>
             {% for track in audio_tracks %}
               {% assign track_extension = track.extname | downcase %}

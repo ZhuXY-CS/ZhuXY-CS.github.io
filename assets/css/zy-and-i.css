@@ -807,12 +807,32 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 .love-player__playlist-title {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   margin-bottom: 0.2rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.45rem;
+  align-items: center;
   color: rgba(139, 47, 114, 0.56);
   font: 0.66rem/1.2 var(--love-font-utility);
   letter-spacing: 0.1em;
+}
+
+.love-player__playlist-hint {
+  overflow: hidden;
+  color: rgba(139, 47, 114, 0.34);
+  font: 0.58rem/1.2 var(--love-font-cn);
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+  text-align: center;
+  text-overflow: ellipsis;
+  transition: color 180ms ease, opacity 180ms ease;
+  white-space: nowrap;
+}
+
+.love-player__playlist:hover .love-player__playlist-hint,
+.love-player__playlist:focus-within .love-player__playlist-hint {
+  color: rgba(139, 47, 114, 0.58);
+  opacity: 1;
 }
 
 .love-player__playlist ol {
