@@ -384,38 +384,61 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-stage__flower--top { top: -0.54rem; }
 .love-stage__flower--bottom { bottom: -0.54rem; transform: translateX(-50%) rotate(180deg); }
 
-.love-stage__flower--side {
-  display: grid;
-  top: 50%;
-  width: 1.52rem;
-  height: 1.52rem;
-  place-items: center;
-  border: 1px solid rgba(206, 109, 152, 0.42);
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0 44%, #fff5fa 45% 70%, #fff 71%);
-  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.24), 0 4px 10px rgba(139, 47, 114, 0.11);
-  font: 0.82rem/1 Georgia, serif;
+.love-season {
+  --love-season-origin: 50% 50%;
+  --love-season-opacity: 0.9;
+  position: absolute;
+  z-index: 8;
+  display: block;
+  pointer-events: none;
+  user-select: none;
 }
 
-.love-stage__flower--left { left: -1.32rem; transform: translateY(-50%) rotate(-12deg); }
-.love-stage__flower--right { right: -1.32rem; transform: translateY(-50%) rotate(12deg); }
-
-.love-stage__flower--corner {
-  display: grid;
-  width: 2.05rem;
-  height: 2.05rem;
-  place-items: center;
-  border: 1px solid rgba(206, 109, 152, 0.44);
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0 40%, #fff4f9 41% 66%, #fff 67%);
-  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(233, 161, 191, 0.26), 0 5px 13px rgba(139, 47, 114, 0.13);
-  font-size: 1.12rem;
-  text-shadow: 0 3px 7px rgba(139, 47, 114, 0.18);
+.love-season img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: var(--love-season-opacity);
+  filter: drop-shadow(0 5px 6px rgba(83, 48, 66, 0.1));
+  transform-origin: var(--love-season-origin);
+  animation: love-season-unfold 1.25s cubic-bezier(0.2, 0.72, 0.25, 1) both;
 }
 
-.love-stage__flower--tr { top: -1.05rem; right: -1.05rem; transform: rotate(18deg); }
-.love-stage__flower--bl { bottom: -1.05rem; left: -1.05rem; transform: rotate(18deg); }
-.love-stage__flower--br { right: -1.05rem; bottom: -1.05rem; transform: rotate(-18deg); }
+.love-season--spring {
+  --love-season-origin: 0 0;
+  top: -2.35rem;
+  left: -2.15rem;
+  width: clamp(10.5rem, 14vw, 14.5rem);
+  -webkit-mask-image: linear-gradient(135deg, #000 0 72%, transparent 100%);
+  mask-image: linear-gradient(135deg, #000 0 72%, transparent 100%);
+}
+
+.love-season--summer {
+  --love-season-origin: 0 100%;
+  bottom: -3.1rem;
+  left: -2.35rem;
+  width: clamp(8.2rem, 10.5vw, 11.2rem);
+  -webkit-mask-image: linear-gradient(45deg, #000 0 78%, transparent 100%);
+  mask-image: linear-gradient(45deg, #000 0 78%, transparent 100%);
+}
+
+.love-season--autumn {
+  --love-season-origin: 100% 0;
+  top: -2.45rem;
+  right: -2.25rem;
+  width: clamp(10.2rem, 13.5vw, 14rem);
+  -webkit-mask-image: linear-gradient(225deg, #000 0 76%, transparent 100%);
+  mask-image: linear-gradient(225deg, #000 0 76%, transparent 100%);
+}
+
+.love-season--winter {
+  --love-season-origin: 100% 100%;
+  right: -2.7rem;
+  bottom: -2.45rem;
+  width: clamp(13rem, 18vw, 19rem);
+  -webkit-mask-image: linear-gradient(315deg, #000 0 78%, transparent 100%);
+  mask-image: linear-gradient(315deg, #000 0 78%, transparent 100%);
+}
 
 .love-stage::after {
   content: "";
@@ -1085,6 +1108,10 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 185, 220, 0)); }
   50% { transform: scale(1.1); filter: drop-shadow(0 0 0.32rem rgba(255, 185, 220, 0.52)); }
 }
+@keyframes love-season-unfold {
+  from { opacity: 0; transform: scale(0.72) rotate(-1.8deg); }
+  to { opacity: var(--love-season-opacity); transform: scale(1) rotate(0); }
+}
 @keyframes love-record-spin { to { transform: rotate(360deg); } }
 @keyframes love-note-pulse {
   0%, 100% { transform: rotate(-4deg) scale(1); }
@@ -1254,11 +1281,11 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
   .love-stage::before { inset: -0.62rem; }
   .love-stage::after { inset: 0.35rem; }
-  .love-stage__flower--side { display: none; }
-  .love-stage__flower--corner { width: 1.5rem; height: 1.5rem; font-size: 0.8rem; }
-  .love-stage__flower--tr { top: -0.72rem; right: -0.72rem; }
-  .love-stage__flower--bl { bottom: -0.72rem; left: -0.72rem; }
-  .love-stage__flower--br { right: -0.72rem; bottom: -0.72rem; }
+  .love-season { --love-season-opacity: 0.84; }
+  .love-season--spring { top: -1.55rem; left: -1.4rem; width: 8.8rem; }
+  .love-season--summer { bottom: -2rem; left: -1.5rem; width: 7.2rem; }
+  .love-season--autumn { top: -1.6rem; right: -1.45rem; width: 8.6rem; }
+  .love-season--winter { right: -1.7rem; bottom: -1.65rem; width: 10.5rem; }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
   .love-sidecar { gap: 0.8rem; }
