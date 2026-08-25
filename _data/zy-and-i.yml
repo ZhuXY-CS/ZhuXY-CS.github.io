@@ -47,13 +47,14 @@ letters:
       - text: "还隔着一场尚未到来的相遇。"
       - text: "他们生活在同一座城市，"
       - text: "却依然不认识彼此。"
-
-  - lines:
       - text: "直到25岁的小庸遇见24岁的ZY。"
         emphasis: true
+        new_paragraph: true
       - text: "那时，他们即将从蜗壳毕业。"
       - text: "一场宴会，两张相邻的座位，"
       - text: "把那些错过的岁月轻轻接在了一起。"
+
+  - lines:
       - text: "仿佛命运终于在那一刻告诉他们："
       - text: "这一次，不要再错过了。"
         emphasis: true
