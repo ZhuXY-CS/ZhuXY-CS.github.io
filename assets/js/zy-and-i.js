@@ -787,6 +787,7 @@
 
     var bubble = tangbao.querySelector(".tangbao-witness__bubble");
     var sprite = tangbao.querySelector(".tangbao-witness__sprite");
+    var spriteLayers = Array.from(tangbao.querySelectorAll(".tangbao-witness__frame"));
     var messages = [
       "糖宝会一直替你们见证 ♡",
       "你们负责相爱，糖宝负责见证！",
@@ -914,7 +915,32 @@
       "一句到家了，一句吃饭了吗，都是藏在日常里的我爱你。",
       "你们从不同方向走来，以后要朝着同一个方向慢慢走呀。",
       "糖宝已经把最甜的位置留好，专门放你们往后的故事。",
-      "愿所有没能立刻见面的想念，最后都有一个怀抱来签收。"
+      "愿所有没能立刻见面的想念，最后都有一个怀抱来签收。",
+      "糖宝今日播报：小庸很想ZY，而且明天还会继续想。",
+      "一想到你们以后会一起吃饭、散步、等日落，糖宝的尾巴就摇个不停。",
+      "今天发生的小事也要讲给彼此听呀，爱情就是慢慢住进对方的日常。",
+      "糖宝把软乎乎的肚皮借你靠一下，再把最安心的抱抱留给她。",
+      "见不到的时候认真想念，见到的时候认真拥抱，这就是糖宝喜欢的爱情。",
+      "你们要一起拥有很多普通星期二，也要一起收藏好多特别纪念日。",
+      "有人记得你的喜好、情绪和小习惯，本身就是一件很幸福的事。",
+      "糖宝希望你们忙完一天，最想分享的人始终还是彼此。",
+      "以后一起遛糖宝的时候，你们一人牵绳，一人牵手，好不好呀？",
+      "爱不是把生活变得没有烦恼，是让每个烦恼都有一个可以商量的人。",
+      "她开心的时候陪她多笑一会儿，她难过的时候就把声音放温柔一点。",
+      "今天也要夸夸她呀，被喜欢的人认真欣赏，会开心很久很久。",
+      "糖宝的小耳朵听见啦，你每一次说起她，声音都会悄悄变温柔。",
+      "哪怕只是一起发呆，只要身边是喜欢的人，时间也会变得甜甜的。",
+      "下次见面要拍很多照片，也要留一点时间什么都不做，只好好看着彼此。",
+      "你们可以偶尔幼稚、偶尔黏人，因为被偏爱的人本来就可以做小朋友。",
+      "糖宝想把每天的好心情攒起来，等你们见面时一次性全部送给你们。",
+      "有人跨过忙碌来回应你，有人穿过距离来惦记你，这就是双向奔赴呀。",
+      "她不是你计划里的某一站，是你每一段未来都想一起看风景的人。",
+      "如果今天有一点不顺利，就把它讲给彼此听，坏心情分一半就会轻一点。",
+      "糖宝最懂啦：真正的喜欢，会记得她爱吃什么，也会在意她今天开不开心。",
+      "等你们住得近一点，早安就不只是一条消息，而是醒来时看见的第一张脸。",
+      "糖宝会替你们收藏每句想你，等重逢时换成一个超级久的抱抱。",
+      "你们的爱情不必像烟花天天热闹，像灯一样一直亮着就很好。",
+      "今天也请让她确定：无论距离多远，她都稳稳地在你的未来里。"
     ];
     var contextualMessages = {
       ball: [
@@ -989,6 +1015,34 @@
         "下一次重逢正在加载，糖宝先替你们放一朵小烟花。",
         "又坚定地选择了彼此一次，当然要好好庆祝啦！"
       ],
+      food: [
+        "糖宝认真啃骨头，你们也要认真吃饭，不许让对方担心呀！",
+        "这根小骨头分你们一半，甜甜的抱抱要给彼此双份。",
+        "糖宝吃得香香的，因为知道你们的以后也会过得香香甜甜。",
+        "先补充一点能量，再继续替你们守护长长久久的喜欢！",
+        "糖宝把最好吃的一口留给你们，把最好看的未来也留给你们。",
+        "好好吃饭不是小事，是在照顾那个被对方放在心尖上的人呀。",
+        "咔嚓咔嚓，糖宝把今天的小烦恼都啃掉，只留下甜甜的想念。",
+        "一日三餐要按时，想念她这件事可以随时加餐！",
+        "糖宝吃饱啦，现在有满满力气替你们等下一次重逢。",
+        "以后一起吃很多顿饭吧，从热气腾腾的早餐一直吃到白发苍苍。",
+        "最幸福的菜单，是喜欢的人坐在对面，糖宝趴在桌边。",
+        "糖宝啃完这根小骨头，再替你们许一个平安健康、长长久久。"
+      ],
+      water: [
+        "糖宝喝一口水，也提醒你们忙起来别忘了照顾自己呀。",
+        "咕嘟咕嘟，把今天的小委屈喝掉，再带着爱重新出发。",
+        "两座城市的天气不一样，但总有人提醒你按时喝水、好好生活。",
+        "糖宝补充好水分啦，接下来继续认真替你们想念彼此！",
+        "喝水的时候也会想起一个人，这大概就是日常里软乎乎的爱。",
+        "今天也要照顾好自己，因为你是她隔着很远也会牵挂的人。",
+        "水碗里晃着两颗小星星，一颗是ZY，一颗是小庸。",
+        "慢慢喝，慢慢爱，生活里的温柔都值得一口一口珍惜。",
+        "糖宝喝饱啦，也把清清甜甜的好心情分给你们一大碗！",
+        "记得提醒她喝水，也记得告诉她：我不是随口关心，我是真的在意你。",
+        "一声喝水了吗很普通，可被同一个人惦记很久，就会变得很浪漫。",
+        "糖宝的水碗见底啦，你们今天的喜欢可不许见底哦！"
+      ],
       morning: [
         "早安是今天的第一份牵挂，记得把温柔留给彼此。",
         "新的一天开始啦，你们也离下一次见面更近一点。",
@@ -1047,7 +1101,8 @@
     var bubbleVisibleUntil = 0;
     var speechPoseTimer;
     var speechCueTimer;
-    var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
+    var initialSprite = spriteLayers[0];
+    var frameRoot = (initialSprite.currentSrc || initialSprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
     var frameSources = [];
     var frameSequence = [14, 15, 16, 17, 18, 19];
     var frameDuration = 145;
@@ -1057,7 +1112,8 @@
     var frameIndex = 0;
     var currentAction = "is-action-trot";
     var frameStartedAt = window.performance.now();
-    var displayedFrame = 0;
+    var displayedFrame = 22;
+    var activeFrameLayer = 0;
     var framePreloads = [];
 
     for (var frameNumber = 1; frameNumber <= 43; frameNumber += 1) {
@@ -1076,16 +1132,32 @@
       "is-action-leap": { frames: [32, 33, 34, 35, 36, 37], frameDuration: 145, loop: false, moving: true, minimum: 900, maximum: 990 },
       "is-action-look": { frames: [22, 23, 24, 25, 24, 23, 22], frameDuration: 220, loop: false, minimum: 1750, maximum: 2050 },
       "is-action-curious": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 205, loop: false, minimum: 1950, maximum: 2250 },
-      "is-action-sniff": { frames: [26, 27, 28, 29, 28, 27, 26], frameDuration: 185, loop: false, minimum: 1500, maximum: 1750 },
-      "is-action-stretch": { frames: [26, 27, 28, 29, 30, 31, 30, 29, 28, 27, 26], frameDuration: 160, loop: false, minimum: 1900, maximum: 2200 },
+      "is-action-sniff": { frames: [22, 23, 24, 25, 26, 27, 28, 29, 28, 27, 26, 25, 24, 23, 22], frameDuration: 124, loop: false, minimum: 1900, maximum: 2150 },
+      "is-action-stretch": { frames: [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22], frameDuration: 112, loop: false, minimum: 2200, maximum: 2450 },
       "is-action-celebrate": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 165, loop: false, minimum: 1650, maximum: 1900 },
       "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 42, 42, 41, 40, 39, 38, 43], frameDuration: 180, loop: false, minimum: 2450, maximum: 2750 },
       "is-action-settle": { frames: [19, 20, 21, 22], frameDuration: 135, loop: false, minimum: 620, maximum: 720 },
       "is-action-ready": { frames: [22, 21, 20, 19], frameDuration: 125, loop: false, minimum: 560, maximum: 660 },
       "is-action-rise": { frames: [25, 24, 23, 22, 21, 20, 19], frameDuration: 110, loop: false, minimum: 820, maximum: 920 },
       "is-action-rest": { frames: [22, 23, 24, 25], frameDuration: 230, loop: false, minimum: 4200, maximum: 6200 },
-      "is-action-turn": { frames: [19, 20, 21, 22, 21, 20, 19], frameDuration: 105, loop: false, minimum: 760, maximum: 860 }
+      "is-action-turn": { frames: [19, 20, 21, 22, 21, 20, 19], frameDuration: 105, loop: false, minimum: 760, maximum: 860 },
+      "is-action-lower": { frames: [22, 23, 24, 25, 26, 27, 28], frameDuration: 145, loop: false, minimum: 1020, maximum: 1120 },
+      "is-action-chew": { frames: [28, 29], frameDuration: 190, loop: true, minimum: 4700, maximum: 5600 },
+      "is-action-drink": { frames: [28, 29], frameDuration: 235, loop: true, minimum: 4750, maximum: 5700 },
+      "is-action-lift": { frames: [28, 27, 26, 25, 24, 23, 22], frameDuration: 145, loop: false, minimum: 1020, maximum: 1120 }
     };
+
+    function displayTangbaoFrame(nextFrame) {
+      if (nextFrame === displayedFrame || spriteLayers.length < 2) return;
+      var incomingLayerIndex = activeFrameLayer === 0 ? 1 : 0;
+      var incomingLayer = spriteLayers[incomingLayerIndex];
+      var outgoingLayer = spriteLayers[activeFrameLayer];
+      incomingLayer.src = frameSources[nextFrame - 1];
+      incomingLayer.classList.add("is-active");
+      outgoingLayer.classList.remove("is-active");
+      activeFrameLayer = incomingLayerIndex;
+      displayedFrame = nextFrame;
+    }
 
     function setFrameAction(action) {
       var selected = actionDefinitions[action] || actionDefinitions["is-action-trot"];
@@ -1097,11 +1169,13 @@
       frameIndex = 0;
       currentAction = action;
       frameStartedAt = window.performance.now();
-      displayedFrame = 0;
+      displayTangbaoFrame(frameSequence[0]);
     }
 
     function messageContextForAction(action) {
       if (action === "is-action-ball") return "ball";
+      if (action === "is-action-chew") return "food";
+      if (action === "is-action-drink") return "water";
       if (action === "is-action-sniff") return "sniff";
       if (action === "is-action-rest" || action === "is-action-stretch") return "rest";
       if (action === "is-action-celebrate" || action === "is-action-leap") return "celebrate";
@@ -1193,7 +1267,7 @@
     var sceneDirection = 1;
     var pendingSpeechContext = "";
     var moveAnimationFrame;
-    var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn"];
+    var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn", "is-action-lower", "is-action-chew", "is-action-drink", "is-action-lift"];
     var sceneDefinitions = {
       stroll: [
         { action: "is-action-trot", duration: [2600, 3800] },
@@ -1237,9 +1311,27 @@
         { action: "is-action-curious", duration: [2200, 2800], speech: "look", speechChance: 0.9, speechDelay: 320 },
         { action: "is-action-celebrate", duration: [1500, 1800] },
         { action: "is-action-ready" }
+      ],
+      snack: [
+        { action: "is-action-prance", duration: [1300, 1900] },
+        { action: "is-action-settle" },
+        { action: "is-action-lower" },
+        { action: "is-action-chew", speech: "food", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-lift" },
+        { action: "is-action-curious", duration: [1250, 1650] },
+        { action: "is-action-ready" }
+      ],
+      waterBreak: [
+        { action: "is-action-trot", duration: [1450, 2150] },
+        { action: "is-action-settle" },
+        { action: "is-action-lower" },
+        { action: "is-action-drink", speech: "water", speechChance: 1, speechDelay: 480 },
+        { action: "is-action-lift" },
+        { action: "is-action-look", duration: [1350, 1750] },
+        { action: "is-action-ready" }
       ]
     };
-    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet", "greeting"];
+    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet", "greeting", "snack", "waterBreak"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
@@ -1347,7 +1439,7 @@
 
       var speechContext = step.speech || "";
       var speechChance = step.speechChance === undefined ? 1 : step.speechChance;
-      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-ready", "is-action-rise", "is-action-turn"].indexOf(step.action) === -1;
+      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-ready", "is-action-rise", "is-action-turn", "is-action-lower", "is-action-lift"].indexOf(step.action) === -1;
       if (pendingSpeechContext && acceptsSpeech) {
         if (!speechContext) speechContext = pendingSpeechContext;
         speechChance = 1;
@@ -1427,8 +1519,7 @@
       }
 
       if (nextFrame !== displayedFrame) {
-        sprite.src = frameSources[nextFrame - 1];
-        displayedFrame = nextFrame;
+        displayTangbaoFrame(nextFrame);
       }
 
       if (x <= padding || x >= maxX) {
@@ -1467,7 +1558,10 @@
 
     scheduleSweetWords(9000);
 
-    Promise.all(framePreloads.slice(0, 9).map(function (image) {
+    Promise.all(framePreloads.map(function (image) {
+      if (typeof image.decode === "function") {
+        return image.decode().catch(function () {});
+      }
       if (image.complete) return Promise.resolve();
       return new Promise(function (resolve) {
         image.addEventListener("load", resolve, { once: true });

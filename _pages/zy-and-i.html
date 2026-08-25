@@ -35,7 +35,12 @@ comments: false
 </svg>
 
 <button class="tangbao-witness is-action-look" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
-  <img class="tangbao-witness__sprite" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" style="filter: url(#tangbao-defringe) drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));">
+  <span class="tangbao-witness__sprite" aria-hidden="true" style="filter: url(#tangbao-defringe) drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));">
+    <img class="tangbao-witness__frame is-active" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync" fetchpriority="high">
+    <img class="tangbao-witness__frame" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync">
+  </span>
+  <span class="tangbao-witness__prop tangbao-witness__prop--bone" aria-hidden="true"></span>
+  <span class="tangbao-witness__prop tangbao-witness__prop--water" aria-hidden="true"></span>
   <span class="tangbao-witness__bubble" aria-live="polite">糖宝会一直替你们见证 ♡</span>
 </button>
 
