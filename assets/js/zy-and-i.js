@@ -957,6 +957,7 @@
     };
     var recentMessages = [];
     var bubbleTimer;
+    var bubbleVisibleUntil = 0;
     var speechPoseTimer;
     var speechCueTimer;
     var frameRoot = (sprite.currentSrc || sprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
@@ -975,6 +976,7 @@
     for (var frameNumber = 1; frameNumber <= 43; frameNumber += 1) {
       var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
       frameSources.push(frameSource);
+      if (frameNumber < 14) continue;
       var preload = new Image();
       preload.src = frameSource;
       framePreloads.push(preload);
@@ -982,15 +984,17 @@
 
     var actionDefinitions = {
       "is-action-trot": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 118, stepDistance: 8.5, moving: true, minimum: 2300, maximum: 3900 },
+      "is-action-prance": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 104, stepDistance: 9.2, moving: true, minimum: 1450, maximum: 2200 },
       "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 82, stepDistance: 11.5, moving: true, minimum: 1050, maximum: 1650 },
-      "is-action-bound": { frames: [2, 3, 5, 1, 6, 7, 2], frameDuration: 132, loop: false, moving: true, minimum: 980, maximum: 1080 },
       "is-action-leap": { frames: [32, 33, 34, 35, 36, 37], frameDuration: 145, loop: false, moving: true, minimum: 900, maximum: 990 },
       "is-action-look": { frames: [22, 23, 24, 25, 24, 23, 22], frameDuration: 220, loop: false, minimum: 1750, maximum: 2050 },
+      "is-action-curious": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 205, loop: false, minimum: 1950, maximum: 2250 },
       "is-action-sniff": { frames: [26, 27, 28, 29, 28, 27, 26], frameDuration: 185, loop: false, minimum: 1500, maximum: 1750 },
       "is-action-stretch": { frames: [26, 27, 28, 29, 30, 31, 30, 29, 28, 27, 26], frameDuration: 160, loop: false, minimum: 1900, maximum: 2200 },
-      "is-action-celebrate": { frames: [22, 23, 24, 25, 8, 9, 8, 25, 24, 23, 22], frameDuration: 150, loop: false, minimum: 1800, maximum: 2050 },
-      "is-action-ball": { frames: [38, 39, 40, 41, 42, 13, 12, 10, 11, 12, 13, 42, 41, 40, 39, 38, 43], frameDuration: 150, loop: false, minimum: 2750, maximum: 3100 },
+      "is-action-celebrate": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 165, loop: false, minimum: 1650, maximum: 1900 },
+      "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 42, 42, 41, 40, 39, 38, 43], frameDuration: 180, loop: false, minimum: 2450, maximum: 2750 },
       "is-action-settle": { frames: [19, 20, 21, 22], frameDuration: 135, loop: false, minimum: 620, maximum: 720 },
+      "is-action-ready": { frames: [22, 21, 20, 19], frameDuration: 125, loop: false, minimum: 560, maximum: 660 },
       "is-action-rise": { frames: [25, 24, 23, 22, 21, 20, 19], frameDuration: 110, loop: false, minimum: 820, maximum: 920 },
       "is-action-rest": { frames: [22, 23, 24, 25], frameDuration: 230, loop: false, minimum: 4200, maximum: 6200 },
       "is-action-turn": { frames: [19, 20, 21, 22, 21, 20, 19], frameDuration: 105, loop: false, minimum: 760, maximum: 860 }
@@ -1013,7 +1017,7 @@
       if (action === "is-action-ball") return "ball";
       if (action === "is-action-sniff") return "sniff";
       if (action === "is-action-rest" || action === "is-action-stretch") return "rest";
-      if (action === "is-action-celebrate" || action === "is-action-bound" || action === "is-action-leap") return "celebrate";
+      if (action === "is-action-celebrate" || action === "is-action-leap") return "celebrate";
       return "look";
     }
 
@@ -1047,9 +1051,11 @@
       tangbao.classList.add("is-speaking");
       window.clearTimeout(bubbleTimer);
       var readingTime = Math.min(7600, Math.max(5000, Array.from(bubble.textContent).length * 165));
+      bubbleVisibleUntil = Date.now() + readingTime;
       bubbleTimer = window.setTimeout(function () {
         tangbao.classList.remove("is-speaking");
         bubble.classList.remove("is-blooming");
+        bubbleVisibleUntil = 0;
       }, readingTime);
     }
 
@@ -1061,17 +1067,19 @@
         return;
       }
 
+      window.clearTimeout(actionTimer);
+      window.clearTimeout(speechCueTimer);
+      sceneQueue = [
+        { action: "is-action-curious", duration: [2600, 3150], speech: "click", speechChance: 1, speechDelay: 240 },
+        { action: "is-action-celebrate", duration: [1450, 1750] },
+        { action: "is-action-ready" }
+      ];
+
       if (actionDefinitions[currentAction] && actionDefinitions[currentAction].moving) {
-        window.clearTimeout(actionTimer);
-        window.clearTimeout(speechCueTimer);
-        sceneQueue = [
-          { action: "is-action-look", duration: [3300, 3800], speech: "click", speechChance: 1, speechDelay: 260 },
-          { action: "is-action-rise" }
-        ];
         applyAction("is-action-settle");
         speechPoseTimer = window.setTimeout(runNextSceneStep, 680);
       } else {
-        revealMessage("click");
+        runNextSceneStep();
       }
     }
 
@@ -1095,37 +1103,39 @@
     var forcedDirection = 0;
     var sceneQueue = [];
     var lastScene = "";
+    var sceneDirection = 1;
     var pendingSpeechContext = "";
     var moveAnimationFrame;
-    var actionClasses = ["is-action-trot", "is-action-dash", "is-action-bound", "is-action-leap", "is-action-look", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-rise", "is-action-rest", "is-action-turn"];
+    var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn"];
     var sceneDefinitions = {
       stroll: [
         { action: "is-action-trot", duration: [2600, 3800] },
         { action: "is-action-settle" },
         { action: "is-action-sniff", speech: "sniff", speechChance: 0.68, speechDelay: 420 },
-        { action: "is-action-look", duration: [1500, 1900] },
-        { action: "is-action-rise" }
+        { action: "is-action-curious", duration: [1500, 1900] },
+        { action: "is-action-ready" }
       ],
       watch: [
-        { action: "is-action-trot", duration: [1900, 2800] },
+        { action: "is-action-prance", duration: [1700, 2400] },
         { action: "is-action-settle" },
         { action: "is-action-look", duration: [3000, 3900], speech: "look", speechChance: 0.82, speechDelay: 360 },
-        { action: "is-action-rise" }
+        { action: "is-action-ready" }
       ],
       zoomies: [
+        { action: "is-action-prance", duration: [900, 1250] },
         { action: "is-action-dash", duration: [1050, 1450] },
-        { action: "is-action-bound" },
+        { action: "is-action-settle" },
         { action: "is-action-leap" },
         { action: "is-action-settle" },
         { action: "is-action-celebrate", speech: "celebrate", speechChance: 0.84, speechDelay: 420 },
-        { action: "is-action-rise" }
+        { action: "is-action-ready" }
       ],
       ball: [
-        { action: "is-action-trot", duration: [1500, 2300] },
+        { action: "is-action-prance", duration: [1500, 2200] },
         { action: "is-action-settle" },
         { action: "is-action-ball", speech: "ball", speechChance: 0.94, speechDelay: 520 },
-        { action: "is-action-rest", duration: [2800, 3800] },
-        { action: "is-action-rise" }
+        { action: "is-action-celebrate", duration: [1450, 1750] },
+        { action: "is-action-ready" }
       ],
       quiet: [
         { action: "is-action-trot", duration: [1700, 2500] },
@@ -1133,9 +1143,16 @@
         { action: "is-action-stretch" },
         { action: "is-action-rest", speech: "rest", speechChance: 0.88, speechDelay: 520 },
         { action: "is-action-rise" }
+      ],
+      greeting: [
+        { action: "is-action-prance", duration: [1300, 1850] },
+        { action: "is-action-settle" },
+        { action: "is-action-curious", duration: [2200, 2800], speech: "look", speechChance: 0.9, speechDelay: 320 },
+        { action: "is-action-celebrate", duration: [1500, 1800] },
+        { action: "is-action-ready" }
       ]
     };
-    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet"];
+    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet", "greeting"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
@@ -1169,13 +1186,13 @@
 
       if (definition.moving) {
         window.clearTimeout(bubbleTimer);
+        bubbleVisibleUntil = 0;
         tangbao.classList.remove("is-speaking");
-        var hadForcedDirection = forcedDirection !== 0;
-        direction = forcedDirection || direction;
+        bubble.classList.remove("is-blooming");
+        direction = forcedDirection || sceneDirection || direction;
         forcedDirection = 0;
-        if (!hadForcedDirection && Math.random() < 0.3) direction *= -1;
         if (action === "is-action-dash") targetVelocityX = direction * between(150, 205);
-        else if (action === "is-action-bound") targetVelocityX = direction * between(95, 132);
+        else if (action === "is-action-prance") targetVelocityX = direction * between(82, 112);
         else if (action === "is-action-leap") targetVelocityX = direction * between(78, 112);
         else targetVelocityX = direction * between(54, 88);
         targetVelocityY = 0;
@@ -1211,6 +1228,12 @@
       sceneQueue = (sceneDefinitions[scene] || sceneDefinitions.stroll).map(function (step) {
         return Object.assign({}, step);
       });
+      var facingDirection = tangbao.classList.contains("is-facing-left") ? -1 : 1;
+      sceneDirection = Math.random() < 0.26 ? -facingDirection : facingDirection;
+      if (sceneDirection !== facingDirection) {
+        forcedDirection = sceneDirection;
+        sceneQueue.unshift({ action: "is-action-turn" });
+      }
       if (scene !== "quiet" && Math.random() < 0.64) targetGroundY = chooseGroundLane();
       runNextSceneStep();
     }
@@ -1224,13 +1247,20 @@
         return;
       }
 
+      var upcomingDefinition = actionDefinitions[sceneQueue[0].action];
+      var speechTimeRemaining = bubbleVisibleUntil - Date.now();
+      if (upcomingDefinition.moving && tangbao.classList.contains("is-speaking") && speechTimeRemaining > 100) {
+        actionTimer = window.setTimeout(runNextSceneStep, speechTimeRemaining + 60);
+        return;
+      }
+
       var step = sceneQueue.shift();
       var definition = actionDefinitions[step.action];
       applyAction(step.action);
 
       var speechContext = step.speech || "";
       var speechChance = step.speechChance === undefined ? 1 : step.speechChance;
-      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-rise", "is-action-turn"].indexOf(step.action) === -1;
+      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-ready", "is-action-rise", "is-action-turn"].indexOf(step.action) === -1;
       if (pendingSpeechContext && acceptsSpeech) {
         if (!speechContext) speechContext = pendingSpeechContext;
         speechChance = 1;
@@ -1246,6 +1276,7 @@
 
     function turnAtBoundary(direction) {
       if (currentAction === "is-action-turn") return;
+      sceneDirection = direction;
       forcedDirection = direction;
       window.clearTimeout(actionTimer);
       window.clearTimeout(speechCueTimer);
@@ -1254,7 +1285,7 @@
         { action: "is-action-trot", duration: [1500, 2200] },
         { action: "is-action-settle" },
         { action: "is-action-look", duration: [1400, 1800] },
-        { action: "is-action-rise" }
+        { action: "is-action-ready" }
       ];
       runNextSceneStep();
     }
@@ -1315,7 +1346,7 @@
 
       if (x <= padding || x >= maxX) {
         x = Math.min(maxX, Math.max(padding, x));
-        if (currentAction === "is-action-trot" || currentAction === "is-action-dash" || currentAction === "is-action-bound" || currentAction === "is-action-leap") {
+        if (currentAction === "is-action-trot" || currentAction === "is-action-prance" || currentAction === "is-action-dash" || currentAction === "is-action-leap") {
           velocityX = 0;
           targetVelocityX = 0;
           turnAtBoundary(x <= padding ? 1 : -1);
@@ -1349,7 +1380,7 @@
 
     scheduleSweetWords(9000);
 
-    Promise.all(framePreloads.slice(13, 22).map(function (image) {
+    Promise.all(framePreloads.slice(0, 9).map(function (image) {
       if (image.complete) return Promise.resolve();
       return new Promise(function (resolve) {
         image.addEventListener("load", resolve, { once: true });

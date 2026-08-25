@@ -236,20 +236,21 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 .tangbao-witness.is-action-trot .tangbao-witness__sprite { animation: tangbao-trot 720ms ease-in-out infinite; }
+.tangbao-witness.is-action-prance .tangbao-witness__sprite { animation: tangbao-prance 620ms ease-in-out infinite; }
 .tangbao-witness.is-action-dash .tangbao-witness__sprite { animation: tangbao-dash 480ms ease-in-out infinite; }
-.tangbao-witness.is-action-bound .tangbao-witness__sprite { animation: tangbao-bound 920ms cubic-bezier(0.42, 0, 0.3, 1) both; }
 .tangbao-witness.is-action-leap .tangbao-witness__sprite { animation: tangbao-leap 900ms cubic-bezier(0.32, 0, 0.24, 1) both; }
 .tangbao-witness.is-action-look .tangbao-witness__sprite { animation: tangbao-look 1.55s ease-in-out both; }
+.tangbao-witness.is-action-curious .tangbao-witness__sprite { animation: tangbao-curious 1.85s ease-in-out both; }
 .tangbao-witness.is-action-sniff .tangbao-witness__sprite { animation: tangbao-sniff 1.3s ease-in-out both; }
 .tangbao-witness.is-action-stretch .tangbao-witness__sprite { animation: tangbao-stretch 1.78s ease-in-out both; }
 .tangbao-witness.is-action-celebrate .tangbao-witness__sprite { animation: tangbao-celebrate 1.68s ease-in-out both; }
 .tangbao-witness.is-action-ball .tangbao-witness__sprite { animation: tangbao-ball 2.58s ease-in-out both; }
 .tangbao-witness.is-action-settle .tangbao-witness__sprite { animation: tangbao-settle 580ms ease-out both; }
+.tangbao-witness.is-action-ready .tangbao-witness__sprite { animation: tangbao-ready 620ms ease-in-out both; }
 .tangbao-witness.is-action-rise .tangbao-witness__sprite { animation: tangbao-rise 820ms ease-in-out both; }
 .tangbao-witness.is-action-rest .tangbao-witness__sprite { animation: tangbao-rest 3.4s ease-in-out infinite; }
 .tangbao-witness.is-action-turn .tangbao-witness__sprite { animation: tangbao-turn 780ms ease-in-out both; }
 
-.tangbao-witness.is-action-bound::after,
 .tangbao-witness.is-action-leap::after {
   opacity: 0.34;
   transform: scale(0.64);
@@ -1270,21 +1271,17 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 @keyframes tangbao-trot {
   0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0); }
-  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.035rem); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.075rem); }
+}
+
+@keyframes tangbao-prance {
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
+  48% { transform: scaleX(var(--tangbao-direction)) translateY(-0.16rem) rotate(0.5deg); }
 }
 
 @keyframes tangbao-dash {
   0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-0.35deg); }
-  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.07rem) rotate(0.35deg); }
-}
-
-@keyframes tangbao-bound {
-  0% { transform: scaleX(var(--tangbao-direction)) translateY(0.08rem) scaleY(0.95); }
-  18% { transform: scaleX(var(--tangbao-direction)) translateY(-0.34rem) rotate(-1deg) scaleY(1.02); }
-  48% { transform: scaleX(var(--tangbao-direction)) translateY(-0.82rem) rotate(1deg); }
-  76% { transform: scaleX(var(--tangbao-direction)) translateY(-0.16rem) rotate(0); }
-  90% { transform: scaleX(var(--tangbao-direction)) translateY(0.08rem) scaleY(0.94); }
-  100% { transform: scaleX(var(--tangbao-direction)) translateY(0) scaleY(1); }
+  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) rotate(0.35deg); }
 }
 
 @keyframes tangbao-leap {
@@ -1302,6 +1299,13 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   68% { transform: scaleX(var(--tangbao-direction)) translateY(-0.04rem) rotate(1deg); }
 }
 
+@keyframes tangbao-curious {
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
+  22% { transform: scaleX(var(--tangbao-direction)) translateY(-0.035rem) rotate(-0.8deg); }
+  48% { transform: scaleX(var(--tangbao-direction)) translateY(0.025rem) rotate(1.35deg); }
+  74% { transform: scaleX(var(--tangbao-direction)) translateY(-0.045rem) rotate(-0.45deg); }
+}
+
 @keyframes tangbao-sniff {
   0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
   32% { transform: scaleX(var(--tangbao-direction)) translateY(0.08rem) rotate(0.7deg); }
@@ -1317,21 +1321,30 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 @keyframes tangbao-celebrate {
-  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(-1deg); }
-  50% { transform: scaleX(var(--tangbao-direction)) translateY(-0.28rem) rotate(2deg); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
+  24% { transform: scaleX(var(--tangbao-direction)) translateY(-0.16rem) rotate(-0.75deg); }
+  54% { transform: scaleX(var(--tangbao-direction)) translateY(-0.3rem) rotate(1.4deg); }
+  82% { transform: scaleX(var(--tangbao-direction)) translateY(-0.07rem) rotate(-0.35deg); }
 }
 
 @keyframes tangbao-ball {
   0% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
-  24% { transform: scaleX(var(--tangbao-direction)) translateY(0.05rem) rotate(-1deg); }
-  52% { transform: scaleX(var(--tangbao-direction)) translateY(-0.5rem) rotate(1deg); }
-  72% { transform: scaleX(var(--tangbao-direction)) translateY(0.04rem) rotate(0); }
+  22% { transform: scaleX(var(--tangbao-direction)) translateY(0.06rem) rotate(-0.7deg); }
+  46% { transform: scaleX(var(--tangbao-direction)) translateY(-0.36rem) rotate(0.8deg); }
+  68% { transform: scaleX(var(--tangbao-direction)) translateY(0.05rem) rotate(0); }
+  84% { transform: scaleX(var(--tangbao-direction)) translateY(-0.08rem) rotate(-0.35deg); }
   100% { transform: scaleX(var(--tangbao-direction)) translateY(0) rotate(0); }
 }
 
 @keyframes tangbao-settle {
   0% { transform: scaleX(var(--tangbao-direction)) translateY(-0.12rem) scaleY(1.03); }
   45% { transform: scaleX(var(--tangbao-direction)) translateY(0.08rem) scaleY(0.95); }
+  100% { transform: scaleX(var(--tangbao-direction)) translateY(0) scaleY(1); }
+}
+
+@keyframes tangbao-ready {
+  0% { transform: scaleX(var(--tangbao-direction)) translateY(0.055rem) scaleY(0.97); }
+  55% { transform: scaleX(var(--tangbao-direction)) translateY(-0.065rem) scaleY(1.02); }
   100% { transform: scaleX(var(--tangbao-direction)) translateY(0) scaleY(1); }
 }
 
@@ -1348,11 +1361,9 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 @keyframes tangbao-turn {
-  0% { transform: scaleX(var(--tangbao-direction)) translateX(0) scaleY(1); }
-  38% { transform: scaleX(var(--tangbao-direction)) translateX(-0.08rem) scaleY(0.96); }
-  50% { transform: scaleX(var(--tangbao-direction)) scaleX(0.12) scaleY(0.94); }
-  62% { transform: scaleX(var(--tangbao-direction)) translateX(0.08rem) scaleY(0.96); }
-  100% { transform: scaleX(var(--tangbao-direction)) translateX(0) scaleY(1); }
+  0%, 100% { transform: scaleX(var(--tangbao-direction)) translateY(0) scaleY(1); }
+  42% { transform: scaleX(var(--tangbao-direction)) translateY(0.055rem) rotate(-0.8deg) scaleY(0.97); }
+  58% { transform: scaleX(var(--tangbao-direction)) translateY(0.055rem) rotate(0.8deg) scaleY(0.97); }
 }
 
 @media (min-width: 1051px) and (max-width: 1380px) {
