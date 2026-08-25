@@ -294,23 +294,28 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   transition: opacity 260ms ease, filter 260ms ease, transform 320ms cubic-bezier(0.2, 0.72, 0.25, 1);
   text-align: center;
   text-wrap: balance;
+  overflow: visible;
 }
 
 .tangbao-witness__bubble::before {
-  content: "♡";
+  content: "♥";
   position: absolute;
-  top: -0.55rem;
-  right: 0.72rem;
+  z-index: 2;
+  top: -0.62rem;
+  right: 0.86rem;
   display: grid;
-  width: 1.08rem;
-  height: 1.08rem;
+  width: 1.24rem;
+  height: 1.24rem;
   place-items: center;
-  border: 1px solid rgba(206, 109, 152, 0.32);
+  border: 1px solid rgba(206, 109, 152, 0.38);
   border-radius: 50%;
-  background: #fffafd;
-  box-shadow: 0 3px 9px rgba(84, 43, 65, 0.1);
-  color: var(--love-lace-deep);
-  font: 0.72rem/1 Georgia, serif;
+  background: radial-gradient(circle at 34% 28%, #fff 0 18%, #fff4f9 48%, #fbe4ef 100%);
+  box-shadow:
+    0 4px 10px rgba(118, 52, 84, 0.13),
+    0 0 0 3px rgba(255, 255, 255, 0.84);
+  color: #d76599;
+  font: 0.64rem/1 Georgia, serif;
+  text-shadow: 0 1px 0 #fff;
 }
 
 .tangbao-witness__bubble::after {
@@ -1249,8 +1254,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 @keyframes tangbao-bubble-bloom {
-  from { opacity: 0; filter: blur(2px); clip-path: inset(22% 12% 8% 12% round 1rem); }
-  to { opacity: 1; filter: blur(0); clip-path: inset(0 round 1rem); }
+  from { opacity: 0; filter: blur(2px); }
+  to { opacity: 1; filter: blur(0); }
 }
 
 @keyframes tangbao-trot {
