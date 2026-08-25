@@ -248,39 +248,73 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .tangbao-witness__bubble {
   position: absolute;
   left: 50%;
-  bottom: calc(100% - 0.25rem);
+  bottom: calc(100% - 0.12rem);
   width: max-content;
-  max-width: min(15rem, 78vw);
-  padding: 0.5rem 0.7rem;
-  border: 1px solid rgba(139, 47, 114, 0.18);
-  border-radius: 0.75rem 0.75rem 0.75rem 0.2rem;
-  background: rgba(255, 253, 253, 0.97);
-  box-shadow: 0 6px 18px rgba(51, 34, 42, 0.12);
-  color: var(--love-accent);
-  font: 0.72rem/1.45 Consolas, Monaco, "Courier New", monospace;
+  max-width: min(17rem, 82vw);
+  padding: 0.68rem 0.92rem 0.64rem;
+  border: 1px solid rgba(206, 109, 152, 0.32);
+  border-radius: 1rem 1rem 1rem 0.34rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.985), rgba(255, 246, 251, 0.975));
+  box-shadow:
+    0 9px 24px rgba(84, 43, 65, 0.13),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.86),
+    inset 0 0 0 4px rgba(233, 161, 191, 0.11);
+  color: #7d2b62;
+  font: 0.76rem/1.62 var(--love-font-cn);
+  letter-spacing: 0.018em;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 0.35rem) scale(0.96);
-  transition: opacity 180ms ease, transform 180ms ease;
+  filter: blur(1.5px);
+  transform: translate(-50%, 0.42rem) scale(0.94);
+  transition: opacity 260ms ease, filter 260ms ease, transform 320ms cubic-bezier(0.2, 0.72, 0.25, 1);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.tangbao-witness__bubble::before {
+  content: "♡";
+  position: absolute;
+  top: -0.55rem;
+  right: 0.72rem;
+  display: grid;
+  width: 1.08rem;
+  height: 1.08rem;
+  place-items: center;
+  border: 1px solid rgba(206, 109, 152, 0.32);
+  border-radius: 50%;
+  background: #fffafd;
+  box-shadow: 0 3px 9px rgba(84, 43, 65, 0.1);
+  color: var(--love-lace-deep);
+  font: 0.72rem/1 Georgia, serif;
 }
 
 .tangbao-witness__bubble::after {
   content: "";
   position: absolute;
-  left: 1rem;
-  top: 100%;
-  border: 0.35rem solid transparent;
-  border-top-color: rgba(255, 253, 253, 0.97);
+  left: 50%;
+  top: calc(100% - 0.27rem);
+  width: 0.56rem;
+  height: 0.56rem;
+  border-right: 1px solid rgba(206, 109, 152, 0.28);
+  border-bottom: 1px solid rgba(206, 109, 152, 0.28);
+  background: #fff7fb;
+  transform: translateX(-50%) rotate(45deg);
 }
 
 .tangbao-witness.is-speaking .tangbao-witness__bubble {
   opacity: 1;
+  filter: blur(0);
   transform: translate(-50%, 0) scale(1);
+}
+
+.tangbao-witness.is-speaking .tangbao-witness__bubble.is-blooming {
+  animation: tangbao-bubble-bloom 460ms cubic-bezier(0.18, 0.72, 0.24, 1) both;
 }
 
 .tangbao-witness.is-near-left .tangbao-witness__bubble {
   left: 0;
-  transform: translate(0, 0.35rem) scale(0.96);
+  transform: translate(0, 0.42rem) scale(0.94);
 }
 
 .tangbao-witness.is-near-left.is-speaking .tangbao-witness__bubble {
@@ -290,7 +324,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .tangbao-witness.is-near-right .tangbao-witness__bubble {
   right: 0;
   left: auto;
-  transform: translate(0, 0.35rem) scale(0.96);
+  transform: translate(0, 0.42rem) scale(0.94);
 }
 
 .tangbao-witness.is-near-right.is-speaking .tangbao-witness__bubble {
@@ -298,21 +332,29 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 .tangbao-witness.is-near-right .tangbao-witness__bubble::after {
-  right: 1rem;
+  right: 1.15rem;
   left: auto;
+  transform: rotate(45deg);
+}
+
+.tangbao-witness.is-near-left .tangbao-witness__bubble::after {
+  left: 1.15rem;
+  transform: rotate(45deg);
 }
 
 .tangbao-witness.is-near-top .tangbao-witness__bubble {
-  top: calc(100% - 0.1rem);
+  top: calc(100% - 0.02rem);
   bottom: auto;
-  border-radius: 0.2rem 0.75rem 0.75rem;
+  border-radius: 0.34rem 1rem 1rem;
 }
 
 .tangbao-witness.is-near-top .tangbao-witness__bubble::after {
-  top: auto;
-  bottom: 100%;
-  border-top-color: transparent;
-  border-bottom-color: rgba(255, 253, 253, 0.97);
+  top: -0.29rem;
+  bottom: auto;
+  border: 0;
+  border-top: 1px solid rgba(206, 109, 152, 0.28);
+  border-left: 1px solid rgba(206, 109, 152, 0.28);
+  background: #fffdfd;
 }
 
 .tangbao-witness.is-resting {
@@ -1186,6 +1228,11 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   0% { opacity: 0; transform: translate(-50%, -42%) scale(0.5); }
   22% { opacity: 1; transform: translate(-50%, -58%) scale(1.2); }
   100% { opacity: 0; transform: translate(-50%, -145%) scale(0.85); }
+}
+
+@keyframes tangbao-bubble-bloom {
+  from { opacity: 0; filter: blur(2px); clip-path: inset(22% 12% 8% 12% round 1rem); }
+  to { opacity: 1; filter: blur(0); clip-path: inset(0 round 1rem); }
 }
 
 @keyframes tangbao-trot {
