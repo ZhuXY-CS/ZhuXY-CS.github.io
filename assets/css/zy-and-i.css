@@ -180,6 +180,14 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   will-change: transform, opacity;
 }
 
+.tangbao-defringe-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .tangbao-witness {
   --tangbao-size: clamp(5.2rem, 7.5vw, 6.7rem);
   position: fixed;
