@@ -232,11 +232,21 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   width: 100%;
   height: 100%;
   pointer-events: none;
-  filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));
   --tangbao-direction: 1;
   animation: none;
+  backface-visibility: hidden;
   transform: scaleX(var(--tangbao-direction));
   transform-origin: center bottom;
+  will-change: transform;
+}
+
+.tangbao-witness__visual {
+  position: absolute;
+  inset: 0;
+  display: block;
+  filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));
+  pointer-events: none;
+  transform: translateZ(0);
 }
 
 .tangbao-witness__frame {
@@ -245,6 +255,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: block;
   width: 100%;
   height: 100%;
+  backface-visibility: hidden;
   object-fit: contain;
   opacity: 0;
   transition: opacity 52ms linear;
@@ -253,6 +264,11 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .tangbao-witness__frame.is-active {
   opacity: 1;
+}
+
+.tangbao-witness.is-action-lower .tangbao-witness__frame,
+.tangbao-witness.is-action-lift .tangbao-witness__frame {
+  transition-duration: 122ms;
 }
 
 .tangbao-witness.is-facing-left .tangbao-witness__sprite {
@@ -291,17 +307,28 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .tangbao-witness__prop--bone {
   left: 67%;
   bottom: 23%;
+  width: 1.85rem;
+  height: 0.88rem;
+  transform: translate(-48%, 0.22rem) scale(0.76);
+}
+
+.tangbao-witness__bone-shape {
+  position: absolute;
+  left: 0.2rem;
+  top: 0.24rem;
+  display: block;
   width: 1.45rem;
   height: 0.34rem;
   border: 1px solid rgba(167, 116, 89, 0.34);
   border-radius: 999px;
   background: linear-gradient(180deg, #fffaf0 0%, #f7dfc7 72%, #eecdad 100%);
   box-shadow: 0 0.16rem 0.3rem rgba(92, 57, 43, 0.14), inset 0 1px 0 #fff;
-  transform: translate(-48%, 0.22rem) rotate(-10deg) scale(0.72);
+  transform: rotate(-10deg);
+  transform-origin: center;
 }
 
-.tangbao-witness__prop--bone::before,
-.tangbao-witness__prop--bone::after {
+.tangbao-witness__bone-shape::before,
+.tangbao-witness__bone-shape::after {
   content: "";
   position: absolute;
   top: -0.2rem;
@@ -313,8 +340,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   box-shadow: 0 0.27rem 0 -1px #f7dfc7;
 }
 
-.tangbao-witness__prop--bone::before { left: -0.2rem; }
-.tangbao-witness__prop--bone::after { right: -0.2rem; }
+.tangbao-witness__bone-shape::before { left: -0.2rem; }
+.tangbao-witness__bone-shape::after { right: -0.2rem; }
 
 .tangbao-witness__prop--water {
   left: 68%;
@@ -361,6 +388,10 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .tangbao-witness.is-action-chew .tangbao-witness__prop--bone {
   opacity: 1;
+  transform: translate(-48%, 0) scale(1);
+}
+
+.tangbao-witness.is-action-chew .tangbao-witness__bone-shape {
   animation: tangbao-bone-nibble 1040ms ease-in-out infinite;
 }
 
@@ -1528,9 +1559,9 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 @keyframes tangbao-bone-nibble {
-  0%, 100% { transform: translate(-48%, 0) rotate(-10deg) scale(1); }
-  42% { transform: translate(-46%, -0.025rem) rotate(-7deg) scale(1.01); }
-  72% { transform: translate(-49%, 0.012rem) rotate(-11deg) scale(0.995); }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-10deg) scale(1); }
+  42% { transform: translate3d(0.035rem, -0.025rem, 0) rotate(-7deg) scale(1.01); }
+  72% { transform: translate3d(-0.018rem, 0.012rem, 0) rotate(-11deg) scale(0.995); }
 }
 
 @keyframes tangbao-water-ripple {
