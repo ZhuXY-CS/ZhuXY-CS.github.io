@@ -13,32 +13,11 @@ comments: false
 {% assign photos = love.photos %}
 {% assign audio_tracks = site.static_files | where_exp: "track", "track.path contains '/audio/'" %}
 
-<svg class="tangbao-defringe-filter" width="0" height="0" aria-hidden="true" focusable="false">
-  <defs>
-    <filter id="tangbao-defringe" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB">
-      <feColorMatrix in="SourceGraphic" type="matrix" values="
-        0 0 0 0 0
-        0 0 0 0 0
-        0 0 0 0 0
-        -0.75 1.5 -0.75 0 0" result="green-excess" />
-      <feComponentTransfer in="green-excess" result="green-mask">
-        <feFuncA type="linear" slope="5" intercept="-0.02" />
-      </feComponentTransfer>
-      <feFlood flood-color="#f7eee8" flood-opacity="1" result="warm-fur" />
-      <feComposite in="warm-fur" in2="green-mask" operator="in" result="green-correction" />
-      <feMerge>
-        <feMergeNode in="SourceGraphic" />
-        <feMergeNode in="green-correction" />
-      </feMerge>
-    </filter>
-  </defs>
-</svg>
-
 <button class="tangbao-witness is-action-look" id="tangbao-witness" type="button" aria-label="糖宝，我们的爱情见证官">
   <span class="tangbao-witness__sprite" aria-hidden="true">
-    <span class="tangbao-witness__visual" style="filter: drop-shadow(0 7px 7px rgba(51, 34, 42, 0.2));">
-      <img class="tangbao-witness__frame is-active" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync" fetchpriority="high" style="filter: url(#tangbao-defringe);">
-      <img class="tangbao-witness__frame" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync" style="filter: url(#tangbao-defringe);">
+    <span class="tangbao-witness__visual">
+      <img class="tangbao-witness__frame is-active" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync" fetchpriority="high">
+      <img class="tangbao-witness__frame" src="{{ '/images/zy-and-i/tangbao-frames/frame-22.webp' | relative_url }}" alt="" decoding="sync">
     </span>
   </span>
   <span class="tangbao-witness__prop tangbao-witness__prop--bone" aria-hidden="true"><span class="tangbao-witness__bone-shape"></span></span>

@@ -1206,10 +1206,10 @@
       "is-action-rise": { frames: [25, 24, 23, 22, 21, 20, 19], frameDuration: 110, loop: false, minimum: 820, maximum: 920 },
       "is-action-rest": { frames: [22, 23, 24, 25], frameDuration: 230, loop: false, minimum: 4200, maximum: 6200 },
       "is-action-turn": { frames: [19, 20, 21, 22, 21, 20, 19], frameDuration: 105, loop: false, minimum: 760, maximum: 860 },
-      "is-action-lower": { frames: [22, 23, 24, 25, 26, 27, 28], frameDuration: 145, loop: false, minimum: 1020, maximum: 1120 },
-      "is-action-chew": { frames: [28], frameDuration: 1040, loop: true, minimum: 4700, maximum: 5600 },
+      "is-action-lower": { frames: [26, 27, 28], frameDuration: 240, loop: false, minimum: 780, maximum: 780 },
+      "is-action-chew": { frames: [28], frameDuration: 1300, loop: true, minimum: 5200, maximum: 5200 },
       "is-action-drink": { frames: [28], frameDuration: 1280, loop: true, minimum: 4750, maximum: 5700 },
-      "is-action-lift": { frames: [28, 27, 26, 25, 24, 23, 22], frameDuration: 145, loop: false, minimum: 1020, maximum: 1120 }
+      "is-action-lift": { frames: [28, 27, 26], frameDuration: 240, loop: false, minimum: 780, maximum: 780 }
     };
 
     function displayTangbaoFrame(nextFrame) {
