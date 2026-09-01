@@ -249,8 +249,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   backface-visibility: hidden;
   object-fit: contain;
   opacity: 0;
-  transition: opacity 52ms linear;
-  will-change: opacity;
+  transition: opacity 46ms linear;
 }
 
 .tangbao-witness__frame.is-active {
@@ -262,10 +261,15 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .tangbao-witness.is-action-sniff .tangbao-witness__frame,
 .tangbao-witness.is-action-stretch .tangbao-witness__frame,
 .tangbao-witness.is-action-ball .tangbao-witness__frame,
-.tangbao-witness.is-action-rest .tangbao-witness__frame,
+.tangbao-witness.is-action-rest .tangbao-witness__frame {
+  transition-duration: 88ms;
+  transition-timing-function: ease-out;
+}
+
 .tangbao-witness.is-action-chew .tangbao-witness__frame,
 .tangbao-witness.is-action-drink .tangbao-witness__frame {
-  transition-duration: 126ms;
+  transition-duration: 72ms;
+  transition-timing-function: ease-out;
 }
 
 .tangbao-witness.is-facing-left .tangbao-witness__sprite {

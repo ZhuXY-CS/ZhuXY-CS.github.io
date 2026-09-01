@@ -852,7 +852,8 @@
 
     var bubble = tangbao.querySelector(".tangbao-witness__bubble");
     var sprite = tangbao.querySelector(".tangbao-witness__sprite");
-    var spriteLayers = Array.from(tangbao.querySelectorAll(".tangbao-witness__frame"));
+    var visual = tangbao.querySelector(".tangbao-witness__visual");
+    var initialSprite = tangbao.querySelector(".tangbao-witness__frame");
     var messages = [
       "糖宝会一直替你们见证 ♡",
       "你们负责相爱，糖宝负责见证！",
@@ -1237,9 +1238,8 @@
     var bubbleVisibleUntil = 0;
     var speechPoseTimer;
     var speechCueTimer;
-    var initialSprite = spriteLayers[0];
     var frameRoot = (initialSprite.currentSrc || initialSprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
-    var frameSources = [];
+    var frameLayers = {};
     var frameSequence = [14, 15, 16, 17, 18, 19];
     var frameDuration = 145;
     var frameLoops = true;
@@ -1249,16 +1249,23 @@
     var currentAction = "is-action-trot";
     var frameStartedAt = window.performance.now();
     var displayedFrame = 22;
-    var activeFrameLayer = 0;
     var framePreloads = [];
 
     for (var frameNumber = 1; frameNumber <= 59; frameNumber += 1) {
       var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
-      frameSources.push(frameSource);
       if (frameNumber < 14) continue;
-      var preload = new Image();
-      preload.src = frameSource;
-      framePreloads.push(preload);
+      var frameLayer = frameNumber === 22 ? initialSprite : new Image();
+      frameLayer.className = "tangbao-witness__frame" + (frameNumber === 22 ? " is-active" : "");
+      frameLayer.alt = "";
+      frameLayer.decoding = frameNumber === 22 ? "sync" : "async";
+      frameLayer.draggable = false;
+      frameLayer.dataset.frame = String(frameNumber);
+      if (frameNumber !== 22) {
+        frameLayer.src = frameSource;
+        visual.appendChild(frameLayer);
+      }
+      frameLayers[frameNumber] = frameLayer;
+      framePreloads.push(frameLayer);
     }
 
     var actionDefinitions = {
@@ -1282,14 +1289,12 @@
     };
 
     function displayTangbaoFrame(nextFrame) {
-      if (nextFrame === displayedFrame || spriteLayers.length < 2) return;
-      var incomingLayerIndex = activeFrameLayer === 0 ? 1 : 0;
-      var incomingLayer = spriteLayers[incomingLayerIndex];
-      var outgoingLayer = spriteLayers[activeFrameLayer];
-      incomingLayer.src = frameSources[nextFrame - 1];
+      if (nextFrame === displayedFrame) return;
+      var incomingLayer = frameLayers[nextFrame];
+      var outgoingLayer = frameLayers[displayedFrame];
+      if (!incomingLayer || !incomingLayer.complete || !incomingLayer.naturalWidth) return;
       incomingLayer.classList.add("is-active");
-      outgoingLayer.classList.remove("is-active");
-      activeFrameLayer = incomingLayerIndex;
+      if (outgoingLayer) outgoingLayer.classList.remove("is-active");
       displayedFrame = nextFrame;
     }
 
