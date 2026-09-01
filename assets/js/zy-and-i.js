@@ -1181,7 +1181,7 @@
     var activeFrameLayer = 0;
     var framePreloads = [];
 
-    for (var frameNumber = 1; frameNumber <= 43; frameNumber += 1) {
+    for (var frameNumber = 1; frameNumber <= 59; frameNumber += 1) {
       var frameSource = frameRoot + String(frameNumber).padStart(2, "0") + ".webp";
       frameSources.push(frameSource);
       if (frameNumber < 14) continue;
@@ -1195,21 +1195,19 @@
       "is-action-prance": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 104, stepDistance: 9.2, moving: true, minimum: 1450, maximum: 2200 },
       "is-action-dash": { frames: [14, 15, 16, 17, 18, 19], frameDuration: 82, stepDistance: 11.5, moving: true, minimum: 1050, maximum: 1650 },
       "is-action-leap": { frames: [32, 33, 34, 35, 36, 37], frameDuration: 145, loop: false, moving: true, minimum: 900, maximum: 990 },
-      "is-action-look": { frames: [22, 23, 24, 25, 24, 23, 22], frameDuration: 220, loop: false, minimum: 1750, maximum: 2050 },
-      "is-action-curious": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 205, loop: false, minimum: 1950, maximum: 2250 },
-      "is-action-sniff": { frames: [22, 23, 24, 25, 26, 27, 28, 29, 28, 27, 26, 25, 24, 23, 22], frameDuration: 124, loop: false, minimum: 1900, maximum: 2150 },
-      "is-action-stretch": { frames: [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22], frameDuration: 112, loop: false, minimum: 2200, maximum: 2450 },
-      "is-action-celebrate": { frames: [22, 23, 24, 25, 24, 23, 22, 23, 22], frameDuration: 165, loop: false, minimum: 1650, maximum: 1900 },
-      "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 42, 42, 41, 40, 39, 38, 43], frameDuration: 180, loop: false, minimum: 2450, maximum: 2750 },
+      "is-action-look": { frames: [22, 23, 22, 23, 22], frameDuration: 260, loop: false, minimum: 1750, maximum: 2050 },
+      "is-action-curious": { frames: [22, 23, 22, 23, 22], frameDuration: 285, loop: false, minimum: 1950, maximum: 2250 },
+      "is-action-sniff": { frames: [22, 26, 27, 28, 27, 26, 22], frameDuration: 185, loop: false, minimum: 1900, maximum: 2150 },
+      "is-action-stretch": { frames: [22, 26, 27, 28, 29, 29, 28, 27, 26, 22], frameDuration: 175, loop: false, minimum: 2200, maximum: 2450 },
+      "is-action-celebrate": { frames: [22], frameDuration: 1650, loop: false, minimum: 1650, maximum: 1900 },
+      "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 42, 41, 40, 39, 38, 43], frameDuration: 190, loop: false, minimum: 2450, maximum: 2750 },
       "is-action-settle": { frames: [19, 20, 21, 22], frameDuration: 135, loop: false, minimum: 620, maximum: 720 },
       "is-action-ready": { frames: [22, 21, 20, 19], frameDuration: 125, loop: false, minimum: 560, maximum: 660 },
       "is-action-rise": { frames: [25, 24, 23, 22, 21, 20, 19], frameDuration: 110, loop: false, minimum: 820, maximum: 920 },
       "is-action-rest": { frames: [22, 23, 24, 25], frameDuration: 230, loop: false, minimum: 4200, maximum: 6200 },
-      "is-action-turn": { frames: [19, 20, 21, 22, 21, 20, 19], frameDuration: 105, loop: false, minimum: 760, maximum: 860 },
-      "is-action-lower": { frames: [26, 27, 28], frameDuration: 240, loop: false, minimum: 780, maximum: 780 },
-      "is-action-chew": { frames: [28], frameDuration: 1300, loop: true, minimum: 5200, maximum: 5200 },
-      "is-action-drink": { frames: [28], frameDuration: 1280, loop: true, minimum: 4750, maximum: 5700 },
-      "is-action-lift": { frames: [28, 27, 26], frameDuration: 240, loop: false, minimum: 780, maximum: 780 }
+      "is-action-turn": { frames: [22], frameDuration: 780, loop: false, minimum: 760, maximum: 860 },
+      "is-action-chew": { frames: [44, 45, 46, 47, 48, 49, 48, 47, 48, 49, 48, 47, 48, 49, 48, 47, 48, 49, 48, 50, 51], frameDuration: 175, loop: false, minimum: 3675, maximum: 3675 },
+      "is-action-drink": { frames: [52, 53, 54, 55, 56, 57, 56, 57, 56, 57, 56, 57, 56, 57, 58, 59], frameDuration: 190, loop: false, minimum: 3040, maximum: 3040 }
     };
 
     function displayTangbaoFrame(nextFrame) {
@@ -1332,7 +1330,7 @@
     var sceneDirection = 1;
     var pendingSpeechContext = "";
     var moveAnimationFrame;
-    var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn", "is-action-lower", "is-action-chew", "is-action-drink", "is-action-lift"];
+    var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn", "is-action-chew", "is-action-drink"];
     var sceneDefinitions = {
       stroll: [
         { action: "is-action-trot", duration: [2600, 3800] },
@@ -1380,18 +1378,14 @@
       snack: [
         { action: "is-action-prance", duration: [1300, 1900] },
         { action: "is-action-settle" },
-        { action: "is-action-lower" },
         { action: "is-action-chew", speech: "food", speechChance: 1, speechDelay: 440 },
-        { action: "is-action-lift" },
         { action: "is-action-curious", duration: [1250, 1650] },
         { action: "is-action-ready" }
       ],
       waterBreak: [
         { action: "is-action-trot", duration: [1450, 2150] },
         { action: "is-action-settle" },
-        { action: "is-action-lower" },
         { action: "is-action-drink", speech: "water", speechChance: 1, speechDelay: 480 },
-        { action: "is-action-lift" },
         { action: "is-action-look", duration: [1350, 1750] },
         { action: "is-action-ready" }
       ]
@@ -1504,7 +1498,7 @@
 
       var speechContext = step.speech || "";
       var speechChance = step.speechChance === undefined ? 1 : step.speechChance;
-      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-ready", "is-action-rise", "is-action-turn", "is-action-lower", "is-action-lift"].indexOf(step.action) === -1;
+      var acceptsSpeech = !definition.moving && ["is-action-settle", "is-action-ready", "is-action-rise", "is-action-turn"].indexOf(step.action) === -1;
       if (pendingSpeechContext && acceptsSpeech) {
         if (!speechContext) speechContext = pendingSpeechContext;
         speechChance = 1;
