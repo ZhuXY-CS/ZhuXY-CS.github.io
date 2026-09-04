@@ -8,17 +8,26 @@ main:
   - title: "About"
     url: /#about
 
-  - title: "Research"
-    url: /#research
+  - title: "Education"
+    url: /#education
 
-  - title: "Publications"
+  - title: "Publication"
     url: /#publication
 
-  - title: "Experience"
-    url: /#experience
+  - title: "Project"
+    url: /#project
 
-  - title: "CV"
-    url: /cv/
+  - title: "Internship"
+    url: /#internship
+
+  - title: "Award"
+    url: /#award
+
+  - title: "Competition"
+    url: /#competition
+
+  - title: "Skill"
+    url: /#skill    
 
   # - title: "Project"
   #   url: /teaching/    

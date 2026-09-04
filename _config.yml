@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Xianyu Zhu"
+title                    : "HomePage"
 title_separator          : "-"
 name                     : &name "Xianyu Zhu"
-description              : &description "Xianyu Zhu's academic homepage: machine learning systems, distributed training, gradient compression, and high-performance computing."
+description              : &description "personal description"
 url                      : https://zhuxy-cs.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "/ZhuXY-CS.github.io"
@@ -28,7 +28,7 @@ author:
   bio              : ""
   location         : "Hefei, Anhui, China"
   employer         : "USTC"
-  uri              : "https://zhuxy-cs.github.io"
+  uri              : "zhuxy-cs.github.io"
   email            : "zhuxy@mail.ustc.edu.cn" 
 
   # Academic websites
@@ -141,12 +141,9 @@ og_image                 :  # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : Person
-  name                   : "Xianyu Zhu"
-  links:
-    - "https://scholar.google.com/citations?user=DHVjR2oAAAAJ"
-    - "https://orcid.org/0000-0002-1889-6103"
-    - "https://github.com/ZhuXY-CS"
+  type                   : # Person or Organization (defaults to Person)
+  name                   : # If the user or organization name differs from the site's name
+  links: # An array of links to social media profiles
 
 
 # Analytics

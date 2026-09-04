@@ -32,17 +32,7 @@ $(document).ready(function(){
   // Follow menu drop down
   $(".author__urls-wrapper button").on("click", function() {
     $(".author__urls").fadeToggle("fast", function() {});
-    var $profileButton = $(this);
-    $profileButton.toggleClass("open");
-    $profileButton.attr("aria-expanded", String($profileButton.hasClass("open")));
-  });
-
-  $(document).on("keydown", function(event) {
-    var $profileButton = $(".author__urls-wrapper button");
-    if (event.key === "Escape" && $profileButton.hasClass("open")) {
-      $(".author__urls").hide();
-      $profileButton.removeClass("open").attr("aria-expanded", "false").focus();
-    }
+    $(".author__urls-wrapper button").toggleClass("open");
   });
 
   // Restore the follow menu if toggled on a window resize
@@ -51,6 +41,9 @@ $(document).ready(function(){
       $(".author__urls").css('display', 'block')
     }
   });    
+
+  // init smooth scroll, this needs to be slightly more than then fixed masthead height
+  $("a").smoothScroll({offset: -65});
 
   // add lightbox class to all image links
   $("a[href$='.jpg'],a[href$='.jpeg'],a[href$='.JPG'],a[href$='.png'],a[href$='.gif']").addClass("image-popup");

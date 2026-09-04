@@ -50,8 +50,6 @@ function updateNav() {
       $btn.addClass('hidden');
       $btn.removeClass('close');
       $hlinks.addClass('hidden');
-      $btn.attr('aria-expanded', 'false');
-      $btn.attr('aria-label', 'Open navigation menu');
     }
   }
 
@@ -76,21 +74,6 @@ if (screen.orientation && screen.orientation.addEventListener) {
 $btn.on('click', function() {
   $hlinks.toggleClass('hidden');
   $(this).toggleClass('close');
-  var isOpen = !$hlinks.hasClass('hidden');
-  $(this).attr('aria-expanded', String(isOpen));
-  $(this).attr('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-});
-
-$hlinks.on('click', 'a', function() {
-  $hlinks.addClass('hidden');
-  $btn.removeClass('close').attr('aria-expanded', 'false').attr('aria-label', 'Open navigation menu');
-});
-
-$(document).on('keydown', function(event) {
-  if (event.key === 'Escape' && !$hlinks.hasClass('hidden')) {
-    $hlinks.addClass('hidden');
-    $btn.removeClass('close').attr('aria-expanded', 'false').attr('aria-label', 'Open navigation menu').focus();
-  }
 });
 
 updateNav();
