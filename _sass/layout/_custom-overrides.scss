@@ -499,18 +499,28 @@ strong + br {
   padding-top: 0.65em;
   border-top: 1px solid var(--global-border-color);
 
-  a { font-weight: 600; }
+  a {
+    font-weight: 600;
+    text-decoration: none !important;
+    transition: color 180ms ease;
+  }
 
   i {
     color: #8d1f5f;
-    transition: transform 180ms ease, color 180ms ease;
+    transition: color 180ms ease;
+  }
+
+  a:hover,
+  a:focus-visible,
+  a[aria-current="page"] {
+    color: #b32670;
+    text-decoration: none !important;
   }
 
   a:hover i,
   a:focus-visible i,
   a[aria-current="page"] i {
     color: #b32670;
-    transform: scale(1.12);
   }
 }
 
