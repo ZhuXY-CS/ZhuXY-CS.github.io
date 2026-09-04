@@ -5,16 +5,16 @@
 document.addEventListener('DOMContentLoaded', function() {
 
   // 1. 平滑滚动到锚点
-  const navLinks = document.querySelectorAll('a[href^="/#"]');
+  const navLinks = document.querySelectorAll('.greedy-nav a[href*="#"]');
 
   navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-      e.preventDefault();
-
-      const targetId = this.getAttribute('href').replace('/#', '');
+      const targetUrl = new URL(this.href, window.location.href);
+      const targetId = targetUrl.hash.substring(1);
       const targetElement = document.getElementById(targetId);
 
       if (targetElement) {
+        e.preventDefault();
         // 计算滚动位置（考虑导航栏高度）
         const navHeight = 60; // 导航栏高度
         const targetPosition = targetElement.offsetTop - navHeight;
@@ -26,13 +26,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 更新URL但不刷新页面
         history.pushState(null, null, '#' + targetId);
+
+        navItems.forEach(item => item.parentElement.classList.remove('active'));
+        this.parentElement.classList.add('active');
       }
     });
   });
 
   // 2. 滚动时高亮当前区块对应的导航项
   const sections = document.querySelectorAll('section[id]');
-  const navItems = document.querySelectorAll('.greedy-nav a[href^="/#"]');
+  const navItems = document.querySelectorAll('.greedy-nav a[href*="#"]');
 
   function highlightNavigation() {
     let currentSection = '';
@@ -49,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     navItems.forEach(item => {
       item.parentElement.classList.remove('active');
-      if (item.getAttribute('href') === '/#' + currentSection) {
+      if (new URL(item.href, window.location.href).hash === '#' + currentSection) {
         item.parentElement.classList.add('active');
       }
     });
@@ -63,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     scrollTimeout = window.requestAnimationFrame(highlightNavigation);
   });
+
+  window.addEventListener('hashchange', highlightNavigation);
 
   // 页面加载时检查URL中的锚点
   if (window.location.hash) {

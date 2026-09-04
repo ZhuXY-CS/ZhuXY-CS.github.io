@@ -1,231 +1,160 @@
 ---
 permalink: /
-title: ""
+title:
+description: "Xianyu Zhu is a machine learning systems researcher working on distributed training, gradient compression, performance modeling, and high-performance computing."
 author_profile: true
 redirect_from:
   - /about/
   - /about.html
 ---
 
-<style>
-/* 平滑滚动 */
-html {
-  scroll-behavior: smooth;
-}
+<div class="academic-home">
 
-/* 区块间距 */
-section {
-  padding-top: 20px;
-  margin-top: -20px;
-}
-
-/* 标题样式 */
-h2 {
-  margin-top: 0px;
-  padding-top: 0px;
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 10px;
-}
-
-/* 响应式间距 */
-@media (max-width: 768px) {
-  section {
-    padding-top: 15px;
-    margin-top: -15px;
-  }
-}
-</style>
-
-<!-- ==================== About Me Section ==================== -->
-<section id="about">
-
-<h2>👨🏻‍🎓 About Me</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: justify; line-height: 1.6;">
-
-I recently received a master degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
-I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
-Before that, I obtained my bachelor's degree in Computer Science from Northwest A&F University in 2023.
-During my undergraduate studies, I joined the Parallel and Visual Processing Laboratory led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a>.
-
-<br>
-
-As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA) and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
-And I also serve as a reviewer for Transactions on Parallel and Distributed Systems (TPDS).
-
-My research interests lie at the intersection of <strong>high-performance computing</strong>, <strong>machine learning systems</strong>, and <strong>distributed training</strong>. Specifically, I focus on:
-
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Gradient Compression Algorithms:</strong> Developing efficient compression techniques to reduce communication overhead in distributed training</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Large-scale Distributed Systems:</strong> Building scalable solutions for training foundation models on HPC clusters</li>
-</ul>
-
-<br>
-
-<strong>Now, I am seeking related PhD opportunities in 2026 Fall🍂🍂🍂/2027 Spring🌿🌿🌿</strong>
-
-</div>
-
+<section id="about" class="home-hero" aria-labelledby="home-title">
+  <p class="home-eyebrow">Machine learning systems · Distributed training · HPC</p>
+  <h1 id="home-title">Xianyu Zhu</h1>
+  <p class="home-role">I study how learning systems can train faster and scale more efficiently across communication- and compute-constrained platforms.</p>
+  <p class="home-intro">
+    I recently received a master's degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China</a>. I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
+  </p>
+  <div class="home-actions" aria-label="Primary profile links">
+    <a class="home-action home-action--primary" href="/cv/"><i class="fas fa-file-alt" aria-hidden="true"></i> View CV</a>
+    <a class="home-action" href="https://scholar.google.com/citations?user=DHVjR2oAAAAJ"><i class="ai ai-google-scholar" aria-hidden="true"></i> Google Scholar</a>
+    <a class="home-action" href="mailto:zhuxy@mail.ustc.edu.cn"><i class="fas fa-envelope" aria-hidden="true"></i> Email</a>
+  </div>
+  <div class="home-research-path" role="list" aria-label="Research path from algorithms to systems">
+    <span role="listitem">Algorithms</span><i aria-hidden="true"></i>
+    <span role="listitem">Communication</span><i aria-hidden="true"></i>
+    <span role="listitem">Systems</span>
+  </div>
+  <p class="home-availability"><span aria-hidden="true"></span> Seeking related PhD opportunities for Fall 2026 or Spring 2027.</p>
 </section>
 
-<!-- ==================== Education Section ==================== -->
-<section id="education">
+<section id="research" class="home-section" aria-labelledby="research-title">
+  <div class="home-section-heading">
+    <p class="home-section-kicker">Research</p>
+    <h2 id="research-title">Research focus</h2>
+  </div>
+  <div class="research-focus-grid">
+    <article>
+      <p class="research-focus-index">01</p>
+      <h3>Communication-efficient training</h3>
+      <p>Gradient sparsification and pipelined collectives that reduce communication overhead in distributed training.</p>
+    </article>
+    <article>
+      <p class="research-focus-index">02</p>
+      <h3>Scalable training systems</h3>
+      <p>Runtime and scheduling techniques for foundation-model training on large-scale heterogeneous HPC platforms.</p>
+    </article>
+    <article>
+      <p class="research-focus-index">03</p>
+      <h3>Performance modeling</h3>
+      <p>Data-driven models that reveal system bottlenecks and guide efficient configurations for distributed workloads.</p>
+    </article>
+  </div>
 
-<h2>📖 Education</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
-
-<strong><img src="http://zhuxy-cs.github.io/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
-<ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master of Computer Science and Technology in School of Computer Science and Technology</li>
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
-</ul>
-
-<strong><img src="http://zhuxy-cs.github.io/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
-<ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor of Computer Science and Technology in College of Information Engineering</li>
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
-</ul>
-
-</div>
-
+  <div class="home-subsection-heading">
+    <h3>Research projects</h3>
+    <p>Selected systems and applied machine-learning work.</p>
+  </div>
+  <div class="home-project-grid">
+    <article class="home-project-card home-project-card--current">
+      <p class="home-project-meta">Chinese Academy of Sciences · 2023–Present</p>
+      <h3>Dataflow programming and runtime systems for domestic heterogeneous architectures</h3>
+      <p>Project member working on gradient-compression algorithms for efficient distributed training.</p>
+    </article>
+    {% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
+    {% for post in sorted_projects %}
+      <article class="home-project-card">
+        <p class="home-project-meta">{{ post.badge }}</p>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.description }}</p>
+        <a class="home-text-link" href="{{ post.url | relative_url }}">View project <span aria-hidden="true">→</span></a>
+      </article>
+    {% endfor %}
+  </div>
 </section>
 
-<!-- ==================== Publication Section ==================== -->
-<section id="publication">
-
-<h2>📝 Publication</h2>
-
-<div style="font-family: 'Times New Roman', Times, serif;">
-
-<h3>📨 Submitted Paper</h3>
-<ul style="margin-bottom: 1.5em;">
-<!-- <li style="margin-bottom: 12px; line-height: 2.0 !important;">As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Second Review (Major Revision)</strong></li> -->
-</ul>
-
-<h3>📚 Published Paper</h3>
-
-{% assign sorted_publications = site.publications | sort: 'rank' | reverse %}
-{% for post in sorted_publications %}
-  {% include archive-single-publication.html %}
-{% endfor %}
-
-</div>
-
+<section id="publication" class="home-section" aria-labelledby="publication-title">
+  <div class="home-section-heading home-section-heading--with-link">
+    <div>
+      <p class="home-section-kicker">Selected work</p>
+      <h2 id="publication-title">First-author publications</h2>
+    </div>
+    <a class="home-text-link" href="/publications/">View all publications <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="home-publication-list">
+    {% assign featured_publications = site.publications | where: 'featured', true | sort: 'rank' | reverse %}
+    {% for post in featured_publications %}
+      {% include archive-single-publication.html %}
+    {% endfor %}
+  </div>
 </section>
 
-<!-- ==================== Project Section ==================== -->
-<section id="project">
+<section id="experience" class="home-section" aria-labelledby="experience-title">
+  <div class="home-section-heading">
+    <p class="home-section-kicker">Background</p>
+    <h2 id="experience-title">Experience and education</h2>
+  </div>
+  <div class="home-timeline">
+    <article>
+      <p class="home-timeline-date">2025.07–09</p>
+      <div>
+        <h3>Research Assistant · The University of Hong Kong</h3>
+        <p>Systems and Networking Laboratory, supervised by <a href="https://i.cs.hku.hk/~heming/">Professor Heming Cui</a>. Worked on distributed training for unified multimodal large models.</p>
+      </div>
+    </article>
+    <article>
+      <p class="home-timeline-date">2023–2026</p>
+      <div>
+        <h3>M.S. in Computer Science and Technology · USTC</h3>
+        <p>Advanced Computer Systems Architecture Laboratory, University of Science and Technology of China.</p>
+      </div>
+    </article>
+    <article>
+      <p class="home-timeline-date">2019–2023</p>
+      <div>
+        <h3>B.S. in Computer Science and Technology · Northwest A&amp;F University</h3>
+        <p>Parallel and Visual Processing Laboratory, supervised by Professor Bin Liu.</p>
+      </div>
+    </article>
+  </div>
 
-<h2>📽️ Research Project</h2>
+  <div class="home-facts-grid">
+    <details>
+      <summary>Academic service and recognition</summary>
+      <div>
+        <p>Reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS).</p>
+        <ul>
+          <li>National Scholarship</li>
+          <li>President Scholarship</li>
+          <li>Thanksgiving Scholarship for Modern and Contemporary Chinese Scientists</li>
+          <li>Outstanding Graduate</li>
+          <li>Top Ten Scientific Research Star</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Competitions</summary>
+      <div>
+        <ul>
+          <li>11th Student RDMA Programming Competition — Third Prize</li>
+          <li>2022 Mathematical Contest in Modeling — Meritorious Winner</li>
+          <li>12th Blue Bridge Cup, Provincial Competition — First Prize</li>
+          <li>2021 Group Programming Ladder Tournament — National Third Prize</li>
+          <li>Computer Design Competition, Northwest Region — First Prize</li>
+          <li>12th National Mathematics Competition — Second Prize</li>
+        </ul>
+      </div>
+    </details>
+  </div>
 
-<div style="font-family: 'Times New Roman', Times, serif;">
-
-<h3>🚀 Ongoing Project</h3>
-<ul>
-    <li>
-        <strong>Dataflow Programming and Runtime System Framework Adapted to Domestic Heterogeneous System Architectures</strong><br>
-        <em>Strategic Priority Research Program of Chinese Academy of Sciences</em><br>
-        Role: Project Member | Duration: 2023 - Present<br>
-        Focus: Gradient compression algorithms for efficient distributed training on heterogeneous architectures
-    </li>
-</ul>
-
-<h3>🎉 Completed Project</h3>
-
-{% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
-{% for post in sorted_projects %}
-  {% include archive-single-project.html %}
-{% endfor %}
-
-</div>
-
+  <div class="home-toolkit" aria-labelledby="toolkit-title">
+    <h3 id="toolkit-title">Technical toolkit</h3>
+    <ul>
+      <li>C/C++</li><li>Python</li><li>CUDA</li><li>PyTorch</li><li>TensorFlow</li><li>DeepSpeed</li><li>MPI</li><li>OpenMP</li><li>Linux</li><li>Sunway OceanLight</li>
+    </ul>
+  </div>
 </section>
 
-<!-- ==================== Internship Section ==================== -->
-<section id="internship">
-
-<h2>⭐ Internship</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
-
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019--2020, New Media Center of college, responsible for writing, interview and operation of official account</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019--2020 Summer, Baidu AI Talents Camp, learning machine learning and AI framework PaddlePaddle</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019 Winter and 2020 Winter, the event about outstanding student coming back to Alma Mater</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Summer, Tedu Group's Artificial Intelligence Training Project</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Fall, Teaching Assistant for Parallel Computing Course</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07, Hong Kong PhD Fellowship Summer Workshop in CUHK<img src="http://zhuxy-cs.github.io/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07--09, Research Assistant in Systems and Networking Lab in HKU<img src="http://zhuxy-cs.github.io/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
-focusing on designing a more effective distributed training framework for the unified multimodal large model </li>
-</ul>
-
 </div>
-
-</section>
-
-<!-- ==================== Award Section ==================== -->
-<section id="award">
-
-<h2>🏆 Award</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
-
-<h3>🔥 Scholarship</h3>
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">National Scholarship</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">President Scholarship</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Thanksgiving Scholarship for Modern and Contemporary Chinese Scientists (the highest-paying scholarship)</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Professional Scholarship</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Academic Scholarship</li>
-</ul>
-
-<h3>✨ Honor</h3>
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Outstanding Graduate</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Excellent College Student</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Advanced Individual in Social Practice</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">One of the 100 Campus Stars - Top Ten Scientific Research Stars </li>
-</ul>
-
-</div>
-
-</section>
-
-<!-- ==================== Competition Section ==================== -->
-<section id="competition">
-
-<h2>✅ Competition</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
-
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"11th Student RDMA Programming Competition", <b>Third Prize</b> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 Mathematical Contest In Modeling(MCM)", <b>Meritorious Winner</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"12th Blue Bridge Cup Competition", Provincial Competition <b>First Prize</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2021 Group Programming Ladder Tournament", National <b>Third Prize</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 The Competition of Computer Design", <b>First Prize</b> in Northwest Region</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"12th National Mathematics Competition for College Students", <b>Second Prize</b></li>
-</ul>
-
-</div>
-
-</section>
-
-<!-- ==================== Skill Section ==================== -->
-<section id="skill">
-
-<h2>⚙️ Technical Skill</h2>
-
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
-
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Language:</strong> C/C++, Python, CUDA C, JAVA, LaTeX, Assembly Language</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, PaddlePaddle, DeepSpeed</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming, SACA Programming</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Platform:</strong> Linux, NVIDIA Jetson Nano/TX2, NVIDIA DGX-H800, Sunway OceanLight Supercomputer</li>
-</ul>
-
-</div>
-
-</section>
