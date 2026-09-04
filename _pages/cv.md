@@ -19,7 +19,7 @@ redirect_from:
 
 <strong><img src="/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
 <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>Master of Computer Science and Technology in School of Computer Science and Technology</li>
+    <li>Master's degree in Computer Science and Technology, School of Computer Science and Technology</li>
     <!-- <li>GPA: 90 (3.87/4.3)</li> -->
     <li>Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
@@ -27,7 +27,7 @@ redirect_from:
 
 <strong><img src="/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
 <ul style="list-style-type: disc; margin-left: 20px;">
-    <li>Bachelor of Computer Science and Technology in College of Information Engineering</li>
+    <li>Bachelor's degree in Computer Science and Technology, College of Information Engineering</li>
     <!-- <li>GPA: 90.5 (3.77/4.0), Rank: 2 / 132</li> -->
     <li>Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
 </ul>

@@ -41,7 +41,7 @@ h2 {
 
 <h2>👨🏻‍🎓 About Me</h2>
 
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: justify; line-height: 1.6;">
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 I recently received a master's degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
 I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
@@ -77,13 +77,13 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <strong><img src="/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master of Computer Science and Technology in School of Computer Science and Technology</li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master's degree in Computer Science and Technology, School of Computer Science and Technology</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
 <strong><img src="/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor of Computer Science and Technology in College of Information Engineering</li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor's degree in Computer Science and Technology, College of Information Engineering</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
 </ul>
 
@@ -97,11 +97,6 @@ My research interests lie at the intersection of <strong>high-performance comput
 <h2>📝 Publication</h2>
 
 <div style="font-family: 'Times New Roman', Times, serif;">
-
-<h3>📨 Submitted Paper</h3>
-<ul style="margin-bottom: 1.5em;">
-<!-- <li style="margin-bottom: 12px; line-height: 2.0 !important;">As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Second Review (Major Revision)</strong></li> -->
-</ul>
 
 <h3>📚 Published Paper</h3>
 

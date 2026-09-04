@@ -6,15 +6,6 @@ author_profile: true
 hide_title: true
 ---
 
-<h2 >📨 Submitted Paper</h2>
-<div style="font-family: 'Times New Roman', Times, serif;">
-<ul>
-<li>As <strong>first-author</strong>, the paper "Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication" has been submitted to Journal of Computer Science and Technology  <strong>(JCST), Major Revision in 1st Review</strong></li>
-</ul>
-</div>
-
-********************************************************
-
 <h2>📝 Published Paper</h2>
 {% assign sorted_publications = site.publications | sort: 'rank' | reverse %}
 {% for post in sorted_publications %}
@@ -49,4 +40,3 @@ hide_title: true
     {% include archive-single.html %}
   {% endfor %}
 {% endif %}
-

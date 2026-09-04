@@ -15,7 +15,7 @@ description: 'A lightweight model achieving 98.58% accuracy for apple leaf disea
 keywords: '<strong>Apple Leaf Pests and Diseases</strong>, <strong>Asymmetric Convolution</strong>, <strong>Dilated Convolution</strong>, <strong>Real-Time Inference</strong>, <strong>Convolutional Neural Networks</strong>, <strong>Deep Learning</strong>'
 posterurl: '/poster/LAD-Net-poster.pdf'
 doi: 'https://doi.org/10.1109/TCBB.2022.3191854'
-googlescholar: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DHVjR2oAAAAJ&citation_for_view=DHVjR2oAAAAJ:u5HHmVD_uO8C'
+googlescholar: 'https://scholar.google.com/scholar?q=LAD-Net+A+Novel+Light+Weight+Model+for+Early+Apple+Leaf+Pests+and+Diseases+Classification'
 citation: ' Xianyu Zhu,  Jinjiang Li,  Runchang Jia,  Bin Liu,  Zhuohan Yao,  Aihong Yuan,  Yingqiu Huo,  Haixi Zhang, &quot;LAD-Net: A Novel Light Weight Model for Early Apple Leaf Pests and Diseases Classification.&quot; IEEE/ACM Transactions on Computational Biology and Bioinformatics, 2023.'
 bibtex: |
   @article{zhu2023lad,

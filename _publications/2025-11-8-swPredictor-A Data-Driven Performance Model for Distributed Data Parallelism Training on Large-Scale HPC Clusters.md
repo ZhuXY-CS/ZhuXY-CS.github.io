@@ -15,7 +15,7 @@ description: 'A framework designed to accelerate foundation models via intra-op 
 keywords: '<strong>High-Performance Computing</strong>, <strong>Performance Modeling</strong>, <strong>Deep Learning</strong>, <strong>Distributed Training</strong>'
 posterurl: '/poster/swPredictor-poster.pdf'
 doi: 'https://doi.org/10.1016/j.peva.2025.102530'
-googlescholar: 'https://www.sciencedirect.com/science/article/pii/S0166531625000641'
+googlescholar: 'https://scholar.google.com/scholar?q=swPredictor+A+Data-Driven+Performance+Model+for+Distributed+Data+Parallelism+Training+on+Large-Scale+HPC+Clusters'
 citation: ' Xianyu Zhu, Ruohan Wu,  Junshi Chen,  Hong An &quot;swPredictor: A Data-Driven Performance Model for Distributed Data Parallelism Training on Large-Scale HPC Clusters.&quot; Performance Evaluation: An International Journal (PEVA), 2025.'
 bibtex: |
   @article{zhu2025swPredictor,

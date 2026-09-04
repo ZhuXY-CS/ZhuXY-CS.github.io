@@ -58,7 +58,7 @@ h4 {
   p {
     font-family: "Trebuchet MS", Helvetica, sans-serif !important;
     font-size: 16px !important;
-    line-height: 1.6 !important;
+    line-height: 1.68 !important;
     margin-top: 0.5em !important;
     margin-bottom: 0.8em !important;
     color: #333 !important;
@@ -105,7 +105,7 @@ h4 {
     color: #0066cc !important;
     text-decoration: none !important;
     border-bottom: 1px solid transparent !important;
-    transition: all 0.2s ease !important;
+    transition: color 0.2s ease, border-color 0.2s ease !important;
 
     &:hover {
       border-bottom-color: #0066cc !important;
@@ -153,6 +153,12 @@ h4 {
   .author__bio {
     font-size: 0.95em !important;
     color: #666 !important;
+  }
+}
+
+@media screen and (min-width: 64em) {
+  .author__avatar img {
+    box-shadow: 0 6px 20px rgba(35, 55, 72, 0.1);
   }
 }
 
@@ -491,6 +497,17 @@ strong + br {
       margin-right: 0.5em !important;
     }
   }
+
+  a {
+    border-radius: 4px;
+    transition: color 180ms ease, background-color 180ms ease;
+
+    &:hover {
+      color: #245f8f;
+      background-color: rgba(47, 111, 163, 0.07);
+      text-decoration: none;
+    }
+  }
 }
 
 /* Personal page entry: keep it last and visually distinct. */
@@ -727,7 +744,8 @@ hr {
   max-width: 280px !important;
   width: 100% !important;
   height: auto !important;
-  box-shadow: 3px 3px 6px #888 !important;
+  border: 1px solid #e3e9ee !important;
+  box-shadow: 0 8px 22px rgba(35, 55, 72, 0.12) !important;
   object-fit: cover !important;
   border-radius: 4px !important;
 }
@@ -867,7 +885,7 @@ hr {
 
 /* Paper box hover effect */
 .paper-box:hover {
-  background-color: #fafafa !important;
+  background-color: #f7fafc !important;
   transition: background-color 0.3s ease !important;
 }
 
@@ -894,7 +912,8 @@ section[id] {
 
 /* 区块标题样式增强 */
 section[id] > h2 {
-  border-bottom: 2px solid #e8e8e8 !important;
+  color: #22384d !important;
+  border-bottom: 2px solid #dce6ef !important;
   padding-bottom: 12px !important;
   margin-bottom: 20px !important;
 }
@@ -903,4 +922,10 @@ section[id] > h2 {
 .greedy-nav .visible-links a:hover {
   color: #0066cc !important;
   transition: color 0.2s ease !important;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(0, 102, 204, 0.28) !important;
+  outline-offset: 3px !important;
 }
