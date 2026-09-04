@@ -13,9 +13,7 @@ rank: 2020
 
 ********************************
 
-<p style="text-align: justify;">
 <ul style="text-align: justify;">
-<li>Build MEAN-SSD to detect the apple leaf diseases and pests</li>
-<li>Detection the diseases on mobile device based on cloud collaboration</li>
+<li>Build MEAN-SSD to detect apple leaf diseases and pests.</li>
+<li>Detect diseases on mobile devices through cloud collaboration.</li>
 </ul>
-</p>

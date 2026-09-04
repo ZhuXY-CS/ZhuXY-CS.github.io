@@ -43,7 +43,7 @@ h2 {
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; text-align: justify; line-height: 1.6;">
 
-I recently received a master degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
+I recently received a master's degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
 I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
 Before that, I obtained my bachelor's degree in Computer Science from Northwest A&F University in 2023.
 During my undergraduate studies, I joined the Parallel and Visual Processing Laboratory led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a>.
@@ -51,7 +51,7 @@ During my undergraduate studies, I joined the Parallel and Visual Processing Lab
 <br>
 
 As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA) and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
-And I also serve as a reviewer for Transactions on Parallel and Distributed Systems (TPDS).
+I also serve as a reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS).
 
 My research interests lie at the intersection of <strong>high-performance computing</strong>, <strong>machine learning systems</strong>, and <strong>distributed training</strong>. Specifically, I focus on:
 
@@ -62,7 +62,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <br>
 
-<strong>Now, I am seeking related PhD opportunities in 2026 Fall🍂🍂🍂/2027 Spring🌿🌿🌿</strong>
+<strong>Now, I am seeking related PhD opportunities for Fall 2026🍂🍂🍂/Spring 2027🌿🌿🌿</strong>
 
 </div>
 
@@ -75,13 +75,13 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
-<strong><img src="http://zhuxy-cs.github.io/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
+<strong><img src="/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master of Computer Science and Technology in School of Computer Science and Technology</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
-<strong><img src="http://zhuxy-cs.github.io/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
+<strong><img src="/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor of Computer Science and Technology in College of Information Engineering</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
@@ -155,9 +155,9 @@ My research interests lie at the intersection of <strong>high-performance comput
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019 Winter and 2020 Winter, the event about outstanding student coming back to Alma Mater</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Summer, Tedu Group's Artificial Intelligence Training Project</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Fall, Teaching Assistant for Parallel Computing Course</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07, Hong Kong PhD Fellowship Summer Workshop in CUHK<img src="http://zhuxy-cs.github.io/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07--09, Research Assistant in Systems and Networking Lab in HKU<img src="http://zhuxy-cs.github.io/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
-focusing on designing a more effective distributed training framework for the unified multimodal large model </li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07, Hong Kong PhD Fellowship Summer Workshop at CUHK<img src="/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07--09, Research Assistant in the Systems and Networking Lab at HKU<img src="/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
+focusing on designing a more effective distributed training framework for unified multimodal large models </li>
 </ul>
 
 </div>
@@ -201,7 +201,7 @@ focusing on designing a more effective distributed training framework for the un
 
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">"11th Student RDMA Programming Competition", <b>Third Prize</b> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 Mathematical Contest In Modeling(MCM)", <b>Meritorious Winner</b></li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 Mathematical Contest in Modeling (MCM)", <b>Meritorious Winner</b></li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">"12th Blue Bridge Cup Competition", Provincial Competition <b>First Prize</b></li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2021 Group Programming Ladder Tournament", National <b>Third Prize</b></li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 The Competition of Computer Design", <b>First Prize</b> in Northwest Region</li>

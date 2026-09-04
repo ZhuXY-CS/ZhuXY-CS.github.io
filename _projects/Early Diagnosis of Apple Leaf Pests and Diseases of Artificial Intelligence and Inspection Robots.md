@@ -48,9 +48,9 @@ rank: 2022
 
 <div style="text-align: center;">
   <video width="640" height="360" controls
-         poster="http://zhuxy-cs.github.io/images/robot_based_detection_experiment.png"
+         poster="/images/robot_based_detection_experiment.png"
          style="display: block; margin: auto; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); border-radius: 8px;">
-    <source src="http://zhuxy-cs.github.io/videos/robot_experiment.mp4" type="video/mp4">
+    <source src="/videos/robot_experiment.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>

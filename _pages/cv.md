@@ -17,7 +17,7 @@ redirect_from:
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 
-<strong><img src="http://zhuxy-cs.github.io/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to Now<br>
+<strong><img src="/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
 <ul style="list-style-type: disc; margin-left: 20px;">
     <li>Master of Computer Science and Technology in School of Computer Science and Technology</li>
     <!-- <li>GPA: 90 (3.87/4.3)</li> -->
@@ -25,7 +25,7 @@ redirect_from:
 </ul>
 
 
-<strong><img src="http://zhuxy-cs.github.io/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
+<strong><img src="/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
 <ul style="list-style-type: disc; margin-left: 20px;">
     <li>Bachelor of Computer Science and Technology in College of Information Engineering</li>
     <!-- <li>GPA: 90.5 (3.77/4.0), Rank: 2 / 132</li> -->
@@ -48,10 +48,10 @@ redirect_from:
     <li>2019 Winter and 2020 Winter, the event about outstanding student coming back to Alma Mater</li>
     <li>2022 Summer, Tedu Group's Artificial Intelligence Training Project</li>
     <!-- <li>2024.11, Huawei Kunpeng and Ascend Science, Technology and Education Innovation Excellence Center Special Training Camp</li> -->
-    <li>2025.07, Hong Kong PhD Fellowship Summer Workshop in CUHK<img src="http://zhuxy-cs.github.io/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
-    <li>2025.07--09, Research Assistant in Systems and Networking Lab in HKU<img src="http://zhuxy-cs.github.io/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
-focusing on designing a more effective distributed training framework for the unified multimodal
-large model </li>
+    <li>2025.07, Hong Kong PhD Fellowship Summer Workshop at CUHK<img src="/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
+    <li>2025.07--09, Research Assistant in the Systems and Networking Lab at HKU<img src="/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
+focusing on designing a more effective distributed training framework for unified multimodal
+large models </li>
 </ul>
 </div>
 

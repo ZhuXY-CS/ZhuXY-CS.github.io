@@ -12,10 +12,10 @@ site_theme               : "default"
 title                    : "HomePage"
 title_separator          : "-"
 name                     : &name "Xianyu Zhu"
-description              : &description "personal description"
+description              : &description "Academic homepage of Xianyu Zhu, focusing on high-performance computing, machine learning systems, and distributed training."
 url                      : https://zhuxy-cs.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "/ZhuXY-CS.github.io"
+repository               : "ZhuXY-CS/ZhuXY-CS.github.io"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
@@ -28,7 +28,7 @@ author:
   bio              : ""
   location         : "Hefei, Anhui, China"
   employer         : "USTC"
-  uri              : "zhuxy-cs.github.io"
+  uri              : "https://zhuxy-cs.github.io"
   email            : "zhuxy@mail.ustc.edu.cn" 
 
   # Academic websites

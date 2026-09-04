@@ -7,15 +7,12 @@ venue: 'Journal of Computer Science and Technology (JCST)'
 rank: 2026
 badge: 'JCST 2026'
 badge_class: 'badge-journal'
-image: 'https://zhuxy-cs.github.io/images/publications/Chunk-GradComp.png'
+image: '/images/publications/Chunk-GradComp.png'
 authors: '<strong>Xianyu Zhu</strong>, Ruohan Wu, Junshi Chen, Hong An'
 author_list: '<strong>Xianyu Zhu¹</strong>, Ruohan Wu¹, Junshi Chen¹², Hong An¹²'
 affiliations: '¹School of Computer Science and Technology, University of Science and Technology of China, Hefei, China<br>²Laoshan Laboratory, Qingdao, China'
 description: 'An algorithm designed to accelerate distributed data parallel training via chunk-wise gradient sparsification and pipelined communication.'
 keywords: '<strong>Communication Optimization</strong>, <strong>Deep Learning</strong>, <strong>Distributed Training</strong>, <strong>Gradient Compression</strong>'
-posterurl: 'http://zhuxy-cs.github.io/poster/Chunk-GradComp.pdf'
-doi: 'https://doi.org/10.0000/0000'
-googlescholar: 'https://www.sciencedirect.com/science/article/pii/000000'
 citation: ' Xianyu Zhu, Ruohan Wu,  Junshi Chen,  Hong An &quot;Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication.&quot; Journal of Computer Science and Technology (JCST), 2026.'
 bibtex: |
   @article{zhu2026Chunk-GradComp,

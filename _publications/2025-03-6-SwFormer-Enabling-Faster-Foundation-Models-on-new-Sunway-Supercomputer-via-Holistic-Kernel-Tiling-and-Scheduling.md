@@ -7,7 +7,7 @@ venue: 'Journal of Computer Science and Technology (JCST)'
 rank: 2025
 badge: 'JCST 2025'
 badge_class: 'badge-journal'
-image: 'https://zhuxy-cs.github.io/images/publications/swformer.jpg'
+image: '/images/publications/swformer.jpg'
 authors: 'Ruohan Wu, <strong>Xianyu Zhu</strong>, Junshi Chen, Hong An'
 author_list: 'Ruohan Wu¹, <strong>Xianyu Zhu¹</strong>, Junshi Chen¹², Hong An¹²'
 affiliations: '¹School of Computer Science and Technology, University of Science and Technology of China, Hefei, China<br>²Laoshan Laboratory, Qingdao, China'
@@ -51,9 +51,9 @@ Deep learning's continuous evolution has driven the creation of increasingly lar
 
 <div style="text-align: center;">
   <video width="640" height="360" controls
-         poster="http://zhuxy-cs.github.io/images/swformer-video-cover.png"
+         poster="/images/swformer-video-cover.png"
          style="display: block; margin: auto; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); border-radius: 8px;">
-    <source src="http://zhuxy-cs.github.io/videos/swFormer_JCST.mp4" type="video/mp4">
+    <source src="/videos/swFormer_JCST.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>

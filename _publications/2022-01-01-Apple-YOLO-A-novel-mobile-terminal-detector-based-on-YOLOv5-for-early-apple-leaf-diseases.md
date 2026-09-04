@@ -7,7 +7,7 @@ venue: 'In the proceedings of 2022 IEEE 46th Annual Computers, Software, and App
 rank: 2022
 badge: 'COMPSAC 2022'
 badge_class: 'badge-conference'
-image: 'https://zhuxy-cs.github.io/images/publications/apple-yolo.jpg'
+image: '/images/publications/apple-yolo.jpg'
 authors: 'Jinjiang Li, <strong>Xianyu Zhu</strong>, Runchang Jia, Bin Liu, Cong Yu'
 author_list: 'Jinjiang Li¹, <strong>Xianyu Zhu¹</strong>, Runchang Jia¹, Bin Liu¹, Cong Yu¹'
 affiliations: '¹College of Information Engineering, Northwest A&F University, Yangling, China'
