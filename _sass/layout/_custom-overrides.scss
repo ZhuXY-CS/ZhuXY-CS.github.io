@@ -929,3 +929,38 @@ button:focus-visible {
   outline: 3px solid rgba(0, 102, 204, 0.28) !important;
   outline-offset: 3px !important;
 }
+
+/* Academic editorial treatment for long-form research prose. */
+.page__content .academic-prose {
+  font-family: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif !important;
+  font-size: 1.02em;
+  line-height: 1.78 !important;
+  color: #273746;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hanging-punctuation: first last;
+}
+
+.page__content .academic-prose a,
+.page__content .academic-prose strong,
+.page__content .academic-prose em {
+  font-family: inherit !important;
+}
+
+.page__content .academic-prose li {
+  font-family: inherit !important;
+  text-align: left;
+}
+
+@media (max-width: 47.99em) {
+  .page__content .academic-prose {
+    font-size: 1em;
+    line-height: 1.68 !important;
+    text-align: left;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+}

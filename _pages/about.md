@@ -41,7 +41,7 @@ h2 {
 
 <h2>👨🏻‍🎓 About Me</h2>
 
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
+<div class="academic-prose">
 
 I recently received a master's degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
 I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
@@ -62,7 +62,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <br>
 
-<strong>Now, I am seeking related PhD opportunities for Fall 2026🍂🍂🍂/Spring 2027🌿🌿🌿</strong>
+<strong>I am currently seeking PhD opportunities for Fall 2026 or Spring 2027.</strong>
 
 </div>
 
@@ -94,11 +94,11 @@ My research interests lie at the intersection of <strong>high-performance comput
 <!-- ==================== Publication Section ==================== -->
 <section id="publication">
 
-<h2>📝 Publication</h2>
+<h2>📝 Publications</h2>
 
 <div style="font-family: 'Times New Roman', Times, serif;">
 
-<h3>📚 Published Paper</h3>
+<h3>📚 Published Papers</h3>
 
 {% assign sorted_publications = site.publications | sort: 'rank' | reverse %}
 {% for post in sorted_publications %}
@@ -112,7 +112,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 <!-- ==================== Project Section ==================== -->
 <section id="project">
 
-<h2>📽️ Research Project</h2>
+<h2>📽️ Research Projects</h2>
 
 <div style="font-family: 'Times New Roman', Times, serif;">
 
@@ -126,7 +126,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     </li>
 </ul>
 
-<h3>🎉 Completed Project</h3>
+<h3>🎉 Completed Projects</h3>
 
 {% assign sorted_projects = site.projects | sort: 'rank' | reverse %}
 {% for post in sorted_projects %}
@@ -162,11 +162,11 @@ focusing on designing a more effective distributed training framework for unifie
 <!-- ==================== Award Section ==================== -->
 <section id="award">
 
-<h2>🏆 Award</h2>
+<h2>🏆 Awards</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
-<h3>🔥 Scholarship</h3>
+<h3>🔥 Scholarships</h3>
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">National Scholarship</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">President Scholarship</li>
@@ -175,7 +175,7 @@ focusing on designing a more effective distributed training framework for unifie
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Academic Scholarship</li>
 </ul>
 
-<h3>✨ Honor</h3>
+<h3>✨ Honors</h3>
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Outstanding Graduate</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">Excellent College Student</li>
@@ -190,7 +190,7 @@ focusing on designing a more effective distributed training framework for unifie
 <!-- ==================== Competition Section ==================== -->
 <section id="competition">
 
-<h2>✅ Competition</h2>
+<h2>✅ Competitions</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
@@ -210,7 +210,7 @@ focusing on designing a more effective distributed training framework for unifie
 <!-- ==================== Skill Section ==================== -->
 <section id="skill">
 
-<h2>⚙️ Technical Skill</h2>
+<h2>⚙️ Technical Skills</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
