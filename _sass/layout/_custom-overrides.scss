@@ -932,8 +932,7 @@ button:focus-visible {
 
 /* Academic editorial treatment for long-form research prose. */
 .page__content .academic-prose {
-  font-family: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif !important;
-  font-size: 1.02em;
+  font-family: "Trebuchet MS", Helvetica, sans-serif !important;
   line-height: 1.78 !important;
   color: #273746;
   text-align: justify;
@@ -957,7 +956,6 @@ button:focus-visible {
 
 @media (max-width: 47.99em) {
   .page__content .academic-prose {
-    font-size: 1em;
     line-height: 1.68 !important;
     text-align: left;
     hyphens: none;

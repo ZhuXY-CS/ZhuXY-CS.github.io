@@ -50,8 +50,8 @@ During my undergraduate studies, I joined the Parallel and Visual Processing Lab
 
 <br>
 
-As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA) and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
-I also serve as a reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS).
+As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA), and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
+Since 2026, I have served as a reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS).
 
 My research interests lie at the intersection of <strong>high-performance computing</strong>, <strong>machine learning systems</strong>, and <strong>distributed training</strong>. Specifically, I focus on:
 
@@ -137,22 +137,22 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 </section>
 
-<!-- ==================== Internship Section ==================== -->
+<!-- ==================== Experience Section ==================== -->
 <section id="internship">
 
-<h2>⭐ Internship</h2>
+<h2>⭐ Experience & Academic Service</h2>
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 <ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019--2020, New Media Center of college, responsible for writing, interview and operation of official account</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019--2020 Summer, Baidu AI Talents Camp, learning machine learning and AI framework PaddlePaddle</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2019 Winter and 2020 Winter, the event about outstanding student coming back to Alma Mater</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Summer, Tedu Group's Artificial Intelligence Training Project</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2022 Fall, Teaching Assistant for Parallel Computing Course</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07, Hong Kong PhD Fellowship Summer Workshop at CUHK<img src="/images/CUHK_logo_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;"> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">2025.07--09, Research Assistant in the Systems and Networking Lab at HKU<img src="/images/hku-logo-eps_01.jpg" style="width:20px; height:20px; object-fit:contain; vertical-align:middle; margin-right:6px;">, supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>,
-focusing on designing a more effective distributed training framework for unified multimodal large models </li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Reviewer</strong>, IEEE Transactions on Parallel and Distributed Systems (TPDS), 2026--Present</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Research Assistant</strong>, Systems and Networking Lab, The University of Hong Kong, Jul.--Sep. 2025; supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>, focusing on distributed training for unified multimodal large models</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, Hong Kong PhD Fellowship Summer Workshop, The Chinese University of Hong Kong, Jul. 2025</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, CCF HPC China 2023, Aug. 2023</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Teaching Assistant</strong>, Parallel Computing, Fall 2022</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>AI Trainee</strong>, Tedu Group, Summer 2022; developed a multi-object image annotation platform</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, Baidu AI Talents Camp, Summer 2021; studied machine learning and PaddlePaddle</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Staff Member</strong>, New Media Center, Northwest A&F University, 2019--2020</li>
 </ul>
 
 </div>
@@ -215,9 +215,9 @@ focusing on designing a more effective distributed training framework for unifie
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 <ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Language:</strong> C/C++, Python, CUDA C, JAVA, LaTeX, Assembly Language</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Languages:</strong> C/C++, Python, CUDA C, Java, Verilog, LaTeX, Assembly</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, PaddlePaddle, DeepSpeed</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High Performance Computing:</strong> OpenMP, MPI, CUDA Programming, SACA Programming</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High-Performance Computing:</strong> OpenMP, MPI, NCCL, CUDA Programming, SACA Programming</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Platform:</strong> Linux, NVIDIA Jetson Nano/TX2, NVIDIA DGX-H800</li>
 </ul>
 
