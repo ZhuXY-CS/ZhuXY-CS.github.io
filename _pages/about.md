@@ -57,12 +57,12 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Gradient Compression Algorithms:</strong> Developing efficient compression techniques to reduce communication overhead in distributed training</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Large-scale Distributed Systems:</strong> Building scalable solutions for training foundation models on HPC clusters</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Memory-Efficient Training Algorithm:</strong> Building workload‑aware adaptive memory‑management runtime system</li>
 </ul>
 
 <br>
 
-<strong>I am currently seeking PhD opportunities for Fall 2026 or Spring 2027.</strong>
+<strong>I am currently seeking PhD opportunities for Fall 2026 or Spring/Fall 2027.</strong>
 
 </div>
 
