@@ -100,7 +100,7 @@ comments: false
     </div>
   </section>
 
-  <aside class="love-sidecar" aria-label="我们的音乐与星空">
+  <aside class="love-sidecar" aria-label="我们的音乐、天气与情话">
     {% if love.music and love.music != "" %}
       <section class="love-widget love-player" aria-label="背景音乐播放器">
         <audio id="love-audio" src="{{ love.music | relative_url }}" preload="metadata" playsinline data-lyrics="{{ love.lyrics | relative_url }}"></audio>
@@ -202,6 +202,18 @@ comments: false
       </div>
 
       <p class="love-weather__message" id="love-weather-message">无论是高新和东区，抑或是合肥与太原，还是陆地与海洋，<br><strong>我们的心始终在一起</strong></p>
+    </section>
+
+    <section class="love-widget love-note" aria-label="我们的情话">
+      <header class="love-widget__header">
+        <span class="love-widget__eyebrow">LOVE NOTE</span>
+        <span class="love-widget__ornament" aria-hidden="true">♡</span>
+      </header>
+      <div class="love-note__content">
+        <span class="love-note__mark" aria-hidden="true">“</span>
+        <p>情话内容，等我们一起决定。</p>
+        <span class="love-note__mark love-note__mark--close" aria-hidden="true">”</span>
+      </div>
     </section>
   </aside>
 </main>
