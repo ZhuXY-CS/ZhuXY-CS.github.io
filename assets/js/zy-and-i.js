@@ -488,7 +488,7 @@
       button.setAttribute("aria-label", tooltip);
       button.setAttribute("data-tooltip", tooltip);
       button.setAttribute("title", tooltip);
-      if (icon) icon.textContent = isPlaying ? "🎵" : "🔇";
+      if (icon) icon.textContent = isPlaying ? "Ⅱ" : "▶";
       player.classList.toggle("is-playing", isPlaying);
     }
 
@@ -1240,6 +1240,21 @@
     var speechCueTimer;
     var frameRoot = (initialSprite.currentSrc || initialSprite.src).replace(/frame-\d{2}\.webp(?:\?.*)?$/, "frame-");
     var frameLayers = {};
+    // Keep one composited surface: hidden image layers can be evicted/repainted
+    // independently while their transformed parent is moving.
+    var frameCanvas = document.createElement("canvas");
+    frameCanvas.width = 256;
+    frameCanvas.height = 256;
+    frameCanvas.className = "tangbao-witness__canvas";
+    frameCanvas.setAttribute("aria-hidden", "true");
+    var frameContext = frameCanvas.getContext("2d");
+    if (!frameContext) return;
+    var frameSurface = document.createElement("canvas");
+    frameSurface.width = 256;
+    frameSurface.height = 256;
+    var surfaceContext = frameSurface.getContext("2d");
+    if (!surfaceContext) return;
+    var canvasReady = false;
     var frameSequence = [14, 15, 16, 17, 18, 19];
     var frameDuration = 145;
     var frameLoops = true;
@@ -1248,7 +1263,7 @@
     var frameIndex = 0;
     var currentAction = "is-action-trot";
     var frameStartedAt = window.performance.now();
-    var displayedFrame = 22;
+    var displayedFrame = null;
     var framePreloads = [];
 
     for (var frameNumber = 1; frameNumber <= 59; frameNumber += 1) {
@@ -1262,7 +1277,7 @@
       frameLayer.dataset.frame = String(frameNumber);
       if (frameNumber !== 22) {
         frameLayer.src = frameSource;
-        visual.appendChild(frameLayer);
+        // Decode off-DOM; only the persistent canvas is displayed.
       }
       frameLayers[frameNumber] = frameLayer;
       framePreloads.push(frameLayer);
@@ -1291,10 +1306,17 @@
     function displayTangbaoFrame(nextFrame) {
       if (nextFrame === displayedFrame) return;
       var incomingLayer = frameLayers[nextFrame];
-      var outgoingLayer = frameLayers[displayedFrame];
       if (!incomingLayer || !incomingLayer.complete || !incomingLayer.naturalWidth) return;
-      incomingLayer.classList.add("is-active");
-      if (outgoingLayer) outgoingLayer.classList.remove("is-active");
+      // Prepare the complete transparent frame before replacing visible pixels.
+      surfaceContext.clearRect(0, 0, 256, 256);
+      surfaceContext.drawImage(incomingLayer, 0, 0, 256, 256);
+      frameContext.globalCompositeOperation = "copy";
+      frameContext.drawImage(frameSurface, 0, 0);
+      if (!canvasReady) {
+        visual.replaceChildren(frameCanvas);
+        canvasReady = true;
+      }
+      frameCanvas.dataset.frame = String(nextFrame);
       displayedFrame = nextFrame;
     }
 
@@ -1703,6 +1725,7 @@
         image.addEventListener("error", resolve, { once: true });
       });
     })).then(function () {
+      displayTangbaoFrame(22);
       previousTime = window.performance.now();
       startScene("stroll");
       moveAnimationFrame = window.requestAnimationFrame(move);
