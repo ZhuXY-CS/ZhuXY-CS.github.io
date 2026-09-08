@@ -99,6 +99,7 @@
 
       activeIndex = nextIndex;
       pages[activeIndex].hidden = false;
+      book.scrollTop = 0;
       pages[activeIndex].classList.remove("is-turning-forward", "is-turning-backward");
       pages[activeIndex].offsetWidth;
       pages[activeIndex].classList.add("is-active", directionClass);
@@ -1732,7 +1733,22 @@
     });
   }
 
+  function setupSweetNotes() {
+    var card = document.querySelector(".love-sweet-note");
+    if (!card) return;
+    var copy = card.querySelector("[data-sweet-note]");
+    var button = card.querySelector(".love-sweet-note__next");
+    var notes = card.querySelectorAll("[data-sweet-notes] span");
+    var index = 0;
+    if (!button || !copy || !notes.length) return;
+    button.addEventListener("click", function () {
+      index = (index + 1) % notes.length;
+      copy.textContent = notes[index].textContent;
+    });
+  }
+
   function initialize() {
+    setupSweetNotes();
     setupLetterBook();
     setupPhotoLoading();
     createHeartAnimation();

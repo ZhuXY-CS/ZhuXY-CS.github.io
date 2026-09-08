@@ -1690,3 +1690,51 @@ body.love-page button { cursor: var(--love-heart-cursor); }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Left column: the original letter above a small, separate love note. */
+.love-left-column {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0.8rem;
+}
+.love-left-column .love-letter { min-height: 0; }
+.love-sweet-note { display: flex; flex-direction: column; min-height: 9rem; }
+.love-sweet-note__body {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 0.45rem 1.2rem;
+}
+.love-sweet-note__body p {
+  margin: 0;
+  max-width: 20em;
+  color: var(--love-accent);
+  font: 0.95rem/1.85 var(--love-font-cn);
+  text-align: center;
+  text-wrap: pretty;
+}
+.love-sweet-note__next {
+  align-self: center;
+  margin: 0.4rem 0 0.8rem;
+  padding: 0.35rem 0.65rem;
+  border: 0;
+  background: transparent;
+  color: #a06488;
+  font: 0.66rem/1.4 var(--love-font-cn);
+}
+.love-sweet-note__next:hover { color: var(--love-accent); }
+.love-sweet-note__next:focus-visible { outline: 1px solid var(--love-accent); outline-offset: 2px; }
+@media (min-width: 1051px) {
+  .love-left-column { height: 100%; grid-template-rows: minmax(0, 1fr) minmax(9rem, 24%); }
+  .love-left-column .love-letter { padding-top: 0.8rem; padding-bottom: 0.45rem; }
+  .love-left-column .love-letter__pages { overflow-y: auto; scrollbar-width: thin; scrollbar-color: #e9a1bf transparent; }
+  .love-left-column .love-copy { height: auto; min-height: 0; }
+  .love-left-column .love-letter__page { height: max-content; }
+  .love-left-column .love-postmark { flex-shrink: 0; margin-top: 0.75rem; }
+  .love-left-column .love-letter__nav { flex-shrink: 0; }
+}
+@media (max-width: 1050px) {
+  .love-left-column { grid-template-rows: auto auto; }
+}

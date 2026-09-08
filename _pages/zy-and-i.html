@@ -25,6 +25,7 @@ comments: false
 <main class="love-stage">
   <a class="love-home" href="{{ '/' | relative_url }}" aria-label="返回学术主页" title="返回学术主页">←</a>
 
+  <div class="love-left-column">
   <section class="love-letter" aria-label="我们的文字">
     <div class="love-letter__pages" id="love-letter-pages" aria-live="off">
       {% if letters and letters.size > 0 %}
@@ -71,6 +72,21 @@ comments: false
       </nav>
     {% endif %}
   </section>
+
+  <section class="love-widget love-sweet-note" aria-label="给你的情话">
+    <header class="love-widget__header">
+      <span class="love-widget__eyebrow">LOVE NOTE · 写给你</span>
+      <span class="love-widget__ornament" aria-hidden="true">♡</span>
+    </header>
+    <div class="love-sweet-note__body">
+      <p data-sweet-note aria-live="polite">{{ love.sweet_notes | first }}</p>
+    </div>
+    {% if love.sweet_notes.size > 1 %}
+      <button class="love-sweet-note__next" type="button" aria-label="换一句情话">再一句心里话 <span aria-hidden="true">↗</span></button>
+    {% endif %}
+    <div hidden data-sweet-notes>{% for note in love.sweet_notes %}<span>{{ note }}</span>{% endfor %}</div>
+  </section>
+  </div>
 
   <section class="love-memory" aria-label="我们的照片">
     <div class="love-photos">
