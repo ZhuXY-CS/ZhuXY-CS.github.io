@@ -488,7 +488,7 @@
       button.setAttribute("aria-label", tooltip);
       button.setAttribute("data-tooltip", tooltip);
       button.setAttribute("title", tooltip);
-      if (icon) icon.textContent = isPlaying ? "Ⅱ" : "▶";
+      if (icon) icon.textContent = isPlaying ? "🎵" : "🔇";
       player.classList.toggle("is-playing", isPlaying);
     }
 
