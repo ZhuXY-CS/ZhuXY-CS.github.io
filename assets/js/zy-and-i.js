@@ -1235,6 +1235,73 @@
       ]
     };
     var recentMessages = [];
+    // Use one clock for poses, speech and frames. Hidden time does not advance it.
+    var pausedAt = document.hidden ? window.performance.now() : null;
+    var pausedDuration = 0;
+    var timers = new Map();
+    var nextTimerId = 0;
+    var framesReady = false;
+    var sceneStarted = false;
+
+    function animationNow() {
+      return (pausedAt === null ? window.performance.now() : pausedAt) - pausedDuration;
+    }
+
+    function armTimer(timer) {
+      if (pausedAt !== null || document.hidden) return;
+      timer.nativeId = window.setTimeout(function () {
+        timer.nativeId = null;
+        if (pausedAt !== null || document.hidden) return;
+        timers.delete(timer.id);
+        timer.callback();
+      }, Math.max(0, timer.dueAt - animationNow()));
+    }
+
+    function scheduleTimer(callback, delay) {
+      var timer = { id: ++nextTimerId, callback: callback, dueAt: animationNow() + delay, nativeId: null };
+      timers.set(timer.id, timer);
+      armTimer(timer);
+      return timer.id;
+    }
+
+    function cancelTimer(id) {
+      var timer = timers.get(id);
+      if (!timer) return;
+      window.clearTimeout(timer.nativeId);
+      timers.delete(id);
+    }
+
+    function resumeAnimation() {
+      if (reducedMotion || !framesReady || document.hidden || moveAnimationFrame) return;
+      if (!sceneStarted) {
+        sceneStarted = true;
+        startScene("stroll");
+        scheduleSweetWords(9000);
+      }
+      previousTime = window.performance.now();
+      moveAnimationFrame = window.requestAnimationFrame(move);
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        if (pausedAt !== null) return;
+        pausedAt = window.performance.now();
+        timers.forEach(function (timer) {
+          window.clearTimeout(timer.nativeId);
+          timer.nativeId = null;
+        });
+        window.cancelAnimationFrame(moveAnimationFrame);
+        moveAnimationFrame = 0;
+      } else {
+        if (pausedAt !== null) {
+          pausedDuration += window.performance.now() - pausedAt;
+          pausedAt = null;
+          timers.forEach(armTimer);
+        }
+        resumeAnimation();
+      }
+    });
+
     var bubbleTimer;
     var bubbleVisibleUntil = 0;
     var speechPoseTimer;
@@ -1263,7 +1330,7 @@
     var frameDistanceTravelled = 0;
     var frameIndex = 0;
     var currentAction = "is-action-trot";
-    var frameStartedAt = window.performance.now();
+    var frameStartedAt = animationNow();
     var displayedFrame = null;
     var framePreloads = [];
 
@@ -1293,7 +1360,7 @@
       "is-action-curious": { frames: [22, 23, 22, 23, 22], frameDuration: 285, loop: false, minimum: 1950, maximum: 2250 },
       "is-action-sniff": { frames: [22, 26, 27, 28, 27, 26, 22], frameDuration: 185, loop: false, minimum: 1900, maximum: 2150 },
       "is-action-stretch": { frames: [22, 26, 27, 28, 29, 29, 28, 27, 26, 22], frameDuration: 175, loop: false, minimum: 2200, maximum: 2450 },
-      "is-action-celebrate": { frames: [22], frameDuration: 1650, loop: false, minimum: 1650, maximum: 1900 },
+      "is-action-celebrate": { frames: [22, 30, 31, 30, 31, 30, 22], frameDuration: 185, loop: false, minimum: 1650, maximum: 1900 },
       "is-action-ball": { frames: [38, 39, 40, 41, 42, 42, 42, 41, 40, 39, 38, 43], frameDuration: 190, loop: false, minimum: 2450, maximum: 2750 },
       "is-action-settle": { frames: [19, 20, 21, 22], frameDuration: 135, loop: false, minimum: 620, maximum: 720 },
       "is-action-ready": { frames: [22, 21, 20, 19], frameDuration: 125, loop: false, minimum: 560, maximum: 660 },
@@ -1330,7 +1397,7 @@
       frameDistanceTravelled = 0;
       frameIndex = 0;
       currentAction = action;
-      frameStartedAt = window.performance.now();
+      frameStartedAt = animationNow();
       displayTangbaoFrame(frameSequence[0]);
     }
 
@@ -1372,10 +1439,10 @@
       void bubble.offsetWidth;
       bubble.classList.add("is-blooming");
       tangbao.classList.add("is-speaking");
-      window.clearTimeout(bubbleTimer);
+      cancelTimer(bubbleTimer);
       var readingTime = Math.min(7600, Math.max(5000, Array.from(bubble.textContent).length * 165));
-      bubbleVisibleUntil = Date.now() + readingTime;
-      bubbleTimer = window.setTimeout(function () {
+      bubbleVisibleUntil = animationNow() + readingTime;
+      bubbleTimer = scheduleTimer(function () {
         tangbao.classList.remove("is-speaking");
         bubble.classList.remove("is-blooming");
         bubbleVisibleUntil = 0;
@@ -1383,15 +1450,15 @@
     }
 
     function speak() {
-      window.clearTimeout(speechPoseTimer);
+      cancelTimer(speechPoseTimer);
 
-      if (reducedMotion || !actionClasses) {
+      if (reducedMotion || !framesReady || !sceneStarted) {
         revealMessage("click");
         return;
       }
 
-      window.clearTimeout(actionTimer);
-      window.clearTimeout(speechCueTimer);
+      cancelTimer(actionTimer);
+      cancelTimer(speechCueTimer);
       sceneQueue = [
         { action: "is-action-curious", duration: [2600, 3150], speech: "click", speechChance: 1, speechDelay: 240 },
         { action: "is-action-celebrate", duration: [1450, 1750] },
@@ -1400,7 +1467,7 @@
 
       if (actionDefinitions[currentAction] && actionDefinitions[currentAction].moving) {
         applyAction("is-action-settle");
-        speechPoseTimer = window.setTimeout(runNextSceneStep, 680);
+        speechPoseTimer = scheduleTimer(runNextSceneStep, 680);
       } else {
         runNextSceneStep();
       }
@@ -1512,7 +1579,7 @@
     }
 
     function applyAction(action) {
-      window.clearTimeout(turnFlipTimer);
+      cancelTimer(turnFlipTimer);
       actionClasses.forEach(function (className) { tangbao.classList.remove(className); });
       tangbao.classList.add(action);
       tangbao.dataset.action = action.replace("is-action-", "");
@@ -1522,7 +1589,7 @@
       var direction = Math.abs(targetVelocityX) > 5 ? (targetVelocityX < 0 ? -1 : 1) : (tangbao.classList.contains("is-facing-left") ? -1 : 1);
 
       if (definition.moving) {
-        window.clearTimeout(bubbleTimer);
+        cancelTimer(bubbleTimer);
         bubbleVisibleUntil = 0;
         tangbao.classList.remove("is-speaking");
         bubble.classList.remove("is-blooming");
@@ -1539,7 +1606,7 @@
         targetVelocityX = 0;
         targetVelocityY = 0;
         var turnDirection = forcedDirection || (tangbao.classList.contains("is-facing-left") ? 1 : -1);
-        turnFlipTimer = window.setTimeout(function () {
+        turnFlipTimer = scheduleTimer(function () {
           tangbao.classList.toggle("is-facing-left", turnDirection < 0);
         }, 370);
       } else if (action !== "is-action-settle") {
@@ -1576,8 +1643,8 @@
     }
 
     function runNextSceneStep() {
-      window.clearTimeout(actionTimer);
-      window.clearTimeout(speechCueTimer);
+      cancelTimer(actionTimer);
+      cancelTimer(speechCueTimer);
 
       if (!sceneQueue.length) {
         startScene(chooseScene());
@@ -1585,9 +1652,9 @@
       }
 
       var upcomingDefinition = actionDefinitions[sceneQueue[0].action];
-      var speechTimeRemaining = bubbleVisibleUntil - Date.now();
+      var speechTimeRemaining = bubbleVisibleUntil - animationNow();
       if (upcomingDefinition.moving && tangbao.classList.contains("is-speaking") && speechTimeRemaining > 100) {
-        actionTimer = window.setTimeout(runNextSceneStep, speechTimeRemaining + 60);
+        actionTimer = scheduleTimer(runNextSceneStep, speechTimeRemaining + 60);
         return;
       }
 
@@ -1605,18 +1672,18 @@
       }
 
       if (speechContext && Math.random() < speechChance) {
-        speechCueTimer = window.setTimeout(function () { revealMessage(speechContext); }, step.speechDelay || 360);
+        speechCueTimer = scheduleTimer(function () { revealMessage(speechContext); }, step.speechDelay || 360);
       }
 
-      actionTimer = window.setTimeout(runNextSceneStep, stepDuration(step));
+      actionTimer = scheduleTimer(runNextSceneStep, stepDuration(step));
     }
 
     function turnAtBoundary(direction) {
       if (currentAction === "is-action-turn") return;
       sceneDirection = direction;
       forcedDirection = direction;
-      window.clearTimeout(actionTimer);
-      window.clearTimeout(speechCueTimer);
+      cancelTimer(actionTimer);
+      cancelTimer(speechCueTimer);
       sceneQueue = [
         { action: "is-action-turn" },
         { action: "is-action-trot", duration: [1500, 2200] },
@@ -1628,7 +1695,7 @@
     }
 
     function scheduleSweetWords(delay) {
-      window.setTimeout(function () {
+      scheduleTimer(function () {
         if (!document.hidden && !tangbao.classList.contains("is-speaking")) {
           if (actionDefinitions[currentAction] && actionDefinitions[currentAction].moving) pendingSpeechContext = "look";
           else revealMessage(messageContextForAction(currentAction));
@@ -1638,6 +1705,8 @@
     }
 
     function move(currentTime) {
+      moveAnimationFrame = 0;
+      if (document.hidden || !framesReady) return;
       var elapsed = Math.min((currentTime - previousTime) / 1000, 0.05);
       var padding = 8;
       var maxX = Math.max(padding, window.innerWidth - tangbao.offsetWidth - padding);
@@ -1671,7 +1740,7 @@
         }
         nextFrame = frameSequence[frameIndex];
       } else {
-        var elapsedFrames = Math.floor(Math.max(0, currentTime - frameStartedAt) / frameDuration);
+        var elapsedFrames = Math.floor(Math.max(0, animationNow() - frameStartedAt) / frameDuration);
         var framePosition = frameLoops ? elapsedFrames % frameSequence.length : Math.min(elapsedFrames, frameSequence.length - 1);
         nextFrame = frameSequence[framePosition];
       }
@@ -1704,18 +1773,6 @@
       moveAnimationFrame = window.requestAnimationFrame(move);
     }
 
-    document.addEventListener("visibilitychange", function () {
-      if (document.hidden) {
-        window.cancelAnimationFrame(moveAnimationFrame);
-        moveAnimationFrame = 0;
-      } else if (!moveAnimationFrame) {
-        previousTime = window.performance.now();
-        moveAnimationFrame = window.requestAnimationFrame(move);
-      }
-    });
-
-    scheduleSweetWords(9000);
-
     Promise.all(framePreloads.map(function (image) {
       if (typeof image.decode === "function") {
         return image.decode().catch(function () {});
@@ -1727,9 +1784,8 @@
       });
     })).then(function () {
       displayTangbaoFrame(22);
-      previousTime = window.performance.now();
-      startScene("stroll");
-      moveAnimationFrame = window.requestAnimationFrame(move);
+      framesReady = true;
+      resumeAnimation();
     });
   }
 
