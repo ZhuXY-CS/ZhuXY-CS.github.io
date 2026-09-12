@@ -78,13 +78,15 @@ comments: false
       <span class="love-widget__eyebrow">LOVE NOTE · 写给你</span>
       <span class="love-widget__ornament" aria-hidden="true">♡</span>
     </header>
-    <div class="love-sweet-note__body">
-      <p data-sweet-note aria-live="polite">{{ love.sweet_notes | first }}</p>
+    {% assign first_note = love.sweet_notes | first %}
+    <div class="love-sweet-note__body" aria-live="polite" aria-atomic="true">
+      <p data-sweet-note>{{ first_note.text | escape }}</p>
+      <p class="love-sweet-note__attribution" data-sweet-note-attribution>{{ first_note.attribution | escape }}</p>
     </div>
     {% if love.sweet_notes.size > 1 %}
       <button class="love-sweet-note__next" type="button" aria-label="换一句情话">再一句心里话 <span aria-hidden="true">↗</span></button>
     {% endif %}
-    <div hidden data-sweet-notes>{% for note in love.sweet_notes %}<span>{{ note }}</span>{% endfor %}</div>
+    <div hidden data-sweet-notes>{% for note in love.sweet_notes %}<span data-attribution="{{ note.attribution | escape }}">{{ note.text | escape }}</span>{% endfor %}</div>
   </section>
   </div>
 

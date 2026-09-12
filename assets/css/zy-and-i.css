@@ -1705,6 +1705,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   flex: 1;
   place-items: center;
+  align-content: center;
+  gap: 0.3rem;
   padding: 0.45rem 1.2rem;
 }
 .love-sweet-note__body p {
@@ -1723,6 +1725,11 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   background: transparent;
   color: #a06488;
   font: 0.66rem/1.4 var(--love-font-cn);
+}
+.love-sweet-note__body .love-sweet-note__attribution {
+  color: #946a82;
+  font-size: 0.64rem;
+  line-height: 1.5;
 }
 .love-sweet-note__next:hover { color: var(--love-accent); }
 .love-sweet-note__next:focus-visible { outline: 1px solid var(--love-accent); outline-offset: 2px; }

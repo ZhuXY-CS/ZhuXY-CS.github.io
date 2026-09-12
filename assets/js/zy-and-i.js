@@ -1853,6 +1853,7 @@
     var card = document.querySelector(".love-sweet-note");
     if (!card) return;
     var copy = card.querySelector("[data-sweet-note]");
+    var attribution = card.querySelector("[data-sweet-note-attribution]");
     var button = card.querySelector(".love-sweet-note__next");
     var notes = card.querySelectorAll("[data-sweet-notes] span");
     var index = 0;
@@ -1860,6 +1861,7 @@
     button.addEventListener("click", function () {
       index = (index + 1) % notes.length;
       copy.textContent = notes[index].textContent;
+      if (attribution) attribution.textContent = notes[index].dataset.attribution || "";
     });
   }
 
