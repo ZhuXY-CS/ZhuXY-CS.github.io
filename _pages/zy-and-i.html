@@ -229,25 +229,12 @@ comments: false
 
         <button class="crime-map-launch" id="crime-map-launch" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="crime-map-dialog">
           <span class="crime-map-launch__visual" aria-hidden="true">
-            <svg class="crime-map-mini" viewBox="0 0 240 150" focusable="false">
-              <path class="crime-map-mini__shore" d="M51 9c21 7 35 5 52 13 15 7 27 18 47 27 25 11 43 9 59 29 10 12 13 31 6 45-8 16-27 18-45 18-24 0-45-8-66-7-21 1-43 10-60 2-15-8-19-27-14-44 4-14 14-25 15-41 1-17-7-33 6-42Z" />
-              <path class="crime-map-mini__river" d="M115 24c-7 22 5 35-4 53-8 14-25 21-39 32-9 7-14 15-18 28" />
-              <g class="crime-map-mini__dots">
-                <circle class="is-very-high" cx="111" cy="65" r="8" />
-                <circle class="is-very-high" cx="130" cy="75" r="7" />
-                <circle class="is-high" cx="91" cy="85" r="6" />
-                <circle class="is-high" cx="72" cy="102" r="5" />
-                <circle class="is-average" cx="150" cy="94" r="5" />
-                <circle class="is-low" cx="173" cy="111" r="5" />
-                <circle class="is-very-low" cx="187" cy="48" r="5" />
-                <circle class="is-very-low" cx="64" cy="49" r="5" />
-              </g>
-            </svg>
+            {% include dublin-postal-map.svg preview=true %}
           </span>
           <span class="crime-map-launch__copy">
-            <span class="crime-map-launch__kicker">DUBLIN · GARDA DISTRICTS</span>
+            <span class="crime-map-launch__kicker">DUBLIN · D1–D18</span>
             <strong>都柏林各区域犯罪率</strong>
-            <span>点击查看 2025 警区数据、地图与安全提醒 <span aria-hidden="true">↗</span></span>
+            <span>查看分区地图、犯罪数据与居住意见 <span aria-hidden="true">↗</span></span>
           </span>
         </button>
       </section>
@@ -255,50 +242,7 @@ comments: false
   </aside>
 </main>
 
-<div class="crime-map-dialog" id="crime-map-dialog" hidden>
-  <div class="crime-map-dialog__scrim" data-crime-map-close></div>
-  <section class="crime-map-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="crime-map-dialog-title" aria-describedby="crime-map-dialog-summary">
-    <header class="crime-map-dialog__header">
-      <div>
-        <span class="crime-map-dialog__eyebrow">DUBLIN SAFETY ATLAS · 2025</span>
-        <h2 id="crime-map-dialog-title">都柏林 Garda 警区犯罪率</h2>
-        <p id="crime-map-dialog-summary">按可用的 2025 年警区记录事件计算，每 1,000 名居民统计。</p>
-      </div>
-      <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
-    </header>
-
-    <div class="crime-map-dialog__body">
-      <div class="crime-map-dialog__map-column">
-        <div class="crime-map" id="crime-map-canvas" role="region" aria-label="都柏林 Garda 警区犯罪率示意图"></div>
-        <div class="crime-map__legend" aria-label="犯罪率颜色图例">
-          <span><i class="is-very-low"></i>很低</span>
-          <span><i class="is-low"></i>较低</span>
-          <span><i class="is-average"></i>平均</span>
-          <span><i class="is-high"></i>高</span>
-          <span><i class="is-very-high"></i>很高</span>
-        </div>
-        <p class="crime-map__caption">警区位置为示意排布，边界以 Garda sub-district 为准；点击地图标记可定位到右侧数据。</p>
-      </div>
-      <div class="crime-map-dialog__list-column">
-        <div class="crime-map-dialog__list-heading">
-          <strong>全部可用警区</strong>
-          <span>每千居民 · 2025</span>
-        </div>
-        <div class="crime-map-dialog__list" id="crime-map-list"></div>
-      </div>
-    </div>
-
-    <aside class="crime-map-dialog__notes" aria-label="数据注意事项">
-      <strong>看数据时请留意</strong>
-      <ul>
-        <li>这是 Garda 报案事件，不是居民实际受害概率；市中心、机场和商业区会被访客与通勤人口放大。</li>
-        <li>警区不等同于 Dublin 1、Dublin 2 等邮政区；租房或出行前应按具体地址/Eircode 核查。</li>
-        <li>站点级 2025 欺诈数据暂不可用，因此表中率值不含欺诈；CSO 也提醒该类别存在报案积压问题。</li>
-      </ul>
-      <p>来源：<a href="https://data.cso.ie/table/CJA07" target="_blank" rel="noopener">CSO CJA07</a>、<a href="https://www.cso.ie/en/releasesandpublications/ep/p-rc/recordedcrimeq42025/" target="_blank" rel="noopener">CSO Recorded Crime Q4 2025</a>。标签为辅助性比较，不是政府安全评级。</p>
-    </aside>
-  </section>
-</div>
+{% include dublin-safety.html %}
 
 <footer class="love-footer">
   <span>Made for ZY</span>

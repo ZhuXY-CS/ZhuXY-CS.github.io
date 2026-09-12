@@ -78,6 +78,7 @@ function fixture({ hidden = false, reducedMotion = false, width = 390 } = {}) {
   }
   return {
     root, bubble, visual, frames, timers, window, advance,
+    map(open) { listeners['love:crime-map-toggle']({ detail: { open } }); },
     hide() { document.hidden = true; listeners.visibilitychange(); },
     show() { document.hidden = false; listeners.visibilitychange(); },
     async ready() { decoders.forEach(resolve => resolve()); for (let i = 0; i < 6; i++) await Promise.resolve(); },
@@ -104,6 +105,30 @@ test('switching tabs before decode never starts duplicate animation loops', asyn
     assert.equal(f.timers.size, 0);
     f.advance(10000); f.show(); f.advance(16);
   }
+  assert.equal(f.frames.size, 1);
+});
+
+test('crime map freezes Tangbao across tab switches and resumes only once', async () => {
+  const f = fixture();
+  await f.ready(); f.advance(1200);
+  f.map(true);
+  const state = f.state();
+  f.advance(30000); f.hide(); f.show(); f.advance(30000);
+  assert.equal(f.frames.size, 0);
+  assert.equal(f.timers.size, 0);
+  assert.equal(f.state(), state);
+  f.hide(); f.map(false);
+  assert.equal(f.frames.size, 0);
+  f.show(); f.advance(16);
+  assert.equal(f.frames.size, 1);
+});
+
+test('opening crime map before sprite decode prevents background animation', async () => {
+  const f = fixture();
+  f.map(true); await f.ready(); f.advance(20000);
+  assert.equal(f.frames.size, 0);
+  assert.equal(f.timers.size, 0);
+  f.map(false); f.advance(16);
   assert.equal(f.frames.size, 1);
 });
 

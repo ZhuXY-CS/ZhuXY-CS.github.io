@@ -1,0 +1,216 @@
+# Editorial housing/travel considerations, not official safety rankings.
+# Police references are nearby examples, not a postcode-to-police boundary crosswalk.
+# Only publish geographically attributable incidents; null means unverified, not none.
+D01:
+  places: "北市中心 · O’Connell Street / IFSC"
+  advantages: "市中心办事、购物和公共交通换乘方便；适合希望减少日常通勤的人。"
+  drawbacks: "商业街、交通枢纽与住宅街混合，白天和深夜的环境差异大；看房要单独检查入口与隔音。"
+  advice: "Connolly、商业街和夜间回家路线应逐段查看；候车时收好手机，提前确定到家方案。"
+  stations: [Store Street, Fitzgibbon Street, Mountjoy]
+  event:
+    date: "2026-08-10"
+    published: "2026-08-12"
+    title: "North Great Charles Street 严重袭击案"
+    summary: "警方称一名男子受重伤，一名女子已被起诉；报道为起诉进展，不代表已定罪。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/august/12-08-2026-court-appearance-serious-assault-incident-north-great-charles-street-dublin-1-10th-august-2026.html"
+D02:
+  places: "南市中心 · Trinity / Temple Bar"
+  advantages: "大学、办公区和文化设施集中，适合以市中心为主要活动范围的人。"
+  drawbacks: "酒吧区、游客街与住宅巷道的环境不同；热闹地段需评估夜间噪声和人流。"
+  advice: "夜间聚会后选择明亮主路与正规交通；购物、餐饮时不要把包和手机留在无人照看的位置。"
+  stations: [Pearse Street]
+  event:
+    date: "2025-04-12"
+    published: "2026-04-13（判刑报道）"
+    title: "Hatch Street 抢劫案：近期司法进展"
+    summary: "两人就袭击并抢走受害者手机、钱包的案件认罪并获刑。案件发生于2025年，不能算作2026年新发案件。"
+    source: BreakingNews.ie
+    url: "https://www.breakingnews.ie/ireland/hour-of-terror-pair-jailed-for-vicious-dublin-city-centre-robbery-1886406.html"
+D03:
+  places: "Clontarf / Fairview / East Wall"
+  advantages: "兼有海滨、Fairview 公园和靠近市中心的居住选择，可以按通勤目的地细选。"
+  drawbacks: "覆盖海滨住宅和内城边缘，区域内部差异明显；一个邮编不足以代表整区环境。"
+  advice: "沿海散步与日常通勤分别评估；夜间避免用偏僻公园通道作为捷径。"
+  stations: [Clontarf, Fitzgibbon Street]
+  event:
+    date: "发生日期未披露"
+    published: "2026-03-10"
+    title: "Dublin 3 涉嫌袭击及可疑接近儿童调查"
+    summary: "警方公布一名男子因相关调查被捕；公告未提供具体街道或事发日，不能进一步定位到区内某个社区。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/march/arrest-assault-and-suspicious-approached-to-children-dublin-3-.html"
+D04:
+  places: "Ballsbridge / Donnybrook / Ringsend / Sandymount"
+  advantages: "有海滨、住宅街及办公区，适合把南城工作地点和户外活动一起考虑。"
+  drawbacks: "不同街道距离铁路、公交和商店差异大；大型活动时还需考虑人流与交通。"
+  advice: "公寓看房要检查地下车库、访客管理与包裹存放方式，不要仅凭住宅区名气判断安全。"
+  stations: [Donnybrook, Irishtown]
+  event:
+    date: "2026-02-24"
+    published: "2026（Crimecall 公告）"
+    title: "Ballsbridge 地下车库车辆被劫"
+    summary: "警方调查一名驾驶者进入地下车库后遭人接近、车辆被开走的事件，并征集线索。"
+    source: Garda Crimecall
+    url: "https://www.garda.ie/en/crime-prevention/crimecall-on-rte/crimecall-episodes/2026/"
+D05:
+  places: "Artane / Raheny 部分地区"
+  advantages: "以居住社区为主要选择，可按学校、商店和公交步行距离比较房源。"
+  drawbacks: "同一邮区距轨道站点的距离不同，晚间回家便利程度需落到具体地址。"
+  advice: "实地查看主干道过街点、站台照明和最后一段步行路线；不要以警方站点均值替代街道判断。"
+  stations: [Raheny, Coolock]
+  event:
+    date: "2026-01-15"
+    published: "2026-01-16"
+    title: "Oscar Traynor Road 袭击案"
+    summary: "警方称一名男子在约18:30被投掷的玻璃物品击中并送医，呼吁目击者提供线索。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/january/witness-appeal-assault-oscar-traynor-road-dublin-5-15th-january-2026.html"
+D06:
+  places: "Rathmines / Ranelagh / Rathgar"
+  advantages: "有较集中的餐饮和生活服务，部分位置可步行到 Luas 绿线。"
+  drawbacks: "商业主街与住宅支路的噪声、人流差异大；不要默认全区都在电车步行范围内。"
+  advice: "重视门禁、自行车存放与夜间步行；Rathmines、Ranelagh 要按实际街道比较。"
+  stations: [Rathmines, Terenure]
+  event:
+    date: "2026-09-02"
+    published: "2026-09-03"
+    title: "Ranelagh 商店涉嫌袭击事件"
+    summary: "媒体援引警方称，约13:30接报涉嫌袭击，一名男子送医。此处仅采用警方确认的袭击信息，不采用网上未核实的武器说法。"
+    source: Extra.ie（引述警方）
+    url: "https://extra.ie/2026/09/03/news/four-arrested-alleged-ranelagh-assault"
+D07:
+  places: "Smithfield / Stoneybatter / Cabra"
+  advantages: "既有接近市中心的街区，也有更外围的住宅选择，可比较步行、骑行和公共交通。"
+  drawbacks: "范围跨内城与住宅区，不能用单个警区平均值概括；临街房源需检查夜间环境。"
+  advice: "按实际上下班时间走一遍车站到家路线；靠近公园或运河并不意味着夜间捷径合适。"
+  stations: [Bridewell Dublin, Cabra]
+  event:
+    date: "2026-03（报道未明确具体行动日）"
+    published: "2026-03-26"
+    title: "Dublin 7 查获电动滑板车及刀具"
+    summary: "媒体报道警方行动中查获两辆高功率电动滑板车和刀具，一名男子被起诉、一名青少年被捕。具体街道未披露。"
+    source: Irish Independent
+    url: "https://www.independent.ie/irish-news/man-30s-charged-and-teen-arrested-as-gardai-seize-escooters-and-bladed-weapon-in-dublin-7/a412525497.html"
+D08:
+  places: "Liberties / Kilmainham / Portobello 部分地区"
+  advantages: "靠近市中心，并有文化景点和不同类型的住宅街，适合按工作地点选择。"
+  drawbacks: "游客街、商业区与安静住宅混合，个别街区的数据不能推广至全部 D8。"
+  advice: "分别考察白天和夜间环境；运河沿线出行优先选有照明、人流和出口的路线。"
+  stations: [Kevin Street, Kilmainham]
+  event:
+    date: "2026-02-18"
+    published: "2026-02-19"
+    title: "Portobello Road 严重袭击案"
+    summary: "警方称约18:10发生涉嫌袭击，一名男子重伤送医，当时认为伤势不危及生命；调查持续。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/february/witness-appeal-serious-assault-portobello-road-dublin-8-18th-february-2026.html"
+D09:
+  places: "Drumcondra / Santry / Whitehall"
+  advantages: "可结合 DCU、北城工作地点及公交走廊筛选，适合北侧日常活动较多的人。"
+  drawbacks: "不同房源受主干道交通、噪声和步行距离影响很大，需要逐项比较。"
+  advice: "看房时走到常用车站，检查过街点；自行车和车辆都要确认安全存放条件。"
+  stations: [Santry, Ballymun]
+  event:
+    date: "2026-04-23"
+    published: "2026-04-24"
+    title: "Santry Avenue 涉嫌袭击事件"
+    summary: "媒体援引警方称约16:30发生涉嫌袭击，一名男子送医；报道将地点标为 Dublin 9。"
+    source: Crime World（引述警方）
+    url: "https://www.crimeworld.com/ireland/man-30s-rushed-to-hospital-following-broad-daylight-attack-in-ballymun/a/148092432.html"
+D10:
+  places: "Ballyfermot / Cherry Orchard 部分地区"
+  advantages: "适合将西城工作地点、社区设施与日常购物范围一起评估。"
+  drawbacks: "邮区覆盖的街道环境不同；能否直达工作地点和夜间交通是重要取舍。"
+  advice: "查看门禁、停车处和车站到家路线；遇到封锁或冲突远离现场，不围观。"
+  stations: [Ballyfermot]
+  event:
+    date: "2026-03-19（报道当日）"
+    published: "2026-03-19"
+    title: "Ballyfermot Road 可疑装置调查"
+    summary: "媒体报道警方处理商业场所外发现的可疑装置。可疑物调查不等同于已确认爆炸袭击。"
+    source: The Irish Times
+    url: "https://www.irishtimes.com/crime-law/2026/03/19/suspect-devices-found-in-bag-outside-retail-premises-in-cherry-orchard-dublin/"
+D11:
+  places: "Finglas / Ballymun 部分地区"
+  advantages: "可把北西城工作地点、道路连接和社区服务纳入同一轮比较。"
+  drawbacks: "范围包含多种住宅环境；到站距离和回家路线比单一邮编标签更有参考价值。"
+  advice: "按街道而非居民身份评估安全；遇到疑似枪声或正在发生的暴力，离开危险范围并拨112/999。"
+  stations: [Finglas, Ballymun]
+  event:
+    date: "2026-08-09"
+    published: "2026-08-10"
+    title: "Poppintree 枪击调查"
+    summary: "警方调查约22:00向一处物业开枪的事件；公告称当时物业内无人，没有伤者报告。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/august/10-08-2026-witness-appeal-discharge-of-a-firearm-ballymun-dublin-11-9th-august-2026.html"
+D12:
+  places: "Crumlin / Drimnagh / Walkinstown"
+  advantages: "南西城住宅选择较多，可按商店、社区设施及通勤方向选街区。"
+  drawbacks: "部分地址离 Luas 较近，其他位置依赖公交；不能把整区当成统一交通条件。"
+  advice: "比较不同房源的站台距离、晚间接驳和停车条件；保持正常防盗措施。"
+  stations: [Crumlin, Sundrive Road]
+  event:
+    date: "2026-07-31"
+    published: "2026-08-02"
+    title: "Crumlin 枪械和弹药查获案进展"
+    summary: "警方公布相关调查中被捕的一名男子已被起诉。查获和起诉本身不代表发生了街头枪击。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/august/02-08-2026-court-appearance-firearm-and-ammunition-seizure-arrest-crumlin-dublin-12-31st-july-2026.html"
+D13:
+  places: "Donaghmede / Baldoyle / Sutton / Howth"
+  advantages: "有沿海与内陆住宅选择，靠近铁路的地址可重点比较轨道通勤。"
+  drawbacks: "范围较大，海滨位置与内陆社区的出行条件不相同，外围房源尤其要核查晚间接驳。"
+  advice: "步道游览尽量安排在白天；晚上按实际车站与地址规划回程。"
+  stations: [Howth, Raheny]
+  event:
+    date: "2026-05-28"
+    published: "2026-05-30"
+    title: "Donaghmede 大麻查获案"
+    summary: "RTÉ 报道四人被控与 Carndonagh Road 查获约255公斤大麻有关的罪名；案件处于起诉阶段。"
+    source: RTÉ
+    url: "https://www.rte.ie/news/2026/0530/1576064-cannabis-seizure-court/"
+D14:
+  places: "Dundrum / Churchtown / Clonskeagh 部分地区"
+  advantages: "适合结合 Dundrum 商业设施、南城校园及 Luas 绿线位置选房。"
+  drawbacks: "靠近商场不等于靠近目的地；部分地址仍需公交接驳或较长步行。"
+  advice: "重点检查自行车存放、公寓入口和最后一段步行；不要把发生在其他邮区、由 Dundrum 警方调查的案件计入本区。"
+  stations: [Dundrum, Rathfarnham]
+D15:
+  places: "Blanchardstown / Castleknock / Clonsilla / Ongar"
+  advantages: "可按西北部工作地点、商业设施和铁路站点筛选，适合活动范围偏西北的人。"
+  drawbacks: "面积大，车站附近与外围社区的通勤体验差异明显，不能用整区均值替代具体地址。"
+  advice: "看清班次与车站到家的最后一公里；停车和自行车安全要单独核查。"
+  stations: [Blanchardstown]
+  event:
+    date: "2025-08-26"
+    published: "2026-09-04"
+    title: "Corduff 商场枪击案：近期起诉进展"
+    summary: "媒体报道两人就2025年 Blackcourt Avenue 附近枪击案被起诉；发生日期与2026年的起诉报道日期不同。"
+    source: The Irish Times
+    url: "https://www.irishtimes.com/ireland/2026/09/04/woman-50s-charged-in-connection-with-2025-corduff-shopping-centre-shooting/"
+D16:
+  places: "Ballinteer / Knocklyon / Rathfarnham 部分地区"
+  advantages: "有靠近山麓与公园的住宅选择，适合重视户外空间并能接受南城通勤的人。"
+  drawbacks: "一些房源离轨道交通较远；夜间接驳、坡度与步行时间需要实际测算。"
+  advice: "山路和偏僻步道不宜当夜间回家捷径；独立住宅检查门窗、照明与车位。"
+  stations: [Rathfarnham, Dundrum]
+D17:
+  places: "Darndale / Priorswood / Belcamp"
+  advantages: "可结合北东部工作地点、社区设施和公交走廊评估日常便利程度。"
+  drawbacks: "不同住宅片区及主干道两侧的环境不同；跨区统计或新闻容易造成错误归属。"
+  advice: "按房屋地址和实际通勤线路调查；泛称 Coolock 的报道可能涉及多个邮区，不直接算作 D17 案件。"
+  stations: [Coolock]
+D18:
+  places: "Sandyford / Stepaside / Leopardstown / Cabinteely / Shankill"
+  advantages: "可结合 Sandyford 工作区、Luas 绿线与山麓住宅筛选，日常目的地在南城时尤其值得比较。"
+  drawbacks: "范围非常大；靠近绿线的公寓与远离车站的住宅不能视为相同通勤条件。"
+  advice: "Clay Farm / Stepaside 要具体检查到车站的步行、晚间照明及坡度；公寓门禁和车库同样需要核查。"
+  stations: [Dundrum, Cabinteely, Shankill]
+  event:
+    date: "2026-08-29"
+    published: "2026-09-09"
+    title: "Leopardstown 暴力冲突案进展"
+    summary: "警方确认一名受重伤男子于9月1日死亡；9月8日再拘捕的两人已获释且未被起诉，将向检察机关提交卷宗。案发于 D18，不能因 Dundrum 警方调查便归入 D14。"
+    source: Garda（修订公告）
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/september/09-09-2026-amended-update-5-incident-of-violent-disorder-leopardstown-dublin-18-29th-august-2026.html"

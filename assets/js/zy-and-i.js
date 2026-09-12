@@ -2,10 +2,32 @@
   "use strict";
 
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var mapPausesTyping = false;
+  var typingDelays = new Set();
+
+  function runTypingDelay(delay) {
+    delay.started = Date.now();
+    delay.timer = window.setTimeout(function () {
+      typingDelays.delete(delay);
+      delay.resolve();
+    }, delay.remaining);
+  }
+
+  document.addEventListener("love:crime-map-toggle", function (event) {
+    mapPausesTyping = Boolean(event.detail && event.detail.open);
+    typingDelays.forEach(function (delay) {
+      if (mapPausesTyping) {
+        window.clearTimeout(delay.timer);
+        delay.remaining = Math.max(0, delay.remaining - (Date.now() - delay.started));
+      } else runTypingDelay(delay);
+    });
+  });
 
   function wait(milliseconds) {
     return new Promise(function (resolve) {
-      window.setTimeout(resolve, milliseconds);
+      var delay = {resolve: resolve, remaining: milliseconds, started: Date.now(), timer: 0};
+      typingDelays.add(delay);
+      if (!mapPausesTyping) runTypingDelay(delay);
     });
   }
 
@@ -790,122 +812,93 @@
   function setupCrimeMap() {
     var launch = document.getElementById("crime-map-launch");
     var dialog = document.getElementById("crime-map-dialog");
-    var map = document.getElementById("crime-map-canvas");
-    var list = document.getElementById("crime-map-list");
-    if (!launch || !dialog || !map || !list) return;
-
-    var districts = [
-      { name: "Dublin Airport", division: "Northern", population: 1322, rate: 1021.9, rating: "Very High", x: 90, y: 10 },
-      { name: "Pearse Street", division: "South Central", population: 21357, rate: 518.9, rating: "Very High", x: 51, y: 53 },
-      { name: "Store Street", division: "North Central", population: 24262, rate: 509.6, rating: "Very High", x: 50, y: 43 },
-      { name: "Bridewell Dublin", division: "North Central", population: 26411, rate: 336.1, rating: "Very High", x: 44, y: 44 },
-      { name: "Kevin Street", division: "South Central", population: 31435, rate: 141.2, rating: "Very High", x: 44, y: 58 },
-      { name: "Rathcoole", division: "Western", population: 15403, rate: 114.1, rating: "Very High", x: 8, y: 82 },
-      { name: "Ronanstown", division: "Western", population: 35300, rate: 112.0, rating: "Very High", x: 19, y: 76 },
-      { name: "Mountjoy", division: "North Central", population: 26559, rate: 106.8, rating: "Very High", x: 56, y: 46 },
-      { name: "Fitzgibbon Street", division: "North Central", population: 24406, rate: 99.6, rating: "Very High", x: 53, y: 39 },
-      { name: "Kilmainham", division: "South Central", population: 28219, rate: 96.0, rating: "Very High", x: 37, y: 57 },
-      { name: "Ballymun", division: "Northern", population: 24791, rate: 84.6, rating: "Very High", x: 56, y: 29 },
-      { name: "Clondalkin", division: "Western", population: 35670, rate: 83.6, rating: "Very High", x: 16, y: 67 },
-      { name: "Ballyfermot", division: "Western", population: 29953, rate: 79.3, rating: "Very High", x: 28, y: 61 },
-      { name: "Santry", division: "Northern", population: 40531, rate: 78.0, rating: "High", x: 65, y: 30 },
-      { name: "Tallaght", division: "Southern", population: 88135, rate: 75.1, rating: "High", x: 25, y: 84 },
-      { name: "Balbriggan", division: "Northern", population: 28322, rate: 69.0, rating: "High", x: 82, y: 3 },
-      { name: "Sundrive Road", division: "Southern", population: 28092, rate: 67.6, rating: "High", x: 40, y: 65 },
-      { name: "Finglas", division: "Western", population: 47687, rate: 67.4, rating: "High", x: 28, y: 34 },
-      { name: "Blanchardstown", division: "Western", population: 114803, rate: 63.9, rating: "Average", x: 16, y: 30 },
-      { name: "Lucan", division: "Western", population: 40471, rate: 61.1, rating: "Average", x: 10, y: 53 },
-      { name: "Rathmines", division: "Southern", population: 28538, rate: 59.9, rating: "Average", x: 47, y: 67 },
-      { name: "Coolock", division: "Northern", population: 59627, rate: 59.5, rating: "Average", x: 76, y: 31 },
-      { name: "Crumlin", division: "Southern", population: 27108, rate: 58.0, rating: "Average", x: 35, y: 69 },
-      { name: "Donnybrook", division: "South Central", population: 33206, rate: 53.8, rating: "Average", x: 58, y: 62 },
-      { name: "Irishtown", division: "South Central", population: 26330, rate: 53.4, rating: "Average", x: 63, y: 59 },
-      { name: "Dundrum", division: "Eastern", population: 53288, rate: 52.4, rating: "Average", x: 56, y: 76 },
-      { name: "Lusk", division: "Northern", population: 21399, rate: 51.5, rating: "Average", x: 80, y: 9 },
-      { name: "Swords", division: "Northern", population: 58207, rate: 47.6, rating: "Average", x: 75, y: 16 },
-      { name: "Dun Laoghaire", division: "Eastern", population: 42801, rate: 45.5, rating: "Average", x: 72, y: 82 },
-      { name: "Clontarf", division: "Northern", population: 42382, rate: 40.8, rating: "Low", x: 70, y: 40 },
-      { name: "Cabra", division: "Western", population: 24401, rate: 40.5, rating: "Low", x: 31, y: 44 },
-      { name: "Cabinteely", division: "Eastern", population: 36058, rate: 39.3, rating: "Low", x: 75, y: 90 },
-      { name: "Terenure", division: "Southern", population: 29122, rate: 36.1, rating: "Low", x: 43, y: 75 },
-      { name: "Shankill", division: "Eastern", population: 24477, rate: 34.9, rating: "Low", x: 84, y: 92 },
-      { name: "Blackrock", division: "Eastern", population: 35308, rate: 32.5, rating: "Very Low", x: 69, y: 72 },
-      { name: "Raheny", division: "Northern", population: 27705, rate: 32.2, rating: "Very Low", x: 78, y: 42 },
-      { name: "Rathfarnham", division: "Southern", population: 68203, rate: 29.1, rating: "Very Low", x: 38, y: 82 },
-      { name: "Garristown", division: "Northern", population: 4303, rate: 27.9, rating: "Very Low", x: 88, y: 4 },
-      { name: "Howth", division: "Northern", population: 22924, rate: 27.5, rating: "Very Low", x: 87, y: 42 },
-      { name: "Malahide", division: "Northern", population: 34311, rate: 22.3, rating: "Very Low", x: 70, y: 22 },
-      { name: "Skerries", division: "Northern", population: 12554, rate: 20.9, rating: "Very Low", x: 76, y: 1 }
-    ];
-    var colors = {
-      "Very High": "#a94771",
-      High: "#d27a4c",
-      Average: "#c8a43f",
-      Low: "#6eab83",
-      "Very Low": "#5b9ab4"
-    };
-    var ratingLabels = { "Very High": "很高", High: "高", Average: "平均", Low: "较低", "Very Low": "很低" };
+    if (!launch || !dialog) return;
+    var panel = dialog.querySelector(".crime-map-dialog__panel");
+    var viewport = dialog.querySelector(".atlas-map-viewport");
+    var svg = viewport.querySelector("svg");
     var lastFocused = null;
-    var selectedIndex = 0;
-    var rendered = false;
+    var background = [];
+    var zoom = 1;
 
-    function formatNumber(value) { return value.toLocaleString("en-US"); }
-
-    function selectDistrict(index) {
-      selectedIndex = index;
-      Array.prototype.forEach.call(dialog.querySelectorAll("[data-crime-index]"), function (item) {
-        item.classList.toggle("is-selected", Number(item.dataset.crimeIndex) === index);
+    function selectRegion(code) {
+      if (!dialog.querySelector('[data-atlas-panel="' + code + '"]')) return;
+      dialog.querySelectorAll("[data-atlas-region]").forEach(function (item) {
+        var selected = item.dataset.atlasRegion === code;
+        item.classList.toggle("is-selected", selected);
+        item.setAttribute("aria-pressed", String(selected));
+      });
+      dialog.querySelectorAll("[data-atlas-panel]").forEach(function (item) {
+        item.hidden = item.dataset.atlasPanel !== code;
       });
     }
-
-    function render() {
-      if (rendered) return;
-      map.innerHTML = districts.map(function (district, index) {
-        return '<button class="crime-map__marker is-' + district.rating.toLowerCase().replace(/ /g, "-") + '" type="button" data-crime-index="' + index + '" aria-label="' + district.name + '，每千居民 ' + district.rate.toFixed(1) + '，' + ratingLabels[district.rating] + '" style="--crime-x:' + district.x + ';--crime-y:' + district.y + ';--crime-color:' + colors[district.rating] + '"></button>';
-      }).join("");
-
-      list.innerHTML = districts.map(function (district, index) {
-        return '<button class="crime-map-dialog__row is-' + district.rating.toLowerCase().replace(/ /g, "-") + '" type="button" data-crime-index="' + index + '"><span><strong>' + district.name + '</strong><small>DMR ' + district.division + ' · 人口 ' + formatNumber(district.population) + '</small></span><span class="crime-map-dialog__row-rate" style="--crime-color:' + colors[district.rating] + '">' + district.rate.toFixed(1) + '<em>' + ratingLabels[district.rating] + '</em></span></button>';
-      }).join("");
-      rendered = true;
-      selectDistrict(selectedIndex);
-    }
-
     function open() {
-      render();
+      if (!dialog.hidden) return;
       lastFocused = document.activeElement;
+      // Visibility must not depend on a scheduled animation frame.
       dialog.hidden = false;
+      dialog.classList.add("is-open");
       launch.setAttribute("aria-expanded", "true");
       document.body.classList.add("is-crime-map-open");
-      document.dispatchEvent(new CustomEvent("love:crime-map-toggle", { detail: { open: true } }));
-      window.requestAnimationFrame(function () { dialog.classList.add("is-open"); });
-      var closeButton = dialog.querySelector(".crime-map-dialog__close");
-      if (closeButton) closeButton.focus();
+      background = Array.prototype.filter.call(document.body.children, function (el) {
+        return el !== dialog && !/^(SCRIPT|STYLE|LINK)$/.test(el.tagName);
+      }).map(function (el) {
+        var previous = el.inert;
+        el.inert = true;
+        return {element: el, inert: previous};
+      });
+      document.dispatchEvent(new CustomEvent("love:crime-map-toggle", {detail: {open: true}}));
+      dialog.querySelector(".crime-map-dialog__close").focus({preventScroll: true});
     }
-
     function close() {
       if (dialog.hidden) return;
+      // No delayed close timer that could hide a reopened dialog.
+      dialog.hidden = true;
       dialog.classList.remove("is-open");
       launch.setAttribute("aria-expanded", "false");
       document.body.classList.remove("is-crime-map-open");
-      document.dispatchEvent(new CustomEvent("love:crime-map-toggle", { detail: { open: false } }));
-      window.setTimeout(function () {
-        if (!dialog.classList.contains("is-open")) dialog.hidden = true;
-      }, 260);
-      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+      background.forEach(function (entry) { entry.element.inert = entry.inert; });
+      background = [];
+      document.dispatchEvent(new CustomEvent("love:crime-map-toggle", {detail: {open: false}}));
+      if (lastFocused && lastFocused.isConnected) lastFocused.focus({preventScroll: true});
     }
-
     launch.addEventListener("click", open);
     dialog.addEventListener("click", function (event) {
-      var closeTarget = event.target.closest("[data-crime-map-close]");
-      if (closeTarget) { close(); return; }
-      var districtTarget = event.target.closest("[data-crime-index]");
-      if (districtTarget) selectDistrict(Number(districtTarget.dataset.crimeIndex));
+      var target = event.target instanceof Element ? event.target : event.target.parentElement;
+      if (!target) return;
+      if (target.closest("[data-crime-map-close]")) { close(); return; }
+      var region = target.closest("[data-atlas-region]");
+      if (region) selectRegion(region.dataset.atlasRegion);
+      var control = target.closest("[data-atlas-zoom]");
+      if (control) {
+        var centerX = (viewport.scrollLeft + viewport.clientWidth / 2) / zoom;
+        var centerY = (viewport.scrollTop + viewport.clientHeight / 2) / zoom;
+        zoom = control.dataset.atlasZoom === "reset" ? 1 : Math.max(1, Math.min(3, zoom + (control.dataset.atlasZoom === "in" ? 0.5 : -0.5)));
+        svg.style.width = zoom * 100 + "%";
+        svg.style.maxWidth = "none";
+        viewport.scrollLeft = zoom === 1 ? 0 : centerX * zoom - viewport.clientWidth / 2;
+        viewport.scrollTop = zoom === 1 ? 0 : centerY * zoom - viewport.clientHeight / 2;
+      }
+    });
+    dialog.addEventListener("keydown", function (event) {
+      var region = event.target.closest("[data-atlas-region]");
+      if (region && event.target.tagName.toLowerCase() === "path" && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        selectRegion(region.dataset.atlasRegion);
+      }
     });
     document.addEventListener("keydown", function (event) {
-      if (!dialog.hidden && event.key === "Escape") {
-        event.preventDefault();
-        close();
+      if (dialog.hidden) return;
+      if (event.key === "Escape") { event.preventDefault(); close(); return; }
+      if (event.key === "Tab") {
+        var controls = Array.prototype.filter.call(panel.querySelectorAll('button, a[href], summary, [tabindex="0"]'), function (el) {
+          return !el.closest("[hidden]") && !el.disabled && el.getClientRects().length;
+        });
+        var first = controls[0], last = controls[controls.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+          event.preventDefault(); last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault(); first.focus();
+        }
       }
     });
   }

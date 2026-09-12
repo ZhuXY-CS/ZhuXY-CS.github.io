@@ -1,0 +1,14 @@
+<svg class="dublin-atlas-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林 D1 至 D18 邮编区域地图，点击色块查看资料"{% endif %}>
+  <rect width="700" height="700" fill="#edf4f8"/>
+  <text x="665" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
+  <text x="550" y="370" class="atlas-water-label">DUBLIN BAY</text>
+  <text x="36" y="675" class="atlas-water-label">DUBLIN · D1–D18</text>
+  {% for region in site.data.dublin_atlas.regions %}
+  <path d="{{ region.d }}" fill="{{ region.color }}" stroke="#fffdfd" stroke-width="1.6" fill-rule="evenodd" class="atlas-region{% if region.code == 'D18' %} is-selected{% endif %}" {% unless include.preview %}data-atlas-region="{{ region.code }}" tabindex="0" role="button" aria-label="查看 Dublin {{ region.label | remove: 'D' }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}"{% endunless %}>
+    <title>Dublin {{ region.label | remove: 'D' }}</title>
+  </path>
+  {% endfor %}
+  {% for region in site.data.dublin_atlas.regions %}
+  <text x="{{ region.x }}" y="{{ region.y }}" class="atlas-region-label" aria-hidden="true">{{ region.label }}</text>
+  {% endfor %}
+</svg>

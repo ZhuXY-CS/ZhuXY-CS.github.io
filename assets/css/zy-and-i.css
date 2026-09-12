@@ -1823,6 +1823,9 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .crime-map-mini__dots circle { stroke: rgba(255, 255, 255, 0.9); stroke-width: 2; }
 
 .crime-map-launch__copy { display: grid; min-width: 0; gap: 0.16rem; }
+.crime-map-launch__visual .dublin-atlas-svg { width: 100%; height: 5.2rem; display: block; }
+.crime-map-launch__visual .atlas-region-label,
+.crime-map-launch__visual .atlas-water-label { display: none; }
 .crime-map-launch__kicker,
 .crime-map-dialog__eyebrow {
   color: rgba(139, 47, 114, 0.62);
@@ -1856,15 +1859,66 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   width: min(1120px, 100%);
   max-height: min(840px, calc(100dvh - 2rem));
   overflow: hidden;
+  grid-template-rows: auto minmax(0, 1fr);
   border: 1px solid rgba(233, 161, 191, 0.56);
   background: #fffdfd;
   box-shadow: 0 24px 80px rgba(20, 8, 17, 0.34), inset 0 0 0 4px rgba(255, 255, 255, 0.9);
-  opacity: 0;
-  transform: translateY(0.8rem) scale(0.985);
-  transition: opacity 220ms ease, transform 260ms cubic-bezier(0.2, 0.72, 0.24, 1);
+  opacity: 1;
+  transform: none;
 }
 
 .crime-map-dialog.is-open .crime-map-dialog__panel { opacity: 1; transform: none; }
+.atlas-scroll { min-height: 0; overflow: auto; overscroll-behavior: contain; color: #443b47; font: 0.8rem/1.65 var(--love-font-cn); }
+.atlas-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; gap: 1.35rem; padding: 1.2rem; }
+.atlas-geography { min-width: 0; position: sticky; top: 0; }
+.atlas-map-tools { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem; }
+.atlas-map-tools span { margin-right: auto; color: #756277; font-size: 0.7rem; }
+.atlas-map-tools button { border: 1px solid #d9c5d3; background: white; min-width: 2rem; min-height: 2rem; padding: 0.2rem 0.5rem; color: #69204e; }
+.atlas-map-viewport { width: 100%; aspect-ratio: 1; overflow: auto; border: 1px solid #d1dce5; background: #edf4f8; overscroll-behavior: contain; }
+.dublin-atlas-svg { display: block; width: 100%; height: auto; }
+.atlas-region { cursor: pointer; vector-effect: non-scaling-stroke; }
+.atlas-region:hover, .atlas-region:focus-visible, .atlas-region.is-selected { stroke: #47293f; stroke-width: 3; outline: none; }
+.atlas-region-label { text-anchor: middle; dominant-baseline: middle; pointer-events: none; fill: #322c3b; stroke: #fff; stroke-width: 2.7; paint-order: stroke; font: 700 15px/1 Arial, sans-serif; }
+.atlas-water-label { pointer-events: none; fill: #7892a3; font: 12px/1 Arial, sans-serif; letter-spacing: 2px; }
+.atlas-caption { margin: 0.45rem 0; color: #716877; font-size: 0.68rem; line-height: 1.55; }
+.atlas-scroll a { color: #7d3661; text-underline-offset: 3px; }
+.atlas-region-picker { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.35rem; margin: 0.75rem 0; }
+.atlas-region-picker button { min-height: 2.25rem; padding: 0.3rem; border: 1px solid #e4d8e0; border-left: 5px solid var(--region-color); background: white; font: 700 0.75rem/1.2 var(--love-font-utility); color: #4a3a4a; }
+.atlas-region-picker button.is-selected { background: #f1e2ed; border-color: #7d3661; }
+.atlas-scroll button:focus-visible, .atlas-scroll a:focus-visible, .atlas-scroll summary:focus-visible { outline: 2px solid #7d3661; outline-offset: 2px; }
+.atlas-inspector { min-width: 0; }
+.atlas-inspector [hidden] { display: none !important; }
+.atlas-area-heading { display: flex; gap: 0.7rem; align-items: center; border-bottom: 2px solid var(--region-color); padding-bottom: 0.8rem; }
+.atlas-area-heading > span { flex: 0 0 auto; display: grid; place-items: center; width: 3.4rem; height: 3.4rem; background: var(--region-color); color: white; font: 700 1.2rem/1 var(--love-font-utility); }
+.atlas-area-heading h3 { margin: 0; font: 600 1.35rem/1.25 var(--love-font-en); color: #4d2e49; }
+.atlas-area-heading p { margin: 0.2rem 0 0; font-size: 0.72rem; }
+.atlas-inspector h4 { margin: 0 0 0.45rem; color: #69204e; font-size: 0.9rem; }
+.atlas-inspector section { padding: 1rem 0; border-bottom: 1px solid #ebdfe8; }
+.atlas-inspector p { margin: 0.4rem 0; }
+.atlas-stat { display: flex; gap: 0.6rem; justify-content: space-between; align-items: center; margin-top: 0.45rem; padding: 0.5rem 0.6rem; background: #f8f3f7; }
+.atlas-stat strong { font: 600 1.1rem/1.3 var(--love-font-utility); color: #69204e; text-align: right; }
+.atlas-stat small { display: block; font: 0.6rem/1.4 var(--love-font-cn); color: #716877; }
+.atlas-advice dl { margin: 0.6rem 0; }
+.atlas-advice dt { margin-top: 0.55rem; font-weight: bold; color: #7d3661; font-size: 0.72rem; }
+.atlas-advice dd { margin: 0.1rem 0 0; }
+.atlas-event-title { font-weight: 600; }
+.atlas-event-date { color: #786475; font-size: 0.69rem; }
+.atlas-news { background: #fcf7fa; padding: 0.85rem !important; }
+.atlas-evidence, .atlas-method { margin: 0 1.2rem 1.2rem; padding: 0.9rem 1rem; border: 1px solid #e5d2de; font-size: 0.72rem; }
+.atlas-evidence summary { cursor: pointer; font-weight: 600; color: #69204e; }
+.atlas-method { background: #faf4f8; }
+.atlas-method p:last-child { margin-bottom: 0; }
+.atlas-table-wrap { overflow: auto; max-width: 100%; }
+.atlas-table-wrap table { width: 100%; border-collapse: collapse; font: 0.7rem/1.5 var(--love-font-utility); white-space: nowrap; }
+.atlas-table-wrap th, .atlas-table-wrap td { padding: 0.45rem; border-bottom: 1px solid #eadde6; text-align: right; }
+.atlas-table-wrap th:first-child { text-align: left; }
+.atlas-table-wrap caption { text-align: left; margin-bottom: 0.5rem; }
+@media (max-width: 720px) {
+  .atlas-layout { grid-template-columns: minmax(0, 1fr); padding: 0.85rem; gap: 1rem; }
+  .atlas-geography { position: static; }
+  .atlas-evidence, .atlas-method { margin: 0 0.85rem 0.85rem; }
+  .atlas-scroll { font-size: 0.83rem; }
+}
 .crime-map-dialog__header {
   display: flex;
   justify-content: space-between;
@@ -1986,7 +2040,10 @@ body.is-crime-map-open .love-memory,
 body.is-crime-map-open .love-left-column,
 body.is-crime-map-open .love-sidecar > .love-player,
 body.is-crime-map-open .love-home { visibility: hidden; pointer-events: none; }
-body.is-crime-map-open .love-stage { filter: blur(2px); }
+body.is-crime-map-open .love-stage,
+body.is-crime-map-open .love-stage *,
+body.is-crime-map-open .love-stage *::before,
+body.is-crime-map-open .love-stage *::after { animation-play-state: paused !important; }
 
 .crime-map-mini .is-very-high,
 .crime-map__legend .is-very-high,

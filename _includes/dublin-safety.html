@@ -1,0 +1,84 @@
+<div class="crime-map-dialog" id="crime-map-dialog" hidden>
+  <div class="crime-map-dialog__scrim" data-crime-map-close></div>
+  <section class="crime-map-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="crime-map-dialog-title" aria-describedby="crime-map-dialog-summary" tabindex="-1">
+    <header class="crime-map-dialog__header">
+      <div>
+        <span class="crime-map-dialog__eyebrow">DUBLIN SAFETY ATLAS · 核查 {{ site.data.dublin_atlas.checked }}</span>
+        <h2 id="crime-map-dialog-title">都柏林 · 区域与安全地图</h2>
+        <p id="crime-map-dialog-summary">D1–D18 分区色块 · 2025 警区统计 · 居住意见与近期案件</p>
+      </div>
+      <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
+    </header>
+    <div class="atlas-scroll">
+      <div class="atlas-layout">
+        <div class="atlas-geography">
+          <div class="atlas-map-tools" role="group" aria-label="地图缩放">
+            <span>点击色块或区号</span>
+            <button type="button" data-atlas-zoom="in" aria-label="放大地图">＋</button>
+            <button type="button" data-atlas-zoom="out" aria-label="缩小地图">−</button>
+            <button type="button" data-atlas-zoom="reset">全图</button>
+          </div>
+          <div class="atlas-map-viewport" id="crime-map-canvas">{% include dublin-postal-map.svg %}</div>
+          <p class="atlas-caption">颜色区分邮编区域，不代表危险等级。浅色空白包含未纳入的邮编区；D6W、D20、D22、D24 不在这18区范围内。</p>
+          <div class="atlas-region-picker" aria-label="选择邮编区域">
+            {% for region in site.data.dublin_atlas.regions %}
+            <button type="button" data-atlas-region="{{ region.code }}" style="--region-color:{{ region.color }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
+            {% endfor %}
+          </div>
+          <p class="atlas-caption">边界：<a href="https://doi.org/10.5281/zenodo.4589220" target="_blank" rel="noopener">autoaddress.ie / Rowan Molony · CC BY 4.0</a>。2021年版本，基于普查小区及 Eircode 资料，已简化绘制；地址归属以 <a href="https://finder.eircode.ie/" target="_blank" rel="noopener">Eircode 查询</a>为准。</p>
+        </div>
+        <div class="atlas-inspector" id="crime-map-list" aria-live="polite" aria-atomic="false">
+          {% for region in site.data.dublin_atlas.regions %}
+          {% assign advice = site.data.dublin_advice[region.code] %}
+          <article data-atlas-panel="{{ region.code }}" {% unless region.code == 'D18' %}hidden{% endunless %}>
+            <header class="atlas-area-heading" style="--region-color:{{ region.color }}">
+              <span>{{ region.label }}</span><div><h3>Dublin {{ region.label | remove: 'D' }}</h3><p>{{ advice.places }}</p></div>
+            </header>
+            <section class="atlas-rates">
+              <h4>犯罪数据 · 相关警区参考</h4>
+              <p>没有可直接引用的本邮编区官方犯罪率。以下是附近警区的完整辖区数值，不是 {{ region.label }} 的率值，也不作加权或合并。</p>
+              {% for name in advice.stations %}
+              {% assign station = site.data.dublin_atlas.stations | where: 'name', name | first %}
+              <div class="atlas-stat"><span>{{ station.name }}</span><strong>{{ station.rate }}<small>次 / 千人 · 估算</small></strong></div>
+              {% endfor %}
+              <p class="atlas-caption">CSO 2025可用类别事件数 ÷ 第三方警区人口估计 × 1,000；人口基准年份未独立核实。正式比较优先查看下方原始事件数。</p>
+            </section>
+            <section class="atlas-advice">
+              <h4>区域意见</h4>
+              <p class="atlas-caption">编辑整理的居住与出行取舍，非官方安全评级。</p>
+              <dl><dt>优点</dt><dd>{{ advice.advantages }}</dd><dt>缺点 / 取舍</dt><dd>{{ advice.drawbacks }}</dd><dt>具体建议</dt><dd>{{ advice.advice }}</dd></dl>
+              <p class="atlas-caption">按地址核查：<a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener">TFI 通勤规划</a> · <a href="https://www.garda.ie/en/crime-prevention/" target="_blank" rel="noopener">Garda 防范建议</a></p>
+            </section>
+            <section class="atlas-news">
+              <h4>近期案件与司法进展</h4>
+              {% if advice.event %}
+              <p class="atlas-event-title">{{ advice.event.title }}</p>
+              <p class="atlas-event-date">发生：{{ advice.event.date }}<br>发布 / 更新：{{ advice.event.published }}</p>
+              <p>{{ advice.event.summary }}</p>
+              <a href="{{ advice.event.url }}" target="_blank" rel="noopener">阅读 {{ advice.event.source }} 原文 ↗</a>
+              {% else %}
+              <p>本次检索未核实到可明确归入 {{ region.label }} 的2026年近期案件报道。信息缺口不代表没有犯罪，也不能据此认定安全。</p>
+              <a href="https://www.garda.ie/en/search/?q={{ advice.places | split: ' / ' | first | url_encode }}" target="_blank" rel="noopener">查看警方相关公告 ↗</a>
+              {% endif %}
+              <p class="atlas-caption">核查日期 {{ site.data.dublin_atlas.checked }}，静态整理，非实时或穷尽清单。报道数量不能用于比较犯罪率；涉嫌、被捕和起诉不等同于定罪。</p>
+            </section>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+      <details class="atlas-evidence">
+        <summary>查看全部41个警区的原始数据与计算依据</summary>
+        <p>CSO CJA07，2025年；表更新于 {{ site.data.dublin_atlas.csoUpdated | slice: 0,10 }}。合计类别03–08、10–16；不含01凶杀、02性犯罪和09欺诈。记录事件不是定罪人数或个人受害概率。</p>
+        <div class="atlas-table-wrap"><table><caption>2025年可用类别记录事件 · 按估算率降序</caption><thead><tr><th scope="col">警区</th><th scope="col">事件数</th><th scope="col">人口估计*</th><th scope="col">每千人估算</th><th scope="col">袭击等03</th><th scope="col">抢劫06</th><th scope="col">入室07</th><th scope="col">盗窃08</th></tr></thead><tbody>
+        {% for station in site.data.dublin_atlas.stations %}<tr><th scope="row">{{ station.name }}</th><td>{{ station.count }}</td><td>{{ station.population }}</td><td>{{ station.rate }}</td><td>{{ station.categories['03'] }}</td><td>{{ station.categories['06'] }}</td><td>{{ station.categories['07'] }}</td><td>{{ station.categories['08'] }}</td></tr>{% endfor %}
+        </tbody></table></div>
+        <p>*人口估计来自 crimestats.ie；其基准年份及与CSO历史辖区边界的一致性未独立核实，率值只作有条件参考。机场和市中心访客众多，用居民人口作分母会显著放大比率。</p>
+      </details>
+      <aside class="atlas-method">
+        <strong>安全判断请落到地址与时间</strong>
+        <p>邮编区与警方辖区不是同一边界，不能直接互换犯罪率。单起案件不能代表整个社区。选房请实际查看门禁、照明、噪声及夜间车站到家的路线。紧急情况拨 <a href="tel:112">112</a> / <a href="tel:999">999</a>。</p>
+        <p>数据与方法：<a href="https://data.cso.ie/table/CJA07" target="_blank" rel="noopener">CSO CJA07</a> · <a href="https://www.cso.ie/en/methods/surveybackgroundnotes/recordedcrime/" target="_blank" rel="noopener">CSO 统计口径</a> · <a href="https://www.crimestats.ie/faq/" target="_blank" rel="noopener">人口参考来源</a> · <a href="https://www.eircode.ie/faqs" target="_blank" rel="noopener">Eircode 区域说明</a></p>
+      </aside>
+    </div>
+  </section>
+</div>
