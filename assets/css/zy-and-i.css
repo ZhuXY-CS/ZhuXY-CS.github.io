@@ -60,15 +60,26 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   z-index: 22;
   width: 2.5rem;
   height: 2.5rem;
-  padding: 0 0 0.12rem;
-  border-color: rgba(184, 67, 132, 0.58);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24), 0 3px 10px rgba(139, 47, 114, 0.08);
+  padding: 0;
+  border-radius: 0.85rem;
+  border-color: rgba(184, 67, 132, 0.22);
+  background: linear-gradient(145deg, #fff, #fff1f7);
+  box-shadow: inset 0 0 0 3px #fff, 0 3px 10px rgba(139, 47, 114, 0.1);
   color: var(--love-accent);
   font: 1.42rem/1 Georgia, serif;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  text-shadow: 0 2px 5px rgba(139, 47, 114, 0.13);
+  text-shadow: none;
+}
+
+.love-home svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .love-music {
@@ -108,8 +119,12 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-home:focus-visible {
   border-color: var(--love-accent);
   color: var(--love-accent);
-  outline: none;
-  transform: scale(1.06);
+  transform: translateY(-1px);
+}
+
+.love-home:focus-visible {
+  outline: 2px solid var(--love-accent);
+  outline-offset: 3px;
 }
 
 .love-music:hover,
@@ -484,6 +499,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   min-width: 0;
   min-height: 0;
   flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .love-letter__page {
@@ -516,6 +533,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-copy {
   display: flex;
+  min-width: 0;
   min-height: 100%;
   width: 100%;
   flex-direction: column;
@@ -529,6 +547,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   font-size: clamp(1.02rem, 1.35vw, 1.14rem);
   line-height: 1.58;
   letter-spacing: 0.025em;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .love-copy__line--english {
