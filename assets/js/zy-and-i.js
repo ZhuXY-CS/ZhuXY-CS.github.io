@@ -842,8 +842,9 @@
       var query = search.value.trim().toLowerCase();
       var count = 0;
       dialog.querySelectorAll('[data-atlas-search-text]').forEach(function (item) {
-        var exactCode = /^d?0?([1-9]|1[0-8])$/i.exec(query);
-        var matches = exactCode ? Number(item.dataset.atlasRegion.slice(1)) === Number(exactCode[1]) : item.dataset.atlasSearchText.toLowerCase().includes(query);
+        var exactCode = /^d?0?([1-9]|1[0-8]|20|22|24|6w)$/i.exec(query);
+        var normalized = exactCode ? 'D' + exactCode[1].toUpperCase().padStart(2, '0') : null;
+        var matches = normalized ? item.dataset.atlasRegion === normalized : item.dataset.atlasSearchText.toLowerCase().includes(query);
         item.hidden = !matches;
         if (matches) count++;
       });

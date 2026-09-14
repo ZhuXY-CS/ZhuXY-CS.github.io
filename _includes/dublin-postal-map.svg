@@ -1,27 +1,32 @@
-<svg class="dublin-atlas-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林 D1 至 D18 邮编区域地图，点击色块查看资料"{% endif %}>
-  <rect width="700" height="700" fill="#edf4f8"/>
-  <text x="665" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
-  <text x="550" y="370" class="atlas-water-label">DUBLIN BAY</text>
-  <text x="36" y="675" class="atlas-water-label">DUBLIN · D1–D18</text>
-  {% for region in site.data.dublin_atlas.regions %}
+<svg class="dublin-atlas-svg" viewBox="0 0 900 800" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林完整22邮区与周边地理地图，点击色块查看资料"{% endif %}>
+  <rect width="900" height="800" fill="#e4f0f5"/>
+  <path d="{{ site.data.dublin_geography.land }}" fill="#eff0e7" stroke="#bacdc7" stroke-width="1.2" fill-rule="evenodd"/>
+  <text x="855" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
+  <text x="730" y="310" class="atlas-water-label">IRISH SEA</text>
+  <text x="730" y="331" class="atlas-water-label">爱尔兰海</text>
+  <text x="670" y="425" class="atlas-water-label">DUBLIN BAY</text>
+  {% for region in site.data.dublin_geography.regions %}
   <path d="{{ region.d }}" fill="{{ region.color }}" stroke="#fffdfd" stroke-width="1.6" fill-rule="evenodd" class="atlas-region{% if region.code == 'D18' %} is-selected{% endif %}" {% unless include.preview %}data-atlas-region="{{ region.code }}" tabindex="0" role="button" aria-label="查看 Dublin {{ region.label | remove: 'D' }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}"{% endunless %}>
     <title>Dublin {{ region.label | remove: 'D' }}</title>
   </path>
   {% endfor %}
-  {% for region in site.data.dublin_atlas.regions %}
-  <text x="{{ region.x }}" y="{{ region.y }}" class="atlas-region-label" aria-hidden="true">{{ region.label }}</text>
+  {% for region in site.data.dublin_geography.regions %}
+  <text x="{{ region.x }}" y="{{ region.y }}" class="atlas-region-label{% unless region.core %} atlas-context-label{% endunless %}" aria-hidden="true">{{ region.label }}{% unless region.core %}<tspan x="{{ region.x }}" dy="15">{{ region.name }}</tspan>{% endunless %}</text>
   {% endfor %}
+  <g class="atlas-context-label"><circle cx="{{ site.data.dublin_geography.bray.x }}" cy="{{ site.data.dublin_geography.bray.y }}" r="3"/><text x="{{ site.data.dublin_geography.bray.x | plus: 9 }}" y="{{ site.data.dublin_geography.bray.y | plus: 4 }}">Bray · 布雷</text></g>
+  <g class="atlas-scale" transform="translate(36 750)"><path d="M0,-5 V0 H{{ site.data.dublin_geography.scale5km }} V-5"/><text x="0" y="20">0</text><text x="{{ site.data.dublin_geography.scale5km }}" y="20" text-anchor="end">5 km</text></g>
   {% unless include.preview %}
   <g class="atlas-campuses" aria-label="大学校园参考位置">
     {% for campus in site.data.dublin_campuses %}
+    {% assign position = site.data.dublin_geography.campuses | where: 'id', campus.id | first %}
     <g class="atlas-campus-marker" data-atlas-campus="{{ campus.id }}" role="button" tabindex="0" aria-label="定位 {{ campus.name }} {{ campus.subtitle }}" aria-pressed="false">
       <title>{{ campus.title }} · {{ campus.subtitle }}</title>
-      <path d="M{{ campus.x }},{{ campus.y }} L{{ campus.label_x | minus: 18 }},{{ campus.label_y }} H{{ campus.label_x }}" class="atlas-campus-leader"/>
-      <circle cx="{{ campus.x }}" cy="{{ campus.y }}" r="10" class="atlas-campus-halo"/>
-      <circle cx="{{ campus.x }}" cy="{{ campus.y }}" r="4" class="atlas-campus-dot"/>
-      <rect x="{{ campus.label_x }}" y="{{ campus.label_y | minus: 16 }}" width="105" height="43" rx="9"/>
-      <text x="{{ campus.label_x | plus: 12 }}" y="{{ campus.label_y }}">{{ campus.name }}</text>
-      <text x="{{ campus.label_x | plus: 12 }}" y="{{ campus.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
+      <path d="M{{ position.x }},{{ position.y }} L{{ position.label_x | minus: 18 }},{{ position.label_y }} H{{ position.label_x }}" class="atlas-campus-leader"/>
+      <circle cx="{{ position.x }}" cy="{{ position.y }}" r="8" class="atlas-campus-halo"/>
+      <circle cx="{{ position.x }}" cy="{{ position.y }}" r="3" class="atlas-campus-dot"/>
+      <rect x="{{ position.label_x }}" y="{{ position.label_y | minus: 16 }}" width="105" height="43" rx="9"/>
+      <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y }}">{{ campus.name }}</text>
+      <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
     </g>
     {% endfor %}
   </g>

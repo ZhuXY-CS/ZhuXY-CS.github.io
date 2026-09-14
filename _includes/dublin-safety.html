@@ -5,7 +5,7 @@
       <div>
         <span class="crime-map-dialog__eyebrow">DUBLIN SAFETY ATLAS · 核查 {{ site.data.dublin_atlas.checked }}</span>
         <h2 id="crime-map-dialog-title">都柏林 · 区域与安全地图</h2>
-        <p id="crime-map-dialog-summary">D1–D18 分区 · 校园定位 · 居住与通勤 · 2025 警区统计</p>
+        <p id="crime-map-dialog-summary">完整22邮区与周边地理 · 校园定位 · 居住与通勤 · 2025 警区统计</p>
       </div>
       <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
     </header>
@@ -23,15 +23,16 @@
             <button type="button" data-atlas-zoom="reset">全图</button>
           </div>
           <div class="atlas-map-viewport" id="crime-map-canvas">{% include dublin-postal-map.svg %}</div>
-          <p class="atlas-caption">颜色区分邮编区域，不代表危险等级。浅色空白包含未纳入的邮编区；D6W、D20、D22、D24 不在这18区范围内。</p>
+          <p class="atlas-caption">彩色：完整22个传统都柏林邮区，含 D6W、D20、D22、D24。灰绿：周边邮区与陆地；蓝色：海洋。颜色不是安全评级，缺少犯罪数据的区域也完整保留。</p>
           <div class="atlas-region-picker" aria-label="选择邮编区域">
             <label class="atlas-search">查找区域<input type="search" data-atlas-search placeholder="区号或地名，如 D18 / Dundrum" aria-label="查找邮编区域或地名"></label>
-            {% for region in site.data.dublin_atlas.regions %}
-            <button type="button" data-atlas-region="{{ region.code }}" data-atlas-search-text="{{ region.code }} {{ region.label }} Dublin {{ region.label | remove: 'D' }} {{ site.data.dublin_advice[region.code].places | escape }}" style="--region-color:{{ region.color }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
+            {% for region in site.data.dublin_geography.regions %}
+            <button type="button" data-atlas-region="{{ region.code }}" data-atlas-search-text="{{ region.code }} {{ region.label }} {{ region.name }} {{ site.data.dublin_advice[region.code].places | escape }}" style="--region-color:{{ region.color }}" aria-label="{{ region.label }} {{ region.name }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
             {% endfor %}
-            <p class="atlas-search-empty" data-atlas-empty hidden role="status">没有匹配区域，请试试区号或英文地名。这里只包含 D1–D18。</p>
+            <p class="atlas-search-empty" data-atlas-empty hidden role="status">没有匹配区域，请试试区号或英文地名。支持完整22邮区和图中周边邮区。</p>
           </div>
           <p class="atlas-caption">边界：<a href="https://doi.org/10.5281/zenodo.4589220" target="_blank" rel="noopener">autoaddress.ie / Rowan Molony · CC BY 4.0</a>。2021年版本，基于普查小区及 Eircode 资料，已简化绘制；地址归属以 <a href="https://finder.eircode.ie/" target="_blank" rel="noopener">Eircode 查询</a>为准。</p>
+          <p class="atlas-caption">外围海岸：<a href="https://www.naturalearthdata.com/downloads/10m-cultural-vectors/" target="_blank" rel="noopener">Natural Earth 1:10m · 公共领域</a>，为概化轮廓，不能用于导航。外围地名为邮区名称、不是城镇中心；Bray 为城镇示意点。邮区不等于城市或郡界，灰绿色也不表示“都柏林以外”。</p>
         </div>
         <div class="atlas-inspector" id="crime-map-list" aria-live="polite" aria-atomic="false">
           {% for campus in site.data.dublin_campuses %}
@@ -43,25 +44,29 @@
             <p class="atlas-caption">校园信息核查 2026-09-14。标记为示意参考点，非校园轮廓或导航路线；下方仍是相关邮编区资料，不是校园犯罪率。</p>
           </section>
           {% endfor %}
-          {% for region in site.data.dublin_atlas.regions %}
+          {% for region in site.data.dublin_geography.regions %}
           {% assign advice = site.data.dublin_advice[region.code] %}
           <article data-atlas-panel="{{ region.code }}" {% unless region.code == 'D18' %}hidden{% endunless %}>
             <header class="atlas-area-heading" style="--region-color:{{ region.color }}">
-              <span>{{ region.label }}</span><div><h3>Dublin {{ region.label | remove: 'D' }}</h3><p>{{ advice.places }}</p></div>
+              <span>{{ region.label }}</span><div><h3>{{ region.name }}</h3><p>{{ advice.places | default: '邮编区域 · 地理范围已纳入，详细资料待核实' }}</p></div>
             </header>
             <section class="atlas-rates">
               <h4>犯罪数据 · 相关警区参考</h4>
+              {% if advice.stations %}
               <p>没有可直接引用的本邮编区官方犯罪率。以下是附近警区的完整辖区数值，不是 {{ region.label }} 的率值，也不作加权或合并。</p>
               {% for name in advice.stations %}
               {% assign station = site.data.dublin_atlas.stations | where: 'name', name | first %}
               <div class="atlas-stat"><span>{{ station.name }}</span><strong>{{ station.rate }}<small>次 / 千人 · 估算</small></strong></div>
               {% endfor %}
               <p class="atlas-caption">CSO 2025可用类别事件数 ÷ 第三方警区人口估计 × 1,000；人口基准年份未独立核实。正式比较优先查看下方原始事件数。</p>
+              {% else %}
+              <p class="atlas-no-data">暂无已核实、可直接对应本区域的犯罪率。保留完整边界，不填零、不借用邻区数据，也不据此给出安全排名。</p>
+              {% endif %}
             </section>
             <section class="atlas-advice">
               <h4>区域意见</h4>
               <p class="atlas-caption">编辑整理的居住与出行取舍，非官方安全评级。</p>
-              <dl><dt>优点</dt><dd>{{ advice.advantages }}</dd><dt>缺点 / 取舍</dt><dd>{{ advice.drawbacks }}</dd><dt>具体建议</dt><dd>{{ advice.advice }}</dd></dl>
+              {% if advice %}<dl><dt>优点</dt><dd>{{ advice.advantages }}</dd><dt>缺点 / 取舍</dt><dd>{{ advice.drawbacks }}</dd><dt>具体建议</dt><dd>{{ advice.advice }}</dd></dl>{% else %}<p>本区域的优缺点和个案资料尚未完成核实，暂不作评价。请结合具体地址检查通勤、门禁、照明和晚间步行路线。</p>{% endif %}
               <p class="atlas-caption">按地址核查：<a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener">TFI 通勤规划</a> · <a href="https://www.garda.ie/en/crime-prevention/" target="_blank" rel="noopener">Garda 防范建议</a></p>
             </section>
             <section class="atlas-news">
@@ -72,8 +77,8 @@
               <p>{{ advice.event.summary }}</p>
               <a href="{{ advice.event.url }}" target="_blank" rel="noopener">阅读 {{ advice.event.source }} 原文 ↗</a>
               {% else %}
-              <p>本次检索未核实到可明确归入 {{ region.label }} 的2026年近期案件报道。信息缺口不代表没有犯罪，也不能据此认定安全。</p>
-              <a href="https://www.garda.ie/en/search/?q={{ advice.places | split: ' / ' | first | url_encode }}" target="_blank" rel="noopener">查看警方相关公告 ↗</a>
+              <p>此处暂未收录已核实、可明确归入 {{ region.label }} 的2026年近期案件报道。信息缺口不代表没有犯罪，也不能据此认定安全。</p>
+              <a href="https://www.garda.ie/en/search/?q={{ advice.places | default: region.name | split: ' / ' | first | url_encode }}" target="_blank" rel="noopener">查看警方相关公告 ↗</a>
               {% endif %}
               <p class="atlas-caption">核查日期 {{ site.data.dublin_atlas.checked }}，静态整理，非实时或穷尽清单。报道数量不能用于比较犯罪率；涉嫌、被捕和起诉不等同于定罪。</p>
             </section>

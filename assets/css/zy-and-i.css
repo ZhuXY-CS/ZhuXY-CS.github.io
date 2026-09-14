@@ -1875,12 +1875,18 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .atlas-map-tools { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.5rem; }
 .atlas-map-tools span { margin-right: auto; color: #756277; font-size: 0.7rem; }
 .atlas-map-tools button { border: 1px solid #d9c5d3; background: white; min-width: 2rem; min-height: 2rem; padding: 0.2rem 0.5rem; color: #69204e; }
-.atlas-map-viewport { width: 100%; aspect-ratio: 1; max-height: 68dvh; overflow: auto; border: 1px solid #d1dce5; border-radius: 14px; background: #edf4f8; overscroll-behavior: contain; box-shadow: inset 0 0 30px #c4d8e433; }
+.atlas-map-viewport { width: 100%; aspect-ratio: 9 / 8; overflow: auto; border: 1px solid #d1dce5; border-radius: 14px; background: #e4f0f5; overscroll-behavior: contain; box-shadow: inset 0 0 30px #c4d8e433; }
 .atlas-map-viewport .dublin-atlas-svg { height: 100%; }
 .dublin-atlas-svg { display: block; width: 100%; height: auto; }
 .atlas-region { cursor: pointer; vector-effect: non-scaling-stroke; }
 .atlas-region:hover, .atlas-region:focus-visible, .atlas-region.is-selected { stroke: #47293f; stroke-width: 3; outline: none; }
 .atlas-region-label { text-anchor: middle; dominant-baseline: middle; pointer-events: none; fill: #322c3b; stroke: #fff; stroke-width: 2.7; paint-order: stroke; font: 700 15px/1 Arial, sans-serif; }
+.atlas-context-label { fill: #69776e; stroke-width: 2; font: 12px Arial, sans-serif; paint-order: stroke; }
+.atlas-context-label text { fill: #69776e; font: 12px Arial, sans-serif; }
+.atlas-context-label tspan { font-size: 11px; font-weight: 400; }
+.atlas-scale { fill: #526d79; font: 12px Arial, sans-serif; }
+.atlas-scale path { fill: none; stroke: #526d79; stroke-width: 2; }
+.atlas-no-data { padding: 0.8rem; border-left: 3px solid #a4aca2; background: #f1f3ee; }
 .atlas-water-label { pointer-events: none; fill: #7892a3; font: 12px/1 Arial, sans-serif; letter-spacing: 2px; }
 .atlas-caption { margin: 0.45rem 0; color: #716877; font-size: 0.68rem; line-height: 1.55; }
 .atlas-scroll a { color: #7d3661; text-underline-offset: 3px; }
