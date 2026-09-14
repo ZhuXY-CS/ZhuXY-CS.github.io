@@ -211,15 +211,20 @@ test('reduced motion stays still while speech also pauses in the background', ()
 
 test('desktop and mobile scenes stay within bounds with one loop', async () => {
   const actions = new Set();
+  const scenes = new Set();
   for (const width of [390, 1280]) {
     const f = fixture({ width }); await f.ready();
-    for (let i = 0; i < 37500; i++) {
+    for (let i = 0; i < 112500; i++) {
       f.advance(16);
       actions.add(f.root.dataset.action);
+      scenes.add(f.root.dataset.scene);
       assert.equal(f.frames.size, 1);
       const [, x, y] = f.root.style.transform.match(/translate3d\(([-.\d]+)px,([-.\d]+)px/);
       assert.ok(+x >= 8 && +x <= width - 98 && +y >= 8 && +y <= 746);
     }
   }
   assert.equal(actions.size, 17, 'exercise every action, including leap and boundary turn');
+  for (const scene of ['explore', 'picnic', 'wakeup', 'playdate', 'delivery', 'stargaze']) {
+    assert.ok(scenes.has(scene), 'new scene runs through the scheduler: ' + scene);
+  }
 });

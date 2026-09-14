@@ -1023,6 +1023,18 @@
     var visual = tangbao.querySelector(".tangbao-witness__visual");
     var initialSprite = tangbao.querySelector(".tangbao-witness__frame");
     var messages = [
+      "糖宝不懂时差，只知道你们醒来都想找同一个人说话。",
+      "今天最想告诉她的小事，可能正好也是她最想听的。",
+      "不用等攒够好消息才联系，糖宝也喜欢听普通的一天。",
+      "她说有点累的时候，先问问想聊聊，还是想安静陪着。",
+      "糖宝把两只爪子挨在一起，假装你们今天也牵到手啦。",
+      "约好的事情记在心里，也记在日历上，糖宝负责期待。",
+      "下次见面要留一点空白时间，什么都不做，只在一起。",
+      "你们可以喜欢不同的歌，也可以认真听完对方分享的那一首。",
+      "好看的云只有一会儿，想分享给你的人却一直都是你。",
+      "糖宝今天没有大道理，只想提醒两位：被喜欢的时候，可以放心开心。",
+      "愿你们说以后时有期待，说现在时也有值得珍惜的小事。",
+      "晚回的消息不必补成一大段，认真回来，说声我在就很好。",
       "糖宝会一直替你们见证 ♡",
       "你们负责相爱，糖宝负责见证！",
       "隔着一段路，也要好好爱彼此呀 ♡",
@@ -1219,6 +1231,54 @@
       "今天也给自己一点温柔呀，你们都值得被认真照顾。"
     ];
     var contextualMessages = {
+      explore: [
+        "鼻尖收到一点新消息，糖宝去看看，回来讲给你们听。",
+        "这里闻闻，那里看看，今天的小小探险也想有人分享。",
+        "糖宝没有迷路，只是在替你们挑一条适合散步的路。",
+        "拐过这个弯还有新风景，下次想和你们一起看。",
+        "糖宝停下来听听风，你们也说说今天遇见了什么吧。",
+        "巡逻发现：最值得回头看的，还是等着自己的那个人。"
+      ],
+      picnic: [
+        "小骨头、水碗、喜欢的人，糖宝的野餐清单就齐啦。",
+        "糖宝把最后一口慢慢吃完，好日子也想这样慢慢过。",
+        "先喝水，再歇歇，今天不赶路，陪你们坐一会儿。",
+        "等你们见面，记得挑个晴天，把午饭带到草地上。",
+        "糖宝吃饱后的小愿望：下次饭桌旁，你们都在。",
+        "一边吃饭一边讲今天的小事，糖宝觉得这样就很幸福。"
+      ],
+      wakeup: [
+        "糖宝睡醒啦，先伸展一下，再把今天剩下的时间过好。",
+        "刚刚梦见你们一起回家了，醒来尾巴还想摇一摇。",
+        "午睡结束，小爪子重新上岗，继续陪你们慢慢过今天。",
+        "糖宝把困意伸走一点，把旁边的位置再给你们留一点。",
+        "休息够了再出发，糖宝知道，停一停也不会把彼此弄丢。",
+        "小懒觉充电成功，想听你们刚才聊到哪里啦。"
+      ],
+      playdate: [
+        "糖宝把球放在这里，等你们有空了，再一起玩。",
+        "今天这颗球不比谁追得快，只要一起开心就好。",
+        "糖宝先玩一轮，你们的下一次约会想去哪里呀？",
+        "球滚到脚边啦，要不要暂时放下手机，陪喜欢的人笑一会儿？",
+        "赢了小球，想讨个夸夸；没追上，也想讨个抱抱。",
+        "玩累了就坐在一起，安安静静也是约会的一部分。"
+      ],
+      delivery: [
+        "糖宝送到一封没有邮票的信，里面写着：今天也想见你。",
+        "这次小跑是加急派送：有个人想听听你今天的声音。",
+        "小爪子把想念送到啦，收到以后，回一个拥抱就好。",
+        "糖宝带来的不是大消息，是一句刚刚路过这里又想起你。",
+        "包裹里有一小片晚霞，还有一句想和你一起看的话。",
+        "远方的问候已送达，糖宝趴下来，等你们慢慢聊。"
+      ],
+      stargaze: [
+        "糖宝今晚不追球，陪你们等一颗慢慢亮起来的星星。",
+        "天黑了也不用急着把话说完，明天还想继续听你讲。",
+        "糖宝安静趴在这里，你们可以把声音放轻一点。",
+        "她那边的天空正在换颜色，你这边的牵挂一直留着。",
+        "今天没有特别的故事也好，平平安安的一天就值得收藏。",
+        "等能一起看夜空的时候，糖宝要占你们脚边那块位置。"
+      ],
       ball: [
         "糖宝把想念装进小球里，滚到你们下一次见面。",
         "球可以跑远，你们可不许走散哦！",
@@ -1750,6 +1810,58 @@
     });
     var actionClasses = ["is-action-trot", "is-action-prance", "is-action-dash", "is-action-leap", "is-action-look", "is-action-curious", "is-action-sniff", "is-action-stretch", "is-action-celebrate", "is-action-ball", "is-action-settle", "is-action-ready", "is-action-rise", "is-action-rest", "is-action-turn", "is-action-chew", "is-action-drink"];
     var sceneDefinitions = {
+      explore: [
+        { action: "is-action-trot", duration: [1800, 2400] },
+        { action: "is-action-settle" },
+        { action: "is-action-sniff", speech: "explore", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-ready" },
+        { action: "is-action-trot", duration: [900, 1300] },
+        { action: "is-action-settle" },
+        { action: "is-action-curious" },
+        { action: "is-action-ready" }
+      ],
+      picnic: [
+        { action: "is-action-prance", duration: [1300, 1900] },
+        { action: "is-action-settle" },
+        { action: "is-action-sniff" },
+        { action: "is-action-chew", speech: "picnic", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-drink" },
+        { action: "is-action-stretch" },
+        { action: "is-action-ready" }
+      ],
+      wakeup: [
+        { action: "is-action-settle" },
+        { action: "is-action-rest", duration: [5200, 6800] },
+        { action: "is-action-rise" },
+        { action: "is-action-trot", duration: [800, 1100] },
+        { action: "is-action-settle" },
+        { action: "is-action-stretch", speech: "wakeup", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-look" },
+        { action: "is-action-ready" }
+      ],
+      playdate: [
+        { action: "is-action-prance", duration: [1100, 1700] },
+        { action: "is-action-settle" },
+        { action: "is-action-ball", speech: "playdate", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-curious" },
+        { action: "is-action-rest" },
+        { action: "is-action-rise" }
+      ],
+      delivery: [
+        { action: "is-action-prance", duration: [1600, 2200] },
+        { action: "is-action-settle" },
+        { action: "is-action-curious", speech: "delivery", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-celebrate" },
+        { action: "is-action-look" },
+        { action: "is-action-ready" }
+      ],
+      stargaze: [
+        { action: "is-action-trot", duration: [1200, 1900] },
+        { action: "is-action-settle" },
+        { action: "is-action-look", duration: [3600, 4400], speech: "stargaze", speechChance: 1, speechDelay: 440 },
+        { action: "is-action-rest", duration: [6000, 7800] },
+        { action: "is-action-rise" }
+      ],
       stroll: [
         { action: "is-action-trot", duration: [2600, 3800] },
         { action: "is-action-settle" },
@@ -1808,7 +1920,7 @@
         { action: "is-action-ready" }
       ]
     };
-    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet", "greeting", "snack", "waterBreak"];
+    var sceneChoices = ["stroll", "stroll", "watch", "zoomies", "ball", "quiet", "greeting", "snack", "waterBreak", "explore", "picnic", "wakeup", "playdate", "delivery", "stargaze"];
 
     function between(minimum, maximum) {
       return minimum + Math.random() * (maximum - minimum);
