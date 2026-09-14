@@ -1,0 +1,28 @@
+# WGS84 source points transformed to EPSG:2157, then through the existing
+# atlas's SVG transform. Points identify a campus landmark/entrance, not a boundary.
+- id: tcd
+  name: TCD
+  title: Trinity College Dublin
+  subtitle: 主校区 · College Green
+  region: D02
+  x: 315.6
+  y: 351.0
+  label_x: 465
+  label_y: 306
+  location: "校内 Long Room Hub 附近的参考点；校门与教学楼请查官方地图。"
+  advice: "安排通勤时确认具体教学楼和可用校门，不要只把目的地设为整个学校。"
+  url: https://www.tcd.ie/Maps/
+  source: https://www.dublincity.ie/node/10090
+- id: ucd
+  name: UCD
+  title: University College Dublin
+  subtitle: Belfield 校区 · 主入口
+  region: D04
+  x: 368.3
+  y: 429.0
+  label_x: 490
+  label_y: 458
+  location: "标记为 Belfield 主入口参考点，不是 Blackrock 校区；校园边界与邮编色块不同。"
+  advice: "规划到具体教学楼的全程，包含下车后校内步行；看房时另查返程末班车。"
+  url: https://www.ucd.ie/maps/
+  source: https://maths.ucd.ie/sms/research/conferences/gps.html

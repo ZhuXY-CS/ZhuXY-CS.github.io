@@ -11,4 +11,19 @@
   {% for region in site.data.dublin_atlas.regions %}
   <text x="{{ region.x }}" y="{{ region.y }}" class="atlas-region-label" aria-hidden="true">{{ region.label }}</text>
   {% endfor %}
+  {% unless include.preview %}
+  <g class="atlas-campuses" aria-label="大学校园参考位置">
+    {% for campus in site.data.dublin_campuses %}
+    <g class="atlas-campus-marker" data-atlas-campus="{{ campus.id }}" role="button" tabindex="0" aria-label="定位 {{ campus.name }} {{ campus.subtitle }}" aria-pressed="false">
+      <title>{{ campus.title }} · {{ campus.subtitle }}</title>
+      <path d="M{{ campus.x }},{{ campus.y }} L{{ campus.label_x | minus: 18 }},{{ campus.label_y }} H{{ campus.label_x }}" class="atlas-campus-leader"/>
+      <circle cx="{{ campus.x }}" cy="{{ campus.y }}" r="10" class="atlas-campus-halo"/>
+      <circle cx="{{ campus.x }}" cy="{{ campus.y }}" r="4" class="atlas-campus-dot"/>
+      <rect x="{{ campus.label_x }}" y="{{ campus.label_y | minus: 16 }}" width="105" height="43" rx="9"/>
+      <text x="{{ campus.label_x | plus: 12 }}" y="{{ campus.label_y }}">{{ campus.name }}</text>
+      <text x="{{ campus.label_x | plus: 12 }}" y="{{ campus.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
+    </g>
+    {% endfor %}
+  </g>
+  {% endunless %}
 </svg>

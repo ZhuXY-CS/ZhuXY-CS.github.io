@@ -820,8 +820,40 @@
     var background = [];
     var zoom = 1;
 
+    function selectCampus(id) {
+      var card = dialog.querySelector('[data-atlas-campus-card="' + id + '"]');
+      if (!card) return;
+      selectRegion(card.dataset.campusRegion);
+      dialog.querySelectorAll('[data-atlas-campus]').forEach(function (item) {
+        item.setAttribute('aria-pressed', String(item.dataset.atlasCampus === id));
+      });
+      dialog.querySelectorAll('[data-atlas-campus-card]').forEach(function (item) {
+        item.hidden = item !== card;
+      });
+      zoom = 1;
+      svg.style.width = '100%';
+      svg.style.height = '100%';
+      viewport.scrollLeft = viewport.scrollTop = 0;
+      card.scrollIntoView({block: 'nearest', behavior: 'instant'});
+    }
+
+    var search = dialog.querySelector('[data-atlas-search]');
+    if (search) search.addEventListener('input', function () {
+      var query = search.value.trim().toLowerCase();
+      var count = 0;
+      dialog.querySelectorAll('[data-atlas-search-text]').forEach(function (item) {
+        var exactCode = /^d?0?([1-9]|1[0-8])$/i.exec(query);
+        var matches = exactCode ? Number(item.dataset.atlasRegion.slice(1)) === Number(exactCode[1]) : item.dataset.atlasSearchText.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) count++;
+      });
+      dialog.querySelector('[data-atlas-empty]').hidden = count > 0;
+    });
+
     function selectRegion(code) {
       if (!dialog.querySelector('[data-atlas-panel="' + code + '"]')) return;
+      dialog.querySelectorAll('[data-atlas-campus-card]').forEach(function (item) { item.hidden = true; });
+      dialog.querySelectorAll('[data-atlas-campus]').forEach(function (item) { item.setAttribute('aria-pressed', 'false'); });
       dialog.querySelectorAll("[data-atlas-region]").forEach(function (item) {
         var selected = item.dataset.atlasRegion === code;
         item.classList.toggle("is-selected", selected);
@@ -866,6 +898,8 @@
       var target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
       if (target.closest("[data-crime-map-close]")) { close(); return; }
+      var campus = target.closest('[data-atlas-campus]');
+      if (campus) { selectCampus(campus.dataset.atlasCampus); return; }
       var region = target.closest("[data-atlas-region]");
       if (region) selectRegion(region.dataset.atlasRegion);
       var control = target.closest("[data-atlas-zoom]");
@@ -874,12 +908,17 @@
         var centerY = (viewport.scrollTop + viewport.clientHeight / 2) / zoom;
         zoom = control.dataset.atlasZoom === "reset" ? 1 : Math.max(1, Math.min(3, zoom + (control.dataset.atlasZoom === "in" ? 0.5 : -0.5)));
         svg.style.width = zoom * 100 + "%";
+        svg.style.height = zoom * 100 + "%";
         svg.style.maxWidth = "none";
         viewport.scrollLeft = zoom === 1 ? 0 : centerX * zoom - viewport.clientWidth / 2;
         viewport.scrollTop = zoom === 1 ? 0 : centerY * zoom - viewport.clientHeight / 2;
       }
     });
     dialog.addEventListener("keydown", function (event) {
+      var campus = event.target.closest('[data-atlas-campus]');
+      if (campus && event.target.tagName.toLowerCase() === 'g' && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault(); selectCampus(campus.dataset.atlasCampus); return;
+      }
       var region = event.target.closest("[data-atlas-region]");
       if (region && event.target.tagName.toLowerCase() === "path" && (event.key === "Enter" || event.key === " ")) {
         event.preventDefault();
@@ -890,7 +929,7 @@
       if (dialog.hidden) return;
       if (event.key === "Escape") { event.preventDefault(); close(); return; }
       if (event.key === "Tab") {
-        var controls = Array.prototype.filter.call(panel.querySelectorAll('button, a[href], summary, [tabindex="0"]'), function (el) {
+        var controls = Array.prototype.filter.call(panel.querySelectorAll('button, input, a[href], summary, [tabindex="0"]'), function (el) {
           return !el.closest("[hidden]") && !el.disabled && el.getClientRects().length;
         });
         var first = controls[0], last = controls[controls.length - 1];

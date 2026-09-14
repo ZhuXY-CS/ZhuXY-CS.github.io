@@ -119,6 +119,9 @@ weather:
 
 # 左下角情话卡片，点击按钮依次阅读。
 sweet_notes:
+  - text: "山川异域，风月同天。寄诸佛子，共结来缘"
+    attribution: "长屋王 ·《绣袈裟衣缘》"
+    source: "https://www.thepaper.cn/newsDetail_forward_5723195"
   - text: "我们分担寒潮、风雷、霹雳；我们共享雾霭、流岚、虹霓。"
     attribution: "舒婷《致橡树》"
     source: "https://www.gushiwen.cn/shiwenv_3eebdc329a26.aspx"

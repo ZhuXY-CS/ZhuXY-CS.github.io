@@ -5,13 +5,17 @@
       <div>
         <span class="crime-map-dialog__eyebrow">DUBLIN SAFETY ATLAS · 核查 {{ site.data.dublin_atlas.checked }}</span>
         <h2 id="crime-map-dialog-title">都柏林 · 区域与安全地图</h2>
-        <p id="crime-map-dialog-summary">D1–D18 分区色块 · 2025 警区统计 · 居住意见与近期案件</p>
+        <p id="crime-map-dialog-summary">D1–D18 分区 · 校园定位 · 居住与通勤 · 2025 警区统计</p>
       </div>
       <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
     </header>
     <div class="atlas-scroll">
       <div class="atlas-layout">
         <div class="atlas-geography">
+          <div class="atlas-campus-shortcuts" role="group" aria-label="校园定位">
+            <span>从学校出发</span>
+            {% for campus in site.data.dublin_campuses %}<button type="button" data-atlas-campus="{{ campus.id }}" aria-pressed="false">{{ campus.name }} <small>{{ campus.subtitle }}</small></button>{% endfor %}
+          </div>
           <div class="atlas-map-tools" role="group" aria-label="地图缩放">
             <span>点击色块或区号</span>
             <button type="button" data-atlas-zoom="in" aria-label="放大地图">＋</button>
@@ -21,13 +25,24 @@
           <div class="atlas-map-viewport" id="crime-map-canvas">{% include dublin-postal-map.svg %}</div>
           <p class="atlas-caption">颜色区分邮编区域，不代表危险等级。浅色空白包含未纳入的邮编区；D6W、D20、D22、D24 不在这18区范围内。</p>
           <div class="atlas-region-picker" aria-label="选择邮编区域">
+            <label class="atlas-search">查找区域<input type="search" data-atlas-search placeholder="区号或地名，如 D18 / Dundrum" aria-label="查找邮编区域或地名"></label>
             {% for region in site.data.dublin_atlas.regions %}
-            <button type="button" data-atlas-region="{{ region.code }}" style="--region-color:{{ region.color }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
+            <button type="button" data-atlas-region="{{ region.code }}" data-atlas-search-text="{{ region.code }} {{ region.label }} Dublin {{ region.label | remove: 'D' }} {{ site.data.dublin_advice[region.code].places | escape }}" style="--region-color:{{ region.color }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
             {% endfor %}
+            <p class="atlas-search-empty" data-atlas-empty hidden role="status">没有匹配区域，请试试区号或英文地名。这里只包含 D1–D18。</p>
           </div>
           <p class="atlas-caption">边界：<a href="https://doi.org/10.5281/zenodo.4589220" target="_blank" rel="noopener">autoaddress.ie / Rowan Molony · CC BY 4.0</a>。2021年版本，基于普查小区及 Eircode 资料，已简化绘制；地址归属以 <a href="https://finder.eircode.ie/" target="_blank" rel="noopener">Eircode 查询</a>为准。</p>
         </div>
         <div class="atlas-inspector" id="crime-map-list" aria-live="polite" aria-atomic="false">
+          {% for campus in site.data.dublin_campuses %}
+          <section class="atlas-campus-card" data-atlas-campus-card="{{ campus.id }}" data-campus-region="{{ campus.region }}" hidden>
+            <span class="atlas-campus-kicker">CAMPUS · 校园定位</span>
+            <h3>{{ campus.name }} · {{ campus.title }}</h3><p>{{ campus.subtitle }}</p>
+            <p>{{ campus.location }}</p><p>{{ campus.advice }}</p>
+            <p><a href="{{ campus.url }}" target="_blank" rel="noopener">官方校园地图 ↗</a> · <a href="{{ campus.source }}" target="_blank" rel="noopener">位置依据 ↗</a> · <a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener">规划通勤 ↗</a></p>
+            <p class="atlas-caption">校园信息核查 2026-09-14。标记为示意参考点，非校园轮廓或导航路线；下方仍是相关邮编区资料，不是校园犯罪率。</p>
+          </section>
+          {% endfor %}
           {% for region in site.data.dublin_atlas.regions %}
           {% assign advice = site.data.dublin_advice[region.code] %}
           <article data-atlas-panel="{{ region.code }}" {% unless region.code == 'D18' %}hidden{% endunless %}>
@@ -66,6 +81,14 @@
           {% endfor %}
         </div>
       </div>
+      <details class="atlas-evidence atlas-checklist">
+        <summary>看房与夜间通勤 · 随手检查清单</summary>
+        <p>按具体房源逐项确认；勾选仅在当前页面保留，不代表安全认证。</p>
+        <label><input type="checkbox"> 核对房源地址、门禁和包裹存放方式</label>
+        <label><input type="checkbox"> 白天与晚间分别查看车站到家路线、照明与噪声</label>
+        <label><input type="checkbox"> 核对上课时间的全程通勤、换乘与返程末班车</label>
+        <label><input type="checkbox"> 把租金、账单与交通费用一起纳入预算</label>
+      </details>
       <details class="atlas-evidence">
         <summary>查看全部41个警区的原始数据与计算依据</summary>
         <p>CSO CJA07，2025年；表更新于 {{ site.data.dublin_atlas.csoUpdated | slice: 0,10 }}。合计类别03–08、10–16；不含01凶杀、02性犯罪和09欺诈。记录事件不是定罪人数或个人受害概率。</p>
