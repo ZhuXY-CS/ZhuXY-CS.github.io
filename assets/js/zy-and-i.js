@@ -865,7 +865,7 @@
       });
     }
     function open() {
-      if (!dialog.hidden) return;
+      if (!dialog.hidden || document.body.classList.contains('is-crime-map-open')) return;
       lastFocused = document.activeElement;
       // Visibility must not depend on a scheduled animation frame.
       dialog.hidden = false;
@@ -940,6 +940,85 @@
           event.preventDefault(); first.focus();
         }
       }
+    });
+  }
+
+  function setupZodiac() {
+    var launch = document.getElementById('zodiac-launch');
+    var dialog = document.getElementById('zodiac-dialog');
+    if (!launch || !dialog) return;
+    var panel = dialog.querySelector('.zodiac-panel');
+    var closeButton = dialog.querySelector('button[data-zodiac-close]');
+    var lastFocused = null;
+    var background = [];
+    var rituals = Array.prototype.slice.call(dialog.querySelectorAll('[data-zodiac-ritual]'));
+    var ritualIndex = 0;
+    var dayKey = '';
+    function showRitual(index) {
+      if (!rituals.length) return;
+      ritualIndex = index % rituals.length;
+      rituals.forEach(function (item, i) { item.hidden = i !== ritualIndex; });
+    }
+    function updateDay() {
+      var now = new Date();
+      var key = [now.getFullYear(), now.getMonth(), now.getDate()].join('-');
+      if (key === dayKey) return;
+      dayKey = key;
+      showRitual(Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000));
+    }
+    function open() {
+      // Use the existing widget pause contract; never open two modal dialogs.
+      if (!dialog.hidden || document.body.classList.contains('is-crime-map-open')) return;
+      lastFocused = document.activeElement;
+      updateDay();
+      dialog.hidden = false;
+      dialog.classList.add('is-open');
+      launch.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('is-crime-map-open');
+      background = Array.prototype.filter.call(document.body.children, function (el) {
+        return el !== dialog && !/^(SCRIPT|STYLE|LINK)$/.test(el.tagName);
+      }).map(function (el) { var previous = el.inert; el.inert = true; return {element: el, inert: previous}; });
+      document.dispatchEvent(new CustomEvent('love:crime-map-toggle', {detail: {open: true}}));
+      closeButton.focus({preventScroll: true});
+    }
+    function close() {
+      if (dialog.hidden) return;
+      dialog.hidden = true;
+      dialog.classList.remove('is-open');
+      launch.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('is-crime-map-open');
+      background.forEach(function (entry) { entry.element.inert = entry.inert; });
+      background = [];
+      document.dispatchEvent(new CustomEvent('love:crime-map-toggle', {detail: {open: false}}));
+      if (lastFocused && lastFocused.isConnected) lastFocused.focus({preventScroll: true});
+    }
+    launch.addEventListener('click', open);
+    dialog.addEventListener('click', function (event) {
+      var target = event.target instanceof Element ? event.target : event.target.parentElement;
+      if (!target) return;
+      if (target.closest('[data-zodiac-close]')) { close(); return; }
+      if (target.closest('[data-zodiac-next]')) { updateDay(); showRitual(ritualIndex + 1); }
+      var button = target.closest('[data-zodiac-page]');
+      if (!button) return;
+      dialog.querySelectorAll('[data-zodiac-page]').forEach(function (item) {
+        item.setAttribute('aria-pressed', String(item === button));
+      });
+      dialog.querySelectorAll('[data-zodiac-section]').forEach(function (item) {
+        item.hidden = item.dataset.zodiacSection !== button.dataset.zodiacPage;
+      });
+      updateDay();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (dialog.hidden) return;
+      if (event.key === 'Escape') { event.preventDefault(); close(); return; }
+      if (event.key !== 'Tab') return;
+      var controls = Array.prototype.filter.call(panel.querySelectorAll('button, a[href], summary, [tabindex="0"]'), function (item) {
+        return !item.closest('[hidden]') && !item.disabled && item.getClientRects().length;
+      });
+      var first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
   }
 
@@ -2211,6 +2290,7 @@
 
   function initialize() {
     setupCrimeMap();
+    setupZodiac();
     setupSweetNotes();
     setupLetterBook();
     setupPhotoLoading();
