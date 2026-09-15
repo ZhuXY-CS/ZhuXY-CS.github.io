@@ -1775,10 +1775,10 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   z-index: 2;
   display: grid;
   min-height: 0;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto;
-  gap: 0;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0.08rem;
+  align-items: start;
 }
 
 /* Keep both widget entries reachable even on short desktop windows. */
@@ -1786,11 +1786,12 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-tool-zone__header {
   grid-column: 1;
+  grid-row: 1;
   margin: 0;
   padding: 0.32rem 0 0.2rem;
 }
 
-.love-tool-icons { display: flex; grid-column: 2; grid-row: 1; align-items: center; gap: 0.25rem; min-height: 0; padding: 0.2rem 0.05rem 0.3rem 0.35rem; }
+.love-tool-icons { display: flex; grid-column: 1; grid-row: 2; align-items: center; gap: 0.25rem; min-height: 0; margin-top: 0.12rem; padding: 0.2rem 0.05rem 0.45rem; }
 .love-tool-icons button { position: relative; display: grid; width: 2.85rem; height: 2.85rem; flex: 0 0 2.85rem; place-items: center; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #5c416a; cursor: pointer; box-shadow: none; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
 .love-tool-icons button:hover, .love-tool-icons button:focus-visible { transform: translateY(-2px); background: rgba(255, 255, 255, 0.68); box-shadow: 0 6px 14px rgba(102,55,78,.1); outline: none; }
 .love-tool-icons button:focus-visible { outline: 2px solid var(--love-accent); outline-offset: 3px; }
