@@ -61,7 +61,7 @@ author:
   keybase          : # Username
   instagram        : # Username
   lastfm           : # Username
-  linkedin         : # Username
+  linkedin         : "xianyu-zhu-a39b73377"
   mastodon         : # URL
   medium           : # URL
   pinterest        : # Username
@@ -145,6 +145,7 @@ social:
   type                   : # Person or Organization (defaults to Person)
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
+    - "https://www.linkedin.com/in/xianyu-zhu-a39b73377/"
 
 
 # Analytics
