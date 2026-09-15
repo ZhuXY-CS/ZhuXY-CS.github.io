@@ -643,6 +643,7 @@
 
     var places = Array.prototype.slice.call(widget.querySelectorAll("[data-weather-place]"));
     var cacheDuration = 30 * 60 * 1000;
+    var sourceLabel = widget.querySelector("[data-weather-source]");
 
     window.loveWeatherMessages = [
       "不管今天是哪一种天气，记得把牵挂好好带在身边呀。",
@@ -745,15 +746,16 @@
       var latitude = place.dataset.latitude;
       var longitude = place.dataset.longitude;
       var timezone = place.dataset.timezone;
-      var cacheKey = "zy-weather-v3-" + latitude + "-" + longitude;
+      var cacheKey = "zy-weather-v4-" + latitude + "-" + longitude;
       var cached = readCache(cacheKey);
       if (cached) return Promise.resolve(cached);
 
       var parameters = new URLSearchParams({
         latitude: latitude,
         longitude: longitude,
+        current: "temperature_2m,weather_code,is_day",
         hourly: "weather_code",
-        daily: "weather_code,temperature_2m_max,temperature_2m_min",
+        daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
         timezone: timezone,
         forecast_days: "2"
       });
@@ -770,9 +772,15 @@
     }
 
     function renderPlace(place, data) {
+      if (!data || !data.daily) throw new Error("Weather data incomplete");
       var daily = data.daily || {};
       var hourly = data.hourly || {};
-      var todayWeather = describeWeather(Number((daily.weather_code || [])[0]), true);
+      var current = data.current || {};
+      var dailyCodes = daily.weather_code || [];
+      var currentCode = Number(current.weather_code);
+      var todayCode = Number.isFinite(currentCode) ? currentCode : Number(dailyCodes[0]);
+      var todayIsDay = current.is_day === 0 ? false : true;
+      var todayWeather = describeWeather(todayCode, todayIsDay);
       var tomorrowWeather = describeWeather(Number((daily.weather_code || [])[1]), true);
       var todayDate = (daily.time || [])[0] || "";
       var todayCodes = [];
@@ -788,24 +796,40 @@
       var todayLow = Number((daily.temperature_2m_min || [])[0]);
       var tomorrowHigh = Number((daily.temperature_2m_max || [])[1]);
       var tomorrowLow = Number((daily.temperature_2m_min || [])[1]);
+      var todayRainChance = Number((daily.precipitation_probability_max || [])[0]);
+      var tomorrowRainChance = Number((daily.precipitation_probability_max || [])[1]);
       var today = place.querySelector(".love-weather__day--today");
       var tomorrow = place.querySelector(".love-weather__day--tomorrow");
+      var todayCondition = describeDay(todayCodes, dailyCodes[0]);
+      var tomorrowCondition = tomorrowWeather.label;
+
+      if (Number.isFinite(todayRainChance) && todayRainChance >= 20) todayCondition += " · " + Math.round(todayRainChance) + "%降雨概率";
+      if (Number.isFinite(tomorrowRainChance) && tomorrowRainChance >= 20) tomorrowCondition += " · " + Math.round(tomorrowRainChance) + "%降雨概率";
 
       today.querySelector(".love-weather__day-icon").textContent = todayWeather.icon;
       today.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(todayLow) && Number.isFinite(todayHigh) ? Math.round(todayLow) + "° / " + Math.round(todayHigh) + "°" : "--° / --°";
-      today.querySelector(".love-weather__day-condition").textContent = describeDay(todayCodes, (daily.weather_code || [])[0]);
+      today.querySelector(".love-weather__day-condition").textContent = todayCondition;
       tomorrow.querySelector(".love-weather__day-icon").textContent = tomorrowWeather.icon;
       tomorrow.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(tomorrowLow) && Number.isFinite(tomorrowHigh) ? Math.round(tomorrowLow) + "° / " + Math.round(tomorrowHigh) + "°" : "--° / --°";
-      tomorrow.querySelector(".love-weather__day-condition").textContent = tomorrowWeather.label;
+      tomorrow.querySelector(".love-weather__day-condition").textContent = tomorrowCondition;
+
+      var currentTime = String(current.time || "").replace("T", " ");
+      place.setAttribute("title", currentTime ? "Open-Meteo · 当地天气更新时间：" + currentTime : "Open-Meteo · 天气预报");
+      return currentTime;
     }
 
     Promise.all(places.map(function (place) {
-      return fetchPlace(place).then(function (data) { renderPlace(place, data); });
-    })).catch(function () {
-      places.forEach(function (place) {
-        place.querySelector(".love-weather__day--today .love-weather__day-condition").textContent = "天气暂时藏进云里";
-        place.querySelector(".love-weather__day--tomorrow .love-weather__day-condition").textContent = "晚一点再来看";
+      return fetchPlace(place).then(function (data) {
+        return renderPlace(place, data);
+      }).catch(function () {
+        place.querySelector(".love-weather__day--today .love-weather__day-condition").textContent = "该地点天气暂时不可用";
+        place.querySelector(".love-weather__day--tomorrow .love-weather__day-condition").textContent = "稍后自动重试";
+        return "";
       });
+    })).then(function (times) {
+      if (!sourceLabel) return;
+      var latestTime = times.filter(Boolean).sort().pop();
+      sourceLabel.textContent = latestTime ? "天气数据：Open-Meteo · 更新于 " + latestTime.replace(" ", " 当地 ") : "天气数据暂时不可用 · 请稍后重试";
     });
   }
 

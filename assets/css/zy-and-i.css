@@ -1782,7 +1782,20 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 }
 
 /* Keep both widget entries reachable even on short desktop windows. */
-.love-weather { overflow: hidden; grid-template-rows: auto auto max-content; align-content: start; }
+.love-weather { overflow: hidden; grid-template-rows: auto auto auto max-content; align-content: start; }
+
+.love-weather__source {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  margin: 0.2rem 0 0;
+  overflow: hidden;
+  color: rgba(62, 48, 58, 0.48);
+  font: 0.56rem/1.3 var(--love-font-utility);
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .love-tool-zone__header {
   grid-column: 1;
