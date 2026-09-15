@@ -440,7 +440,7 @@
       activeLyricSetIndex = 0;
       lyricSets.forEach(function (set, index) {
         set.root.classList.remove("is-active", "is-leaving", "is-resetting");
-        set.root.toggleAttribute("aria-hidden", index !== activeLyricSetIndex);
+        set.root.setAttribute("aria-hidden", String(index !== activeLyricSetIndex));
         set.previous.textContent = "";
         set.current.textContent = index === activeLyricSetIndex ? (message || "歌词正在赶来") : "";
         set.next.textContent = "";
@@ -489,7 +489,7 @@
         var immediateSet = lyricSets[activeLyricSetIndex];
         lyricSets.forEach(function (set, index) {
           set.root.classList.remove("is-active", "is-leaving", "is-resetting");
-          set.root.toggleAttribute("aria-hidden", index !== activeLyricSetIndex);
+          set.root.setAttribute("aria-hidden", String(index !== activeLyricSetIndex));
         });
         writeLyricSet(immediateSet, nextIndex);
         immediateSet.root.classList.add("is-active");
@@ -553,8 +553,11 @@
           track.setAttribute("aria-current", "true");
           var list = track.closest("ol");
           var item = track.parentElement;
-          if (list && item && (item.offsetTop < list.scrollTop || item.offsetTop + item.offsetHeight > list.scrollTop + list.clientHeight)) {
-            list.scrollTop = Math.max(0, item.offsetTop - list.clientHeight / 2 + item.offsetHeight / 2);
+          if (list && item) {
+            var itemTop = item.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop - list.clientTop;
+            if (itemTop < list.scrollTop || itemTop + item.offsetHeight > list.scrollTop + list.clientHeight) {
+              list.scrollTop = Math.max(0, itemTop - list.clientHeight / 2 + item.offsetHeight / 2);
+            }
           }
         } else {
           track.removeAttribute("aria-current");
@@ -640,197 +643,126 @@
   function setupWeatherForecast() {
     var widget = document.getElementById("love-weather");
     if (!widget) return;
-
     var places = Array.prototype.slice.call(widget.querySelectorAll("[data-weather-place]"));
-    var cacheDuration = 30 * 60 * 1000;
     var sourceLabel = widget.querySelector("[data-weather-source]");
+    var cacheDuration = 30 * 60 * 1000;
+    var busy = false;
+    window.loveWeatherMessages = ["两片天空各有晴雨，两颗心一直朝着同一个方向。"];
 
-    window.loveWeatherMessages = [
-      "不管今天是哪一种天气，记得把牵挂好好带在身边呀。",
-      "两片天空各有晴雨，两颗心一直朝着同一个方向。",
-      "糖宝播报：距离会变，天气会变，坚定喜欢彼此不会变 ♡"
-    ];
-
-    function describeWeather(code, isDay) {
-      if (code === 0) return { icon: isDay ? "☀️" : "🌙", label: "晴朗" };
-      if (code === 1 || code === 2) return { icon: isDay ? "🌤️" : "☁️", label: "晴间多云" };
-      if (code === 3) return { icon: "☁️", label: "多云" };
-      if (code === 45 || code === 48) return { icon: "🌫️", label: "有雾" };
-      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { icon: "🌧️", label: "有雨" };
-      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return { icon: "🌨️", label: "有雪" };
-      if (code >= 95) return { icon: "⛈️", label: "雷雨" };
-      return { icon: "☁️", label: "天气温柔" };
+    function localDate(timezone, offset) {
+      var parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(new Date());
+      function part(type) { return parts.find(function (p) { return p.type === type; }).value; }
+      var date = new Date(Date.UTC(Number(part("year")), Number(part("month")) - 1, Number(part("day")) + (offset || 0)));
+      return date.toISOString().slice(0, 10);
     }
-
-    function weatherKind(code) {
-      if (code === 0) return "晴";
-      if (code === 1 || code === 2) return "多云";
-      if (code === 3) return "阴";
-      if (code === 45 || code === 48) return "雾";
-      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "雨";
-      if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "雪";
-      if (code >= 95) return "雷雨";
-      return "多云";
+    function number(value) {
+      return typeof value === "number" && Number.isFinite(value) ? value : NaN;
     }
-
-    function describeDay(codes, fallbackCode) {
-      var sequence = [];
-
-      codes.forEach(function (code) {
-        var kind = weatherKind(Number(code));
-        if (sequence[sequence.length - 1] !== kind) sequence.push(kind);
-      });
-
-      if (!sequence.length) sequence.push(weatherKind(Number(fallbackCode)));
-
-      var uniqueKinds = sequence.filter(function (kind, index) {
-        return sequence.indexOf(kind) === index;
-      });
-
-      if (uniqueKinds.length === 1) {
-        return {
-          "晴": "晴朗一整天",
-          "多云": "多云为主",
-          "阴": "阴天为主",
-          "雾": "有雾，出门慢一点",
-          "雨": "全天有雨",
-          "雪": "全天有雪",
-          "雷雨": "可能有雷雨"
-        }[uniqueKinds[0]];
-      }
-
-      var first = sequence[0];
-      var last = sequence[sequence.length - 1];
-
-      if (uniqueKinds.length === 2) {
-        if (uniqueKinds.indexOf("晴") !== -1 && uniqueKinds.indexOf("多云") !== -1) return "晴间多云";
-        if (first !== last) return first + "转" + last;
-        return first + "为主，间有" + uniqueKinds.filter(function (kind) { return kind !== first; })[0];
-      }
-
-      var changingWeather = ["雷雨", "雪", "雨", "雾"].filter(function (kind) {
-        return uniqueKinds.indexOf(kind) !== -1;
-      })[0];
-
-      if (changingWeather) {
-        var changeIndex = sequence.indexOf(changingWeather);
-        var beforeChange = changeIndex > 0 ? sequence[changeIndex - 1] : changingWeather;
-        var summary = beforeChange === changingWeather ? changingWeather + "为主" : beforeChange + "转" + changingWeather;
-        if (last !== changingWeather && last !== beforeChange) summary += "，随后转" + last;
-        return summary;
-      }
-
-      if (first !== last) return first + "转" + last;
-      return first + "为主，云量有变化";
+    function describe(code, isDay) {
+      if (code === 0) return {icon: isDay ? "☀️" : "🌙", label: "晴朗"};
+      if (code === 1) return {icon: isDay ? "🌤️" : "☁️", label: "大致晴朗"};
+      if (code === 2) return {icon: "⛅", label: "局部多云"};
+      if (code === 3) return {icon: "☁️", label: "阴天"};
+      if (code === 45 || code === 48) return {icon: "🌫️", label: "有雾"};
+      if ([51,53,55].includes(code)) return {icon: "🌦️", label: "毛毛雨"};
+      if ([56,57,66,67].includes(code)) return {icon: "🌧️", label: "冻雨"};
+      if ([61,63,65].includes(code)) return {icon: "🌧️", label: "有雨"};
+      if ([80,81,82].includes(code)) return {icon: "🌦️", label: "阵雨"};
+      if ([71,73,75,77,85,86].includes(code)) return {icon: "🌨️", label: "有雪"};
+      if ([95,96,99].includes(code)) return {icon: "⛈️", label: "雷雨"};
+      return {icon: "—", label: "数据缺失"};
     }
-
-    function readCache(key) {
+    function validate(data, timezone) {
+      var dates = data && data.daily && data.daily.time;
+      if (!Array.isArray(dates) || !dates.includes(localDate(timezone)) ||
+          !dates.includes(localDate(timezone, 1))) throw new Error("Forecast dates unavailable");
+      return data;
+    }
+    async function fetchPlace(place) {
+      var timezone = place.dataset.timezone;
+      var key = "zy-weather-v5-" + place.dataset.latitude + "-" + place.dataset.longitude + "-" + timezone;
       try {
         var cached = JSON.parse(window.localStorage.getItem(key));
-        if (cached && Date.now() - cached.savedAt < cacheDuration) return cached.data;
-      } catch (error) {
-        return null;
-      }
-      return null;
-    }
-
-    function writeCache(key, data) {
-      try {
-        window.localStorage.setItem(key, JSON.stringify({ savedAt: Date.now(), data: data }));
-      } catch (error) {
-        return;
-      }
-    }
-
-    function fetchPlace(place) {
-      var latitude = place.dataset.latitude;
-      var longitude = place.dataset.longitude;
-      var timezone = place.dataset.timezone;
-      var cacheKey = "zy-weather-v4-" + latitude + "-" + longitude;
-      var cached = readCache(cacheKey);
-      if (cached) return Promise.resolve(cached);
-
-      var parameters = new URLSearchParams({
-        latitude: latitude,
-        longitude: longitude,
-        current: "temperature_2m,weather_code,is_day",
-        hourly: "weather_code",
-        daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
-        timezone: timezone,
-        forecast_days: "2"
-      });
-
-      return fetch("https://api.open-meteo.com/v1/forecast?" + parameters.toString())
-        .then(function (response) {
-          if (!response.ok) throw new Error("Weather unavailable");
-          return response.json();
-        })
-        .then(function (data) {
-          writeCache(cacheKey, data);
-          return data;
-        });
-    }
-
-    function renderPlace(place, data) {
-      if (!data || !data.daily) throw new Error("Weather data incomplete");
-      var daily = data.daily || {};
-      var hourly = data.hourly || {};
-      var current = data.current || {};
-      var dailyCodes = daily.weather_code || [];
-      var currentCode = Number(current.weather_code);
-      var todayCode = Number.isFinite(currentCode) ? currentCode : Number(dailyCodes[0]);
-      var todayIsDay = current.is_day === 0 ? false : true;
-      var todayWeather = describeWeather(todayCode, todayIsDay);
-      var tomorrowWeather = describeWeather(Number((daily.weather_code || [])[1]), true);
-      var todayDate = (daily.time || [])[0] || "";
-      var todayCodes = [];
-
-      (hourly.time || []).forEach(function (time, index) {
-        var hour = Number(String(time).slice(11, 13));
-        if (String(time).slice(0, 10) === todayDate && hour >= 6 && hour <= 23 && hour % 3 === 0) {
-          todayCodes.push(Number((hourly.weather_code || [])[index]));
+        var age = cached && Date.now() - cached.savedAt;
+        if (cached && age >= 0 && age < cacheDuration) {
+          validate(cached.data, timezone);
+          return cached;
         }
+      } catch (error) { /* Storage and invalid caches must not block a fresh request. */ }
+      var parameters = new URLSearchParams({
+        latitude: place.dataset.latitude, longitude: place.dataset.longitude,
+        current: "temperature_2m,weather_code,is_day",
+        daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+        timezone: timezone, forecast_days: "2"
       });
-
-      var todayHigh = Number((daily.temperature_2m_max || [])[0]);
-      var todayLow = Number((daily.temperature_2m_min || [])[0]);
-      var tomorrowHigh = Number((daily.temperature_2m_max || [])[1]);
-      var tomorrowLow = Number((daily.temperature_2m_min || [])[1]);
-      var todayRainChance = Number((daily.precipitation_probability_max || [])[0]);
-      var tomorrowRainChance = Number((daily.precipitation_probability_max || [])[1]);
-      var today = place.querySelector(".love-weather__day--today");
-      var tomorrow = place.querySelector(".love-weather__day--tomorrow");
-      var todayCondition = describeDay(todayCodes, dailyCodes[0]);
-      var tomorrowCondition = tomorrowWeather.label;
-
-      if (Number.isFinite(todayRainChance) && todayRainChance >= 20) todayCondition += " · " + Math.round(todayRainChance) + "%降雨概率";
-      if (Number.isFinite(tomorrowRainChance) && tomorrowRainChance >= 20) tomorrowCondition += " · " + Math.round(tomorrowRainChance) + "%降雨概率";
-
-      today.querySelector(".love-weather__day-icon").textContent = todayWeather.icon;
-      today.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(todayLow) && Number.isFinite(todayHigh) ? Math.round(todayLow) + "° / " + Math.round(todayHigh) + "°" : "--° / --°";
-      today.querySelector(".love-weather__day-condition").textContent = todayCondition;
-      tomorrow.querySelector(".love-weather__day-icon").textContent = tomorrowWeather.icon;
-      tomorrow.querySelector(".love-weather__day-temperature").textContent = Number.isFinite(tomorrowLow) && Number.isFinite(tomorrowHigh) ? Math.round(tomorrowLow) + "° / " + Math.round(tomorrowHigh) + "°" : "--° / --°";
-      tomorrow.querySelector(".love-weather__day-condition").textContent = tomorrowCondition;
-
-      var currentTime = String(current.time || "").replace("T", " ");
-      place.setAttribute("title", currentTime ? "Open-Meteo · 当地天气更新时间：" + currentTime : "Open-Meteo · 天气预报");
-      return currentTime;
+      var controller = new AbortController();
+      var timeout = window.setTimeout(function () { controller.abort(); }, 12000);
+      try {
+        var response = await fetch("https://api.open-meteo.com/v1/forecast?" + parameters, {signal: controller.signal});
+        if (!response.ok) throw new Error("Weather unavailable");
+        var record = {savedAt: Date.now(), data: validate(await response.json(), timezone)};
+        try { window.localStorage.setItem(key, JSON.stringify(record)); } catch (error) {}
+        return record;
+      } finally { window.clearTimeout(timeout); }
     }
-
-    Promise.all(places.map(function (place) {
-      return fetchPlace(place).then(function (data) {
-        return renderPlace(place, data);
-      }).catch(function () {
-        place.querySelector(".love-weather__day--today .love-weather__day-condition").textContent = "该地点天气暂时不可用";
-        place.querySelector(".love-weather__day--tomorrow .love-weather__day-condition").textContent = "稍后自动重试";
-        return "";
+    function renderPlace(place, record) {
+      var data = record.data, daily = data.daily;
+      var current = data.current || {};
+      var timezone = place.dataset.timezone;
+      [0, 1].forEach(function (offset) {
+        var date = localDate(timezone, offset);
+        var index = daily.time.indexOf(date);
+        var row = place.querySelector(offset ? ".love-weather__day--tomorrow" : ".love-weather__day--today");
+        function value(key) { return number((daily[key] || [])[index]); }
+        var weather = describe(value("weather_code"), true);
+        var low = value("temperature_2m_min"), high = value("temperature_2m_max");
+        var rain = value("precipitation_probability_max");
+        row.querySelector(".love-weather__day-icon").textContent = weather.icon;
+        row.querySelector(".love-weather__day-temperature").textContent =
+          Number.isFinite(low) && Number.isFinite(high) ? Math.round(low) + "° / " + Math.round(high) + "°" : "--° / --°";
+        row.querySelector(".love-weather__day-condition").textContent = weather.label +
+          (rain >= 0 && rain <= 100 ? " · 降水 " + Math.round(rain) + "%" : "");
+        row.title = date + "（当地日期）· 最低 / 最高 °C · 图标为当日最显著天气；百分比为当日最高逐小时降水概率";
       });
-    })).then(function (times) {
-      if (!sourceLabel) return;
-      var latestTime = times.filter(Boolean).sort().pop();
-      sourceLabel.textContent = latestTime ? "天气数据：Open-Meteo · 更新于 " + latestTime.replace(" ", " 当地 ") : "天气数据暂时不可用 · 请稍后重试";
-    });
+      var currentLabel = place.querySelector("[data-weather-current]");
+      var currentWeather = describe(number(current.weather_code), current.is_day !== 0);
+      var currentTemperature = number(current.temperature_2m);
+      var currentDate = String(current.time || "").slice(0, 10);
+      currentLabel.textContent = currentDate === localDate(timezone) && Number.isFinite(currentTemperature) ?
+        "现在 " + currentWeather.icon + " " + Math.round(currentTemperature) + "°" : "当前数据缺失";
+      currentLabel.title = "当前模式估计：" + currentWeather.label + " · 有效时间 " + (current.time || "未知") + "（" + timezone + "）";
+      var fetched = new Intl.DateTimeFormat("zh-CN", {timeZone: timezone, month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit"}).format(new Date(record.savedAt));
+      place.title = "Open-Meteo · 获取于 " + fetched + "（" + timezone + "）；当前天气为模式估计";
+    }
+    async function refresh() {
+      if (busy || document.hidden) return;
+      busy = true;
+      try {
+        var results = await Promise.all(places.map(async function (place) {
+          try { renderPlace(place, await fetchPlace(place)); return true; }
+          catch (error) {
+            place.querySelector("[data-weather-current]").textContent = "暂不可用";
+            [".love-weather__day--today", ".love-weather__day--tomorrow"].forEach(function (selector) {
+              var row = place.querySelector(selector);
+              row.querySelector(".love-weather__day-icon").textContent = "—";
+              row.querySelector(".love-weather__day-temperature").textContent = "--° / --°";
+              row.querySelector(".love-weather__day-condition").textContent = "稍后重试";
+              row.removeAttribute("title");
+            });
+            place.title = "天气获取失败；页面可见时每分钟检查重试";
+            return false;
+          }
+        }));
+        if (sourceLabel) sourceLabel.textContent = "Open-Meteo · 当地日期 · 最低/最高 °C" +
+          (results.every(Boolean) ? "" : " · 部分数据不可用");
+      } finally { busy = false; }
+    }
+    refresh();
+    window.setInterval(refresh, 60000);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) refresh(); });
+    window.addEventListener("online", refresh);
   }
 
   function setupCrimeMap() {

@@ -201,6 +201,7 @@ comments: false
         {% for place in love.weather limit: 2 %}
           <article class="love-weather__place" data-weather-place data-latitude="{{ place.latitude }}" data-longitude="{{ place.longitude }}" data-timezone="{{ place.timezone }}">
             <span class="love-weather__anonymous">{% if forloop.first %}ZY♌️{% else %}小庸♏️{% endif %}</span>
+            <small class="love-weather__current" data-weather-current>当前天气加载中</small>
 
             <div class="love-weather__days">
               <div class="love-weather__day love-weather__day--today">
