@@ -222,25 +222,19 @@ comments: false
       </div>
 
       <section class="love-tool-zone" aria-label="小组件区">
-        <header class="love-widget__header love-tool-zone__header">
-          <span class="love-widget__eyebrow">LOVE TOOLS · 小组件</span>
+        <header class="love-widget__header love-tool-zone__header" aria-label="小组件">
+          <span class="love-widget__eyebrow">LOVE TOOLS</span>
           <span class="love-widget__ornament" aria-hidden="true">⌁</span>
         </header>
 
-        <button class="crime-map-launch" id="crime-map-launch" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="crime-map-dialog">
-          <span class="crime-map-launch__visual" aria-hidden="true">
-            {% include dublin-postal-map.svg preview=true %}
-          </span>
-          <span class="crime-map-launch__copy">
-            <span class="crime-map-launch__kicker">DUBLIN · 22 POSTAL DISTRICTS</span>
-            <strong>都柏林各区域犯罪率</strong>
-            <span>查看分区地图、犯罪数据与居住意见 <span aria-hidden="true">↗</span></span>
-          </span>
-        </button>
-        <button class="zodiac-launch" id="zodiac-launch" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="zodiac-dialog">
-          <span class="zodiac-launch__symbols" aria-hidden="true">♏ <i>♡</i> ♌</span>
-          <span><small>SCORPIO × LEO</small><strong>我们的星座恋爱手册</strong><span>性格、爱情与甜蜜好运提案 ↗</span></span>
-        </button>
+        <div class="love-tool-icons" aria-label="小组件入口">
+          <button class="crime-map-launch" id="crime-map-launch" type="button" title="都柏林安全地图" aria-label="打开都柏林安全地图：22个邮政区、犯罪数据与居住意见" aria-haspopup="dialog" aria-expanded="false" aria-controls="crime-map-dialog">
+            <span class="love-tool-icon love-tool-icon--map" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="m8 11 10-4 12 4 10-4v30l-10 4-12-4-10 4V11Z"/><path d="M18 7v30M30 11v30"/><path d="M24 14c-4.1 0-7.2 3.1-7.2 7 0 5.2 7.2 12.3 7.2 12.3S31.2 26.2 31.2 21c0-3.9-3.1-7-7.2-7Z"/><circle cx="24" cy="21" r="2.2"/></svg></span>
+          </button>
+          <button class="zodiac-launch" id="zodiac-launch" type="button" title="天蝎与狮子星座恋爱手册" aria-label="打开天蝎男生与狮子女生的星座恋爱手册" aria-haspopup="dialog" aria-expanded="false" aria-controls="zodiac-dialog">
+            <span class="love-tool-icon love-tool-icon--zodiac" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="M24 7v7M20.5 10.5h7"/><path d="M12 25a12 12 0 0 1 24 0c0 7-5.4 10.5-12 15-6.6-4.5-12-8-12-15Z"/><path d="M17 25c2.4 0 2.4-4 4.8-4s2.4 4 4.8 4 2.4-4 4.8-4"/><path d="M18 31c4 2.1 8 2.1 12 0"/></svg></span>
+          </button>
+        </div>
       </section>
     </section>
   </aside>

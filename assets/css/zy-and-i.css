@@ -1774,7 +1774,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   z-index: 2;
   display: grid;
   min-height: 0;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   gap: 0.18rem;
 }
 
@@ -1786,17 +1786,22 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 .love-tool-zone__header {
   margin: 0 -0.82rem;
-  padding-bottom: 0.22rem;
+  padding: 0.38rem 0.82rem 0.2rem;
 }
 
-/* A paired dusk / sunlight palette, without another background animation. */
-.zodiac-launch { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 0.65rem; align-items: center; padding: 0.7rem 0.55rem; margin-top: 0.35rem; border: 1px solid #d9cbdc; color: #493350; background: linear-gradient(110deg,#eee8f5,#fff6e7); text-align: left; cursor: pointer; }
-.zodiac-launch__symbols { white-space: nowrap; font: 1.55rem var(--love-font-en); color: #65497c; }
-.zodiac-launch__symbols i { font-size: 0.75rem; font-style: normal; color: #b58239; }
-.zodiac-launch > span:last-child { display: grid; gap: 0.15rem; }
-.zodiac-launch small { font: 0.5rem var(--love-font-utility); letter-spacing: 0.12em; }
-.zodiac-launch strong { font: 600 0.8rem var(--love-font-cn); }
-.zodiac-launch > span > span { font: 0.6rem var(--love-font-cn); }
+.love-tool-icons { display: flex; align-items: center; gap: 0.55rem; min-height: 4.6rem; padding: 0.35rem 0.1rem 0.7rem; }
+.love-tool-icons button { position: relative; display: grid; width: 3.55rem; height: 3.55rem; flex: 0 0 3.55rem; place-items: center; padding: 0; border: 1px solid #dcc8d9; border-radius: 14px; background: #fff; color: #5c416a; cursor: pointer; box-shadow: 0 3px 10px rgba(102,55,78,.08); transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease; }
+.love-tool-icons button:hover, .love-tool-icons button:focus-visible { transform: translateY(-2px); border-color: #876294; box-shadow: 0 7px 16px rgba(102,55,78,.15); outline: none; }
+.love-tool-icons button:focus-visible { outline: 2px solid var(--love-accent); outline-offset: 3px; }
+.love-tool-icon { display: grid; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 10px; }
+.love-tool-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.2; }
+.love-tool-icon--map { color: #4d8196; background: #e8f2f4; }
+.love-tool-icon--zodiac { color: #79538d; background: #f2e9f5; }
+.love-tool-icons button::after { position: absolute; z-index: 5; left: 50%; bottom: -2.4rem; width: max-content; max-width: 13rem; padding: 0.35rem 0.5rem; border-radius: 6px; background: #493350; color: #fff; content: attr(title); font: 0.62rem/1.35 var(--love-font-cn); opacity: 0; pointer-events: none; transform: translate(-50%, -3px); transition: opacity 140ms ease, transform 140ms ease; }
+.love-tool-icons button:hover::after, .love-tool-icons button:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+
+/* The two entries stay icon-only; their detailed copy lives in the dialogs. */
+.zodiac-launch { margin-top: 0; }
 .zodiac-launch:focus-visible, .zodiac-dialog button:focus-visible, .zodiac-dialog a:focus-visible, .zodiac-dialog summary:focus-visible { outline: 2px solid #765783; outline-offset: 3px; }
 .zodiac-panel { width: min(1280px,100%); background: #fffcfa; }
 .zodiac-header { display: flex; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.8rem; background: linear-gradient(115deg,#382841 0%,#584163 60%,#755743 100%); color: #fff8ed; }
