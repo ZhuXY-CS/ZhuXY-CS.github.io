@@ -845,7 +845,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   min-width: 0;
   min-height: 790px;
-  grid-template-rows: repeat(2, minmax(390px, 1fr));
+  grid-template-rows: minmax(420px, 1.25fr) minmax(300px, 0.75fr);
   gap: 1rem;
 }
 
@@ -1475,15 +1475,15 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
   .love-memory { min-height: min(92vw, 625px); }
   .love-copy__line { font-size: clamp(1.02rem, 3.8vw, 1.13rem); }
-  .love-sidecar { grid-template-columns: 1fr; }
+  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(420px, auto) minmax(300px, auto); }
   .love-player { min-height: 390px; }
-  .love-weather { min-height: 390px; }
+  .love-weather { min-height: 300px; }
 }
 
 @media (max-width: 700px) {
-  .love-sidecar { grid-template-columns: 1fr; }
+  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(420px, auto) minmax(300px, auto); }
   .love-player { min-height: 390px; }
-  .love-weather { min-height: 390px; }
+  .love-weather { min-height: 300px; }
 }
 
 @media (max-width: 520px) {
@@ -1507,8 +1507,8 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
   .love-sidecar { gap: 0.8rem; }
-  .love-player { min-height: 390px; }
-  .love-weather { min-height: 390px; }
+  .love-player { min-height: 420px; }
+  .love-weather { min-height: 300px; }
 
   .love-photos {
     grid-template-columns: repeat(2, 1fr);
@@ -1555,7 +1555,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
 
   .love-sidecar {
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.75fr);
   }
 
   .love-player__lyrics {
@@ -1780,9 +1780,6 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 
 /* Keep both widget entries reachable even on short desktop windows. */
 .love-weather { overflow-y: auto; grid-template-rows: auto auto auto; align-content: start; }
-@media (min-width:1051px) {
-  .love-sidecar { grid-template-rows: minmax(250px,0.8fr) minmax(0,1.2fr); }
-}
 
 .love-tool-zone__header {
   margin: 0 -0.82rem;
