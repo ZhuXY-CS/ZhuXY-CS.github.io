@@ -845,7 +845,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   display: grid;
   min-width: 0;
   min-height: 790px;
-  grid-template-rows: minmax(420px, 1.25fr) minmax(300px, 0.75fr);
+  grid-template-rows: repeat(2, minmax(340px, 1fr));
   gap: 1rem;
 }
 
@@ -1475,14 +1475,14 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
   .love-memory { min-height: min(92vw, 625px); }
   .love-copy__line { font-size: clamp(1.02rem, 3.8vw, 1.13rem); }
-  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(420px, auto) minmax(300px, auto); }
-  .love-player { min-height: 390px; }
+  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(360px, auto) minmax(300px, auto); }
+  .love-player { min-height: 360px; }
   .love-weather { min-height: 300px; }
 }
 
 @media (max-width: 700px) {
-  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(420px, auto) minmax(300px, auto); }
-  .love-player { min-height: 390px; }
+  .love-sidecar { grid-template-columns: 1fr; grid-template-rows: minmax(360px, auto) minmax(300px, auto); }
+  .love-player { min-height: 360px; }
   .love-weather { min-height: 300px; }
 }
 
@@ -1507,7 +1507,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   .love-letter { min-height: 48vh; padding: 1.5rem 0.75rem 2rem; }
   .love-memory { min-height: 116vw; }
   .love-sidecar { gap: 0.8rem; }
-  .love-player { min-height: 420px; }
+  .love-player { min-height: 380px; }
   .love-weather { min-height: 300px; }
 
   .love-photos {
@@ -1555,7 +1555,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
   }
 
   .love-sidecar {
-    grid-template-rows: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
 
   .love-player__lyrics {
