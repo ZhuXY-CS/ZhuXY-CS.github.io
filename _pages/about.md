@@ -50,8 +50,8 @@ During my undergraduate studies, I joined the Parallel and Visual Processing Lab
 
 <br>
 
-As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA), and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
-Since 2026, I have served as a reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS).
+<!-- As the <strong>first author</strong>, I have published in Journal of Computer Science and Technology (JCST), Performance Evaluation (PEVA), and IEEE/ACM Transactions on Computational Biology and Bioinformatics (TCBB).
+Since 2026, I have served as a reviewer for IEEE Transactions on Parallel and Distributed Systems (TPDS). -->
 
 My research interests lie at the intersection of <strong>high-performance computing</strong>, <strong>machine learning systems</strong>, and <strong>distributed training</strong>. Specifically, I focus on:
 
