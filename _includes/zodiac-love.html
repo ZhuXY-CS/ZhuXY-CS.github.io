@@ -1,48 +1,48 @@
 <div class="crime-map-dialog zodiac-dialog" id="zodiac-dialog" hidden>
   <div class="crime-map-dialog__scrim" data-zodiac-close></div>
-  <section class="crime-map-dialog__panel zodiac-panel" role="dialog" aria-modal="true" aria-labelledby="zodiac-title" aria-describedby="zodiac-disclaimer" tabindex="-1">
+  <section class="crime-map-dialog__panel zodiac-panel" role="dialog" aria-modal="true" aria-labelledby="zodiac-title" tabindex="-1">
     <header class="zodiac-header">
-      <div><span class="zodiac-eyebrow">OUR LITTLE ZODIAC · 两颗星的相处手册</span><h2 id="zodiac-title">天蝎的深情，狮子的光。</h2><p>小庸 ♏ × ZY ♌ · 把星座当话题，把彼此当答案。</p></div>
+      <div><span class="zodiac-eyebrow">SCORPIO & LEO · 写给小庸与 ZY</span><h2 id="zodiac-title">深情与光，刚好是我们。</h2><p>天蝎的认真，遇见狮子的热烈。很值得期待的一对。</p></div>
       <button class="crime-map-dialog__close" type="button" data-zodiac-close aria-label="关闭星座小组件">×</button>
     </header>
+    <nav class="zodiac-nav" aria-label="星座内容栏目">
+      <button type="button" data-zodiac-page="profiles" aria-controls="zodiac-profiles" aria-pressed="true"><span>两颗星的模样</span><small>各自闪光，也彼此吸引</small></button>
+      <button type="button" data-zodiac-page="love" aria-controls="zodiac-love" aria-pressed="false"><span>我们为什么合拍</span><small>六个值得心动的理由</small></button>
+      <button type="button" data-zodiac-page="fortune" aria-controls="zodiac-fortune" aria-pressed="false"><span>把喜欢过成日常</span><small>给恋爱添一点甜</small></button>
+    </nav>
     <div class="zodiac-scroll">
-      <p id="zodiac-disclaimer" class="zodiac-disclaimer">文化解读，不是性格测验或未来预测。星座与性别不能决定你们是什么样的人；觉得像的可以聊聊，不像的就放下。</p>
-      <nav class="zodiac-nav" aria-label="星座内容栏目">
-        <button type="button" data-zodiac-page="profiles" aria-controls="zodiac-profiles" aria-pressed="true">性格 · 认识彼此</button>
-        <button type="button" data-zodiac-page="love" aria-controls="zodiac-love" aria-pressed="false">爱情 · 好好相爱</button>
-        <button type="button" data-zodiac-page="fortune" aria-controls="zodiac-fortune" aria-pressed="false">运势 · 好运提案</button>
-      </nav>
-      <section id="zodiac-profiles" data-zodiac-section="profiles" aria-label="双人星座性格画像">
-        <p class="zodiac-section-note">以下是占星文化中常见的性格原型，非对你们本人的判断。相处建议为原创。</p>
+      <section id="zodiac-profiles" data-zodiac-section="profiles" aria-label="两颗星的模样">
+        <div class="zodiac-intro"><div class="zodiac-orbit" aria-hidden="true"><span>♏&#xfe0e;</span><i>♡</i><span>♌&#xfe0e;</span></div><div><span class="zodiac-eyebrow">TWO DIFFERENT LIGHTS, ONE LITTLE UNIVERSE</span><h3>你有你的深海，我有我的太阳。</h3><p>一个让爱有深度，一个让爱有温度。先看看各自的可爱，再一起发现：原来不同的光，也可以把同一个世界照亮。</p></div></div>
         <div class="zodiac-profiles">
           {% for profile in site.data.zodiac.profiles %}
           <article class="zodiac-profile zodiac-profile--{{ profile.id }}">
-            <header><span class="zodiac-symbol" aria-hidden="true">{{ profile.symbol }}&#xfe0e;</span><div><span class="zodiac-eyebrow">{{ profile.english }} · {{ profile.element }}</span><h3>{{ profile.name }}</h3></div></header>
+            <header><div><span class="zodiac-eyebrow">{{ profile.english }} · {{ profile.element }}</span><h3>{{ profile.name }}</h3></div><span class="zodiac-symbol" aria-hidden="true">{{ profile.symbol }}&#xfe0e;</span></header>
             <p class="zodiac-tagline">{{ profile.image }}</p>
-            <h4>值得欣赏的亮点</h4><ul>{% for item in profile.strengths %}<li>{{ item }}</li>{% endfor %}</ul>
-            <h4>需要留意的另一面</h4><ul>{% for item in profile.edges %}<li>{{ item }}</li>{% endfor %}</ul>
-            <div class="zodiac-love-note"><h4>把喜欢，变成对方感受得到的事</h4><p>{{ profile.love }}</p></div>
-            <a href="{{ profile.source }}" target="_blank" rel="noopener">原型参考 · Astrology.com ↗</a>
+            <div class="zodiac-tags">{% for tag in profile.tags %}<span>{{ tag }}</span>{% endfor %}</div>
+            <p class="zodiac-profile-intro">{{ profile.intro }}</p>
+            <div class="zodiac-traits">{% for trait in profile.traits %}<div><h4>{{ trait.title }}</h4><p>{{ trait.text }}</p></div>{% endfor %}</div>
+            <div class="zodiac-love-note"><h4>恋爱里的可爱之处</h4><p>{{ profile.love }}</p><h4>这样被爱，会很幸福</h4><p>{{ profile.receive }}</p></div>
+            <p class="zodiac-gift">{{ profile.gift }}</p>
           </article>
           {% endfor %}
         </div>
+        <div class="zodiac-closing"><span aria-hidden="true">✦</span><p>一个值得被热烈回应，一个值得被认真珍惜。<br><strong>而这两件事，你们刚好可以送给彼此。</strong></p><button type="button" data-zodiac-page="love" aria-controls="zodiac-love">看看我们为什么合拍 <span aria-hidden="true">→</span></button></div>
       </section>
-      <section id="zodiac-love" data-zodiac-section="love" hidden aria-label="爱情与相处指南">
-        <div class="zodiac-pair"><span aria-hidden="true">♏ <i>♡</i> ♌</span><h3>不必一模一样，也可以站在同一边。</h3><p>不打“命定配对”分数。相似的认真值得珍惜，不同的表达可以慢慢学会。</p></div>
-        <div class="zodiac-relationship">{% for item in site.data.zodiac.relationship %}<article><h4>{{ item.title }}</h4><p>{{ item.text }}</p></article>{% endfor %}</div>
-        <p class="zodiac-section-note">原型与配对主题参考 <a href="https://www.astrology.com/love/compatibility/leo-scorpio.html" target="_blank" rel="noopener">Astrology.com 配对解读 ↗</a>；生活建议与下面的话术为原创，不是关系成功的保证。</p>
-        <h3>异地也能用的小小表达</h3><div class="zodiac-scenarios">{% for item in site.data.zodiac.scenarios %}<article><h4>{{ item.title }}</h4><blockquote>{{ item.words }}</blockquote><p>{{ item.note }}</p></article>{% endfor %}</div>
+      <section id="zodiac-love" data-zodiac-section="love" hidden aria-label="我们为什么合拍">
+        <div class="zodiac-pair"><span class="zodiac-eyebrow">A MATCH WORTH CHOOSING</span><h3>是恋人，也是彼此的底气。</h3><p>喜欢这组搭配，是因为深情能遇见回应，热烈能遇见珍惜。<br>不需要变成同一种人，也有很多理由把日子过在一起。</p><div class="zodiac-match-ribbon"><span>认真被看见</span><i>♡</i><span>快乐被分享</span><i>♡</i><span>未来被期待</span></div></div>
+        <div class="zodiac-relationship">{% for item in site.data.zodiac.relationship %}<article><span class="zodiac-match-theme">{{ item.theme }}</span><h4>{{ item.title }}</h4><p>{{ item.text }}</p><blockquote>{{ item.scene }}</blockquote></article>{% endfor %}</div>
+        <div class="zodiac-letter"><span class="zodiac-eyebrow">给正在认真相爱的你们</span><h3>在一起，是一件值得开心的事。</h3><p>小庸的认真，可以成为 ZY 放心分享快乐的地方；ZY 的明亮，也可以让小庸藏在细节里的喜欢得到回应。你们可以一起期待见面，一起为小进步高兴，也一起把不那么轻松的日子过得柔软一点。</p><p>为这段恋爱打气，不只是说一句“你们很配”，也是想说：<strong>这份相互欣赏、相互靠近的可能，真的很美好。</strong>愿深情有回声，愿热烈被珍惜，愿你们每一次想到“我们”，都会忍不住笑一下。</p><div class="zodiac-letter-sign">给深海，也给太阳。<span>小庸 ♡ ZY</span></div></div>
       </section>
-      <section id="zodiac-fortune" data-zodiac-section="fortune" hidden aria-label="运势与好运提案">
-        <p class="zodiac-section-note">这里的“运势”是一份积极的行动灵感，不是天象推算。按设备日期从7组原创提案中轮换，也可以手动换一组；不预测财运、健康或关系结果。</p>
-        <div class="zodiac-fortune-heading"><div><span class="zodiac-eyebrow">把好运，做成今天的小事</span><h3>今日好运提案</h3></div><button type="button" data-zodiac-next>换一份好运提案 ↻</button></div>
+      <section id="zodiac-fortune" data-zodiac-section="fortune" hidden aria-label="把喜欢过成日常">
+        <div class="zodiac-fortune-heading"><div><span class="zodiac-eyebrow">LOVE, IN THE LITTLE THINGS</span><h3>今天，也给恋爱添一点甜。</h3><p>七份小约定，每天翻开一份。想多读一点，就再换一页。</p></div><button type="button" data-zodiac-next>再翻一份小约定 <span aria-hidden="true">↻</span></button></div>
         <div class="zodiac-rituals" aria-live="polite" aria-atomic="true">
-          {% for ritual in site.data.zodiac.rituals %}<article data-zodiac-ritual {% unless forloop.first %}hidden{% endunless %}><span class="zodiac-ritual-index">提案 {{ forloop.index }} / {{ site.data.zodiac.rituals.size }}</span><h3>{{ ritual.title }}</h3><div class="zodiac-ritual-grid"><div><h4>给天蝎男生</h4><p>{{ ritual.him }}</p></div><div><h4>给狮子女生</h4><p>{{ ritual.her }}</p></div><div><h4>两个人的爱情小事</h4><p>{{ ritual.together }}</p></div></div><blockquote>{{ ritual.line }}</blockquote></article>{% endfor %}
+          {% for ritual in site.data.zodiac.rituals %}<article data-zodiac-ritual {% unless forloop.first %}hidden{% endunless %}><span class="zodiac-ritual-index">我们的恋爱小约定 · {{ forloop.index }} / {{ site.data.zodiac.rituals.size }}</span><h3>{{ ritual.title }}</h3><div class="zodiac-ritual-grid"><div><h4>小庸的深情</h4><p>{{ ritual.him }}</p></div><div><h4>ZY 的明亮</h4><p>{{ ritual.her }}</p></div><div><h4>一起做，会更甜</h4><p>{{ ritual.together }}</p></div></div><blockquote>{{ ritual.line }}</blockquote></article>{% endfor %}
         </div>
-        <p class="zodiac-section-note">想读网站当天的占星运势？<a href="https://www.astrology.com/horoscope/daily/scorpio.html" target="_blank" rel="noopener">天蝎每日运势 ↗</a> · <a href="https://www.astrology.com/horoscope/daily/leo.html" target="_blank" rel="noopener">狮子每日运势 ↗</a>（第三方娱乐内容，本站不自动抓取，也不把它当作事实。）</p>
-        <details class="zodiac-sources"><summary>网络运势摘读 · 2026-09-14 静态存档</summary><p>下列是本次核查到的文章主题概括，不是实时运势；原站每日页面会更新。它们是占星作者的娱乐性解读，不代表当天一定会发生这些事。</p><div class="zodiac-relationship"><article><h4>天蝎 · 表达喜欢，也留足空间</h4><p>该日文章关注亲密需求与朋友的支持，同时提醒不要因急于获得回应而给对方压力。可以把它当作一次温柔表达的灵感，不必把晚回消息看成坏兆头。</p><a href="https://www.astrology.com/horoscope/daily/scorpio.html" target="_blank" rel="noopener">Renee Watt · 天蝎原文 ↗</a></article><article><h4>狮子 · 明亮的人，也值得被照顾</h4><p>该日文章侧重感受被温柔对待，以及借助细致工作整理情绪，也提到对回应的敏感。可以借此聊聊“我希望怎样被关心”，但不据此判断别人是否爱你。</p><a href="https://www.astrology.com/horoscope/daily/leo.html" target="_blank" rel="noopener">Renee Watt · 狮子原文 ↗</a></article></div></details>
+        <div class="zodiac-section-heading"><span class="zodiac-eyebrow">WORDS TO KEEP CLOSE</span><h3>有些喜欢，就直接说出来。</h3><p>异地的时候也用得上。把心意说具体，距离就少一点存在感。</p></div>
+        <div class="zodiac-scenarios">{% for item in site.data.zodiac.scenarios %}<article><h4>{{ item.title }}</h4><blockquote>{{ item.words }}</blockquote><p>{{ item.note }}</p></article>{% endfor %}</div>
+        <div class="zodiac-closing"><span aria-hidden="true">♡</span><p>最好的“很配”，是我喜欢你的样子，<br><strong>也喜欢我们在一起时的样子。</strong></p></div>
       </section>
-      <details class="zodiac-sources"><summary>资料来源与客观性说明</summary><p>资料核查：{{ site.data.zodiac.checked }}。性格原型与配对主题参考 Astrology.com；它是占星内容网站，并非人格或关系预测的科学证据。本站没有你们的出生时间、地点，也没有进行本命盘、合盘或行运计算。</p><p>占星预测不能作为可靠的人格评估或未来判断工具。相关科学检验可参见 <a href="https://www.nature.com/articles/318419a0" target="_blank" rel="noopener">Carlson（1985），Nature 双盲研究 ↗</a>。不要依据本组件做健康、财务或重要关系决定。</p><p>昵称和男女身份来自你们的设定；性格描述不以性别区分能力、义务或价值。情话、场景话术和好运提案为本站原创，可以由双方互换使用。</p></details>
+      <footer class="zodiac-footnote">以常见星座意象为灵感，写给小庸与 ZY 的原创恋爱小册。性格各有不同，甜蜜由你们一起创造。</footer>
     </div>
   </section>
 </div>

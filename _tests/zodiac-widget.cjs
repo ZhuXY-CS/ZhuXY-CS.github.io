@@ -21,7 +21,8 @@ function fixture() {
   const sections=nav.map((n,i)=>Object.assign(element('SECTION'),{dataset:{zodiacSection:n.dataset.zodiacPage},hidden:i!==0}));
   const rituals=Array.from({length:7},()=>element('ARTICLE'));
   close.matches='[data-zodiac-close]';next.matches='[data-zodiac-next]';
-  dialog.querySelector=s=>({'.zodiac-panel':panel,'button[data-zodiac-close]':close}[s]);
+  const scrollArea={scrollTop:0};
+  dialog.querySelector=s=>({'.zodiac-scroll':scrollArea,'.zodiac-panel':panel,'button[data-zodiac-close]':close}[s]);
   dialog.querySelectorAll=s=>({'[data-zodiac-ritual]':rituals,'[data-zodiac-page]':nav,'[data-zodiac-section]':sections}[s]||[]);
   panel.querySelectorAll=()=>[close,...nav,next];
   document.body=element('BODY');document.body.children=[main,other,dialog];
@@ -29,7 +30,7 @@ function fixture() {
   vm.runInNewContext(source+'\nsetupZodiac();',{document,Element:Object,Date,CustomEvent:class{constructor(type,init){this.type=type;this.detail=init.detail;}}});
   function click(target){dialog.listeners.click({target});}
   function key(key,shiftKey=false){let prevented=false;document.listeners.keydown({key,shiftKey,preventDefault(){prevented=true;}});return prevented;}
-  return {document,launch,dialog,panel,close,next,main,other,nav,sections,rituals,events,click,key};
+  return {scrollArea,document,launch,dialog,panel,close,next,main,other,nav,sections,rituals,events,click,key};
 }
 test('opening pauses once, closing restores focus and previous inert states',()=>{
   const f=fixture(); f.launch.focus(); f.launch.listeners.click();f.launch.listeners.click();
@@ -56,4 +57,12 @@ test('seven proposals cycle without duplicates and persist on same-day reopen',(
 test('keyboard focus loops inside the dialog',()=>{
   const f=fixture();f.launch.listeners.click();assert.equal(f.key('Tab',true),true);assert.equal(f.document.activeElement,f.next);
   assert.equal(f.key('Tab'),true);assert.equal(f.document.activeElement,f.close);
+});
+
+test('in-content link selects its matching navigation tab and returns to the top',()=>{
+  const f=fixture();f.launch.listeners.click();f.scrollArea.scrollTop=700;
+  const cta={dataset:{zodiacPage:'love'},closest(s){return s==='[data-zodiac-page]'?this:null;}};
+  f.click(cta);assert.equal(f.nav.filter(n=>n.attrs['aria-pressed']==='true').length,1);
+  assert.equal(f.nav[1].attrs['aria-pressed'],'true');assert.equal(f.sections[1].hidden,false);
+  assert.equal(f.scrollArea.scrollTop,0);
 });

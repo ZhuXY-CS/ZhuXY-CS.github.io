@@ -904,6 +904,7 @@
     var dialog = document.getElementById('zodiac-dialog');
     if (!launch || !dialog) return;
     var panel = dialog.querySelector('.zodiac-panel');
+    var scrollArea = dialog.querySelector('.zodiac-scroll');
     var closeButton = dialog.querySelector('button[data-zodiac-close]');
     var lastFocused = null;
     var background = [];
@@ -957,11 +958,12 @@
       var button = target.closest('[data-zodiac-page]');
       if (!button) return;
       dialog.querySelectorAll('[data-zodiac-page]').forEach(function (item) {
-        item.setAttribute('aria-pressed', String(item === button));
+        item.setAttribute('aria-pressed', String(item.dataset.zodiacPage === button.dataset.zodiacPage));
       });
       dialog.querySelectorAll('[data-zodiac-section]').forEach(function (item) {
         item.hidden = item.dataset.zodiacSection !== button.dataset.zodiacPage;
       });
+      if (scrollArea) scrollArea.scrollTop = 0;
       updateDay();
     });
     document.addEventListener('keydown', function (event) {

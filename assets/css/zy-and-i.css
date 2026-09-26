@@ -1838,63 +1838,111 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 .love-tool-icons button::after { position: absolute; z-index: 5; left: 50%; bottom: -2.4rem; width: max-content; max-width: 13rem; padding: 0.35rem 0.5rem; border-radius: 6px; background: #493350; color: #fff; content: attr(title); font: 0.62rem/1.35 var(--love-font-cn); opacity: 0; pointer-events: none; transform: translate(-50%, -3px); transition: opacity 140ms ease, transform 140ms ease; }
 .love-tool-icons button:hover::after, .love-tool-icons button:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
 
-/* The two entries stay icon-only; their detailed copy lives in the dialogs. */
+/* A two-person love booklet: deep sea blue meets warm sunlight. */
 .zodiac-launch { margin-top: 0; }
-.zodiac-launch:focus-visible, .zodiac-dialog button:focus-visible, .zodiac-dialog a:focus-visible, .zodiac-dialog summary:focus-visible { outline: 2px solid #765783; outline-offset: 3px; }
-.zodiac-panel { width: min(1280px,100%); background: #fffcfa; }
-.zodiac-header { display: flex; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.8rem; background: linear-gradient(115deg,#382841 0%,#584163 60%,#755743 100%); color: #fff8ed; }
-.zodiac-eyebrow { font: 0.63rem var(--love-font-utility); letter-spacing: 0.12em; }
-.zodiac-header h2 { margin: 0.55rem 0; color: inherit; font: 500 clamp(1.45rem,2.5vw,2.2rem)/1.3 var(--love-font-cn); }
-.zodiac-header p { margin: 0; font: 0.8rem/1.6 var(--love-font-cn); color: #e9dbdf; }
-.zodiac-scroll { overflow: auto; min-height: 0; overscroll-behavior: contain; padding: 1rem 1.8rem 1.8rem; color: #493e4d; font: 0.83rem/1.85 var(--love-font-cn); }
+.zodiac-dialog button:focus-visible, .zodiac-launch:focus-visible { outline: 2px solid #8b2f72; outline-offset: 4px; }
+.zodiac-dialog .zodiac-panel { width: min(1120px,100%); grid-template-rows: auto auto minmax(0,1fr); background: #fffdfb; border-radius: 22px; border: 1px solid #e8dce0; box-shadow: 0 24px 90px #251e3540; }
+.zodiac-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 28px 36px 22px; background: #f7f0f3; color: #543348; }
+.zodiac-eyebrow { font: 11px/1.6 var(--love-font-utility); letter-spacing: .12em; }
+.zodiac-header h2 { margin: 8px 0; color: #543348; font: 600 clamp(24px,3vw,34px)/1.4 var(--love-font-cn); }
+.zodiac-header p { margin: 0; font: 14px/1.8 var(--love-font-cn); color: #816d77; }
+.zodiac-dialog .crime-map-dialog__close { min-width: 38px; min-height: 38px; background: #fff; }
+.zodiac-nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; padding: 12px 36px; background: #fffdfb; box-shadow: 0 5px 14px #54334806; z-index: 1; }
+.zodiac-nav button { padding: 11px 8px; border: 0; border-radius: 10px; background: transparent; color: #826e79; cursor: pointer; font: 500 15px/1.6 var(--love-font-cn); }
+.zodiac-nav small { display: block; margin-top: 3px; font: 11px/1.5 var(--love-font-cn); opacity: .8; }
+.zodiac-nav button[aria-pressed="true"] { color: #713951; background: #f4e7ed; }
+.zodiac-nav button:hover { background: #f8f0f3; }
+.zodiac-nav button[aria-pressed="true"]:hover { background: #f4e7ed; }
+.zodiac-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 20px 36px 28px; color: #615660; font: 14px/1.95 var(--love-font-cn); }
 .zodiac-scroll [hidden] { display: none !important; }
-.zodiac-scroll h3 { color: #493350; font-size: 1.2rem; }
-.zodiac-scroll h4 { font-size: 0.86rem; margin: 1rem 0 0.3rem; color: #624972; }
-.zodiac-scroll p { margin: 0.45rem 0; }
-.zodiac-scroll a { color: #735484; text-decoration: underline; text-underline-offset: 3px; }
-.zodiac-disclaimer, .zodiac-section-note { color: #766a78; font-size: 0.7rem; }
-.zodiac-disclaimer { padding: 0.3rem 0 0.65rem; border-bottom: 1px solid #e9dfea; }
-.zodiac-nav { display: flex; gap: 0.4rem; margin: 1rem 0; flex-wrap: wrap; }
-.zodiac-nav button, .zodiac-fortune-heading button { border: 1px solid #dacdda; border-radius: 999px; padding: 0.55rem 1rem; background: #fff; color: #614570; cursor: pointer; font: 0.76rem var(--love-font-cn); }
-.zodiac-nav button[aria-pressed="true"] { background: #574063; color: #fff8f3; border-color: #574063; }
-.zodiac-profiles { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.1rem; margin-top: 1rem; }
-.zodiac-profile { padding: 1.35rem; border: 1px solid #d9cde3; border-radius: 16px; background: #f4eff8; }
-.zodiac-profile--leo { background: #fff6e8; border-color: #e6d4b7; }
-.zodiac-profile header { display: flex; align-items: center; gap: 0.8rem; }
-.zodiac-profile h3 { margin: 0.25rem 0; }
-.zodiac-symbol { font: 3.8rem/1 var(--love-font-en); color: #735388; }
-.zodiac-profile--leo .zodiac-symbol, .zodiac-profile--leo h4 { color: #956426; }
-.zodiac-tagline { padding: 0.75rem 0; border-bottom: 1px solid #d9cddd; font-size: 0.9rem; }
-.zodiac-profile ul { padding-left: 1.2rem; margin: 0.4rem 0; }
-.zodiac-profile li { margin: 0.4rem 0; }
-.zodiac-profile > a { font-size: 0.67rem; }
-.zodiac-love-note { padding: 0.1rem 0.85rem 0.5rem; margin: 1rem 0; border-radius: 9px; background: #ffffff99; }
-.zodiac-pair { padding: 0.9rem 0 1.2rem; text-align: center; }
-.zodiac-pair > span { font-size: 2.6rem; color: #775489; }
-.zodiac-pair i { color: #ba914f; font-size: 1.3rem; font-style: normal; }
-.zodiac-pair h3 { margin: 0.3rem 0; }
-.zodiac-relationship { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0.3rem 1.5rem; }
-.zodiac-relationship article { padding: 0 0 0.7rem; border-bottom: 1px solid #e8dfea; }
-.zodiac-scenarios { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.8rem; }
-.zodiac-scenarios article { padding: 0.2rem 1rem 0.8rem; background: #f6f0f5; border-radius: 12px; }
-.zodiac-scroll blockquote { margin: 0.7rem 0; padding: 0 0 0 0.8rem; border-left: 2px solid #b58fbc; font-style: normal; color: #62436d; }
-.zodiac-fortune-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 1.5rem 0 1rem; }
-.zodiac-fortune-heading h3 { margin: 0.2rem 0; }
-.zodiac-rituals { border: 1px solid #e5d3b7; border-radius: 16px; padding: 1.5rem; background: linear-gradient(125deg,#fbf4fe,#fff5de); }
-.zodiac-ritual-index { color: #806c82; font: 0.65rem var(--love-font-utility); }
-.zodiac-rituals h3 { font-size: 1.6rem; margin: 0.6rem 0 1rem; }
-.zodiac-ritual-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.2rem; }
-.zodiac-rituals blockquote { margin-top: 1.8rem; font-size: 1.1rem; }
-.zodiac-sources { margin-top: 1.3rem; padding-top: 0.8rem; border-top: 1px solid #e8dfea; font-size: 0.7rem; color: #766a78; }
-.zodiac-sources summary { cursor: pointer; }
+.zodiac-scroll h3, .zodiac-scroll h4 { font-family: var(--love-font-cn); }
+.zodiac-scroll h3 { color: #513847; font-size: 23px; line-height: 1.5; }
+.zodiac-scroll h4 { font-size: 16px; line-height: 1.65; margin: 0 0 8px; color: #513847; }
+.zodiac-scroll p { margin: 0; }
+.zodiac-intro { display: grid; grid-template-columns: 168px 1fr; align-items: center; gap: 28px; padding: 8px 0 30px; }
+.zodiac-intro h3 { margin: 7px 0 10px; }
+.zodiac-intro .zodiac-eyebrow { color: #947b87; font-size: 10px; }
+.zodiac-orbit { display: flex; align-items: center; justify-content: center; height: 120px; position: relative; }
+.zodiac-orbit span { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: #eaf1f6; color: #365b75; font: 46px/1 Georgia,serif; }
+.zodiac-orbit span:last-child { background: #fff0d8; color: #9b6a29; }
+.zodiac-orbit i { position: absolute; z-index: 1; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #fffdfb; color: #a45f7a; font: 21px/1 Georgia,serif; }
+.zodiac-profiles { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.zodiac-profile { --zodiac-color: #365b75; --zodiac-tint: #eaf1f6; padding: 26px; background: #f4f8fb; border: 1px solid #dbe5ed; border-radius: 16px; }
+.zodiac-profile--leo { --zodiac-color: #976222; --zodiac-tint: #f9ecd7; background: #fffbf2; border-color: #efe1c9; }
+.zodiac-profile header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.zodiac-profile .zodiac-eyebrow { color: var(--zodiac-color); font-size: 10px; }
+.zodiac-profile h3 { margin: 5px 0 0; color: var(--zodiac-color); font-size: 24px; }
+.zodiac-symbol { color: var(--zodiac-color); font: 44px/1 Georgia,serif; }
+.zodiac-scroll .zodiac-tagline { margin: 18px 0 12px; font-size: 17px; font-weight: 600; color: var(--zodiac-color); }
+.zodiac-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.zodiac-tags span { padding: 2px 10px; border-radius: 5px; background: var(--zodiac-tint); color: var(--zodiac-color); font-size: 12px; }
+.zodiac-profile-intro { padding-bottom: 22px; }
+.zodiac-traits > div { margin-bottom: 22px; }
+.zodiac-profile h4 { color: var(--zodiac-color); }
+.zodiac-love-note { margin-top: 6px; padding: 20px; border-radius: 10px; background: #ffffffc7; }
+.zodiac-love-note h4:not(:first-child) { margin-top: 20px; }
+.zodiac-scroll .zodiac-gift { margin-top: 22px; color: var(--zodiac-color); font-size: 13px; font-weight: 600; }
+.zodiac-closing { padding: 34px 0 8px; text-align: center; color: #81526a; }
+.zodiac-closing > span { display: block; font: 26px/1 Georgia,serif; margin-bottom: 14px; }
+.zodiac-closing p { font-size: 17px; line-height: 1.9; }
+.zodiac-closing strong { font-weight: 600; }
+.zodiac-closing button, .zodiac-fortune-heading button { margin-top: 20px; padding: 11px 18px; border: 1px solid #d9bcc9; border-radius: 8px; background: #fff; color: #81526a; font: 14px/1.5 var(--love-font-cn); cursor: pointer; }
+.zodiac-pair { padding: 12px 0 28px; text-align: center; }
+.zodiac-pair .zodiac-eyebrow { color: #9b7587; }
+.zodiac-pair h3 { font-size: 29px; margin: 8px 0 14px; }
+.zodiac-match-ribbon { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 22px; color: #86516b; font-size: 13px; }
+.zodiac-match-ribbon i { font-style: normal; color: #bd8ba2; }
+.zodiac-relationship { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.zodiac-relationship article { padding: 24px; border: 1px solid #ecdee5; border-radius: 14px; background: #fff; }
+.zodiac-match-theme { display: inline-block; color: #946d80; font-size: 12px; margin-bottom: 12px; }
+.zodiac-relationship blockquote { margin: 18px 0 0; padding: 14px 16px; background: #faf3f6; border: 0; border-radius: 8px; color: #87536c; font-size: 13px; }
+.zodiac-letter { margin-top: 28px; padding: 30px 36px; background: #f7f0f3; border-radius: 14px; }
+.zodiac-letter h3 { margin: 10px 0 16px; }
+.zodiac-letter p + p { margin-top: 16px; }
+.zodiac-letter-sign { margin-top: 24px; font-size: 13px; color: #9b7185; }
+.zodiac-letter-sign span { display: block; margin-top: 5px; font: italic 22px/1.6 var(--love-font-en); color: #80506a; }
+.zodiac-fortune-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 10px 0 24px; }
+.zodiac-fortune-heading h3 { margin: 8px 0; }
+.zodiac-fortune-heading button { margin: 0; flex-shrink: 0; }
+.zodiac-rituals { padding: 28px; border: 1px solid #ead7df; background: #faf3f6; border-radius: 16px; }
+.zodiac-ritual-index { color: #9a7083; font-size: 12px; }
+.zodiac-rituals h3 { margin: 8px 0 24px; font-size: 26px; }
+.zodiac-ritual-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.zodiac-ritual-grid h4 { font-size: 14px; }
+.zodiac-ritual-grid > div:first-child h4 { color: #365b75; }
+.zodiac-ritual-grid > div:nth-child(2) h4 { color: #976222; }
+.zodiac-rituals blockquote { border: 0; padding: 0; margin: 24px 0 0; font-size: 19px; line-height: 1.9; color: #86516b; }
+.zodiac-section-heading { margin: 32px 0 20px; }
+.zodiac-section-heading h3 { margin: 8px 0; }
+.zodiac-scenarios { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; }
+.zodiac-scenarios article { padding: 22px; background: #fff; border: 1px solid #eee5e8; border-radius: 12px; }
+.zodiac-scenarios h4 { font-size: 14px; }
+.zodiac-scenarios blockquote { margin: 12px 0; padding: 0; border: 0; font-size: 18px; color: #86516b; }
+.zodiac-scenarios p { font-size: 13px; }
+.zodiac-footnote { padding-top: 28px; font-size: 11px; color: #97848e; text-align: center; }
 @media (max-width:720px) {
-  .zodiac-header { padding: 1.1rem; }
-  .zodiac-scroll { padding: 0.8rem 1rem 1.2rem; }
+  .zodiac-dialog .zodiac-panel { border-radius: 16px; }
+  .zodiac-header { padding: 20px 18px 16px; }
+  .zodiac-header h2 { font-size: 23px; }
+  .zodiac-header p { font-size: 12px; }
+  .zodiac-nav { padding: 9px 10px; gap: 2px; }
+  .zodiac-nav button { padding: 10px 3px; font-size: 12px; }
+  .zodiac-nav small { display: none; }
+  .zodiac-scroll { padding: 18px 16px 24px; font-size: 14px; }
+  .zodiac-intro { grid-template-columns: 1fr; gap: 12px; text-align: center; }
+  .zodiac-orbit { height: 82px; }
+  .zodiac-intro h3 { font-size: 20px; }
+  .zodiac-intro .zodiac-eyebrow { font-size: 9px; letter-spacing: .06em; }
   .zodiac-profiles, .zodiac-relationship, .zodiac-scenarios, .zodiac-ritual-grid { grid-template-columns: 1fr; }
-  .zodiac-nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0.25rem; }
-  .zodiac-nav button { padding: 0.55rem 0.2rem; border-radius: 8px; font-size: 0.67rem; line-height: 1.7; }
-  .zodiac-profile, .zodiac-rituals { padding: 1rem; }
-  .zodiac-fortune-heading { align-items: start; flex-direction: column; gap: 0.5rem; }
+  .zodiac-profile, .zodiac-relationship article, .zodiac-rituals { padding: 22px 18px; }
+  .zodiac-profile h3 { font-size: 23px; }
+  .zodiac-pair h3 { font-size: 24px; }
+  .zodiac-match-ribbon { gap: 8px; font-size: 11px; }
+  .zodiac-letter { padding: 24px 20px; }
+  .zodiac-fortune-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .zodiac-fortune-heading h3 { font-size: 22px; }
+  .zodiac-ritual-grid { gap: 20px; }
+  .zodiac-closing p { font-size: 16px; }
 }
 
 .crime-map-dialog__eyebrow {
