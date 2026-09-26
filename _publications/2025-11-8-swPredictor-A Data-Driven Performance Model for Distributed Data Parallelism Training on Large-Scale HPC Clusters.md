@@ -25,15 +25,8 @@ bibtex: |
     year={2025},
     publisher={Elsevier}
   }
+detail_keywords: "swPredictor, FI-Net, FNO-Inception, Performance Modeling, HPC, Distributed Data Parallelism"
 ---
-
-
-**************************************************************
-
-**Keywords: swPredictor, FI-Net, FNO-Inception, Performance Modeling, HPC, Distributed Data Parallelism**
-
-
---------
 
 ## Abstract
 
@@ -43,6 +36,3 @@ Given the complexity of heterogeneous architectures and multi-node collaboration
 to fit complex nonlinear relationships. The experimental results demonstrate that FI-Net can accurately predict the performance of DDP training on the Sunway OceanLight supercomputer with an overall MAPE of 0.93%, which outperforms the other baseline models.
 </p>
 </div>
-
-
---------

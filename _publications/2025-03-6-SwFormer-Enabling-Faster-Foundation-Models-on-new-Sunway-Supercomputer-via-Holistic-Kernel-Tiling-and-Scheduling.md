@@ -24,15 +24,8 @@ bibtex: |
     year={2025},
     publisher={Springer}
   }
+detail_keywords: "Hardware/software interfaces, Computer Systems Organization, Processor Architectures, Programming Techniques, Software Engineering"
 ---
-
-
-**************************************************************
-
-**Keywords: Hardware/software interfaces, Computer Systems Organization, Processor Architectures, Programming Techniques, Software Engineering**
-
-
---------
 
 ## Abstract
 
@@ -42,12 +35,7 @@ Deep learning's continuous evolution has driven the creation of increasingly lar
 </p>
 </div>
 
-
---------
-
-
-
-<h2 id="demo"> 🌾 The video demo</h2>
+<h2 id="demo">The video demo</h2>
 
 <div style="text-align: center;">
   <video width="640" height="360" controls
@@ -57,5 +45,3 @@ Deep learning's continuous evolution has driven the creation of increasingly lar
     Your browser does not support the video tag.
   </video>
 </div>
-
---------

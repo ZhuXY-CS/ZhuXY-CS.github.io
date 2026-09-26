@@ -24,15 +24,8 @@ bibtex: |
     year={2024},
     publisher={Springer}
   }
+detail_keywords: "attention optimization, parallel programs, Sunway architecture, FlashAttention"
 ---
-
-
---------
-
-**Keywords: attention optimization, parallel programs, Sunway architecture, FlashAttention**
-
-
---------
 
 ## Abstract
 <div style="font-family: 'Times New Roman', Times, serif;">
@@ -42,6 +35,3 @@ This work proposes SWattention, a highly efficient method for computing the exac
 Compared with the standard attention, SWattention achieves around 2.0x speedup for FP32 training and 2.5x speedup for mixed-precision training. The sequence lengths range from 1k to 8k and scale up to 16k without being out of memory. As for the end-to-end performance, SWattention achieves up to 1.26x speedup for training GPT-style models, which demonstrates that SWattention enables longer sequence length for LLM training.
 </p>
 </div>
-
-
---------

@@ -11,8 +11,7 @@ keywords: "<strong>Cloud Collaboration</strong>, <strong>MEAN-SSD</strong>, <str
 rank: 2020
 ---
 
-********************************
-
+<h2>Project Overview</h2>
 <ul style="text-align: justify;">
 <li>Build MEAN-SSD to detect apple leaf diseases and pests.</li>
 <li>Detect diseases on mobile devices through cloud collaboration.</li>

@@ -23,15 +23,8 @@ bibtex: |
     journal={Journal of Computer Science and Technology (JCST)},
     year={2026}
   }
+detail_keywords: "Communication Optimization, Deep Learning, Distributed Training, Gradient Compression"
 ---
-
-
-**************************************************************
-
-**Keywords: Communication Optimization, Deep Learning, Distributed Training, Gradient Compression**
-
-
---------
 
 ## Abstract
 
@@ -40,6 +33,3 @@ bibtex: |
 Gradient sparsification algorithms improve communication efficiency in large-scale distributed training by selectively transmitting only the most significant gradient components. However, the existing TopK-based sparsification methods still suffer from computational bottlenecks and inefficient sparse communication procedures. In this paper, we introduce Chunk-GradComp, a novel framework designed to reduce the overhead incurred by gradient selection and hide communication latency. Chunk-GradComp consists of two main components. 1) Chunk-TopK partitions the target gradient into multiple chunks and performs TopK selection in a single chunk; 2) Chunk-AllGather divides the selected data into smaller segments for pipelined transmission. Additionally, it employs performance modeling to automatically determine the optimal pipeline depth. Experimental results demonstrate that Chunk-TopK can operate at a compression ratio as low as 0.1% with negligible accuracy loss. When combined, Chunk-TopK and Chunk-AllGather reduce the total communication time by up to 80%, achieving a 3× to 4.74× speedup over the DenseAllReduce baseline.
 </p>
 </div>
-
-
---------

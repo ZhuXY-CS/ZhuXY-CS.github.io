@@ -25,15 +25,8 @@ bibtex: |
     year={2023},
     publisher={IEEE}
   }
+detail_keywords: "apple leaf diseases, asymmetric convolution, real-time inference, mobile deployment"
 ---
-
-
---------
-
-**Keywords: apple leaf diseases, asymmetric convolution, real-time inference, mobile deployment**
-
-
---------
 
 ## Abstract
 <div style="font-family: 'Times New Roman', Times, serif;">
@@ -41,6 +34,3 @@ bibtex: |
 Early detection of apple leaf diseases is crucial for agricultural production. However, existing deep learning models are often too large and computationally expensive for real-time deployment on mobile devices. This paper proposes LAD-Net, a novel lightweight model for early apple leaf pests and diseases classification. The model incorporates asymmetric convolution and dilated convolution to reduce parameters while maintaining high accuracy. Experimental results show that LAD-Net achieves 98.58% accuracy on the apple leaf disease dataset with only 1.25MB model size, making it suitable for real-time inference on mobile devices. The model also demonstrates superior performance compared to existing lightweight models in terms of accuracy, model size, and inference speed.
 </p>
 </div>
-
-
---------

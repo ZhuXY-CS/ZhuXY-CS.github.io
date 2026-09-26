@@ -12,22 +12,13 @@ demo: "#demo"
 rank: 2022
 ---
 
-
-********************************
-
-<style>
-.page__content p, .page__content li {
-    text-align: justify !important;
-}
-</style>
-
-<h2>🎯 Project Aim</h2>
+<h2>Project Aim</h2>
 <ul style="text-align: justify;">
 <li>Design a lightweight deep learning pipeline that identifies early-stage apple leaf pests and diseases with high accuracy.</li>
 <li>Deploy the optimized model on Jetson TX2 and integrate it with an autonomous inspection robot for in-orchard monitoring.</li>
 </ul>
 
-<h2>📓 Project Content</h2>
+<h2>Project Content</h2>
 <ul style="text-align: justify;">
 <li>Collected field images covering eight early-stage apple leaf diseases and expanded the dataset ~12× through digital augmentation to support robust training.</li>
 <li>Adopted Mosaic augmentation and proposed the Apple-CSP lightweight module to improve recognition of small lesion targets while keeping the network compact.</li>
@@ -35,7 +26,7 @@ rank: 2022
 <li>Ported the models to Jetson TX2 and collaborated on a wheeled inspection robot with remote monitoring, autonomous navigation, and cloud data synchronization.</li>
 </ul>
 
-<h2>🪨 Project Difficulties</h2>
+<h2>Project Difficulties</h2>
 <p style="text-align: justify;">Key challenges encountered during the project included:</p>
 <ul style="text-align: justify;">
 <li>Capturing sufficient early-stage disease imagery under natural light while maintaining dataset diversity and quality after augmentation.</li>
@@ -43,8 +34,7 @@ rank: 2022
 <li>Achieving stable hardware-software integration on the resource-constrained Jetson TX2 platform, including navigation, perception, and cloud connectivity for the inspection robot.</li>
 </ul>
 
-
-<h2 id="demo"> 🌾 The demo of detection in the field experiment</h2>
+<h2 id="demo">The demo of detection in the field experiment</h2>
 
 <div style="text-align: center;">
   <video width="640" height="360" controls

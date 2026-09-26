@@ -24,15 +24,8 @@ bibtex: |
     year={2022},
     publisher={IEEE}
   }
+detail_keywords: "YOLOv5, mobile detection, apple leaf diseases, early detection"
 ---
-
-
---------
-
-**Keywords: YOLOv5, mobile detection, apple leaf diseases, early detection**
-
-
---------
 
 ## Abstract
 <div style="font-family: 'Times New Roman', Times, serif;">
@@ -40,6 +33,3 @@ bibtex: |
 This paper presents Apple-YOLO, a novel mobile terminal detector based on YOLOv5 for early detection of apple leaf diseases. The proposed method improves upon the original YOLOv5 architecture by incorporating mobile-specific optimizations and early disease detection capabilities. Experimental results demonstrate that Apple-YOLO achieves superior performance in terms of accuracy and speed compared to existing mobile detection methods for agricultural applications.
 </p>
 </div>
-
-
---------

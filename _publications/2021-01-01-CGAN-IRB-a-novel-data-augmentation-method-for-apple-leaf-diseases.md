@@ -24,15 +24,8 @@ bibtex: |
     year={2021},
     publisher={IEEE}
   }
+detail_keywords: "CGAN, data augmentation, apple leaf diseases, IRB"
 ---
-
-
---------
-
-**Keywords: CGAN, data augmentation, apple leaf diseases, IRB**
-
-
---------
 
 ## Abstract
 <div style="font-family: 'Times New Roman', Times, serif;">
@@ -40,6 +33,3 @@ bibtex: |
 This paper presents CGAN-IRB, a novel data augmentation method for apple leaf diseases using Conditional Generative Adversarial Networks with Inverted Residual Block. The proposed method addresses the challenge of limited training data in agricultural disease detection by generating synthetic samples that maintain the characteristics of real apple leaf diseases. Experimental results demonstrate the effectiveness of the proposed approach in improving model performance for apple leaf disease classification tasks.
 </p>
 </div>
-
-
---------

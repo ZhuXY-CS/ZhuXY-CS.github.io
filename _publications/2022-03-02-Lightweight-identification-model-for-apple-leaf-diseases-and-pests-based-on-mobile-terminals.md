@@ -24,15 +24,8 @@ bibtex: |
     year={2022},
     publisher={Chinese Society of Agricultural Engineering}
   }
+detail_keywords: "mobile terminals, ALS-Net, apple leaf diseases, lightweight model"
 ---
-
-
---------
-
-**Keywords: mobile terminals, ALS-Net, apple leaf diseases, lightweight model**
-
-
---------
 
 ## Abstract
 <div style="font-family: 'Times New Roman', Times, serif;">
@@ -40,6 +33,3 @@ bibtex: |
 This paper presents a lightweight identification model for apple leaf diseases and pests based on mobile terminals. The proposed ALS-Net architecture combines depthwise separable convolution and channel shuffle to achieve high accuracy while maintaining low computational complexity. The model is specifically designed for deployment on mobile devices with limited computational resources. Experimental results demonstrate the effectiveness of the proposed approach in real-world agricultural applications.
 </p>
 </div>
-
-
---------
