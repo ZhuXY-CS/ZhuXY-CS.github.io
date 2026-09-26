@@ -241,13 +241,46 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"11th Student RDMA Programming Competition", <b>Third Prize</b> </li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 Mathematical Contest in Modeling (MCM)", <b>Meritorious Winner</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"12th Blue Bridge Cup Competition", Provincial Competition <b>First Prize</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2021 Group Programming Ladder Tournament", National <b>Third Prize</b></li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"2022 The Competition of Computer Design", <b>First Prize</b> in Northwest Region</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">"12th National Mathematics Competition for College Students", <b>Second Prize</b></li>
+<ul class="competition-list">
+  <li class="competition-entry">
+    <strong class="competition-award">Third Prize</strong>
+    <div class="competition-body">
+      <span class="competition-name">11th Student RDMA Programming Competition</span>
+    </div>
+  </li>
+  <li class="competition-entry">
+    <strong class="competition-award">Meritorious Winner</strong>
+    <div class="competition-body">
+      <span class="competition-name">2022 Mathematical Contest in Modeling (MCM)</span>
+    </div>
+  </li>
+  <li class="competition-entry">
+    <strong class="competition-award">First Prize</strong>
+    <div class="competition-body">
+      <span class="competition-name">12th Blue Bridge Cup Competition</span>
+      <span class="competition-level">Provincial Competition</span>
+    </div>
+  </li>
+  <li class="competition-entry">
+    <strong class="competition-award">Third Prize</strong>
+    <div class="competition-body">
+      <span class="competition-name">2021 Group Programming Ladder Tournament</span>
+      <span class="competition-level">National</span>
+    </div>
+  </li>
+  <li class="competition-entry">
+    <strong class="competition-award">First Prize</strong>
+    <div class="competition-body">
+      <span class="competition-name">2022 The Competition of Computer Design</span>
+      <span class="competition-level">Northwest Region</span>
+    </div>
+  </li>
+  <li class="competition-entry">
+    <strong class="competition-award">Second Prize</strong>
+    <div class="competition-body">
+      <span class="competition-name">12th National Mathematics Competition for College Students</span>
+    </div>
+  </li>
 </ul>
 
 </div>

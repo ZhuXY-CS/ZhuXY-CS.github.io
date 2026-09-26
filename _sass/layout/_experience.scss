@@ -40,3 +40,43 @@
     .experience-date { padding-top: 0; font-size: 13px; }
   }
 }
+
+/* Competition results use the same leading-column rhythm as experience. */
+.page__content #competition {
+  .competition-list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 24px 0 32px !important;
+  }
+  .competition-entry {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    column-gap: 28px;
+    padding: 0 !important;
+    margin: 0 0 24px !important;
+  }
+  .competition-award {
+    color: #175d88;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .competition-name {
+    display: block;
+    color: #203447;
+    line-height: 1.65;
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  .competition-level {
+    display: block;
+    margin-top: 4px;
+    color: #647381;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  @media (max-width: 600px) {
+    .competition-entry { grid-template-columns: minmax(0, 1fr); row-gap: 7px; }
+  }
+}
