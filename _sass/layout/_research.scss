@@ -30,7 +30,7 @@
   .research-affiliations { margin-top: 8px; color: #647381; font-size: 13px; line-height: 1.65; }
   .research-venue, .research-project-meta { margin: 16px 0 0; font-size: 15px; line-height: 1.65; }
   .research-venue cite { color: #203447; font-style: normal; font-weight: 600; }
-  .research-summary { max-width: 780px; margin: 14px 0 0; color: #647381; line-height: 1.7; }
+  .research-summary { max-width: 780px; margin: 14px 0 0; color: #647381; line-height: 1.7; text-align: justify; text-align-last: left; hyphens: auto; }
   .research-resources { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
   .research-resources a {
     display: inline-flex; align-items: center; gap: 12px;
@@ -54,7 +54,11 @@
     p, li {
       font-family: Georgia, "Times New Roman", serif !important;
       font-size: 17px !important; line-height: 1.85 !important;
-      color: #344452 !important; text-align: left !important;
+      color: #344452 !important;
+      text-align: justify !important;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
     }
     li { margin-bottom: 10px !important; padding-left: 4px; }
     ul, ol { margin-bottom: 24px !important; }
