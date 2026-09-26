@@ -17,6 +17,9 @@
     // Keep the entire scroll area below the fixed masthead and inside the viewport.
     &.sticky {
       position: fixed;
+      // Match the 200px reserved by the desktop content layout, not viewport columns.
+      width: 200px;
+      max-width: 200px;
       top: $masthead-height + 16px;
       height: auto;
       max-height: calc(100vh - #{$masthead-height} - 32px);
@@ -26,8 +29,13 @@
       padding-top: 0;
       padding-bottom: 16px;
       margin-bottom: 0;
-      scrollbar-width: thin;
-      scrollbar-color: #aebbc5 transparent;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+      .author__urls a {
+        width: fit-content;
+        max-width: 100%;
+      }
     }
   }
 
