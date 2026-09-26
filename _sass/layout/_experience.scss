@@ -1,0 +1,42 @@
+/* Dates form a readable first column; spacing groups each role and institution. */
+.page__content #internship {
+  .experience-list {
+    list-style: none;
+    padding: 0 !important;
+    margin: 24px 0 32px !important;
+  }
+  .experience-entry {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    column-gap: 28px;
+    padding: 0 !important;
+    margin: 0 0 26px !important;
+  }
+  .experience-date {
+    display: block;
+    padding-top: 2px;
+    color: #175d88;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+  }
+  .experience-role { display: block; color: #203447; font-size: 17px; line-height: 1.5; }
+  .experience-organization { margin-top: 3px; color: #344452; line-height: 1.65; }
+  .experience-note {
+    margin: 6px 0 0 !important;
+    color: #647381 !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+  .experience-organization, .experience-note {
+    text-align: justify;
+    text-align-last: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  @media (max-width: 600px) {
+    .experience-entry { grid-template-columns: minmax(0, 1fr); row-gap: 7px; }
+    .experience-date { padding-top: 0; font-size: 13px; }
+  }
+}

@@ -142,20 +142,67 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <h2>⭐ Experience & Academic Service</h2>
 
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
-
-<ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Reviewer</strong>, IEEE Transactions on Parallel and Distributed Systems (TPDS), 2026--Present</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Research Assistant</strong>, Systems and Networking Lab, The University of Hong Kong, Jul.--Sep. 2025; supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>, focusing on distributed training for unified multimodal large models</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, Hong Kong PhD Fellowship Summer Workshop, The Chinese University of Hong Kong, Jul. 2025</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, CCF HPC China 2023, Aug. 2023</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Teaching Assistant</strong>, Parallel Computing, Fall 2022</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>AI Trainee</strong>, Tedu Group, Summer 2022; developed a multi-object image annotation platform</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Participant</strong>, Baidu AI Talents Camp, Summer 2021; studied machine learning and PaddlePaddle</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Staff Member</strong>, New Media Center, Northwest A&F University, 2019--2020</li>
+<ul class="experience-list">
+  <li class="experience-entry">
+    <span class="experience-date">2026 – Present</span>
+    <div class="experience-body">
+      <strong class="experience-role">Reviewer</strong>
+      <div class="experience-organization">IEEE Transactions on Parallel and Distributed Systems (TPDS)</div>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Jul – Sep 2025</span>
+    <div class="experience-body">
+      <strong class="experience-role">Research Assistant</strong>
+      <div class="experience-organization">Systems and Networking Lab, The University of Hong Kong</div>
+      <p class="experience-note">Supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>, focusing on distributed training for unified multimodal large models.</p>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Jul 2025</span>
+    <div class="experience-body">
+      <strong class="experience-role">Participant</strong>
+      <div class="experience-organization">Hong Kong PhD Fellowship Summer Workshop, The Chinese University of Hong Kong</div>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Aug 2023</span>
+    <div class="experience-body">
+      <strong class="experience-role">Participant</strong>
+      <div class="experience-organization">CCF HPC China 2023</div>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Fall 2022</span>
+    <div class="experience-body">
+      <strong class="experience-role">Teaching Assistant</strong>
+      <div class="experience-organization">Parallel Computing</div>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Summer 2022</span>
+    <div class="experience-body">
+      <strong class="experience-role">AI Trainee</strong>
+      <div class="experience-organization">Tedu Group</div>
+      <p class="experience-note">Developed a multi-object image annotation platform.</p>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">Summer 2021</span>
+    <div class="experience-body">
+      <strong class="experience-role">Participant</strong>
+      <div class="experience-organization">Baidu AI Talents Camp</div>
+      <p class="experience-note">Studied machine learning and PaddlePaddle.</p>
+    </div>
+  </li>
+  <li class="experience-entry">
+    <span class="experience-date">2019 – 2020</span>
+    <div class="experience-body">
+      <strong class="experience-role">Staff Member</strong>
+      <div class="experience-organization">New Media Center, Northwest A&F University</div>
+    </div>
+  </li>
 </ul>
-
-</div>
 
 </section>
 
