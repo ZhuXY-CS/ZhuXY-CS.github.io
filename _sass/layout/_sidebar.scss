@@ -14,10 +14,21 @@
   margin-bottom: 1em;
 
   @media screen and (min-width: $sidebar-screen-min-width) {
-    height: 100vh;
-    overflow-y: auto;               // Add scrollbar if the sidebar is too long
-    position: fixed;
-    padding-top: $masthead-height;
+    // Keep the entire scroll area below the fixed masthead and inside the viewport.
+    &.sticky {
+      position: fixed;
+      top: $masthead-height + 16px;
+      height: auto;
+      max-height: calc(100vh - #{$masthead-height} - 32px);
+      max-height: calc(100dvh - #{$masthead-height} - 32px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-top: 0;
+      padding-bottom: 16px;
+      margin-bottom: 0;
+      scrollbar-width: thin;
+      scrollbar-color: #aebbc5 transparent;
+    }
   }
 
   @include breakpoint($large) {
