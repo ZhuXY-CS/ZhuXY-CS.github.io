@@ -2,15 +2,15 @@
    Palette: ink #203447, text #344452, muted #647381,
    link #175d88, surface #f3f6f8, paper #ffffff. */
 .research-page {
-  padding-top: 26px;
+  padding-top: 20px;
   padding-bottom: 48px;
   overflow-wrap: break-word;
 
-  .page__inner-wrap { max-width: 1040px; }
+  .page__inner-wrap { max-width: 940px; }
   .research-back { color: #647381; font-size: 13px; text-decoration: none; }
   .research-back:hover { color: #175d88; text-decoration: underline; }
   .research-eyebrow {
-    margin: 32px 0 12px;
+    margin: 24px 0 10px;
     color: #175d88;
     font-size: 12px;
     font-weight: 700;
@@ -18,42 +18,41 @@
     text-transform: uppercase;
   }
   .page__title {
-    max-width: 1000px;
-    margin: 0 0 24px !important;
-    font-size: clamp(26px, 2.5vw, 38px) !important;
-    line-height: 1.22 !important;
+    max-width: 940px;
+    margin: 0 0 18px !important;
+    font-size: clamp(24px, 2.15vw, 30px) !important;
+    line-height: 1.35 !important;
     color: #203447 !important;
-    letter-spacing: -.035em !important;
-    text-wrap: balance;
+    letter-spacing: -.02em !important;
+    text-wrap: pretty;
   }
   .research-authors { color: #344452; font-size: 16px; line-height: 1.7; }
-  .research-affiliations { margin-top: 8px; color: #647381; font-size: 13px; line-height: 1.65; }
-  .research-venue, .research-project-meta { margin: 16px 0 0; font-size: 15px; line-height: 1.65; }
+  .research-affiliations { margin-top: 6px; color: #647381; font-size: 13px; line-height: 1.65; }
+  .research-venue, .research-project-meta { margin: 10px 0 0; font-size: 14px; line-height: 1.65; }
   .research-venue cite { color: #203447; font-style: normal; font-weight: 600; }
   .research-summary { max-width: 780px; margin: 14px 0 0; color: #647381; line-height: 1.7; text-align: justify; text-align-last: left; hyphens: auto; }
-  .research-resources { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+  .research-resources { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
   .research-resources a {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 9px 14px; border-radius: 5px; background: #f3f6f8;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 11px; border: 1px solid #dce5eb; border-radius: 4px; background: #fff;
     color: #175d88; font-size: 13px; font-weight: 600; text-decoration: none;
   }
-  .research-resources a:first-child { background: #175d88; color: #fff; }
   .research-resources a:hover { background: #e3edf3; color: #203447; }
   .research-keywords {
-    display: flex; gap: 16px; max-width: 880px; margin-top: 24px;
+    display: flex; gap: 12px; max-width: 100%; margin-top: 16px;
     color: #647381; font-size: 13px; line-height: 1.8;
   }
   .research-label { flex-shrink: 0; color: #344452; font-weight: 600; }
   .research-content {
-    max-width: 880px; margin-top: 36px;
+    max-width: 100%; margin-top: 26px;
     h2 {
-      margin: 34px 0 14px !important; padding: 0 !important; border: 0 !important;
-      color: #203447 !important; font-size: 22px !important;
+      margin: 28px 0 12px !important; padding: 0 !important; border: 0 !important;
+      color: #203447 !important; font-size: 20px !important;
     }
     > h2:first-child { margin-top: 0 !important; }
     p, li {
-      font-family: Georgia, "Times New Roman", serif !important;
-      font-size: 17px !important; line-height: 1.85 !important;
+      font-family: "Trebuchet MS", Helvetica, sans-serif !important;
+      font-size: 16px !important; line-height: 1.8 !important;
       color: #344452 !important;
       text-align: justify !important;
       text-align-last: left;
