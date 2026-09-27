@@ -1,12 +1,12 @@
 <svg class="dublin-atlas-svg" viewBox="0 0 900 800" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林完整22邮区与周边地理地图，点击色块查看资料"{% endif %}>
-  <rect width="900" height="800" fill="#e4f0f5"/>
-  <path d="{{ site.data.dublin_geography.land }}" fill="#eff0e7" stroke="#bacdc7" stroke-width="1.2" fill-rule="evenodd"/>
+  <rect width="900" height="800" fill="#eff6f8"/>
+  <path d="{{ site.data.dublin_geography.land }}" fill="#f6f7f2" stroke="#cbd9d5" stroke-width="0.8" fill-rule="evenodd"/>
   <text x="855" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
   <text x="730" y="310" class="atlas-water-label">IRISH SEA</text>
   <text x="730" y="331" class="atlas-water-label">爱尔兰海</text>
   <text x="670" y="425" class="atlas-water-label">DUBLIN BAY</text>
   {% for region in site.data.dublin_geography.regions %}
-  <path d="{{ region.d }}" fill="{{ region.color }}" stroke="#fffdfd" stroke-width="1.6" fill-rule="evenodd" class="atlas-region{% if region.code == 'D18' %} is-selected{% endif %}" {% unless include.preview %}data-atlas-region="{{ region.code }}" tabindex="0" role="button" aria-label="查看 Dublin {{ region.label | remove: 'D' }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}"{% endunless %}>
+  <path d="{{ region.d }}" fill="{{ region.color }}" stroke="#fffdfd" stroke-width="0.9" fill-rule="evenodd" class="atlas-region{% if region.code == 'D18' %} is-selected{% endif %}" {% unless include.preview %}data-atlas-region="{{ region.code }}" tabindex="0" role="button" aria-label="查看 Dublin {{ region.label | remove: 'D' }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}"{% endunless %}>
     <title>Dublin {{ region.label | remove: 'D' }}</title>
   </path>
   {% endfor %}
@@ -21,10 +21,10 @@
     {% assign position = site.data.dublin_geography.campuses | where: 'id', campus.id | first %}
     <g class="atlas-campus-marker" data-atlas-campus="{{ campus.id }}" role="button" tabindex="0" aria-label="定位 {{ campus.name }} {{ campus.subtitle }}" aria-pressed="false">
       <title>{{ campus.title }} · {{ campus.subtitle }}</title>
-      <path d="M{{ position.x }},{{ position.y }} L{{ position.label_x | minus: 18 }},{{ position.label_y }} H{{ position.label_x }}" class="atlas-campus-leader"/>
-      <circle cx="{{ position.x }}" cy="{{ position.y }}" r="8" class="atlas-campus-halo"/>
+      <path d="M{{ position.x }},{{ position.y }} Q{{ position.label_x | minus: 65 }},{{ position.y }} {{ position.label_x }},{{ position.label_y }}" class="atlas-campus-leader"/>
+      <circle cx="{{ position.x }}" cy="{{ position.y }}" r="7" class="atlas-campus-halo"/>
       <circle cx="{{ position.x }}" cy="{{ position.y }}" r="3" class="atlas-campus-dot"/>
-      <rect x="{{ position.label_x }}" y="{{ position.label_y | minus: 16 }}" width="105" height="43" rx="9"/>
+      <rect x="{{ position.label_x }}" y="{{ position.label_y | minus: 16 }}" width="115" height="43" rx="12"/>
       <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y }}">{{ campus.name }}</text>
       <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
     </g>

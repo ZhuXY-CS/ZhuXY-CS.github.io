@@ -967,6 +967,29 @@
         "08": 70,
         "09": null
       }
+    },
+    {
+      "code": "42101",
+      "name": "Ashbourne",
+      "count": 1178,
+      "population": null,
+      "rate": null,
+      "categories": {
+        "03": 126,
+        "04": 88,
+        "05": 0,
+        "06": 9,
+        "07": 44,
+        "08": 408,
+        "09": null,
+        "10": 44,
+        "11": 7,
+        "12": 77,
+        "13": 83,
+        "14": 244,
+        "15": 41,
+        "16": 7
+      }
     }
   ],
   "regions": [
@@ -1114,5 +1137,8 @@
       "x": 400.7,
       "y": 584.1
     }
-  ]
+  ],
+  "countsVerified": "2026-09-27",
+  "countsSource": "https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/CJA07/JSON-stat/2.0/en",
+  "countsSourceSha256": "d4e9db438afffd54bef743c7406453edcc583d7ffe73e2443d85d77e621ed7d5"
 }

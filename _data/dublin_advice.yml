@@ -176,6 +176,15 @@ D14:
   drawbacks: "靠近商场不等于靠近目的地；部分地址仍需公交接驳或较长步行。"
   advice: "重点检查自行车存放、公寓入口和最后一段步行；不要把发生在其他邮区、由 Dundrum 警方调查的案件计入本区。"
   stations: [Dundrum, Rathfarnham]
+  event:
+    date: "此更新未单独说明事发日期"
+    published: "2026-07-08"
+    checked: "2026-09-27"
+    title: "Clonskeagh 非法拘禁及袭击调查：起诉进展"
+    summary: "警方7月8日更新称，调查中被捕的第三名男子已被起诉，安排当日下午出庭。调查仍在继续，起诉不等于定罪。"
+    source: Garda
+    url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/july/08-07-2026-update-1-court-appearance-false-imprisonment-and-assault-clonskeagh-dublin-14-8th-july-2026.html"
+
 D15:
   places: "Blanchardstown / Castleknock / Clonsilla / Ongar"
   advantages: "可按西北部工作地点、商业设施和铁路站点筛选，适合活动范围偏西北的人。"
@@ -214,3 +223,187 @@ D18:
     summary: "警方确认一名受重伤男子于9月1日死亡；9月8日再拘捕的两人已获释且未被起诉，将向检察机关提交卷宗。案发于 D18，不能因 Dundrum 警方调查便归入 D14。"
     source: Garda（修订公告）
     url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2026/september/09-09-2026-amended-update-5-incident-of-violent-disorder-leopardstown-dublin-18-29th-august-2026.html"
+
+# Added 2026-09-27. Advice is editorial; sources establish places and reference stations,
+# not a postal-area / Garda-subdistrict boundary equivalence.
+D20:
+  places: "Palmerstown · 都柏林西侧"
+  advantages: "有成熟村镇生活与本地图书馆，可把日常采购、阅读和散步安排在住处附近。"
+  drawbacks: "往校园的便利程度取决于具体站点和换乘，不能只用地图上的直线距离判断。"
+  advice: "先用上课和返程时间试查通勤，再走一遍车站到房源的路；特别留意主干道过街方式。"
+  stations: [Lucan]
+  station_note: "Lucan 是附近警区参考。警方曾由该站调查 Palmerstown 案件；这不等于两者边界相同，也不是 D20 的犯罪率。"
+  checked: "2026-09-27"
+  sources:
+    - {label: "South Dublin · 村镇介绍", url: "https://www.sdcc.ie/en/services/tourism/our-villages/"}
+    - {label: "South Dublin · 图书馆目录", url: "https://sdcc.ie/en/services/sport-and-recreation/libraries/join-library-login/find-a-library/find-a-library.html"}
+    - {label: "Garda · Palmerstown 案件与调查警站（2018年案件）", url: "https://www.garda.ie/en/crime-prevention/crimecall-on-rte/crimecall-episodes/2019/january-28/aggravated-burglary-in-palmerstown-dublin-on-the-2-11-18.html"}
+D22:
+  places: "Clondalkin · 西部村镇与住宅区"
+  advantages: "有历史村镇中心和图书馆，适合把社区生活与日常通勤一起考虑。"
+  drawbacks: "邮区内部位置差异大；离村中心、车站或工作地点近，不一定代表离学校也方便。"
+  advice: "按房源地址比较步行、换乘与晚上返程；看房时一起检查门禁、公共入口及自行车存放位置。"
+  stations: [Clondalkin]
+  checked: "2026-09-27"
+  sources:
+    - {label: "South Dublin · 村镇介绍", url: "https://www.sdcc.ie/en/services/tourism/our-villages/"}
+    - {label: "Garda · Clondalkin（D22）", url: "https://www.garda.ie/en/contact-us/station-directory/clondalkin.html"}
+D24:
+  places: "Tallaght · 南西侧生活圈"
+  advantages: "Tallaght 有购物与文化设施，也适合把周末山地活动纳入生活计划。"
+  drawbacks: "同一邮区内的房源可能离主要设施很远；不要把镇中心的便利直接套到每个地址。"
+  advice: "先按每天要去的校园核对全程通勤；分别在白天和返程时段看看站点、过街点与住宅入口。"
+  stations: [Tallaght]
+  checked: "2026-09-27"
+  sources:
+    - {label: "South Dublin · 村镇介绍", url: "https://www.sdcc.ie/en/services/tourism/our-villages/"}
+    - {label: "Garda · Tallaght（D24）", url: "https://www.garda.ie/en/contact-us/station-directory/tallaght.html"}
+D6W:
+  places: "Terenure / Templeogue · 南侧社区"
+  advantages: "适合把社区日常作为看房重点；可以围绕具体住处寻找常用商店与休闲去处。"
+  drawbacks: "邮区名称不能说明通勤时间；朝向不同的主路和公交站，体验可能不同。"
+  advice: "把 TCD 或 UCD 设为目的地，比较早课与晚归两套路线；也听听临街房间的交通噪声。"
+  stations: [Terenure]
+  checked: "2026-09-27"
+  sources:
+    - {label: "South Dublin · Terenure / Templeogue 社区活动", url: "https://sdcc.ie/en/services/community/initiatives/55-daily-activity.html"}
+    - {label: "Garda · Terenure（D6W）", url: "https://www.garda.ie/en/contact-us/station-directory/terenure.html"}
+A41:
+  places: "Ballyboughal · Fingal 乡村生活圈"
+  advantages: "乡村与田园环境鲜明，适合喜欢较慢生活节奏、愿意安排出行的人。"
+  drawbacks: "应把到校园的完整出行链作为首要条件，尤其是晚课之后的返程。"
+  advice: "看房前实际查询公共交通与接驳；把日常购物、候车环境和没有班车时的替代方案一起考虑。"
+  data_gap: "已补齐地区介绍与社区警务入口；尚未核实 A41 与统计子辖区的对应关系，因此不套用其他区域的犯罪率。"
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Ballyboughal", url: "https://www.fingal.ie/visitor/locations/ballyboughal"}
+    - {label: "Fingal · 社区警务联络（含 Ballyboughal）", url: "https://www.fingal.ie/community-gardai"}
+A42:
+  places: "Garristown · 北 Fingal 村镇"
+  advantages: "村内有社区设施，周边是开阔的乡野与丘陵景观。"
+  drawbacks: "城市校园通勤需要单独验证；适合周末到访，不一定适合每天早晚往返。"
+  advice: "先排出一周课程对应的交通计划，再判断是否适合长期居住；不要只凭环境照片决定。"
+  stations: [Garristown]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Garristown", url: "https://www.fingal.ie/visitor/locations/garristown"}
+    - {label: "Garda · Garristown（A42）", url: "https://www.garda.ie/en/contact-us/station-directory/garristown.html"}
+A45:
+  places: "Oldtown · 田园村落"
+  advantages: "农业与乡村景观是当地特色，适合喜欢村落环境的人。"
+  drawbacks: "住处到交通站点及生活设施的距离需要逐项确认，不能用整个邮区作承诺。"
+  advice: "签约前试走返程路线，并确认晚间交通、照明和必要时的接送安排。"
+  data_gap: "已补齐地区介绍与社区警务入口；尚未核实 A45 与统计子辖区的对应关系，保留数据缺口，不借用 Garristown 或 Balbriggan 的率值。"
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Oldtown", url: "https://www.fingal.ie/visitor/locations/oldtown"}
+    - {label: "Fingal · 社区警务联络（含 Oldtown）", url: "https://www.fingal.ie/community-gardai"}
+A84:
+  places: "Ashbourne · County Meath"
+  advantages: "镇内图书馆有学习空间，可作为日常阅读与自习的去处。"
+  drawbacks: "属于 Meath 的城镇；到都柏林校园的通勤条件要按实际路线核对。"
+  advice: "将到校、购物与晚间回家分别试算。下方提供 Ashbourne 警站统计，未取得可比人口分母，所以只显示事件数。"
+  stations: [Ashbourne]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Meath · Ashbourne 图书馆", url: "https://www.meath.ie/amenities/community-facilities/ashbourne-library"}
+    - {label: "Garda · Ashbourne（A84）", url: "https://www.garda.ie/en/contact-us/station-directory/ashbourne.html"}
+A94:
+  places: "Blackrock · 东南侧沿海生活圈"
+  advantages: "Blackrock 有铁路站，可把轨道交通作为通勤方案之一。"
+  drawbacks: "DART 便利不等于到所有校园都直达；到站步行与最后一段接驳仍需计算。"
+  advice: "去 TCD 和去 UCD 分别规划；若选海边或车站附近房源，也实地检查风雨天步行体验与房间噪声。"
+  stations: ["Blackrock, Co Dublin"]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Irish Rail · Blackrock 车站", url: "https://www.irishrail.ie/en-ie/station/blackrock"}
+    - {label: "Garda · Blackrock（A94）", url: "https://www.garda.ie/en/contact-us/station-directory/blackrock-dublin.html"}
+A96:
+  places: "Glenageary / Dún Laoghaire 周边"
+  advantages: "可将 Glenageary 等铁路站纳入出行选择，按住处挑选合适站点。"
+  drawbacks: "邮区与城镇名称并不一一对应；房源写着沿海地名，也未必步行即可到站。"
+  advice: "从房门开始计算通勤；去 UCD 时另外检查接驳，去市中心时核对站点与班次。"
+  stations: [Dun Laoghaire]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Irish Rail · 都柏林铁路网络", url: "https://www.irishrail.ie/getmedia/8865b427-4c3f-4723-ae38-850533f1e655/Dublin-Route-Map-2025.pdf"}
+    - {label: "Garda · Dún Laoghaire（A96）", url: "https://www.garda.ie/en/contact-us/station-directory/dun-laoghaire.html"}
+K32:
+  places: "Balbriggan · 北部海滨城镇"
+  advantages: "有海滩、渔港与铁路联系，周末生活可以多一点海边散步。"
+  drawbacks: "北部城镇的生活方式与市中心不同；每天上课应重点比较全程通勤与末班安排。"
+  advice: "先确认课程和列车时段是否匹配，再实地走车站到家的路线；海边休闲路线与晚归路线分开评估。"
+  stations: [Balbriggan]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Balbriggan", url: "https://www.fingal.ie/visitor/locations/balbriggan"}
+    - {label: "Garda · Balbriggan", url: "https://www.garda.ie/en/contact-us/station-directory/balbriggan.html"}
+K34:
+  places: "Skerries · 海滨与风车小镇"
+  advantages: "海滨步道和历史风车是当地特色，适合安排慢慢散步的周末。"
+  drawbacks: "适合游玩不等于适合每日通勤；课程密集时，要把往返时间算进生活成本。"
+  advice: "按实际住址核对到站距离与晚间返程，先体验一次上课日的路线再决定。"
+  stations: [Skerries]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Skerries", url: "https://www.fingal.ie/visitor/locations/skerries"}
+    - {label: "Fingal · 社区警务联络", url: "https://www.fingal.ie/community-gardai"}
+    - {label: "Garda · Skerries 警站位置", url: "https://www.garda.ie/en/contact-us/station-directory/skerries.html"}
+
+K36:
+  places: "Malahide · 海滨、城堡与花园"
+  advantages: "有海滨、码头及城堡花园，也有铁路联系；适合把户外散步加入日常。"
+  drawbacks: "从站点到具体住处、从市中心到校园可能仍有接驳，不宜直接采用旅游介绍里的通勤时长。"
+  advice: "看房时带着课表规划早晚路线，也核对周末班次和房源周边实际生活配套。"
+  stations: [Malahide]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Malahide", url: "https://www.fingal.ie/visitor/locations/malahide"}
+    - {label: "Garda · Malahide 警站位置", url: "https://www.garda.ie/en/contact-us/station-directory/malahide.html"}
+
+K45:
+  places: "Lusk · 北部村镇生活圈"
+  advantages: "有历史街区和文化遗产中心，适合喜欢村镇生活的人。"
+  drawbacks: "铁路站名是 Rush and Lusk；是否方便必须从具体房源查起，不能看到镇名就当作住在车站旁。"
+  advice: "把到站接驳、候车和到校后的步行全部算入；晚课回家也单独检查一次。"
+  stations: [Lusk]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Lusk", url: "https://www.fingal.ie/visitor/locations/lusk"}
+    - {label: "Irish Rail · Rush and Lusk 车站", url: "https://www.irishrail.ie/ga-ie/station/rush-and-lusk"}
+    - {label: "Fingal · 社区警务联络", url: "https://www.fingal.ie/community-gardai"}
+    - {label: "Garda · Lusk 警站位置", url: "https://www.garda.ie/en/contact-us/station-directory/lusk.html"}
+
+K56:
+  places: "Rush · 海滨通勤城镇"
+  advantages: "海滩与沿海环境是特色，适合周末看海、散步和户外活动。"
+  drawbacks: "市中心通勤与海边生活需要取舍；尤其要检查住处到 Rush and Lusk 车站的接驳。"
+  advice: "先试走一整段通勤，再比较房源；晚归时按实际班次与道路条件选择路线。"
+  stations: [Lusk]
+  station_note: "CSO 表中有 Lusk 统计项；这里作为附近警区参考。警方曾由 Lusk 调查 Rush 案件，不代表 K56 与其统计边界相同，也不表示 Rush 当前设有独立统计项。"
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Rush", url: "https://www.fingal.ie/visitor/locations/rush"}
+    - {label: "Irish Rail · Rush and Lusk 车站", url: "https://www.irishrail.ie/ga-ie/station/rush-and-lusk"}
+    - {label: "Garda · Rush 调查警站依据（2017年）", url: "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/press-releases/2017/february/fatal-road-traffic-collision-rush-co-dublin-on-the-1st-february-2017.html"}
+K67:
+  places: "Swords · Fingal 城镇中心"
+  advantages: "有商场、学校、社区设施及 Ward River Valley Park，日常生活配套较集中。"
+  drawbacks: "到南侧校园的路线需要特别核对；规划中的交通项目不能当作已经可用的通勤条件。"
+  advice: "以现在能乘坐的线路试算通勤，同时检查房间噪声、最近站点及夜间回家安排。"
+  stations: [Swords]
+  checked: "2026-09-27"
+  sources:
+    - {label: "Fingal · Swords", url: "https://www.fingal.ie/visitor/locations/swords"}
+    - {label: "Garda · Swords 警站位置", url: "https://www.garda.ie/en/contact-us/station-directory/swords.html"}
+
+K78:
+  places: "Lucan · 西部村镇与住宅区"
+  advantages: "有历史村镇中心与河畔环境，适合把社区生活、散步和日常通勤一起考虑。"
+  drawbacks: "镇中心与外围房源到站距离不同，不能把 Lucan 当作单一通勤点。"
+  advice: "使用房源完整地址而非镇名规划路线；同时查看过街点、晚间照明与车站到家的步行距离。"
+  stations: [Lucan]
+  checked: "2026-09-27"
+  sources:
+    - {label: "South Dublin · 村镇介绍", url: "https://www.sdcc.ie/en/services/tourism/our-villages/"}
+    - {label: "Garda · Lucan（K78）", url: "https://www.garda.ie/en/contact-us/station-directory/lucan.html"}

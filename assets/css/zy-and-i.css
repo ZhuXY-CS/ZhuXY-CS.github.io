@@ -2215,3 +2215,74 @@ body.is-crime-map-open .love-stage *::after { animation-play-state: paused !impo
   .crime-map-dialog__list-column { max-height: 280px; min-height: 210px; }
   .crime-map-dialog__notes { margin: 0 0.82rem 0.82rem; }
 }
+
+/* A quiet city atlas, in the same palette as the letter to ZY. */
+#crime-map-dialog .crime-map-dialog__panel { width: min(1440px, 100%); border-radius: 22px; border: 1px solid #e7dfe5; background: #fcfbfc; box-shadow: 0 24px 80px #32263830; }
+#crime-map-dialog .crime-map-dialog__header { padding: 24px 30px 20px; background: #f6f0f4; border-bottom: 0; }
+#crime-map-dialog .crime-map-dialog__eyebrow { color: #92788b; font-size: 10px; letter-spacing: .14em; }
+#crime-map-dialog .crime-map-dialog__header h2 { margin: 8px 0; color: #543f51; font-size: clamp(22px, 2.3vw, 30px); }
+#crime-map-dialog .crime-map-dialog__header p { color: #7d727b; font-size: 13px; }
+#crime-map-dialog .crime-map-dialog__close { border-radius: 50%; background: #fff; }
+.atlas-scroll { font-size: 14px; line-height: 1.85; scrollbar-width: thin; scrollbar-color: #d9cdd5 transparent; }
+.atlas-layout { grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); padding: 24px 30px; gap: 28px; }
+.atlas-geography { top: 16px; }
+.atlas-campus-shortcuts { gap: 8px; margin-bottom: 14px; }
+.atlas-campus-shortcuts > span { font-size: 12px; margin-right: 4px; }
+.atlas-campus-shortcuts button { display: flex; align-items: baseline; gap: 8px; padding: 8px 14px; border-color: #e4dbe1; border-radius: 20px; font-size: 13px; }
+.atlas-campus-shortcuts small { margin: 0; font-size: 11px; }
+.atlas-campus-shortcuts button[aria-pressed="true"] { background: #74637d; border-color: #74637d; }
+.atlas-map-tools { margin-bottom: 10px; }
+.atlas-map-tools span { font-size: 11px; color: #857c86; }
+.atlas-map-tools button { border-radius: 9px; border-color: #e2dce3; min-height: 32px; min-width: 32px; font-size: 13px; }
+.atlas-map-viewport { background: #eff6f8; border-color: #dce7e9; border-radius: 18px; box-shadow: none; }
+.atlas-region { transition: fill .16s ease, stroke .16s ease; }
+.atlas-region:hover, .atlas-region:focus-visible { stroke: #82718b; stroke-width: 1.8; }
+.atlas-region.is-selected { stroke: #806486; stroke-width: 2; fill: #cebfd6; }
+.atlas-region-label { fill: #4c5360; stroke: #ffffffb3; stroke-width: 1.2; font-weight: 600; font-size: 15px; letter-spacing: .2px; }
+.atlas-context-label, .atlas-context-label text { fill: #8b9692; font-size: 10px; stroke-width: 1; }
+.atlas-context-label tspan { font-size: 9px; }
+.atlas-water-label { fill: #96aebb; font-size: 10px; letter-spacing: 2.5px; }
+.atlas-scale { fill: #899da5; font-size: 10px; }
+.atlas-scale path { stroke: #899da5; stroke-width: 1; }
+.atlas-campus-leader { stroke: #98899f; stroke-width: 1; stroke-dasharray: 3 3; }
+.atlas-campus-marker rect { fill: #fffefd; stroke: #d5cbd9; stroke-width: .9; }
+.atlas-campus-marker text { fill: #685770; font-size: 14px; }
+.atlas-campus-marker .atlas-campus-subtitle { fill: #918296; font-size: 9px; }
+.atlas-campus-halo { stroke: #b19bbb; stroke-width: 1.5; fill: #fff; }
+.atlas-campus-dot { fill: #806486; }
+.atlas-campus-marker:hover rect, .atlas-campus-marker[aria-pressed="true"] rect, .atlas-campus-marker:focus-visible rect { fill: #806486; stroke: #806486; }
+.atlas-caption { font-size: 11px; line-height: 1.7; margin: 10px 0; color: #857b86; }
+.atlas-region-picker { gap: 6px; margin: 18px 0 12px; }
+.atlas-region-picker button { border: 1px solid #e6e1e7; border-bottom: 3px solid var(--region-color); border-radius: 9px; min-height: 36px; font-size: 12px; color: #64576a; }
+.atlas-region-picker button.is-selected { background: #f0e8f3; border-color: #b7a3c0; }
+.atlas-search { font-size: 12px; margin-bottom: 8px; }
+.atlas-search input { padding: 10px 12px; border-color: #e0d8e3; border-radius: 11px; }
+.atlas-inspector { background: #fff; padding: 22px; border: 1px solid #eae4eb; border-radius: 18px; }
+.atlas-area-heading { border-bottom: 1px solid #eee7ee; padding-bottom: 18px; gap: 12px; }
+.atlas-area-heading > span { border-radius: 16px; color: #4c5360; width: 58px; height: 58px; font-size: 20px; }
+.atlas-area-heading h3 { color: #65516b; font-size: 24px; }
+.atlas-area-heading p { color: #84798a; font-size: 12px; }
+.atlas-inspector h4 { color: #65516b; font-size: 16px; }
+.atlas-inspector h4 small { font-size: 11px; font-weight: 400; color: #938797; }
+.atlas-inspector section { padding: 20px 0; border-color: #f0eaf0; }
+.atlas-stat { border-radius: 10px; padding: 12px 14px; background: #f7f4f8; }
+.atlas-stat strong { color: #806486; font-size: 20px; font-variant-numeric: tabular-nums; }
+.atlas-stat small { color: #958899; font-size: 10px; }
+.atlas-advice dt { color: #887091; font-size: 12px; margin-top: 14px; }
+.atlas-news { border-radius: 12px; background: #faf7f9; padding: 16px !important; }
+.atlas-evidence, .atlas-method { border-radius: 14px; border-color: #e9e1e9; margin-left: 30px; margin-right: 30px; font-size: 12px; }
+@media (max-width: 720px) {
+  #crime-map-dialog .crime-map-dialog__header { padding: 18px 18px 16px; }
+  #crime-map-dialog .crime-map-dialog__header h2 { font-size: 22px; }
+  #crime-map-dialog .crime-map-dialog__header p { font-size: 11px; }
+  .atlas-layout { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 20px; }
+  .atlas-geography { position: static; }
+  .atlas-campus-shortcuts button { gap: 5px; padding: 8px 10px; }
+  .atlas-map-tools span { max-width: 55%; font-size: 10px; }
+  .atlas-inspector { padding: 18px; }
+  .atlas-evidence, .atlas-method { margin-left: 16px; margin-right: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .atlas-region { transition: none; } }
+.atlas-stat-values { display: grid; gap: 5px; text-align: right; flex-shrink: 0; }
+.atlas-rate-secondary { color: #88768f; font: 12px/1.4 var(--love-font-utility); }
+.atlas-source-links { padding-top: 10px; }
