@@ -2403,3 +2403,5 @@ body.is-crime-map-open .love-stage *::after { animation-play-state: paused !impo
  .atlas-campus-shortcuts button { padding:7px; }
  .atlas-map-tools { top:90px; }
 }
+.atlas-landmark-label { fill:#777563; font:italic 14px/1.4 Georgia,"STKaiti",serif; paint-order:stroke; stroke:#f7f1df; stroke-width:2px; }
+.atlas-landmark-sub { fill:#827e6c; font:9px/1.5 -apple-system,"PingFang SC",sans-serif; paint-order:stroke; stroke:#f7f1df; stroke-width:1.5px; }

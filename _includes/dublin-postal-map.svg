@@ -7,6 +7,9 @@
       <feBlend in="SourceGraphic" mode="multiply"/>
     </filter>
     <pattern id="atlas-sea-ripples" width="84" height="60" patternUnits="userSpaceOnUse"><path d="M12 28 q7 -5 14 0 t14 0" fill="none" stroke="#fff" stroke-width="1" opacity=".4"/></pattern>
+    <pattern id="atlas-tidal-sand" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#e4d5ad"/><path d="M1 2h2 M5 5h1" stroke="#baaa82" stroke-width=".7"/></pattern>
+    <mask id="atlas-unmapped-land"><rect width="900" height="800" fill="black"/><path d="{{ site.data.dublin_geography.land }}" fill="white"/>{% for region in site.data.dublin_geography.regions %}<path d="{{ region.d }}" fill="black"/>{% endfor %}</mask>
+    <g id="atlas-pine"><path d="M0 0L-9 20h5l-9 13h9l-8 13h24L4 33h9L4 20h5Z" fill="#8c9b7c" fill-opacity=".55" stroke="#7e8b70" stroke-width=".6"/><path d="M0 22v31" stroke="#9d8c71" stroke-width="1.2"/></g>
     <clipPath id="atlas-land-clip"><path d="{{ site.data.dublin_geography.land }}"/></clipPath>
   </defs>
   <rect width="900" height="800" fill="#bcd5df"/>
@@ -22,6 +25,24 @@
     <title>Dublin {{ region.label | remove: 'D' }}</title>
   </path>
   {% endfor %}
+  <g pointer-events="none" aria-hidden="true">
+    <path d="M492 390L572 390L576 452L503 451Z" fill="url(#atlas-tidal-sand)" opacity=".75" mask="url(#atlas-unmapped-land)"/>
+    <path d="M520 414 Q548 404 576 415" fill="none" stroke="#ad9974" stroke-width=".8"/>
+    <text x="579" y="415" class="atlas-landmark-label">Sandymount</text><text x="579" y="429" class="atlas-landmark-sub">Strand · 潮间带示意</text>
+  </g>
+  <g class="atlas-landscape" clip-path="url(#atlas-land-clip)" pointer-events="none" aria-hidden="true">
+    <g transform="translate(105 400)">
+      <path d="M-25 88 Q10 54 40 74T98 77 M-20 97 Q25 84 58 96T110 86 M-30 109 Q12 104 40 114T105 102" fill="none" stroke="#aaa886" stroke-width="1" opacity=".65"/>
+      <use href="#atlas-pine" transform="translate(0 32) scale(.7)"/><use href="#atlas-pine" transform="translate(17 42) scale(.5)"/><use href="#atlas-pine" transform="translate(79 43) scale(.65)"/>
+      <text x="34" y="-2" text-anchor="middle" class="atlas-landmark-label">向西 · Kildare</text><text x="34" y="16" text-anchor="middle" class="atlas-landmark-sub">田野与小镇的方向</text>
+    </g>
+    <g transform="translate(335 648)">
+      <path d="M0 75 Q38 36 63 12 Q88 34 107 59 Q140 24 161 2 Q196 40 226 75Z" fill="#a5a99b" opacity=".26"/>
+      <path d="M0 75L63 12L107 59L161 2L226 75 M42 35L63 12L82 35L70 31L62 39L54 30 M135 28L161 2L185 31L170 23L162 33L152 23" fill="none" stroke="#8f9587" stroke-width="1.1" opacity=".7"/>
+      <use href="#atlas-pine" transform="translate(22 61) scale(.65)"/><use href="#atlas-pine" transform="translate(39 73) scale(.4)"/><use href="#atlas-pine" transform="translate(206 60) scale(.7)"/>
+      <text x="114" y="106" text-anchor="middle" class="atlas-landmark-label">向南 · Wicklow Mountains</text><text x="114" y="124" text-anchor="middle" class="atlas-landmark-sub">威克洛山地 · 景观示意</text>
+    </g>
+  </g>
   <rect width="900" height="800" filter="url(#atlas-paper-grain)" opacity=".55" fill="transparent" pointer-events="none"/>
   <g class="atlas-map-letter" aria-hidden="true" pointer-events="none">
     <text x="34" y="115">在这座靠海的城市</text><text x="48" y="143">总有一处，适合我们。</text>
