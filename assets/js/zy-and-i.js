@@ -855,6 +855,17 @@
       var target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
       if (target.closest("[data-crime-map-close]")) { close(); return; }
+      var tab = target.closest('[data-atlas-tab]');
+      if (tab) {
+        var article = tab.closest('[data-atlas-panel]');
+        article.querySelectorAll('[data-atlas-tab]').forEach(function (item) {
+          item.setAttribute('aria-pressed', String(item.dataset.atlasTab === tab.dataset.atlasTab));
+        });
+        article.querySelectorAll('[data-atlas-view]').forEach(function (item) {
+          item.hidden = item.dataset.atlasView !== tab.dataset.atlasTab;
+        });
+        return;
+      }
       var campus = target.closest('[data-atlas-campus]');
       if (campus) { selectCampus(campus.dataset.atlasCampus); return; }
       var region = target.closest("[data-atlas-region]");

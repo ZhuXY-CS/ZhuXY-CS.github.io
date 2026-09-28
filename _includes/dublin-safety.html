@@ -2,11 +2,12 @@
   <div class="crime-map-dialog__scrim" data-crime-map-close></div>
   <section class="crime-map-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="crime-map-dialog-title" aria-describedby="crime-map-dialog-summary" tabindex="-1">
     <header class="crime-map-dialog__header">
-      <div>
+      <div class="atlas-postcard-title">
         <span class="crime-map-dialog__eyebrow">A LITTLE GUIDE TO DUBLIN · FOR ZY</span>
-        <h2 id="crime-map-dialog-title">陪你，一点点认识都柏林。</h2>
-        <p id="crime-map-dialog-summary">从校园到日常生活，把陌生的城市慢慢看熟。</p>
+        <h2 id="crime-map-dialog-title">陪你认识都柏林<span class="atlas-handwritten">A city for you</span></h2>
+        <p id="crime-map-dialog-summary">从校园到日常，把陌生的地方，慢慢变成我们的故事。</p>
       </div>
+      <div class="atlas-doorway" aria-hidden="true"><img src="{{ '/assets/images/zy-and-i/dublin-doorway.png' | relative_url }}" alt=""><span>GOOD PLACES<br>BRIGHTER DAYS</span></div>
       <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
     </header>
     <div class="atlas-scroll">
@@ -17,7 +18,7 @@
             {% for campus in site.data.dublin_campuses %}<button type="button" data-atlas-campus="{{ campus.id }}" aria-pressed="false">{{ campus.name }} <small>{{ campus.subtitle }}</small></button>{% endfor %}
           </div>
           <div class="atlas-map-tools" role="group" aria-label="地图缩放">
-            <span>22 个邮区 · 点选查看生活与安全参考</span>
+            <span>22 个邮区 + 周边 · 点选区号认识这里</span>
             <button type="button" data-atlas-zoom="in" aria-label="放大地图">＋</button>
             <button type="button" data-atlas-zoom="out" aria-label="缩小地图">−</button>
             <button type="button" data-atlas-zoom="reset">全图</button>
@@ -48,9 +49,14 @@
           {% assign advice = site.data.dublin_advice[region.code] %}
           <article data-atlas-panel="{{ region.code }}" {% unless region.code == 'D18' %}hidden{% endunless %}>
             <header class="atlas-area-heading" style="--region-color:{{ region.color }}">
-              <span>{{ region.label }}</span><div><h3>{{ region.name }}</h3><p>{{ advice.places | default: '邮编区域 · 地理范围已纳入，详细资料待核实' }}</p></div>
+              <span class="atlas-postage"><small>DUBLIN</small><b>{{ region.label }}</b><small>FOR ZY</small></span><div><p class="atlas-letter-kicker">IN DUBLIN, WITH YOU</p><h3>{{ region.name }}</h3><p>{{ advice.places | default: '邮编区域 · 地理范围已纳入，详细资料待核实' }}</p></div>
             </header>
-            <section class="atlas-rates">
+            <nav class="atlas-detail-tabs" aria-label="{{ region.label }} 资料栏目">
+              <button type="button" data-atlas-tab="life" aria-pressed="true" aria-controls="atlas-life-{{ region.code }}">生活</button>
+              <button type="button" data-atlas-tab="travel" aria-pressed="false" aria-controls="atlas-travel-{{ region.code }}">通勤</button>
+              <button type="button" data-atlas-tab="safety" aria-pressed="false" aria-controls="atlas-safety-{{ region.code }} atlas-news-{{ region.code }}">安全</button>
+            </nav>
+            <section class="atlas-rates" id="atlas-safety-{{ region.code }}" data-atlas-view="safety" hidden>
               <h4>安全参考 <small>· 2025 警区统计</small></h4>
               {% if advice.stations %}
               <p>没有可直接引用的本邮编区官方犯罪率。以下是附近警站完整统计辖区的参考数据，不是 {{ region.label }} 的犯罪率，也不合并为邮区数据。</p>
@@ -67,14 +73,21 @@
               <p class="atlas-no-data">{{ advice.data_gap | default: '暂无已核实、可直接对应本区域的犯罪率。缺失不代表零，也不代表安全。' }}</p>
               {% endif %}
             </section>
-            <section class="atlas-advice">
-              <h4>区域意见</h4>
+            <section class="atlas-advice" id="atlas-life-{{ region.code }}" data-atlas-view="life">
+              <h4>在这里，过怎样的日常</h4>
               <p class="atlas-caption">编辑整理的居住与出行取舍，非官方安全评级。</p>
-              {% if advice %}<dl><dt>优点</dt><dd>{{ advice.advantages }}</dd><dt>缺点 / 取舍</dt><dd>{{ advice.drawbacks }}</dd><dt>具体建议</dt><dd>{{ advice.advice }}</dd></dl>{% else %}<p>本区域的优缺点和个案资料尚未完成核实，暂不作评价。请结合具体地址检查通勤、门禁、照明和晚间步行路线。</p>{% endif %}
-              {% if advice.sources %}<p class="atlas-caption atlas-source-links">地区资料核查 {{ advice.checked }} · 生活建议为编辑整理<br>{% for source in advice.sources %}<a href="{{ source.url }}" target="_blank" rel="noopener">{{ source.label }} ↗</a>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</p>{% endif %}
+              {% if advice %}<dl><dt>值得喜欢的地方</dt><dd>{{ advice.advantages }}</dd><dt>选择前，也看看这些</dt><dd>{{ advice.drawbacks }}</dd><dt>具体建议</dt><dd>{{ advice.advice }}</dd></dl>{% else %}<p>本区域的优缺点和个案资料尚未完成核实，暂不作评价。请结合具体地址检查通勤、门禁、照明和晚间步行路线。</p>{% endif %}
+              {% if advice.sources %}<details class="atlas-local-sources"><summary>资料来源与核查日期 ↗</summary><p class="atlas-caption atlas-source-links">地区资料核查 {{ advice.checked }} · 生活建议为编辑整理<br>{% for source in advice.sources %}<a href="{{ source.url }}" target="_blank" rel="noopener">{{ source.label }} ↗</a>{% unless forloop.last %}<br>{% endunless %}{% endfor %}</p></details>{% endif %}
               <p class="atlas-caption">按地址核查：<a href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener">TFI 通勤规划</a> · <a href="https://www.garda.ie/en/crime-prevention/" target="_blank" rel="noopener">Garda 防范建议</a></p>
             </section>
-            <section class="atlas-news">
+            <section class="atlas-travel" id="atlas-travel-{{ region.code }}" data-atlas-view="travel" hidden>
+              <h4>从家到校园，走一遍日常</h4>
+              <p>{{ advice.advice }}</p>
+              <ul><li>用房源的完整地址查询，而不只输入区号。</li><li>按早课与晚归时间，分别核对步行、换乘和末班车。</li><li>把车站到家的照明、过街与雨天步行，也算进选择里。</li></ul>
+              <a class="atlas-route-link" href="https://www.transportforireland.ie/plan-a-journey/" target="_blank" rel="noopener">查一查我的通勤 ↗</a>
+              <p class="atlas-caption">校园定位是地理参考点；不代表直达路线或实时交通情况。</p>
+            </section>
+            <section class="atlas-news" id="atlas-news-{{ region.code }}" data-atlas-view="safety" hidden>
               <h4>近期案件与司法进展</h4>
               {% if advice.event %}
               <p class="atlas-event-title">{{ advice.event.title }}</p>
@@ -87,6 +100,7 @@
               {% endif %}
               <p class="atlas-caption">核查日期 {{ advice.event.checked | default: advice.checked | default: site.data.dublin_atlas.checked }}，静态整理，非实时或穷尽清单。报道数量不能用于比较犯罪率；涉嫌、被捕和起诉不等同于定罪。</p>
             </section>
+            <footer class="atlas-letter-signoff"><span>把陌生的地方，慢慢变成日常。</span><small>For ZY, with love ♡</small></footer>
           </article>
           {% endfor %}
         </div>

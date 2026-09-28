@@ -1,6 +1,6 @@
 <svg class="dublin-atlas-svg" viewBox="0 0 900 800" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林完整22邮区与周边地理地图，点击色块查看资料"{% endif %}>
-  <rect width="900" height="800" fill="#eff6f8"/>
-  <path d="{{ site.data.dublin_geography.land }}" fill="#f6f7f2" stroke="#cbd9d5" stroke-width="0.8" fill-rule="evenodd"/>
+  <rect width="900" height="800" fill="#e5eff3"/>
+  <path d="{{ site.data.dublin_geography.land }}" fill="#f4f2e9" stroke="#cbd9d5" stroke-width="0.8" fill-rule="evenodd"/>
   <text x="855" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
   <text x="730" y="310" class="atlas-water-label">IRISH SEA</text>
   <text x="730" y="331" class="atlas-water-label">爱尔兰海</text>
@@ -11,7 +11,9 @@
   </path>
   {% endfor %}
   {% for region in site.data.dublin_geography.regions %}
-  <text x="{{ region.x }}" y="{{ region.y }}" class="atlas-region-label{% unless region.core %} atlas-context-label{% endunless %}" aria-hidden="true">{{ region.label }}{% unless region.core %}<tspan x="{{ region.x }}" dy="15">{{ region.name }}</tspan>{% endunless %}</text>
+  {% assign label_x = region.x %}{% assign label_y = region.y %}
+  {% if region.code == 'D02' %}{% assign label_x = 552 %}{% assign label_y = 391 %}<path d="M{{ region.x }},{{ region.y }} L{{ label_x | minus: 16 }},{{ label_y }}" class="atlas-label-leader" aria-hidden="true"/>{% endif %}
+  <text data-atlas-label="{{ region.code }}" x="{{ label_x }}" y="{{ label_y }}" class="atlas-region-label{% unless region.core %} atlas-context-label{% endunless %}" aria-hidden="true">{{ region.label }}{% unless region.core %}<tspan x="{{ region.x }}" dy="15">{{ region.name }}</tspan>{% endunless %}</text>
   {% endfor %}
   <g class="atlas-context-label"><circle cx="{{ site.data.dublin_geography.bray.x }}" cy="{{ site.data.dublin_geography.bray.y }}" r="3"/><text x="{{ site.data.dublin_geography.bray.x | plus: 9 }}" y="{{ site.data.dublin_geography.bray.y | plus: 4 }}">Bray · 布雷</text></g>
   <g class="atlas-scale" transform="translate(36 750)"><path d="M0,-5 V0 H{{ site.data.dublin_geography.scale5km }} V-5"/><text x="0" y="20">0</text><text x="{{ site.data.dublin_geography.scale5km }}" y="20" text-anchor="end">5 km</text></g>
@@ -24,9 +26,10 @@
       <path d="M{{ position.x }},{{ position.y }} Q{{ position.label_x | minus: 65 }},{{ position.y }} {{ position.label_x }},{{ position.label_y }}" class="atlas-campus-leader"/>
       <circle cx="{{ position.x }}" cy="{{ position.y }}" r="7" class="atlas-campus-halo"/>
       <circle cx="{{ position.x }}" cy="{{ position.y }}" r="3" class="atlas-campus-dot"/>
-      <rect x="{{ position.label_x }}" y="{{ position.label_y | minus: 16 }}" width="115" height="43" rx="12"/>
-      <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y }}">{{ campus.name }}</text>
-      <text x="{{ position.label_x | plus: 12 }}" y="{{ position.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
+      <rect x="{{ position.label_x }}" y="{{ position.label_y | minus: 16 }}" width="143" height="51" rx="10"/>
+      <path d="M{{ position.label_x | plus: 10 }},{{ position.label_y | minus: 3 }} l12,-7 12,7 -12,7 Z m5,4 v8 q7,5 14,0 v-8" class="atlas-campus-cap" aria-hidden="true"/>
+      <text x="{{ position.label_x | plus: 42 }}" y="{{ position.label_y }}">{{ campus.name }}</text>
+      <text x="{{ position.label_x | plus: 42 }}" y="{{ position.label_y | plus: 16 }}" class="atlas-campus-subtitle">{% if campus.id == 'tcd' %}College Green{% else %}Belfield{% endif %}</text>
     </g>
     {% endfor %}
   </g>
