@@ -3,16 +3,17 @@
   <section class="crime-map-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="crime-map-dialog-title" aria-describedby="crime-map-dialog-summary" tabindex="-1">
     <header class="crime-map-dialog__header">
       <div class="atlas-postcard-title">
-        <span class="crime-map-dialog__eyebrow">A LITTLE GUIDE TO DUBLIN · FOR ZY</span>
+        <span class="crime-map-dialog__eyebrow">FOR ZY · DUBLIN</span>
         <h2 id="crime-map-dialog-title">陪你认识都柏林<span class="atlas-handwritten">A city for you</span></h2>
-        <p id="crime-map-dialog-summary">从校园到日常，把陌生的地方，慢慢变成我们的故事。</p>
+        <p id="crime-map-dialog-summary">不同的街区，同一种美好的生活</p>
       </div>
-      <div class="atlas-doorway" aria-hidden="true"><img src="{{ '/assets/images/zy-and-i/dublin-doorway.png' | relative_url }}" alt=""><span>GOOD PLACES<br>BRIGHTER DAYS</span></div>
+      <p class="atlas-header-note" aria-hidden="true">有些城市，让人到达；<br>都柏林，让人留下。<small>SAME SKY<br>A BRIGHTER US</small></p><div class="atlas-doorway" aria-hidden="true"><img src="{{ '/assets/images/zy-and-i/dublin-doorway.png' | relative_url }}" alt=""><span>GOOD PLACES<br>BRIGHTER DAYS</span></div>
       <button class="crime-map-dialog__close" type="button" aria-label="关闭犯罪率地图" data-crime-map-close>×</button>
     </header>
     <div class="atlas-scroll">
       <div class="atlas-layout">
         <div class="atlas-geography">
+          <label class="atlas-search">查找区域<input type="search" data-atlas-search placeholder="区号或地名，如 D18 / Dundrum" aria-label="查找邮编区域或地名"></label>
           <div class="atlas-campus-shortcuts" role="group" aria-label="校园定位">
             <span>从学校出发</span>
             {% for campus in site.data.dublin_campuses %}<button type="button" data-atlas-campus="{{ campus.id }}" aria-pressed="false">{{ campus.name }} <small>{{ campus.subtitle }}</small></button>{% endfor %}
@@ -26,7 +27,7 @@
           <div class="atlas-map-viewport" id="crime-map-canvas">{% include dublin-postal-map.svg %}</div>
           <p class="atlas-caption">淡彩区块是22个传统邮区，浅灰为周边邮区，浅蓝为海洋。颜色只区分区域，不代表安全等级。</p>
           <div class="atlas-region-picker" aria-label="选择邮编区域">
-            <label class="atlas-search">查找区域<input type="search" data-atlas-search placeholder="区号或地名，如 D18 / Dundrum" aria-label="查找邮编区域或地名"></label>
+
             {% for region in site.data.dublin_geography.regions %}
             <button type="button" data-atlas-region="{{ region.code }}" data-atlas-search-text="{{ region.code }} {{ region.label }} {{ region.name }} {{ site.data.dublin_advice[region.code].places | escape }}" style="--region-color:{{ region.color }}" aria-label="{{ region.label }} {{ region.name }}" aria-pressed="{% if region.code == 'D18' %}true{% else %}false{% endif %}" class="{% if region.code == 'D18' %}is-selected{% endif %}">{{ region.label }}</button>
             {% endfor %}
@@ -49,7 +50,7 @@
           {% assign advice = site.data.dublin_advice[region.code] %}
           <article data-atlas-panel="{{ region.code }}" {% unless region.code == 'D18' %}hidden{% endunless %}>
             <header class="atlas-area-heading" style="--region-color:{{ region.color }}">
-              <span class="atlas-postage"><small>DUBLIN</small><b>{{ region.label }}</b><small>FOR ZY</small></span><div><p class="atlas-letter-kicker">IN DUBLIN, WITH YOU</p><h3>{{ region.name }}</h3><p>{{ advice.places | default: '邮编区域 · 地理范围已纳入，详细资料待核实' }}</p></div>
+              <span class="atlas-postage"><b>{{ region.label }}</b><small>FOR ZY · DUBLIN</small></span><div><p class="atlas-letter-kicker">IN DUBLIN, WITH YOU</p><h3>{{ region.name }}</h3><p>{{ advice.places | default: '邮编区域 · 地理范围已纳入，详细资料待核实' }}</p></div>
             </header>
             <nav class="atlas-detail-tabs" aria-label="{{ region.label }} 资料栏目">
               <button type="button" data-atlas-tab="life" aria-pressed="true" aria-controls="atlas-life-{{ region.code }}">生活</button>

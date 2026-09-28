@@ -1,6 +1,18 @@
 <svg class="dublin-atlas-svg" viewBox="0 0 900 800" xmlns="http://www.w3.org/2000/svg" {% if include.preview %}aria-hidden="true" focusable="false"{% else %}role="group" aria-label="都柏林完整22邮区与周边地理地图，点击色块查看资料"{% endif %}>
-  <rect width="900" height="800" fill="#e5eff3"/>
-  <path d="{{ site.data.dublin_geography.land }}" fill="#f4f2e9" stroke="#cbd9d5" stroke-width="0.8" fill-rule="evenodd"/>
+  <defs>
+    <filter id="atlas-paper-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".42" numOctaves="3" stitchTiles="stitch" seed="8"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".15"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <pattern id="atlas-sea-ripples" width="84" height="60" patternUnits="userSpaceOnUse"><path d="M12 28 q7 -5 14 0 t14 0" fill="none" stroke="#fff" stroke-width="1" opacity=".4"/></pattern>
+    <clipPath id="atlas-land-clip"><path d="{{ site.data.dublin_geography.land }}"/></clipPath>
+  </defs>
+  <rect width="900" height="800" fill="#bcd5df"/>
+  <rect width="900" height="800" fill="url(#atlas-sea-ripples)"/>
+  <path d="{{ site.data.dublin_geography.land }}" fill="#eee9d7" stroke="#cbd9d5" stroke-width="0.8" fill-rule="evenodd"/>
+  <image href="{{ '/assets/images/zy-and-i/dublin-watercolor.png' | relative_url }}" width="900" height="800" preserveAspectRatio="none" opacity=".72" pointer-events="none"/>
   <text x="855" y="45" text-anchor="end" class="atlas-water-label">N ↑</text>
   <text x="730" y="310" class="atlas-water-label">IRISH SEA</text>
   <text x="730" y="331" class="atlas-water-label">爱尔兰海</text>
@@ -10,6 +22,13 @@
     <title>Dublin {{ region.label | remove: 'D' }}</title>
   </path>
   {% endfor %}
+  <rect width="900" height="800" filter="url(#atlas-paper-grain)" opacity=".55" fill="transparent" pointer-events="none"/>
+  <g class="atlas-map-letter" aria-hidden="true" pointer-events="none">
+    <text x="34" y="115">在这座靠海的城市</text><text x="48" y="143">总有一处，适合我们。</text>
+    <path d="M36 165 h40" stroke="#a78b5c" stroke-width="2"/>
+    <text x="36" y="191" class="atlas-map-micro">SAME STREETS</text><text x="36" y="208" class="atlas-map-micro">DIFFERENT STORIES</text><text x="36" y="225" class="atlas-map-micro">ALWAYS YOU</text>
+    <text x="685" y="697" class="atlas-map-script">More good</text><text x="693" y="721" class="atlas-map-script">days ahead ♡</text>
+  </g>
   {% for region in site.data.dublin_geography.regions %}
   {% assign label_x = region.x %}{% assign label_y = region.y %}
   {% if region.code == 'D02' %}{% assign label_x = 552 %}{% assign label_y = 391 %}<path d="M{{ region.x }},{{ region.y }} L{{ label_x | minus: 16 }},{{ label_y }}" class="atlas-label-leader" aria-hidden="true"/>{% endif %}

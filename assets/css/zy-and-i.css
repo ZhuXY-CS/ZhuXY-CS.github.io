@@ -2319,3 +2319,87 @@ body.is-crime-map-open .love-stage *::after { animation-play-state: paused !impo
  .atlas-evidence,.atlas-method { margin-left:16px; margin-right:16px; }
 }
 @media(prefers-reduced-motion:reduce) { .atlas-region { transition:none; } }
+
+/* Illustrated atlas composition, matched to the selected postcard artwork. */
+#crime-map-dialog .crime-map-dialog__scrim { background:#e9e2efa8; backdrop-filter:blur(8px); }
+#crime-map-dialog .crime-map-dialog__panel { background:#f8f4f5; border:1px solid #e3dce8; box-shadow:0 8px 35px #70548124; }
+#crime-map-dialog .crime-map-dialog__header { padding:18px 34px; min-height:148px; background:radial-gradient(ellipse at 20% 20%,#fff8,transparent 75%),#f8f4f5; border:0; }
+#crime-map-dialog .crime-map-dialog__header h2 { font-size:clamp(30px,3.4vw,48px); color:#42264e; font-weight:500; }
+#crime-map-dialog .crime-map-dialog__header p#crime-map-dialog-summary { letter-spacing:.18em; color:#736476; }
+.atlas-handwritten { font-family:"Snell Roundhand","Segoe Script",cursive; font-size:32px; font-weight:400; transform:rotate(-7deg); }
+.atlas-doorway { right:72px; top:0; height:148px; width:210px; }
+.atlas-doorway img { height:148px; width:210px; mix-blend-mode:multiply; }
+.atlas-doorway span { display:none; }
+#crime-map-dialog .atlas-header-note { margin-left:auto; margin-right:225px; min-width:170px; color:#705e77; font:13px/1.9 var(--love-font-cn); letter-spacing:.12em; }
+.atlas-header-note small { display:block; margin-top:10px; font:9px/1.6 Georgia,serif; letter-spacing:.16em; }
+.atlas-postcard-title { padding-right:0; }
+.atlas-layout { padding:0 12px 20px; gap:9px; grid-template-columns:minmax(0,1.6fr) minmax(360px,1fr); }
+.atlas-geography { position:relative; top:0; }
+.atlas-campus-shortcuts { margin:0; padding:9px 12px; background:#f1eceb; border-radius:14px 14px 0 0; }
+.atlas-campus-shortcuts button { padding:6px 12px; font-size:12px; }
+.atlas-campus-shortcuts small { font-size:10px; }
+.atlas-map-viewport { border:0; border-radius:0 0 12px 12px; background:#bcd5df; }
+.atlas-map-tools { position:absolute; z-index:2; right:12px; top:105px; flex-direction:column; background:#fffcf6e8; border:1px solid #ded4df; border-radius:10px; padding:3px; box-shadow:0 3px 12px #66577420; }
+.atlas-map-tools > span { display:none; }
+.atlas-map-tools button { background:transparent; border:0; min-width:32px; min-height:32px; }
+.atlas-search { position:absolute; top:58px; left:18px; z-index:2; width:65%; font-size:0; }
+.atlas-search input { font-size:13px; background:#fffdf9ec; border:1px solid #dbd0da; border-radius:28px; box-shadow:0 3px 9px #6f57681a; padding:11px 18px; }
+.atlas-region { fill-opacity:.64; stroke:#f9f5e7; stroke-width:1.1; }
+.atlas-region.is-selected { fill:#b89ac7; fill-opacity:.78; stroke:#8e6599; stroke-width:1.5; }
+.atlas-region-label { font:500 18px/1 Georgia,serif; stroke-width:1.5; fill:#463750; }
+.atlas-context-label,.atlas-context-label text { font-family:Georgia,serif; font-size:13px; fill:#686361; }
+.atlas-context-label tspan { font-family:Arial,sans-serif; font-size:10px; }
+.atlas-water-label { font:italic 19px/1 Georgia,serif; fill:#648499; letter-spacing:1px; }
+.atlas-map-letter { fill:#79667d; font:italic 18px/1.6 var(--love-font-cn); }
+.atlas-map-letter .atlas-map-micro { font:9px/1.4 Georgia,serif; letter-spacing:2px; }
+.atlas-map-letter .atlas-map-script { font:italic 21px/1.4 "Snell Roundhand","Segoe Script",cursive; fill:#89786c; }
+.atlas-inspector { border:1px solid #e9e0e5; border-radius:14px; padding:32px 28px; background:radial-gradient(ellipse at 70% 0,#f7f0e980,transparent 60%),#fffdfa; box-shadow:none; }
+.atlas-area-heading { flex-direction:row-reverse; align-items:center; gap:20px; min-height:146px; }
+.atlas-area-heading > div { flex:1; }
+.atlas-area-heading h3 { color:#42264e; font:500 32px/1.3 Georgia,serif; }
+.atlas-area-heading > .atlas-postage { width:98px; height:127px; transform:rotate(5deg); padding:8px; align-content:space-between; justify-items:start; background:#e7deed url('../images/zy-and-i/dublin-doorway.png') center/cover; border:3px dotted #c3b6bd; outline-offset:-8px; box-shadow:0 2px 8px #634d6412; }
+.atlas-postage b { background:#f6eff1ce; font-size:24px; padding:2px 5px; }
+.atlas-postage small { font-size:7px; background:#fff9; padding:4px; }
+.atlas-detail-tabs { padding:0; gap:0; border:1px solid #e3dae3; background:#faf7f7; border-radius:8px; overflow:hidden; }
+.atlas-detail-tabs button { padding:11px 4px; border-radius:0; font-family:var(--love-font-cn); font-size:17px; }
+.atlas-detail-tabs button+button { border-left:1px solid #e3dae3; }
+.atlas-detail-tabs button[aria-pressed="true"] { background:#694572; }
+.atlas-inspector h4 { color:#4f305b; font:600 22px/1.5 var(--love-font-cn); }
+.atlas-letter-signoff span { font-family:"STKaiti","KaiTi",var(--love-font-cn); font-size:24px; color:#76567e; }
+.atlas-letter-signoff small { font-family:"Snell Roundhand","Segoe Script",cursive; font-size:23px; }
+.atlas-geography > .atlas-caption,.atlas-region-picker { margin-left:14px; margin-right:14px; }
+.atlas-region-picker { margin-top:14px; }
+@media(max-width:1100px) { #crime-map-dialog .atlas-header-note { display:none; } .atlas-postcard-title { padding-right:160px; } .atlas-area-heading > .atlas-postage { width:74px; height:105px; } }
+@media(max-width:900px) { .atlas-layout { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:720px) {
+ #crime-map-dialog .crime-map-dialog__header { padding:18px; min-height:140px; }
+ #crime-map-dialog .crime-map-dialog__header h2 { font-size:29px; }
+ .atlas-postcard-title { padding-right:20px; }
+ .atlas-handwritten { font-size:26px; }
+ .atlas-layout { padding:0 8px 16px; gap:14px; }
+ .atlas-campus-shortcuts { padding:10px; }
+ .atlas-campus-shortcuts > span { display:none; }
+ .atlas-campus-shortcuts button { padding:7px 9px; }
+ .atlas-campus-shortcuts small { font-size:9px; }
+ .atlas-search { top:55px; left:10px; width:73%; }
+ .atlas-search input { padding:8px 12px; font-size:12px; }
+ .atlas-map-tools { top:103px; right:7px; }
+ .atlas-map-tools button { min-height:30px; min-width:28px; padding:2px; }
+ .atlas-inspector { padding:22px; }
+ .atlas-area-heading h3 { font-size:29px; }
+ .atlas-letter-signoff span { font-size:20px; }
+}
+/* Keep search outside the geographic drawing so no district label is covered. */
+.atlas-search { top:5px; left:10px; width:40%; margin:0; }
+.atlas-search input { padding:8px 14px; }
+.atlas-campus-shortcuts { padding-left:43%; min-height:49px; gap:5px; }
+.atlas-campus-shortcuts > span { display:none; }
+.atlas-campus-shortcuts button { padding:7px 10px; }
+.atlas-campus-shortcuts small { display:none; }
+@media(max-width:720px) {
+ .atlas-search { top:7px; width:59%; }
+ .atlas-search input { font-size:11px; }
+ .atlas-campus-shortcuts { padding-left:64%; min-height:51px; }
+ .atlas-campus-shortcuts button { padding:7px; }
+ .atlas-map-tools { top:90px; }
+}
