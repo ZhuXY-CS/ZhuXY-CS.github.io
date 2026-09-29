@@ -19,6 +19,7 @@
             <header><div><span class="zodiac-eyebrow">{{ profile.english }} · {{ profile.element }}</span><h3>{{ profile.name }}</h3></div><span class="zodiac-symbol" aria-hidden="true">{{ profile.symbol }}&#xfe0e;</span></header>
             <p class="zodiac-tagline">{{ profile.image }}</p>
             <div class="zodiac-tags">{% for tag in profile.tags %}<span>{{ tag }}</span>{% endfor %}</div>
+            <div class="zodiac-astro-note"><span class="zodiac-astro-label">星座小档案 · 守护星</span>{% if profile.id == 'leo' %}<h4>☉ 太阳 · 把温暖带给喜欢的人</h4><p>在西方占星传统中，狮子由太阳守护，属于火象、固定宫。太阳象征生命力与自我表达：用这份意象来写 ZY，就是愿意分享快乐，也值得被大大方方地欣赏。</p>{% else %}<h4>♂ 火星 · ♇ 冥王星</h4><p>天蝎属于水象、固定宫；传统占星以火星为守护星，现代占星也关联冥王星。这些意象常被用来讲述行动、深度与蜕变：把认真放进细节，也让信任慢慢生根。</p>{% endif %}</div>
             <p class="zodiac-profile-intro">{{ profile.intro }}</p>
             <div class="zodiac-traits">{% for trait in profile.traits %}<div><h4>{{ trait.title }}</h4><p>{{ trait.text }}</p></div>{% endfor %}</div>
             <div class="zodiac-love-note"><h4>恋爱里的可爱之处</h4><p>{{ profile.love }}</p><h4>这样被爱，会很幸福</h4><p>{{ profile.receive }}</p></div>
@@ -30,6 +31,7 @@
       </section>
       <section id="zodiac-love" data-zodiac-section="love" hidden aria-label="我们为什么合拍">
         <div class="zodiac-pair"><span class="zodiac-eyebrow">A MATCH WORTH CHOOSING</span><h3>是恋人，也是彼此的底气。</h3><p>喜欢这组搭配，是因为深情能遇见回应，热烈能遇见珍惜。<br>不需要变成同一种人，也有很多理由把日子过在一起。</p><div class="zodiac-match-ribbon"><span>认真被看见</span><i>♡</i><span>快乐被分享</span><i>♡</i><span>未来被期待</span></div></div>
+        <div class="zodiac-astro-pair"><span class="zodiac-eyebrow">THE ASTROLOGY BEHIND OUR STORY</span><h3>水与火的不同，固定宫的坚持。</h3><div><p><strong>水象 × 火象</strong>在占星的象征语言里，水偏向感受与亲密，火偏向表达与热情。写进你们的故事，可以是一份细腻的倾听，遇见一句明亮的回应。</p><p><strong>固定宫 × 固定宫</strong>两者都属于固定宫，常与持续、专注联系在一起。让这份坚持用来守护共同的约定，也记得给彼此留一点改变主意的余地。</p><p><strong>有张力，也有靠近的空间</strong>狮子与天蝎在星座层面呈四分关系，传统上带有磨合的意味。实际相处中，把“你应该懂我”换成“我想告诉你”，差异也能成为了解彼此的入口。</p></div></div>
         <div class="zodiac-relationship">{% for item in site.data.zodiac.relationship %}<article><span class="zodiac-match-theme">{{ item.theme }}</span><h4>{{ item.title }}</h4><p>{{ item.text }}</p><blockquote>{{ item.scene }}</blockquote></article>{% endfor %}</div>
         <div class="zodiac-letter"><span class="zodiac-eyebrow">给正在认真相爱的你们</span><h3>在一起，是一件值得开心的事。</h3><p>小庸的认真，可以成为 ZY 放心分享快乐的地方；ZY 的明亮，也可以让小庸藏在细节里的喜欢得到回应。你们可以一起期待见面，一起为小进步高兴，也一起把不那么轻松的日子过得柔软一点。</p><p>为这段恋爱打气，不只是说一句“你们很配”，也是想说：<strong>这份相互欣赏、相互靠近的可能，真的很美好。</strong>愿深情有回声，愿热烈被珍惜，愿你们每一次想到“我们”，都会忍不住笑一下。</p><div class="zodiac-letter-sign">给深海，也给太阳。<span>小庸 ♡ ZY</span></div></div>
       </section>
@@ -42,7 +44,7 @@
         <div class="zodiac-scenarios">{% for item in site.data.zodiac.scenarios %}<article><h4>{{ item.title }}</h4><blockquote>{{ item.words }}</blockquote><p>{{ item.note }}</p></article>{% endfor %}</div>
         <div class="zodiac-closing"><span aria-hidden="true">♡</span><p>最好的“很配”，是我喜欢你的样子，<br><strong>也喜欢我们在一起时的样子。</strong></p></div>
       </section>
-      <footer class="zodiac-footnote">以常见星座意象为灵感，写给小庸与 ZY 的原创恋爱小册。性格各有不同，甜蜜由你们一起创造。</footer>
+      <footer class="zodiac-footnote">以常见星座意象为灵感，写给小庸与 ZY 的原创恋爱小册。占星内容是文化与象征解读，不是性格或关系的科学预测；未使用出生时间计算个人星盘。甜蜜由你们一起创造。<br>星座资料：<a href="https://www.astro.com/astrowiki/en/Scorpio" target="_blank" rel="noopener">天蝎</a> · <a href="https://www.astro.com/astrowiki/en/Leo" target="_blank" rel="noopener">狮子</a> · <a href="https://www.astro.com/astrowiki/en/Fixed" target="_blank" rel="noopener">固定宫</a></footer>
     </div>
   </section>
 </div>

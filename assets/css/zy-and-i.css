@@ -2405,3 +2405,32 @@ body.is-crime-map-open .love-stage *::after { animation-play-state: paused !impo
 }
 .atlas-landmark-label { fill:#777563; font:italic 14px/1.4 Georgia,"STKaiti",serif; paint-order:stroke; stroke:#f7f1df; stroke-width:2px; }
 .atlas-landmark-sub { fill:#827e6c; font:9px/1.5 -apple-system,"PingFang SC",sans-serif; paint-order:stroke; stroke:#f7f1df; stroke-width:1.5px; }
+
+/* An open, edge-to-edge love almanac: sea-blue and sunlight on ivory paper. */
+#zodiac-dialog { padding:16px; }
+#zodiac-dialog .zodiac-panel { width:100%; max-width:none; max-height:calc(100dvh - 32px); border-radius:24px; }
+#zodiac-dialog .crime-map-dialog__scrim { background:#e9e2efa8; backdrop-filter:blur(8px); }
+.zodiac-header { position:relative; padding:24px 34px; background:radial-gradient(ellipse at 85% 30%,#f6e7c78c,transparent 35%),linear-gradient(110deg,#eff4f8,#faf4f7 65%); border-bottom:1px solid #eee5ea; }
+.zodiac-header::after { content:'✧ · ☉ · ✧'; position:absolute; right:100px; top:38px; font:32px/1.4 Georgia,serif; letter-spacing:14px; color:#b49a686e; pointer-events:none; }
+.zodiac-header h2 { font-size:clamp(27px,2.5vw,40px); font-weight:500; color:#553d58; }
+.zodiac-nav { padding:12px 28px; gap:12px; }
+.zodiac-nav button { border:1px solid transparent; }
+.zodiac-nav button[aria-pressed="true"] { background:#f0e8f1; border-color:#e2d5e5; color:#694d72; }
+.zodiac-scroll { padding:18px 28px 30px; font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif; font-size:15px; background:#fffdfa; }
+.zodiac-intro { grid-template-columns:132px 1fr; padding:0 0 24px; gap:20px; }
+.zodiac-orbit { height:96px; }
+.zodiac-orbit span { width:64px; height:64px; font-size:38px; border:1px solid #fff; box-shadow:0 4px 18px #7662810b; }
+.zodiac-profile { padding:28px 30px; border-radius:18px; background:radial-gradient(circle at 95% 0,#d9e8f2aa,transparent 35%),#f4f8fb; }
+.zodiac-profile--leo { background:radial-gradient(circle at 95% 0,#f6dfadaa,transparent 35%),#fffbf2; }
+.zodiac-profile h3 { font-size:29px; }
+.zodiac-profile .zodiac-symbol { font-size:56px; opacity:.8; }
+.zodiac-astro-note { margin:22px 0; padding:19px 22px; border:1px solid #ffffff; border-left:3px solid var(--zodiac-color); border-radius:3px 12px 12px 3px; background:#ffffffa6; }
+.zodiac-astro-label { display:block; color:var(--zodiac-color); font-size:11px; letter-spacing:.1em; margin-bottom:8px; }
+.zodiac-astro-note p { font-size:14px; line-height:1.9; }
+.zodiac-astro-pair { padding:26px; margin-bottom:24px; border:1px solid #e8deeb; border-radius:16px; background:linear-gradient(110deg,#f0f5f9,#fff8ec); }
+.zodiac-astro-pair h3 { margin:8px 0 20px; }
+.zodiac-astro-pair > div { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:26px; }
+.zodiac-astro-pair strong { display:block; margin-bottom:8px; color:#795a7e; }
+.zodiac-footnote a { color:#80648a; text-underline-offset:3px; }
+@media(min-width:1700px) { .zodiac-scroll { padding-left:40px; padding-right:40px; font-size:16px; } .zodiac-profiles { gap:28px; } .zodiac-traits { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 28px; } }
+@media(max-width:720px) { #zodiac-dialog { padding:8px; } #zodiac-dialog .zodiac-panel { max-height:calc(100dvh - 16px); border-radius:18px; } .zodiac-header { padding:20px; } .zodiac-header::after { display:none; } .zodiac-nav { padding:10px; gap:4px; } .zodiac-scroll { padding:16px; } .zodiac-intro { grid-template-columns:1fr; gap:8px; } .zodiac-profile { padding:22px; } .zodiac-astro-pair > div { grid-template-columns:1fr; gap:18px; } }
