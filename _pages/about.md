@@ -144,6 +144,14 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <ul class="experience-list">
   <li class="experience-entry">
+    <span class="experience-date">Aug 2026 – Present</span>
+    <div class="experience-body">
+      <strong class="experience-role">Research Assistant</strong>
+      <div class="experience-organization">Foundation Models and Federated Learning research group, University of Technology Sydney</div>
+      <p class="experience-note">Supervised by <a href="https://profiles.uts.edu.au/Guodong.Long">Prof. Guodong Long</a></p>
+    </div>
+  </li>
+  <li class="experience-entry">
     <span class="experience-date">2026 – Present</span>
     <div class="experience-body">
       <strong class="experience-role">Reviewer</strong>
