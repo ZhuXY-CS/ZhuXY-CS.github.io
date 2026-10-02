@@ -39,3 +39,11 @@ Node 22.13+（测试使用 node:sqlite）。运行 `npm install` 后使用 `npm 
 `node build-dashboard.mjs` 将页面、样式和脚本打包为 `dashboard-worker.js`，便于直接在 Cloudflare 编辑器部署。它不包含任何密钥或真实记录，生成文件已忽略。
 
 测试：`node --test tests/*.test.mjs`。集成测试使用内存 SQLite 和虚构日期，验证鉴权、加密读写、锁定、邀请一次性、撤销、过期、CSRF 与限流。
+
+## 邮件提醒
+
+Google Apps Script 私有项目中粘贴 mail-relay.gs；以 zhuxycs@gmail.com 账户部署 Web App，以自己身份执行，允许任何人调用（请求必须有 HMAC 签名）。固定收件人为 838707379@qq.com，仅发送含糊关怀提醒，不传输记录。脚本属性和 Worker Secret 均设置同一个随机 64 位十六进制 MAIL_RELAY_KEY；Worker Secret MAIL_RELAY_URL 设置 /exec 地址。Worker 普通变量 MAIL_ENABLED=true 才启用。每天北京时间9点检查，10点、11点有限重试；Cloudflare Cron 配置为 0 1,2,3 * * *。
+
+提醒按最近最多6个有效周期的最短/最长间隔计算范围，范围前两天和范围内每天最多一次，至少3次开始记录，出现21..35天以外间隔自动暂停。这只是保守的自动提醒规则，不是医学诊断。新记录会更新范围，可手动停止本轮。MailApp 不提供投递事务或邮件幂等API；发送状态不确定时不会自动再发，以降低重复邮件风险，此时可能漏发，需要管理员检查脚本执行记录。QQ收到测试邮件后检查发件地址和垃圾邮件。
+
+最后启用前：完成DB绑定和CONFIG，保存真实记录；亲自填写密钥、授权Google发信、部署脚本；确认邮件发送范围后开启MAIL_ENABLED和Cron。不要在公开仓库写入地址以外的私密记录或任何密钥。

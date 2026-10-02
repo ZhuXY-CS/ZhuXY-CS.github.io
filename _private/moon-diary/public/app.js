@@ -28,3 +28,5 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)lock();});w
 
 $('prev-month').addEventListener('click',()=>{calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()-1,1);renderCalendar();});
 $('next-month').addEventListener('click',()=>{calendarMonth=new Date(calendarMonth.getFullYear(),calendarMonth.getMonth()+1,1);renderCalendar();});
+
+$('pause-reminders').addEventListener('click',async()=>{try{await api('pause-reminders',{});message('本轮提醒已停止，新增开始日期后自动计算下一轮。');}catch(e){message(e.message);}});

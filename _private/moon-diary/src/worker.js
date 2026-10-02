@@ -37,10 +37,43 @@ async function authorized(request,env,now) {
   await env.DB.prepare('UPDATE sessions SET seen=? WHERE hash=?').bind(now,hash).run();
   return {hash,device};
 }
-export default { async fetch(request,env) {
+export function prediction(entries,today) {
+  const starts=[...new Set(entries.map(r=>r.start).filter(s=>validDate(s)&&s<=today))].sort();
+  if(starts.length<3)return null;
+  const gaps=starts.slice(1).map((s,i)=>(Date.parse(s)-Date.parse(starts[i]))/86400000).slice(-6);
+  // Unusual or incomplete intervals need review instead of automatic notifications.
+  if(gaps.some(g=>g<21||g>35))return null;
+  const latest=starts.at(-1),day=Date.parse(latest);
+  const date=n=>new Date(day+n*86400000).toISOString().slice(0,10);
+  return {latest,from:date(Math.min(...gaps)),to:date(Math.max(...gaps)),advance:date(Math.min(...gaps)-2)};
+}
+function configured(env){if(!env.CONFIG)return env;const c=JSON.parse(env.CONFIG);return {...env,ANSWER_DIGEST:c.ANSWER_DIGEST,DATA_KEY:c.DATA_KEY,BOOTSTRAP_DIGEST:c.BOOTSTRAP_DIGEST};}
+async function reminderTables(env){await env.DB.prepare('CREATE TABLE IF NOT EXISTS reminder_state (key TEXT PRIMARY KEY, value TEXT NOT NULL)').run();await env.DB.prepare('CREATE TABLE IF NOT EXISTS mail_days (day TEXT PRIMARY KEY, attempts INTEGER NOT NULL DEFAULT 0, sent INTEGER NOT NULL DEFAULT 0)').run();}
+export async function sendReminder(env,now=Date.now(),send=fetch){
+  env=configured(env);
+  if(env.MAIL_ENABLED!=='true'||!env.DB||!env.DATA_KEY||!env.MAIL_RELAY_URL||!/^[a-f0-9]{64}$/.test(env.MAIL_RELAY_KEY||''))return;
+  const url=new URL(env.MAIL_RELAY_URL);if(url.origin!=='https://script.google.com'||!/^\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(url.pathname)||url.search)throw Error('Invalid mail relay URL');
+  const today=new Date(now+8*3600000).toISOString().slice(0,10);
+  const rows=await env.DB.prepare('SELECT sealed FROM entries ORDER BY updated DESC LIMIT 500').all();
+  const entries=await Promise.all(rows.results.map(r=>unseal(r.sealed,env.DATA_KEY))),p=prediction(entries,today);
+  if(!p||today<p.advance||today>p.to)return;
+  await reminderTables(env);
+  const pause=await env.DB.prepare("SELECT value FROM reminder_state WHERE key='paused'").first();
+  if(pause?.value===await digest(p.latest))return;
+  // Atomic claims cap retries; relay itself deduplicates after uncertain network results.
+  const attempt=await env.DB.prepare('INSERT INTO mail_days(day,attempts,sent) VALUES (?,1,0) ON CONFLICT(day) DO UPDATE SET attempts=attempts+1 WHERE sent=0 AND attempts<3 RETURNING day').bind(today).first();
+  if(!attempt)return;
+  const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(env.MAIL_RELAY_KEY),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+  const signature=Array.from(new Uint8Array(await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(today+'|'+now))),b=>b.toString(16).padStart(2,'0')).join('');
+  // No actual cycle dates, notes, recipient, or keys are included in URLs or logs.
+  const r=await send(url.href,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({day:today,timestamp:now,signature}),signal:AbortSignal.timeout(20000)});
+  if(!r.ok)throw Error('Mail relay failed');const result=await r.json();if(result.ok!==true)throw Error('Mail relay rejected');
+  await env.DB.prepare('UPDATE mail_days SET sent=1 WHERE day=?').bind(today).run();
+}
+export default {async scheduled(controller,env){await sendReminder(env,controller.scheduledTime);}, async fetch(request,env) {
   const url=new URL(request.url),now=Math.floor(Date.now()/1000),path=url.pathname;
   try {
-    if(env.CONFIG) { const config=JSON.parse(env.CONFIG); env={...env,ANSWER_DIGEST:config.ANSWER_DIGEST,DATA_KEY:config.DATA_KEY,BOOTSTRAP_DIGEST:config.BOOTSTRAP_DIGEST}; }
+    env=configured(env);
     if(!path.startsWith('/api/')) {
       const r=await env.ASSETS.fetch(request),h=new Headers(r.headers);
       Object.entries(headers()).forEach(([k,v])=>h.set(k,v));h.set('X-Robots-Tag','noindex, nofollow');
@@ -87,6 +120,14 @@ export default { async fetch(request,env) {
     if(request.method==='POST') {
       if(await limited(env,`write:${auth.device}:${Math.floor(now/60)}`,30))return json({error:'操作频繁，请稍后再试'},429);
       const raw=await request.text();if(raw.length>4096)return json({error:'请求过大'},413);const v=JSON.parse(raw);
+      if(path==='/api/pause-reminders') {
+        await reminderTables(env);
+        const rows=await env.DB.prepare('SELECT sealed FROM entries ORDER BY updated DESC LIMIT 500').all();
+        const entries=await Promise.all(rows.results.map(r=>unseal(r.sealed,env.DATA_KEY)));
+        const latest=entries.map(r=>r.start).filter(s=>s<=new Date().toISOString().slice(0,10)).sort().at(-1);
+        if(!latest)return json({error:'还没有记录'},400);
+        await env.DB.prepare("INSERT INTO reminder_state(key,value) VALUES ('paused',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(await digest(latest)).run();return json({ok:true});
+      }
       if(path==='/api/entries') {
         if(!validEntry(v))return json({error:'请检查日期范围，备注最多500字'},400);
         const id=v.id||crypto.randomUUID();if(!/^[a-f0-9-]{36}$/.test(id))return json({error:'记录无效'},400);
