@@ -161,6 +161,7 @@ include:
   - _pages
   - files
 exclude:
+  - _private
   - "*.sublime-project"
   - "*.sublime-workspace"
   - .asset-cache
