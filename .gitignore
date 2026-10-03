@@ -8,3 +8,6 @@ _private/moon-diary/.wrangler/
 _private/moon-diary/node_modules/
 _private/moon-diary/dashboard-worker.js
 _private/moon-diary/source.html
+
+# Private diary service is maintained locally and deployed separately to Cloudflare.
+_private/
