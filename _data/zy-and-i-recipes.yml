@@ -1,0 +1,14 @@
+# Add further dishes to this list. Leave unconfirmed instructions and time empty.
+recipes:
+  - id: tomato-egg-noodles
+    name: "西红柿鸡蛋面"
+    image: "/images/zy-and-i/recipes/tomato-egg-noodles.png"
+    image_alt: "西红柿鸡蛋面美食插画：番茄汤底中有面条、鸡蛋、鸡腿肉和葱花"
+    ingredients:
+      - "西红柿"
+      - "鸡蛋"
+      - "鸡腿肉"
+      - "面条"
+      - "葱花"
+    estimated_time: ""
+    steps: []
