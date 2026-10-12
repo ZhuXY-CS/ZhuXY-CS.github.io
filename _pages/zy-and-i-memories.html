@@ -1,0 +1,61 @@
+---
+layout: zy-and-i-album
+permalink: /zy-and-i/memories/
+title: "回忆相册"
+sitemap: false
+author_profile: false
+---
+{% assign album_files = site.static_files | where_exp: "photo", "photo.path contains '/images/zy-and-i/memories/'" | sort: 'path' %}
+{% assign album_extensions = '.jpg,.jpeg,.png,.webp,.avif,.gif' | split: ',' %}
+{% assign album_count = 0 %}
+{% capture album_cards %}
+  {% for photo in album_files %}
+    {% assign extension = photo.extname | downcase %}
+    {% if album_extensions contains extension %}
+      {% assign album_count = album_count | plus: 1 %}
+      {% assign filename = photo.path | remove_first: '/images/zy-and-i/memories/' %}
+      {% assign details = site.data.zy-and-i-album.photos | where: 'file', filename | first %}
+      {% assign caption = details.caption | default: '一起的时光' %}
+      {% assign alt = details.alt | default: caption %}
+      <figure class="memory-print">
+        <a class="memory-print__image" href="{{ photo.path | relative_url | escape }}" data-memory-photo data-caption="{{ caption | escape }}" data-date="{{ details.date | escape }}" aria-label="查看照片 {{ album_count }}：{{ caption | escape }}">
+          <img src="{{ photo.path | relative_url | escape }}" alt="{{ alt | escape }}" loading="lazy" decoding="async">
+          <span class="memory-print__zoom" aria-hidden="true">↗</span>
+        </a>
+        <figcaption><span class="memory-print__number">{{ album_count | prepend: '00' | slice: -3, 3 }}</span><div><p>{{ caption | escape }}</p>{% if details.date %}<span class="memory-print__date">{{ details.date | escape }}</span>{% endif %}</div></figcaption>
+      </figure>
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+<main class="memory-shell">
+  <nav class="memory-nav" aria-label="相册导航">
+    <a href="{{ '/zy-and-i/' | relative_url }}"><span aria-hidden="true">←</span> 回到 ZY and I</a>
+    <span class="memory-nav__names">ZXY <span aria-hidden="true">♡</span> ZZY</span>
+  </nav>
+  <header class="memory-heading">
+    <div><span class="memory-heading__eyebrow">OUR LITTLE ARCHIVE</span><h1>回忆相册<span aria-hidden="true">♡</span></h1><p>把一起走过的日子，一张一张留在这里。</p></div>
+    <span class="memory-heading__count">{% if album_count > 0 %}{{ album_count }} 张照片{% else %}等我们的第一张回忆{% endif %}</span>
+  </header>
+  {% if album_count > 0 %}
+    <section class="memory-grid" aria-label="我们的照片">{{ album_cards }}</section>
+    <p class="memory-end">这些瞬间，和你一起。</p>
+  {% else %}
+    <section class="memory-empty" aria-label="相册等待第一张照片">
+      <div class="memory-empty__print" aria-hidden="true"><svg viewBox="0 0 120 90"><path d="M60 67S33 52 33 34c0-18 19-23 27-8 8-15 27-10 27 8 0 18-27 33-27 33Z"/></svg><span>YOU &amp; ME</span></div>
+      <h2>留一个位置，给我们的回忆。</h2>
+      <p>旅行、散步、一顿晚饭，或只是坐在一起。<br>每个平常的瞬间，都值得收进相册。</p>
+    </section>
+  {% endif %}
+</main>
+<dialog class="memory-viewer" aria-labelledby="memory-viewer-caption">
+  <div class="memory-viewer__panel">
+    <header><span data-memory-counter></span><button type="button" data-memory-close aria-label="关闭照片">×</button></header>
+    <div class="memory-viewer__stage">
+      <button class="memory-viewer__previous" type="button" data-memory-previous aria-label="上一张照片">‹</button>
+      <img data-memory-image alt="">
+      <button class="memory-viewer__next" type="button" data-memory-next aria-label="下一张照片">›</button>
+    </div>
+    <p class="memory-viewer__status" role="status" data-memory-status></p>
+    <footer><div aria-live="polite" aria-atomic="true"><p id="memory-viewer-caption"></p><span data-memory-date></span></div><a data-memory-original target="_blank" rel="noopener">打开原图 ↗</a></footer>
+  </div>
+</dialog>

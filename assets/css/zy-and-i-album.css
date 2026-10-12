@@ -1,0 +1,68 @@
+/* White photo paper, rose ink, and contact-sheet numbers echo the love page. */
+body.memory-page { background: #fffafb; font-family: var(--love-font-cn); }
+.memory-shell { width: min(1160px, calc(100% - 80px)); margin: 0 auto; }
+.memory-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 32px 0; font-size: 13px; }
+.memory-nav a { color: var(--love-ink); text-decoration: none; }
+.memory-nav a:hover { color: var(--love-accent); }
+.memory-nav a span { margin-right: 8px; }
+.memory-nav__names { font: 20px var(--love-font-en); letter-spacing: 2px; white-space: nowrap; }
+.memory-nav__names span { margin: 0 9px; color: #a95175; }
+.memory-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 40px 0 42px; }
+.memory-heading__eyebrow { font: 12px var(--love-font-utility); letter-spacing: 2px; color: #a95175; }
+.memory-heading h1 { margin: 14px 0 16px; font-size: clamp(30px, 4vw, 44px); font-weight: 500; letter-spacing: 4px; }
+.memory-heading h1 span { display: inline-block; margin-left: 16px; font: 32px var(--love-font-en); color: #a95175; transform: rotate(-12deg); }
+.memory-heading p { margin: 0; font-size: 14px; line-height: 1.8; color: #7c6873; }
+.memory-heading__count { flex-shrink: 0; padding-bottom: 4px; font-size: 12px; color: #7c6873; }
+.memory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.memory-print { min-width: 0; margin: 0; padding: 10px 10px 0; background: #fff; border: 1px solid #efdee5; box-shadow: 0 8px 25px rgba(102, 55, 78, .06); }
+.memory-print__image { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: #f9edf2; }
+.memory-print__image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 220ms ease; }
+.memory-print__image:hover img { transform: scale(1.035); }
+.memory-print__zoom { position: absolute; right: 10px; bottom: 10px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #ffffffec; color: #8b2f72; font: 20px Georgia, serif; }
+.memory-print figcaption { display: flex; gap: 14px; align-items: baseline; padding: 16px 7px 19px; }
+.memory-print__number { font: 12px var(--love-font-utility); color: #a95175; }
+.memory-print figcaption div { min-width: 0; }
+.memory-print figcaption p { margin: 0; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+.memory-print__date { display: block; margin-top: 6px; color: #7c6873; font: 11px var(--love-font-utility); }
+.memory-end { margin: 50px 0; color: #7c6873; text-align: center; font-size: 12px; }
+.memory-empty { display: grid; justify-items: center; padding: 30px 16px 80px; text-align: center; }
+.memory-empty__print { width: 200px; padding: 12px 12px 24px; transform: rotate(-5deg); background: #fff; border: 1px solid #efdee5; box-shadow: 8px 12px 0 #f6e4ed; }
+.memory-empty__print svg { display: block; width: 100%; padding: 22px; background: #f9edf2; fill: none; stroke: #ce6d98; stroke-width: 1.5; }
+.memory-empty__print span { display: block; margin-top: 18px; font: 17px var(--love-font-en); letter-spacing: 3px; color: #a95175; }
+.memory-empty h2 { margin: 42px 0 12px; font-size: 20px; font-weight: 500; line-height: 1.7; }
+.memory-empty p { margin: 0; color: #7c6873; font-size: 13px; line-height: 2; }
+.memory-viewer { width: min(1100px, calc(100% - 40px)); max-width: none; max-height: calc(100dvh - 40px); padding: 0; border: 0; border-radius: 10px; background: #fffafb; color: var(--love-ink); box-shadow: 0 20px 100px #0004; }
+.memory-viewer::backdrop { background: rgba(39, 26, 35, .86); }
+.memory-viewer__panel { padding: 16px 20px 20px; }
+.memory-viewer header, .memory-viewer footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.memory-viewer header { margin-bottom: 12px; font: 12px var(--love-font-utility); color: #7c6873; }
+.memory-viewer button { display: grid; width: 40px; height: 40px; flex-shrink: 0; place-items: center; padding: 0; border: 1px solid #efdee5; border-radius: 50%; background: #fff; color: #8b2f72; font: 30px/1 Georgia, serif; }
+.memory-viewer button:disabled { opacity: .35; }
+.memory-viewer__stage { position: relative; display: grid; min-height: 180px; place-items: center; touch-action: pan-y; }
+.memory-viewer__stage img { display: block; max-width: 100%; height: min(62dvh, 650px); width: 100%; object-fit: contain; }
+.memory-viewer__previous, .memory-viewer__next { position: absolute; top: 50%; z-index: 1; transform: translateY(-50%); }
+.memory-viewer__previous { left: 0; }
+.memory-viewer__next { right: 0; }
+.memory-viewer__status { min-height: 18px; margin: 12px 0; font-size: 12px; text-align: center; color: #7c6873; }
+.memory-viewer footer p { margin: 0; line-height: 1.7; font-size: 14px; overflow-wrap: anywhere; }
+.memory-viewer footer span { display: block; margin-top: 5px; font: 12px var(--love-font-utility); color: #7c6873; }
+.memory-viewer footer a { flex-shrink: 0; color: #8b2f72; font-size: 12px; }
+.memory-page a:focus-visible, .memory-page button:focus-visible { outline: 2px solid #8b2f72; outline-offset: 4px; }
+.memory-viewer__stage img.is-unavailable { opacity: 0; }
+@media (max-width: 900px) { .memory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (max-width: 560px) {
+  .memory-shell { width: calc(100% - 32px); }
+  .memory-nav { padding: 24px 0; font-size: 12px; }
+  .memory-nav__names { font-size: 16px; letter-spacing: 1px; }
+  .memory-heading { display: block; padding: 24px 0 30px; }
+  .memory-heading__count { display: block; margin-top: 20px; }
+  .memory-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .memory-empty { padding: 20px 0 55px; }
+  .memory-empty h2 { font-size: 18px; }
+  .memory-viewer { width: calc(100% - 16px); max-height: calc(100dvh - 16px); }
+  .memory-viewer__panel { padding: 12px; }
+  .memory-viewer__stage img { height: 55dvh; }
+  .memory-viewer button { width: 36px; height: 36px; }
+  .memory-viewer footer { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) { .memory-print__image img { transition: none; } }

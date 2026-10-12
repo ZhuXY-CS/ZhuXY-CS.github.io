@@ -1,0 +1,9 @@
+# Optional captions. Photos appear automatically without entries here.
+# file is relative to images/zy-and-i/memories/ (including any subfolder).
+# Example:
+# photos:
+#   - file: "001-first-date.jpg"
+#     caption: "第一次一起吃晚饭"
+#     date: "2026-08-19"
+#     alt: "我们坐在餐厅窗边"
+photos: []
