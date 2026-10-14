@@ -6,47 +6,25 @@ sitemap: false
 author_profile: false
 ---
 <main class="recipe-shell">
-  <nav class="recipe-nav" aria-label="食谱导航">
-    <a href="{{ '/zy-and-i/' | relative_url }}">← 回到 ZY and I</a>
-    <span>ZXY ♡ ZZY</span>
-  </nav>
-  <header class="recipe-heading">
-    <span class="recipe-eyebrow">OUR RECIPE BOOK</span>
-    <h1>我们的食谱</h1>
-    <p>紫雨的日常饭菜，还有小庸想带紫雨一起尝的味道。</p>
-    <p>做法为家常参考版，按 1–2 人份估算用时，包含备菜；调味按口味调整。小姨和店里的手艺，等以后一起品尝再慢慢记录。</p>
-  </header>
-  <details class="recipe-references">
-    <summary>做法参考与用时说明</summary>
-    <p>根据通用家常烹饪方法及下列资料整理，结合我们记录的食材作了调整；用时为估算，实际以食材熟度和锅具为准。使用现成面条、馍皮，不包含解冻时间。胡辣汤的小米、鸡蛋版本按我们的记录改编。</p>
-    <p><a href="https://www.daydaycook.com/zh-Hans/recipe/home-style-tomato-egg-noodles">番茄鸡蛋面</a> · <a href="https://hanwuji.xiachufang.com/recipe/104460245/">番茄土豆炖牛肉</a> · <a href="https://home.meishichina.com/recipe-300134.html">盐焗粉蒸鸡腿</a> · <a href="https://m.meishichina.com/recipe/91629/">麻辣香锅</a> · <a href="https://www.haiweili.com/lxf050">胡辣汤</a> · <a href="https://www.xiangha.com/techan/141388.html">太和板面</a> · <a href="https://www.zuocaicai.com/kaolengmian/">烤冷面</a></p>
-  </details>
+  <nav class="recipe-nav" aria-label="食谱导航"><a href="{{ '/zy-and-i/' | relative_url }}">← 回到 ZY and I</a><span>我们的食谱 · ZXY ♡ ZZY</span></nav>
+  <h1 class="recipe-page-title">今天，我们吃什么？</h1>
+  <div class="recipe-tabs" role="tablist" aria-label="食谱分类">
+    <button role="tab" id="tab-daily" aria-controls="recipe-viewer" aria-selected="true" data-mode="daily">每天推荐菜<small>每天换几道，一起尝新</small></button>
+    <button role="tab" id="tab-ziyu" aria-controls="recipe-viewer" aria-selected="false" tabindex="-1" data-mode="ziyu">紫雨食谱<small>她的日常好味道</small></button>
+    <button role="tab" id="tab-xiaoyong" aria-controls="recipe-viewer" aria-selected="false" tabindex="-1" data-mode="xiaoyong">小庸甄选<small>想带她一起吃</small></button>
+  </div>
   {% assign recipes = site.data['zy-and-i-recipes'].recipes %}
-  {% if recipes.size > 0 %}
-  {% assign groups = site.data['zy-and-i-recipes'].groups %}
-  <nav class="recipe-group-nav" aria-label="选择饭菜分组">
-    {% for group in groups %}
-      {% assign group_recipes = recipes | where: 'group', group.id %}
-      <a href="#recipes-{{ group.id | escape }}">{{ group.title | escape }} <span>{{ group_recipes.size }} 道</span></a>
-    {% endfor %}
-  </nav>
-  {% for group in groups %}
-  {% assign group_recipes = recipes | where: 'group', group.id %}
-  {% if group_recipes.size > 0 %}
-  <section class="recipe-group recipe-group--{{ group.id | escape }}" id="recipes-{{ group.id | escape }}" aria-labelledby="recipe-group-title-{{ group.id | escape }}">
-    <header class="recipe-group__heading">
-      <div><h2 id="recipe-group-title-{{ group.id | escape }}">{{ group.title | escape }}</h2><p>{{ group.description | escape }}</p></div>
-      <span>{{ group_recipes.size }} 道菜</span>
-    </header>
+  <section id="recipe-viewer" role="tabpanel" aria-labelledby="tab-daily">
+    <div class="recipe-pager"><button id="recipe-prev" aria-label="上一道菜">← 上一道</button><span id="recipe-position" aria-live="polite">选择一道喜欢的菜</span><button id="recipe-next" aria-label="下一道菜">下一道 →</button></div>
     <div class="recipe-list">
-    {% for recipe in group_recipes %}
-    <article class="recipe-card" id="{{ recipe.id | escape }}" aria-labelledby="recipe-title-{{ recipe.id | escape }}">
+    {% for recipe in recipes %}
+    <article class="recipe-card" data-group="{{ recipe.group | escape }}" id="{{ recipe.id | escape }}" aria-labelledby="recipe-title-{{ recipe.id | escape }}">
       <figure class="recipe-card__photo">
         <img src="{{ recipe.image | relative_url | escape }}" alt="{{ recipe.image_alt | escape }}" decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
         <figcaption>美食插画 · 根据我们的照片制作</figcaption>
       </figure>
-      <div class="recipe-card__body">
-        <span class="recipe-eyebrow">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }} · OUR TABLE</span>
+      <div class="recipe-card__body" tabindex="0" aria-label="菜品详情，可上下滚动查看完整做法">
+        <span class="recipe-eyebrow">{% if recipe.group == 'ziyu' %}紫雨食谱{% else %}小庸甄选{% endif %}</span>
         <h3 class="recipe-card__title" id="recipe-title-{{ recipe.id | escape }}">{{ recipe.name | escape }}</h3>
         <h4>食材</h4>
         <ul class="recipe-ingredients">
@@ -57,7 +35,7 @@ author_profile: false
         {% if recipe contains 'note' %}<p class="recipe-card__note">{{ recipe.note | escape }}</p>{% endif %}
         <dl class="recipe-card__time"><dt>预计用时</dt><dd>{{ recipe.estimated_time | default: '待补充' | escape }}</dd></dl>
         <div class="recipe-card__method">
-          <h4>做法</h4>
+          <h4>做法 <small class="recipe-scroll-hint">详情区可上下滚动</small></h4>
           {% if recipe.steps.size > 0 %}
           <ol>{% for step in recipe.steps %}<li>{{ step | escape }}</li>{% endfor %}</ol>
           {% else %}<p class="recipe-pending">待补充</p>{% endif %}
@@ -67,13 +45,18 @@ author_profile: false
     {% endfor %}
     </div>
   </section>
-  {% endif %}
-  {% endfor %}
-  {% else %}
-  <section class="recipe-empty" aria-labelledby="recipe-empty-title">
-    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M8 24h32c0 10-7 16-16 16S8 34 8 24ZM15 40h18M17 8c-5 5 5 7 0 12M24 6c-5 5 5 7 0 12M31 8c-5 5 5 7 0 12"/></svg>
-    <h2 id="recipe-empty-title">今天想吃什么？</h2>
-    <p>我们的食谱正在准备中。</p>
-  </section>
-  {% endif %}
+  <nav class="recipe-preview" aria-label="菜品图片预览">
+    <button class="preview-arrow" id="preview-prev" aria-label="向左滚动预览">‹</button>
+    <div class="recipe-thumbnails">
+      {% for recipe in recipes %}<button class="recipe-thumbnail" data-recipe="{{ recipe.id | escape }}" aria-label="查看{{ recipe.name | escape }}"><img src="{{ recipe.image | relative_url | escape }}" alt="" loading="lazy"><span>{{ recipe.name | escape }}</span></button>{% endfor %}
+    </div>
+    <button class="preview-arrow" id="preview-next" aria-label="向右滚动预览">›</button>
+  </nav>
+  <p class="recipe-footnote">家常参考做法 · 用时按 1–2 人份估算，包含备菜；小姨和店里的具体手艺，等一起品尝再记录。</p>
+  <details class="recipe-references">
+    <summary>做法参考与用时说明</summary>
+    <p>根据通用家常烹饪方法及下列资料整理，结合我们记录的食材作了调整；用时为估算，实际以食材熟度和锅具为准。使用现成面条、馍皮，不包含解冻时间。胡辣汤的小米、鸡蛋版本按我们的记录改编。</p>
+    <p><a href="https://www.daydaycook.com/zh-Hans/recipe/home-style-tomato-egg-noodles">番茄鸡蛋面</a> · <a href="https://hanwuji.xiachufang.com/recipe/104460245/">番茄土豆炖牛肉</a> · <a href="https://home.meishichina.com/recipe-300134.html">盐焗粉蒸鸡腿</a> · <a href="https://m.meishichina.com/recipe/91629/">麻辣香锅</a> · <a href="https://www.haiweili.com/lxf050">胡辣汤</a> · <a href="https://www.xiangha.com/techan/141388.html">太和板面</a> · <a href="https://www.zuocaicai.com/kaolengmian/">烤冷面</a></p>
+  </details>
 </main>
+<script src="{{ '/assets/js/zy-and-i-recipes.js' | relative_url }}" defer></script>
