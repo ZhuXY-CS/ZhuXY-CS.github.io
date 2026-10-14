@@ -9,7 +9,10 @@
   const day = new Date();
   const seed = Number(`${day.getFullYear()}${String(day.getMonth() + 1).padStart(2, '0')}${String(day.getDate()).padStart(2, '0')}`);
   // A local calendar date gives both of us the same recommendations all day.
-  const daily = [0, 1, 2].map(offset => cards[(seed + offset * 5) % cards.length]);
+  const featured = cards.find(card => card.id === 'sweet-sour-meatballs');
+  const others = cards.filter(card => card !== featured);
+  const start = seed % others.length;
+  const daily = [featured, others[start], others[(start + 1) % others.length]].filter(Boolean);
   function show(nextIndex, updateHash = true) {
     index = (nextIndex + selected.length) % selected.length;
     const active = selected[index];
