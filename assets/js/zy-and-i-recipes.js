@@ -36,6 +36,12 @@
       tab.tabIndex = active ? 0 : -1;
     });
     document.querySelector('#recipe-viewer').setAttribute('aria-labelledby', `tab-${mode}`);
+    thumbnails.forEach(button => {
+      const position = selected.findIndex(card => card.id === button.dataset.recipe);
+      button.hidden = position < 0;
+      button.style.order = position;
+    });
+    strip.scrollLeft = 0;
     const found = selected.findIndex(card => card.id === wantedId);
     show(found < 0 ? 0 : found);
   }
