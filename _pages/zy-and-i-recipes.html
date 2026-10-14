@@ -13,27 +13,45 @@ author_profile: false
   <header class="recipe-heading">
     <span class="recipe-eyebrow">OUR RECIPE BOOK</span>
     <h1>我们的食谱</h1>
-    <p>把你爱吃的饭菜，慢慢记在这里。</p>
+    <p>紫雨的日常饭菜，还有小庸想带紫雨一起尝的味道。</p>
   </header>
   {% assign recipes = site.data['zy-and-i-recipes'].recipes %}
   {% if recipes.size > 0 %}
-  <section class="recipe-list" aria-label="我们的菜品">
-    {% for recipe in recipes %}
+  {% assign groups = site.data['zy-and-i-recipes'].groups %}
+  <nav class="recipe-group-nav" aria-label="选择饭菜分组">
+    {% for group in groups %}
+      {% assign group_recipes = recipes | where: 'group', group.id %}
+      <a href="#recipes-{{ group.id | escape }}">{{ group.title | escape }} <span>{{ group_recipes.size }} 道</span></a>
+    {% endfor %}
+  </nav>
+  {% for group in groups %}
+  {% assign group_recipes = recipes | where: 'group', group.id %}
+  {% if group_recipes.size > 0 %}
+  <section class="recipe-group recipe-group--{{ group.id | escape }}" id="recipes-{{ group.id | escape }}" aria-labelledby="recipe-group-title-{{ group.id | escape }}">
+    <header class="recipe-group__heading">
+      <div><h2 id="recipe-group-title-{{ group.id | escape }}">{{ group.title | escape }}</h2><p>{{ group.description | escape }}</p></div>
+      <span>{{ group_recipes.size }} 道菜</span>
+    </header>
+    <div class="recipe-list">
+    {% for recipe in group_recipes %}
     <article class="recipe-card" id="{{ recipe.id | escape }}" aria-labelledby="recipe-title-{{ recipe.id | escape }}">
       <figure class="recipe-card__photo">
         <img src="{{ recipe.image | relative_url | escape }}" alt="{{ recipe.image_alt | escape }}" decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
         <figcaption>美食插画 · 根据我们的照片制作</figcaption>
       </figure>
       <div class="recipe-card__body">
-        <span class="recipe-eyebrow">{{ forloop.index | prepend: '0' }} · OUR TABLE</span>
-        <h2 id="recipe-title-{{ recipe.id | escape }}">{{ recipe.name | escape }}</h2>
-        <h3>食材</h3>
+        <span class="recipe-eyebrow">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }} · OUR TABLE</span>
+        <h3 class="recipe-card__title" id="recipe-title-{{ recipe.id | escape }}">{{ recipe.name | escape }}</h3>
+        <h4>食材</h4>
         <ul class="recipe-ingredients">
           {% for ingredient in recipe.ingredients %}<li>{{ ingredient | escape }}</li>{% endfor %}
         </ul>
+        {% if recipe contains 'made_by' %}<p class="recipe-card__origin">烹饪：{{ recipe.made_by | escape }}</p>{% endif %}
+        {% if recipe contains 'location' %}<p class="recipe-card__origin">地点：{{ recipe.location | escape }}</p>{% endif %}
+        {% if recipe contains 'note' %}<p class="recipe-card__note">{{ recipe.note | escape }}</p>{% endif %}
         <dl class="recipe-card__time"><dt>预计用时</dt><dd>{{ recipe.estimated_time | default: '待补充' | escape }}</dd></dl>
         <div class="recipe-card__method">
-          <h3>做法</h3>
+          <h4>做法</h4>
           {% if recipe.steps.size > 0 %}
           <ol>{% for step in recipe.steps %}<li>{{ step | escape }}</li>{% endfor %}</ol>
           {% else %}<p class="recipe-pending">待补充</p>{% endif %}
@@ -41,7 +59,10 @@ author_profile: false
       </div>
     </article>
     {% endfor %}
+    </div>
   </section>
+  {% endif %}
+  {% endfor %}
   {% else %}
   <section class="recipe-empty" aria-labelledby="recipe-empty-title">
     <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M8 24h32c0 10-7 16-16 16S8 34 8 24ZM15 40h18M17 8c-5 5 5 7 0 12M24 6c-5 5 5 7 0 12M31 8c-5 5 5 7 0 12"/></svg>

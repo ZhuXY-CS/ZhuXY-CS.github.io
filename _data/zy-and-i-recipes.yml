@@ -1,6 +1,14 @@
 # Add further dishes to this list. Leave unconfirmed instructions and time empty.
+groups:
+  - id: ziyu
+    title: "紫雨的日常饭菜"
+    description: "记录紫雨平常做的饭菜。"
+  - id: xiaoyong
+    title: "小庸想带紫雨吃的"
+    description: "小庸平常吃到的味道，想在将来和紫雨一起分享。"
 recipes:
   - id: tomato-egg-noodles
+    group: ziyu
     name: "西红柿鸡蛋面"
     image: "/images/zy-and-i/recipes/tomato-egg-noodles.png"
     image_alt: "西红柿鸡蛋面美食插画：番茄汤底中有面条、鸡蛋、鸡腿肉和葱花"
@@ -13,6 +21,7 @@ recipes:
     estimated_time: ""
     steps: []
   - id: tomato-potato-beef
+    group: ziyu
     name: "番茄土豆烧牛肉"
     image: "/images/zy-and-i/recipes/tomato-potato-beef.png"
     image_alt: "番茄土豆烧牛肉美食插画：牛肉块、土豆和西红柿裹着浓稠酱汁，点缀香菜"
@@ -24,6 +33,7 @@ recipes:
     estimated_time: ""
     steps: []
   - id: tomato-scrambled-eggs
+    group: ziyu
     name: "西红柿炒鸡蛋"
     image: "/images/zy-and-i/recipes/tomato-scrambled-eggs.png"
     image_alt: "西红柿炒鸡蛋美食插画：红色西红柿块与金黄色炒鸡蛋裹着少量番茄汁"
@@ -33,6 +43,7 @@ recipes:
     estimated_time: ""
     steps: []
   - id: carrot-beef-wrap
+    group: ziyu
     name: "胡萝卜牛肉卷馍"
     image: "/images/zy-and-i/recipes/carrot-beef-wrap.png"
     image_alt: "胡萝卜牛肉卷馍美食插画：柔软的馍卷着胡萝卜条、牛肉和沙拉酱，开口露出馅料"
@@ -44,6 +55,7 @@ recipes:
     estimated_time: ""
     steps: []
   - id: salt-baked-chicken-thighs
+    group: ziyu
     name: "盐焗鸡腿"
     image: "/images/zy-and-i/recipes/salt-baked-chicken-thighs.png"
     image_alt: "盐焗鸡腿美食插画：不锈钢碗里盛着带淡金色鸡皮的熟鸡腿肉"
@@ -52,6 +64,7 @@ recipes:
     estimated_time: ""
     steps: []
   - id: tomato-egg-lettuce-noodles
+    group: ziyu
     name: "西红柿鸡蛋生菜面"
     image: "/images/zy-and-i/recipes/tomato-egg-lettuce-noodles.png"
     image_alt: "西红柿鸡蛋生菜面美食插画：番茄汤汁中的面条和鸡蛋，搭配大片浅绿色叶菜"
@@ -60,5 +73,111 @@ recipes:
       - "鸡蛋"
       - "生菜"
       - "面条"
+    estimated_time: ""
+    steps: []
+  - id: mala-dry-pot
+    group: ziyu
+    name: "麻辣香锅"
+    image: "/images/zy-and-i/recipes/mala-dry-pot.png"
+    image_alt: "麻辣香锅美食插画：鸡腿肉、鸡蛋、土豆、西兰花、培根、白菜和蘑菇在黑色炒锅中混炒"
+    ingredients:
+      - "鸡腿肉"
+      - "鸡蛋"
+      - "土豆"
+      - "西兰花"
+      - "培根"
+      - "白菜"
+      - "蘑菇"
+    estimated_time: ""
+    steps: []
+  - id: bacon-noodle-soup
+    group: ziyu
+    name: "培根素面"
+    image: "/images/zy-and-i/recipes/bacon-noodle-soup.png"
+    image_alt: "培根素面美食插画：清汤细面搭配粉红色培根片、绿色青菜和鸡蛋"
+    ingredients:
+      - "面条"
+      - "培根"
+      - "青菜"
+      - "鸡蛋"
+    estimated_time: ""
+    steps: []
+  - id: chicken-vegetable-rice-box
+    group: ziyu
+    name: "鸡肉素盒饭"
+    image: "/images/zy-and-i/recipes/chicken-vegetable-rice-box.png"
+    image_alt: "鸡肉素盒饭美食插画：透明玻璃饭盒内盛着鸡肉、白米饭、西兰花和胡萝卜丝"
+    ingredients:
+      - "鸡肉"
+      - "西兰花"
+      - "胡萝卜"
+      - "米饭"
+    estimated_time: ""
+    steps: []
+  - id: tomato-egg-grilled-cold-noodles
+    group: ziyu
+    name: "西红柿鸡蛋烤冷面"
+    image: "/images/zy-and-i/recipes/tomato-egg-grilled-cold-noodles.png"
+    image_alt: "西红柿鸡蛋烤冷面美食插画：白盘里的金黄色烤冷面片、鸡蛋、红色番茄和绿色香菜"
+    ingredients:
+      - "西红柿"
+      - "鸡蛋"
+      - "烤冷面"
+      - "香菜"
+    estimated_time: ""
+    steps: []
+  - id: hula-soup
+    group: xiaoyong
+    name: "胡辣汤"
+    image: "/images/zy-and-i/recipes/hula-soup.png"
+    image_alt: "胡辣汤美食插画：浓稠汤底中有木耳、鸡蛋丝、瘦肉和小米，点缀香菜"
+    ingredients:
+      - "木耳"
+      - "鸡蛋"
+      - "瘦肉"
+      - "牛骨头"
+      - "小米"
+      - "香菜"
+    estimated_time: ""
+    steps: []
+  - id: sausage-crispy-rice
+    group: xiaoyong
+    name: "香肠锅巴饭"
+    image: "/images/zy-and-i/recipes/sausage-crispy-rice.png"
+    image_alt: "香肠锅巴饭美食插画：圆锅中的米饭铺着香肠片，锅边有金黄色锅巴"
+    ingredients:
+      - "香肠"
+      - "米饭"
+    made_by: "小庸的小姨"
+    note: "小姨说，等紫雨来，她做给紫雨吃。"
+    estimated_time: ""
+    steps: []
+  - id: taihe-beef-noodles
+    group: xiaoyong
+    name: "太和板面"
+    image: "/images/zy-and-i/recipes/taihe-beef-noodles.png"
+    image_alt: "太和板面美食插画：宽板面搭配牛肉块、整根辣椒和白菜，盛在黄褐色陶碗中"
+    ingredients:
+      - "牛肉"
+      - "辣椒"
+      - "白菜"
+      - "板面"
+    location: "翠庭院门口"
+    estimated_time: ""
+    steps: []
+  - id: lulu-wrap
+    group: xiaoyong
+    name: "噜噜卷馍"
+    image: "/images/zy-and-i/recipes/lulu-wrap.png"
+    image_alt: "噜噜卷馍备料美食插画：薄馍皮、千张丝、土豆丝和鸡蛋，搭配老干妈、辣椒面和芝麻"
+    ingredients:
+      - "卷馍"
+      - "千张丝"
+      - "土豆丝"
+      - "鸡蛋"
+      - "老干妈"
+      - "辣椒面"
+      - "芝麻"
+    made_by: "小庸自己烹饪"
     estimated_time: ""
     steps: []
