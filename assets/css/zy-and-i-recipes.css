@@ -82,7 +82,7 @@ body.recipe-page { background: #fffafb; font-family: var(--love-font-cn); }
 .recipe-card__note { padding: 7px 10px; }
 .recipe-preview { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
 .preview-arrow { flex: 0 0 30px; height: 42px; border: 1px solid #efdee5; border-radius: 8px; background: #fff; color: #94385f; font-size: 24px; cursor: pointer; }
-.recipe-thumbnails { display: flex; gap: 10px; min-width: 0; overflow-x: auto; padding: 4px 3px 10px; scrollbar-width: thin; scroll-snap-type: x proximity; }
+.recipe-thumbnails { display: flex; flex: 1 1 0%; gap: 10px; min-width: 0; overflow-x: auto; padding: 4px 3px 10px; scrollbar-width: thin; scroll-snap-type: x proximity; }
 .recipe-thumbnail { flex: 0 0 120px; padding: 4px; background: #fff; border: 1px solid #efdee5; border-radius: 9px; color: #735562; cursor: pointer; scroll-snap-align: start; }
 .recipe-thumbnail img { width: 100%; height: 70px; object-fit: cover; display: block; border-radius: 5px; }
 .recipe-thumbnail span { display: block; padding: 7px 1px 3px; font: 11px var(--love-font-cn); }
