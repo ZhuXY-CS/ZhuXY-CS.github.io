@@ -21,7 +21,6 @@ author_profile: false
     <article class="recipe-card" data-group="{{ recipe.group | escape }}" id="{{ recipe.id | escape }}" aria-labelledby="recipe-title-{{ recipe.id | escape }}">
       <figure class="recipe-card__photo">
         <img src="{{ recipe.image | relative_url | escape }}" alt="{{ recipe.image_alt | escape }}" decoding="async"{% if forloop.first %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
-        <figcaption>美食插画 · 根据我们的照片制作</figcaption>
       </figure>
       <div class="recipe-card__body" tabindex="0" aria-label="菜品详情，可上下滚动查看完整做法">
         <span class="recipe-eyebrow">{% if recipe.group == 'ziyu' %}紫雨食谱{% elsif recipe.group == 'daily' %}每日推荐美食{% else %}小庸甄选{% endif %}</span>
