@@ -113,3 +113,13 @@ body.recipe-page { background: #fffafb; font-family: var(--love-font-cn); }
 }
 .recipe-scroll-hint { font-size: 10px; font-weight: 400; color: #8a7780; margin-left: 8px; }
 .recipe-card__body:focus-visible { outline: 2px solid #ce6d98; outline-offset: -3px; }
+/* Keep the dish recognizable and leave more room to read on phones. */
+@media (max-width: 600px) {
+ .recipe-tabs button { font-size: clamp(12px, 3.5vw, 14px); }
+ .recipe-pager button { min-height: 36px; }
+ .recipe-card { height: clamp(440px, 60svh, 540px); grid-template-rows: 150px minmax(0, 1fr); }
+ .recipe-card__photo { background: #fff; }
+ .recipe-card__photo img { height: 150px; object-fit: contain; }
+ .preview-arrow { flex-basis: 36px; min-height: 44px; }
+ .recipe-thumbnail span { line-height: 1.5; }
+}
