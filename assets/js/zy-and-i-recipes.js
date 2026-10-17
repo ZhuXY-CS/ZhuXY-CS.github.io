@@ -10,8 +10,8 @@
   const seed = Number(`${day.getFullYear()}${String(day.getMonth() + 1).padStart(2, '0')}${String(day.getDate()).padStart(2, '0')}`);
   // A local calendar date gives both of us the same recommendations all day.
   const featured = cards.find(card => card.id === 'sweet-sour-meatballs');
-  const dailyOnly = cards.filter(card => card.dataset.group === 'daily');
-  const others = cards.filter(card => card !== featured && card.dataset.group !== 'daily');
+  const dailyOnly = cards.filter(card => card.dataset.group === 'daily' || card.dataset.daily === 'true');
+  const others = cards.filter(card => card !== featured && !dailyOnly.includes(card));
   const start = seed % others.length;
   const daily = [featured, ...dailyOnly, others[start], others[(start + 1) % others.length]].filter(Boolean);
   function show(nextIndex, updateHash = true) {
