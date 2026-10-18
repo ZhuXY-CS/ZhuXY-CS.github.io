@@ -1841,7 +1841,7 @@ body.love-page button { cursor: var(--love-heart-cursor); }
 /* A two-person love booklet: deep sea blue meets warm sunlight. */
 .zodiac-launch { margin-top: 0; }
 .zodiac-dialog button:focus-visible, .zodiac-launch:focus-visible { outline: 2px solid #8b2f72; outline-offset: 4px; }
-.zodiac-dialog .zodiac-panel { width: min(1120px,100%); grid-template-rows: auto auto minmax(0,1fr); background: #fffdfb; border-radius: 22px; border: 1px solid #e8dce0; box-shadow: 0 24px 90px #251e3540; }
+.zodiac-dialog .zodiac-panel { width: min(1120px,100%); grid-template-rows: auto auto auto minmax(0,1fr); background: #fffdfb; border-radius: 22px; border: 1px solid #e8dce0; box-shadow: 0 24px 90px #251e3540; }
 .zodiac-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 28px 36px 22px; background: #f7f0f3; color: #543348; }
 .zodiac-eyebrow { font: 11px/1.6 var(--love-font-utility); letter-spacing: .12em; }
 .zodiac-header h2 { margin: 8px 0; color: #543348; font: 600 clamp(24px,3vw,34px)/1.4 var(--love-font-cn); }
@@ -2453,3 +2453,8 @@ body.is-crime-map-open .love-stage *::after { animation-play-state: paused !impo
 .love-tool-icon--recipe { color: #a47842; background: #fbefdc; }
 @media (prefers-reduced-motion: reduce) { .recipe-launch { transition: none; } }
 @media (prefers-reduced-motion: reduce) { .memory-album-launch { transition: none; } }
+
+.zodiac-diary-entry { display: flex; align-items: center; gap: 12px; margin: 12px 24px; padding: 12px 16px; border: 1px solid #e7d8ed; border-radius: 12px; color: #79538d; background: #faf5fc; text-decoration: none; }
+.zodiac-diary-entry small { flex: 1; font-size: 12px; }
+.zodiac-diary-entry:focus-visible { outline: 2px solid #79538d; outline-offset: 3px; }
+@media(max-width: 560px) { .zodiac-diary-entry { margin: 8px 14px; padding: 10px; gap: 8px; } }
