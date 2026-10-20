@@ -8,5 +8,27 @@ author_profile: false
 <main class="recipe-shell">
   <nav class="recipe-nav" aria-label="页面导航"><a href="{{ '/zy-and-i/' | relative_url }}">← 回到 ZY and I</a><span>ZXY ♡ ZZY</span></nav>
   <header class="recipe-heading"><span class="recipe-eyebrow">WORDS BETWEEN US</span><h1>紫言先语</h1><p>把想对彼此说的话，慢慢写在这里。</p></header>
-  <section class="recipe-empty" aria-labelledby="words-title"><h2 id="words-title">留一页，给我们的悄悄话。</h2><p>第一句话，等我们来写。</p></section>
+  <section class="words-collection" aria-label="我们的甜蜜对话">
+    <article class="words-card" aria-label="紫雨的语录">
+      <span class="recipe-eyebrow">紫雨说</span>
+      <blockquote>“这是我妈妈烧的排骨，这是我爸爸给你剥的虾，还有我给你炒的西兰花”</blockquote>
+    </article>
+    <article class="words-card words-dialogue" aria-label="小庸和紫雨的对话">
+      <div class="words-message words-message--xiaoyong"><span>小庸</span><p>“宝贝，昨天休息的怎么样呀”</p></div>
+      <div class="words-message words-message--ziyu"><span>紫雨</span><p>“休息的不好我就打你～”</p></div>
+    </article>
+  </section>
 </main>
+<style>
+.words-collection { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-bottom: 48px; }
+.words-card { padding: 30px; border: 1px solid #efdee5; border-radius: 18px; background: #fff; box-shadow: 0 12px 32px rgba(102,55,78,.04); }
+.words-card blockquote { margin: 20px 0 0; color: #735562; font-size: 20px; line-height: 2; }
+.words-dialogue { display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.words-message { max-width: 90%; }
+.words-message > span { display: block; margin-bottom: 8px; color: #8a7780; font-size: 12px; }
+.words-message p { margin: 0; padding: 14px 18px; border-radius: 14px; font-size: 16px; line-height: 1.8; color: #735562; background: #fbf3e8; }
+.words-message--ziyu { align-self: flex-end; }
+.words-message--ziyu > span { text-align: right; }
+.words-message--ziyu p { background: #f9e7ef; color: #94385f; }
+@media(max-width: 700px) { .words-collection { grid-template-columns: 1fr; gap: 16px; } .words-card { padding: 24px; } .words-card blockquote { font-size: 18px; } }
+</style>
