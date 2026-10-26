@@ -53,6 +53,9 @@
       {% if post.doi %}
         <a href="{{ post.doi }}"><i class="fas fa-link"></i> DOI</a>
       {% endif %}
+      {% if post.onlineurl %}
+        <a href="{{ post.onlineurl }}"><i class="fas fa-external-link-alt"></i> Online</a>
+      {% endif %}
       {% if post.googlescholar %}
         <a href="{{ post.googlescholar }}"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
       {% endif %}

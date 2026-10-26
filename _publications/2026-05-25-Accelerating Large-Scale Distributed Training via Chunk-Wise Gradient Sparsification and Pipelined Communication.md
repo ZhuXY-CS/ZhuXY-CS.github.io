@@ -15,6 +15,7 @@ description: 'An algorithm designed to accelerate distributed data parallel trai
 keywords: '<strong>Communication Optimization</strong>, <strong>Deep Learning</strong>, <strong>Distributed Training</strong>, <strong>Gradient Compression</strong>'
 posterurl: '/poster/Chunk-GradComp.pdf'
 doi: 'https://doi.org/10.1007/s11390-026-5813-9'
+onlineurl: 'https://jcst.ict.ac.cn/article/doi/10.1007/s11390-026-5813-9'
 citation: ' Xianyu Zhu, Ruohan Wu,  Junshi Chen,  Hong An &quot;Accelerating Large-Scale Distributed Training via Chunk-Wise Gradient Sparsification and Pipelined Communication.&quot; Journal of Computer Science and Technology (JCST), 2026.'
 bibtex: |
   @article{zhu2026Chunk-GradComp,

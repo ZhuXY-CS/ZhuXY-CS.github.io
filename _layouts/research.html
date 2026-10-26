@@ -21,10 +21,11 @@ layout: default
           {% if page.project_type %}<p class="research-project-meta">{{ page.project_type }}</p>{% endif %}
           {% if page.description %}<p class="research-summary">{{ page.description }}</p>{% endif %}
         {% endif %}
-        {% if page.paperurl or page.posterurl or page.doi or page.googlescholar or page.slidesurl or page.demo or page.link or page.bibtex %}
+        {% if page.paperurl or page.posterurl or page.doi or page.onlineurl or page.googlescholar or page.slidesurl or page.demo or page.link or page.bibtex %}
         <nav class="research-resources" aria-label="{% if is_publication %}Publication{% else %}Project{% endif %} resources">
           {% if page.paperurl %}<a href="{{ page.paperurl | relative_url }}">Paper PDF <span aria-hidden="true">↗</span></a>{% endif %}
           {% if page.doi %}<a href="{{ page.doi }}">DOI <span aria-hidden="true">↗</span></a>{% endif %}
+          {% if page.onlineurl %}<a href="{{ page.onlineurl }}">Online <span aria-hidden="true">↗</span></a>{% endif %}
           {% if page.posterurl %}<a href="{{ page.posterurl | relative_url }}">Poster <span aria-hidden="true">↗</span></a>{% endif %}
           {% if page.googlescholar %}<a href="{{ page.googlescholar }}">Google Scholar <span aria-hidden="true">↗</span></a>{% endif %}
           {% if page.slidesurl %}<a href="{{ page.slidesurl | relative_url }}">Slides <span aria-hidden="true">↗</span></a>{% endif %}
