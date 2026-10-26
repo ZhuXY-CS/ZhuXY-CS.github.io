@@ -1,0 +1,21 @@
+---
+layout: zy-and-i-recipes
+permalink: /zy-and-i/devices/
+title: "管理我们的设备"
+entry_script: /assets/js/love-device-manager.js
+sitemap: false
+author_profile: false
+---
+<main class="recipe-shell love-device-manager">
+  <nav class="recipe-nav"><a href="{{ '/zy-and-i/' | relative_url }}">← 回到 ZY and I</a><span>ZXY ♡ ZZY</span></nav>
+  <header class="recipe-heading"><h1>管理我们的设备</h1><p>本机管理员可以邀请、查看和撤销其他浏览器。</p></header>
+  <p id="device-manager-status" role="status" aria-live="polite">正在确认管理员身份…</p>
+  <section id="device-manager-content" hidden>
+    <p id="device-manager-count"></p>
+    <button type="button" id="device-manager-invite">生成一次性邀请</button>
+    <button type="button" id="device-manager-refresh">刷新名单</button>
+    <section id="device-manager-new" hidden><label for="device-manager-url">新邀请链接（1 小时内有效）</label><input id="device-manager-url" type="text" readonly><button type="button" id="device-manager-copy">复制邀请链接</button></section>
+    <h2>已登记的设备</h2><div id="device-manager-list"></div>
+    <h2>待使用的邀请</h2><div id="device-manager-invitations"></div>
+  </section>
+</main>

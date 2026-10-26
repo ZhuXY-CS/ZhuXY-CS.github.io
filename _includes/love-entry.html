@@ -1,0 +1,27 @@
+<section class="love-entry" id="love-entry" aria-labelledby="love-entry-title" data-device-service="{{ site.love_access_url | escape }}">
+  <a class="love-entry__back" href="{{ '/' | relative_url }}">← 返回学术主页</a>
+  <div class="love-entry__card">
+    <span class="love-entry__mark" aria-hidden="true">♡</span>
+    <p class="love-entry__eyebrow">ZY &amp; I</p>
+    <h1 id="love-entry-title">只属于我们的时光</h1>
+    <p class="love-entry__intro">从记得的那一天，走进我们的故事。</p>
+    <form id="love-entry-form" novalidate>
+      <label for="love-entry-answer" id="love-entry-answer-label">初次相遇的日子</label>
+      <p class="love-entry__hint" id="love-entry-hint">请填写年月日，可以用短横线、斜线或中文日期。</p>
+      <input id="love-entry-answer" name="answer" type="text" placeholder="年 / 月 / 日" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="32" required aria-describedby="love-entry-hint love-entry-status">
+      <div class="love-entry__registration" id="love-entry-registration" hidden>
+        <label for="love-entry-device-name">设备备注</label>
+        <p class="love-entry__hint">为这台设备的常用浏览器取个名字，方便以后管理。</p>
+        <input id="love-entry-device-name" name="device-name" type="text" placeholder="例如：小庸的 Mac · Safari" autocomplete="off" maxlength="60">
+        <p class="love-entry__hint" id="love-entry-device-policy">邀请仅能使用一次，登记后可在 180 天内免验证。</p>
+      </div>
+      <p class="love-entry__status" id="love-entry-status" role="status" aria-live="polite"></p>
+      <button type="submit" id="love-entry-submit" disabled>走进我们的时光 <span aria-hidden="true">→</span></button>
+    </form>
+    <noscript><p class="love-entry__status">请启用 JavaScript 后再验证进入。</p></noscript>
+  </div>
+</section>
+<template id="love-entry-content" data-script="{{ include.script | relative_url }}?v={{ site.time | date: '%s' }}">{{ content }}</template>
+<a id="love-owner-link" class="love-owner-link" href="{{ '/zy-and-i/devices/' | relative_url }}" hidden>管理设备</a>
+<script src="{{ '/assets/js/love-device.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<script src="{{ '/assets/js/love-entry.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
