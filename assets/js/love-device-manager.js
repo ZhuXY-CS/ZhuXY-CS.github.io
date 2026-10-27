@@ -13,12 +13,18 @@
   }
   async function refresh() {
     var data=await service.admin("list"),now=Date.now();
-    var active=data.devices.filter(function(d){return !d.revoked&&d.expires>now;});
-    get("content").hidden=false;get("count").textContent="已登记 "+active.length+" / "+data.limit+" 个有效浏览器。";
+    var groups=data.groups||data.devices;
+    var active=groups.filter(function(d){return !d.revoked&&d.expires>now;});
+    get("content").hidden=false;get("count").textContent="已登记 "+active.length+" / "+data.limit+" 台设备。";
     get("invite").disabled=active.length>=data.limit;
-    get("list").replaceChildren.apply(get("list"),data.devices.map(function(d){
+    get("list").replaceChildren.apply(get("list"),groups.map(function(d){
       var state=d.revoked?"已撤销":d.expires<=now?"已到期":d.role==="owner"?"管理员 · 长期有效":"免验证至 "+new Date(d.expires).toLocaleDateString("zh-CN");
-      return card(d.label,state+" · 最近验证："+new Date(d.last_seen).toLocaleString("zh-CN"),!d.revoked&&d.expires>now&&d.role!=="owner"?function(){return service.admin("revoke",{id:d.id});}:null,"撤销免验证");
+      var names=(d.browsers||[]).filter(function(b){return !b.revoked&&b.expires>now;}).map(function(b){return b.label;});
+      var element=card(d.label,state+(names.length?" · 已授权："+names.join("、"):"")+" · 最近验证："+new Date(d.last_seen).toLocaleString("zh-CN"),!d.revoked&&d.expires>now&&d.role!=="owner"?function(){return service.admin("revoke",{id:d.id});}:null,"撤销整台设备的免验证");
+      if(!d.revoked&&d.expires>now&&d.role!=="owner"){
+        var add=node("button","为这台设备添加浏览器");add.type="button";add.addEventListener("click",function(){run(async function(){var invitation=await service.admin("invite",{machineId:d.id});get("url").value=invitation.url;get("new").hidden=false;await refresh();});});element.append(add);
+      }
+      return element;
     }));
     get("invitations").replaceChildren.apply(get("invitations"),data.invitations.map(function(i,n){return card("待使用邀请 "+(n+1),"到期："+new Date(i.expires).toLocaleString("zh-CN"),function(){return service.admin("cancel",{hash:i.hash});},"作废邀请");}));
     if(!data.invitations.length)get("invitations").append(node("p","没有待使用的邀请。"));

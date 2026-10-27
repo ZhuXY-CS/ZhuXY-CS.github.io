@@ -39,7 +39,7 @@
         document.getElementById("love-entry-device-policy").textContent = "启用后，此浏览器可长期免验证访问，并管理其他设备。";
         answer.hidden = true;
         answer.required = false;
-        deviceName.value = "管理员 Mac · Chrome";
+        deviceName.value = "管理员 Mac";
         submit.firstChild.textContent = "启用本机管理员 ";
       }
     } else {
