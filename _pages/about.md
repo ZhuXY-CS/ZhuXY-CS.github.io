@@ -58,6 +58,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Gradient Compression Algorithms:</strong> Developing efficient compression techniques to reduce communication overhead in distributed training</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Memory-Efficient Training Algorithm:</strong> Building workload‑aware adaptive memory‑management runtime system</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Efficient Multimodal Inference:</strong> Coordinating computation scheduling and memory management to reduce inference latency and memory overhead for multimodal models</li>
 </ul>
 
 <br>
