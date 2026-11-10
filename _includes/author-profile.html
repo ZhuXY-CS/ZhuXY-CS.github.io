@@ -162,7 +162,7 @@
 
       {% if author.zy_and_i %}
         <li class="author__personal-link">
-          <a href="{{ author.zy_and_i | relative_url }}"{% if page.url == author.zy_and_i %} aria-current="page"{% endif %}>
+          <a href="{{ author.zy_and_i | escape }}" target="_blank" rel="noopener noreferrer">
             <i class="fas fa-fw fa-heart icon-pad-right" aria-hidden="true"></i>ZY and I
           </a>
         </li>

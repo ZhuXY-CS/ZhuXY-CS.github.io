@@ -16,8 +16,6 @@ description              : &description "Academic homepage of Xianyu Zhu, focusi
 url                      : https://zhuxy-cs.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "ZhuXY-CS/ZhuXY-CS.github.io"
-# Public URL only. Device keys and invitation management live in the private service.
-love_access_url          : "https://zy-love-access.zhuxycs.workers.dev"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
@@ -49,7 +47,7 @@ author:
   codepen          : # Username
   dribbble         : # Username
   github           : "ZhuXY-CS"
-  zy_and_i         : "/zy-and-i/"
+  zy_and_i         : "https://39.107.90.200:52520/zy-and-i/"
   kaggle           : # Username
   stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
 
