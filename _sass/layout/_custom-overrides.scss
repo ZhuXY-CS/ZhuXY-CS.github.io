@@ -511,6 +511,13 @@ strong + br {
 }
 
 /* Personal page entry: keep it last and visually distinct. */
+.personal-dog-icon {
+  display: inline-block;
+  width: 1.5em;
+  margin-right: 0.5em;
+  text-align: center;
+}
+
 .author__urls .author__personal-link {
   margin-top: 0.8em !important;
   padding-top: 0.65em;
