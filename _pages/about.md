@@ -232,7 +232,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">Aug 2023</span>
     <div class="experience-body">
       <strong class="experience-role">Participant</strong>
-      <div class="experience-organization">CCF HPC China 2023</div>
+      <div class="experience-organization"><a href="https://dl.ccf.org.cn/albumList/getMeetingDetail6666263336028160">CCF HPC China 2023</a></div>
     </div>
   </li>
   <li class="experience-entry">
