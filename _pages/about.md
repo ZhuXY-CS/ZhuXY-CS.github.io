@@ -40,6 +40,10 @@ h2 {
   margin-inline-end: 0.32em;
 }
 
+.affiliation-logo--wordmark {
+  width: auto;
+}
+
 .affiliation-logo--lab {
   --affiliation-logo-size: 0.78em;
 }
@@ -247,7 +251,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">Summer 2022</span>
     <div class="experience-body">
       <strong class="experience-role">AI Trainee</strong>
-      <div class="experience-organization">Tedu Group</div>
+      <div class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/tedu-logo.png" alt="">Tedu</span> Group</div>
       <p class="experience-note">Developed a multi-object image annotation platform.</p>
     </div>
   </li>
@@ -255,7 +259,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">Summer 2021</span>
     <div class="experience-body">
       <strong class="experience-role">Participant</strong>
-      <div class="experience-organization">Baidu AI Talents Camp</div>
+      <div class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/baidu-logo.png" alt="">Baidu</span> AI Talents Camp</div>
       <p class="experience-note">Studied machine learning and PaddlePaddle.</p>
     </div>
   </li>
@@ -263,7 +267,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">2019 – 2020</span>
     <div class="experience-body">
       <strong class="experience-role">Staff Member</strong>
-      <div class="experience-organization">New Media Center, Northwest A&F University</div>
+      <div class="experience-organization">New Media Center, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</div>
     </div>
   </li>
 </ul>
