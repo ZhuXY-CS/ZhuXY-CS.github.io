@@ -44,8 +44,12 @@ h2 {
   --affiliation-logo-size: 0.78em;
 }
 
-#education .education-heading .affiliation-logo {
+.affiliation-logo--university {
   --affiliation-logo-size: 1.1em;
+}
+
+#education .education-heading .affiliation-logo--university {
+  --affiliation-logo-size: 1.2em;
 }
 
 #education .education-heading {
@@ -83,7 +87,7 @@ h2 {
 
 <div class="academic-prose">
 
-I recently received a master's degree from the <a href="https://cs.ustc.edu.cn"><span class="affiliation-label"><img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School</span> of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/"><span class="affiliation-label"><img class="affiliation-logo" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China (USTC)</a>.
+I recently received a master's degree from the <a href="https://cs.ustc.edu.cn"><span class="affiliation-label"><img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School</span> of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China (USTC)</a>.
 I was a member of the <a href="https://acsa.ustc.edu.cn/"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--lab" src="/images/acsa-emblem.png" alt="">Advanced</span> Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
 Before that, I obtained my bachelor's degree in Computer Science from Northwest A&F University in 2023.
 During my undergraduate studies, I joined the Parallel and Visual Processing Laboratory led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a>.
@@ -117,7 +121,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
 <div class="education-heading">
-    <span><strong><span class="affiliation-label"><img class="affiliation-logo" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
+    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
     <span class="education-date">2023–2026</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
@@ -126,7 +130,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 </ul>
 
 <div class="education-heading">
-    <span><strong><span class="affiliation-label"><img class="affiliation-logo" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</strong> (Project 985 &amp; 211)</span>
+    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</strong> (Project 985 &amp; 211)</span>
     <span class="education-date">2019–2023</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
