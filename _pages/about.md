@@ -325,22 +325,22 @@ My research interests lie at the intersection of <strong>high-performance comput
   <li class="competition-entry">
     <strong class="competition-award">First Prize</strong>
     <div class="competition-body">
-      <span class="competition-name">12th Blue Bridge Cup Competition</span>
-      <span class="competition-level">Provincial Competition</span>
+      <span class="competition-name">12th Blue Bridge Cup <span class="competition-name-end">Competition
+        <span class="competition-level">Provincial Competition</span></span></span>
     </div>
   </li>
   <li class="competition-entry">
     <strong class="competition-award">Third Prize</strong>
     <div class="competition-body">
-      <span class="competition-name">2021 Group Programming Ladder Tournament</span>
-      <span class="competition-level">National</span>
+      <span class="competition-name">2021 Group Programming Ladder <span class="competition-name-end">Tournament
+        <span class="competition-level">National</span></span></span>
     </div>
   </li>
   <li class="competition-entry">
     <strong class="competition-award">First Prize</strong>
     <div class="competition-body">
-      <span class="competition-name">2022 The Competition of Computer Design</span>
-      <span class="competition-level">Northwest Region</span>
+      <span class="competition-name">2022 The Competition of Computer <span class="competition-name-end">Design
+        <span class="competition-level">Northwest Region</span></span></span>
     </div>
   </li>
   <li class="competition-entry">
