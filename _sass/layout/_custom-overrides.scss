@@ -510,6 +510,14 @@ strong + br {
   }
 }
 
+.author__urls .author__notion-icon {
+  width: 1.5em;
+  height: 1em;
+  margin-inline-end: 0.5em;
+  object-fit: contain;
+  vertical-align: -0.1em;
+}
+
 /* Personal page entry: keep it last and visually distinct. */
 .personal-dog-icon {
   display: inline-block;
