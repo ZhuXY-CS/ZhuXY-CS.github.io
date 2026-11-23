@@ -71,6 +71,10 @@ h2 {
   }
 }
 
+#publication .paper-box {
+  padding-block: 0.8em !important;
+}
+
 /* 响应式间距 */
 @media (max-width: 768px) {
   section {
