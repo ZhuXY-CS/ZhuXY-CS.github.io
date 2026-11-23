@@ -27,6 +27,13 @@ h2 {
   padding-bottom: 10px;
 }
 
+.affiliation-logo {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
 #education .education-heading {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -62,7 +69,7 @@ h2 {
 
 <div class="academic-prose">
 
-I recently received a master's degree from the <a href="https://cs.ustc.edu.cn">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
+I recently received a master's degree from the <a href="https://cs.ustc.edu.cn"><img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/">University of Science and Technology of China (USTC)</a>.
 I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
 Before that, I obtained my bachelor's degree in Computer Science from Northwest A&F University in 2023.
 During my undergraduate studies, I joined the Parallel and Visual Processing Laboratory led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a>.
@@ -96,20 +103,20 @@ My research interests lie at the intersection of <strong>high-performance comput
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
 <div class="education-heading">
-    <span><strong><img src="/images/ustc_logo2_01.jpg" alt="" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
+    <span><strong><img class="affiliation-logo" src="/images/ustc_logo2_01.jpg" alt="">University of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
     <span class="education-date">2023–2026</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master's degree in Computer Science and Technology, School of Computer Science and Technology</li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master's degree in Computer Science and Technology, <img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School of Computer Science and Technology</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
 <div class="education-heading">
-    <span><strong><img src="/images/nwafu-circle_01.jpg" alt="" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&amp;F University</strong> (Project 985 &amp; 211)</span>
+    <span><strong><img class="affiliation-logo" src="/images/nwafu-circle_01.jpg" alt="">Northwest A&amp;F University</strong> (Project 985 &amp; 211)</span>
     <span class="education-date">2019–2023</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor's degree in Computer Science and Technology, College of Information Engineering</li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor's degree in Computer Science and Technology, <img class="affiliation-logo" src="/images/nwafu-cie-emblem.png" alt="">College of Information Engineering</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
 </ul>
 
