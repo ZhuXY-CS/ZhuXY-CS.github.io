@@ -121,7 +121,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
 <div class="education-heading">
-    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
+    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/ustc_logo2_01.jpg" alt="">University</span> of Science and Technology of China</strong> (C9 League, 985 &amp; 211 University)</span>
     <span class="education-date">2023–2026</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
@@ -130,7 +130,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 </ul>
 
 <div class="education-heading">
-    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</strong> (Project 985 &amp; 211)</span>
+    <span><strong><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</strong> (985 &amp; 211 University)</span>
     <span class="education-date">2019–2023</span>
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
