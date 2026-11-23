@@ -214,10 +214,10 @@ My research interests lie at the intersection of <strong>high-performance comput
     </div>
   </li>
   <li class="experience-entry">
-    <span class="experience-date">Jul – Sep 2025</span>
+    <span class="experience-date">Jul 2025 – Jan 2026</span>
     <div class="experience-body">
       <strong class="experience-role">Research Assistant</strong>
-      <div class="experience-organization">Systems and Networking Lab, The University of Hong Kong</div>
+      <div class="experience-organization">Systems and Networking Lab, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/hku-logo-eps_01.jpg" alt="">The University</span> of Hong Kong</div>
       <p class="experience-note">Supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>, focusing on distributed training for unified multimodal large models.</p>
     </div>
   </li>
@@ -225,7 +225,7 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">Jul 2025</span>
     <div class="experience-body">
       <strong class="experience-role">Participant</strong>
-      <div class="experience-organization">Hong Kong PhD Fellowship Summer Workshop, The Chinese University of Hong Kong</div>
+      <div class="experience-organization">Hong Kong PhD Fellowship Summer Workshop, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/CUHK_logo_01.jpg" alt="">The Chinese</span> University of Hong Kong</div>
     </div>
   </li>
   <li class="experience-entry">
