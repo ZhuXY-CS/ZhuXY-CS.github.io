@@ -280,7 +280,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 <ul style="margin-bottom: 1.5em;">
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">National Scholarship</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">President Scholarship</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Thanksgiving Scholarship for Modern and Contemporary Chinese Scientists (the highest-paying scholarship)</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;">Thanksgiving Scholarship for Modern and Contemporary Chinese Scientists</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Professional Scholarship</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;">First-Class Academic Scholarship</li>
 </ul>
