@@ -239,7 +239,8 @@ My research interests lie at the intersection of <strong>high-performance comput
     <span class="experience-date">Fall 2022</span>
     <div class="experience-body">
       <strong class="experience-role">Teaching Assistant</strong>
-      <div class="experience-organization">Parallel Computing</div>
+      <div class="experience-organization">Parallel Computing, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</div>
+      <p class="experience-note">Assisted <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Prof. Bin Liu</a> with the course.</p>
     </div>
   </li>
   <li class="experience-entry">
