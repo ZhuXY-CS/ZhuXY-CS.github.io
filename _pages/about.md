@@ -30,6 +30,7 @@ h2 {
 .affiliation-logo {
   width: 20px;
   height: 20px;
+  object-fit: contain;
   vertical-align: middle;
   margin-right: 6px;
 }
@@ -70,7 +71,7 @@ h2 {
 <div class="academic-prose">
 
 I recently received a master's degree from the <a href="https://cs.ustc.edu.cn"><img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School of Computer Science and Technology</a> at the <a href="https://ustc.edu.cn/"><img class="affiliation-logo" src="/images/ustc_logo2_01.jpg" alt="">University of Science and Technology of China (USTC)</a>.
-I was a member of the <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
+I was a member of the <a href="https://acsa.ustc.edu.cn/"><img class="affiliation-logo" src="/images/acsa-emblem.png" alt="">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, which is led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a>.
 Before that, I obtained my bachelor's degree in Computer Science from Northwest A&F University in 2023.
 During my undergraduate studies, I joined the Parallel and Visual Processing Laboratory led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a>.
 
@@ -108,7 +109,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master's degree in Computer Science and Technology, <img class="affiliation-logo" src="/images/ustc-cs-emblem.png" alt="">School of Computer Science and Technology</li>
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/"><img class="affiliation-logo" src="/images/acsa-emblem.png" alt="">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
 <div class="education-heading">
