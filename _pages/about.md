@@ -135,7 +135,7 @@ My research interests lie at the intersection of <strong>high-performance comput
 </div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor's degree in Computer Science and Technology, <span class="affiliation-label"><img class="affiliation-logo" src="/images/nwafu-cie-emblem.png" alt="">College</span> of Information Engineering</li>
-    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
+    <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--lab" src="/images/parallel-visual-processing-emblem.png" alt="">Parallel</span> and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
 </ul>
 
 </div>
