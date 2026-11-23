@@ -60,21 +60,22 @@
     font-size: 14px;
     line-height: 1.65;
   }
+  .competition-body { line-height: 1.65; }
   .competition-name {
-    display: block;
     color: #203447;
-    line-height: 1.65;
-    text-align: justify;
-    text-align-last: left;
     hyphens: auto;
     -webkit-hyphens: auto;
   }
   .competition-level {
-    display: block;
-    margin-top: 4px;
-    color: #647381;
+    display: inline-block;
+    margin-inline-start: 0.3em;
+    padding: 0 0.5em;
+    border-radius: 4px;
+    background-color: #eef4f8;
+    color: #536b7e;
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.5;
+    white-space: nowrap;
   }
   @media (max-width: 600px) {
     .competition-entry { grid-template-columns: minmax(0, 1fr); row-gap: 7px; }
