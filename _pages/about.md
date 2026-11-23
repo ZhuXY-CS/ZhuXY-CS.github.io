@@ -27,6 +27,25 @@ h2 {
   padding-bottom: 10px;
 }
 
+#education .education-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1rem;
+  align-items: baseline;
+}
+
+#education .education-date {
+  justify-self: end;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  #education .education-heading {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* 响应式间距 */
 @media (max-width: 768px) {
   section {
@@ -76,13 +95,19 @@ My research interests lie at the intersection of <strong>high-performance comput
 
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 2.0;">
 
-<strong><img src="/images/ustc_logo2_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 & 211) ⇒ From 2023 to 2026<br>
+<div class="education-heading">
+    <span><strong><img src="/images/ustc_logo2_01.jpg" alt="" style="width:20px; vertical-align:middle; margin-right:6px;">University of Science and Technology of China</strong> (C9 League, Project 985 &amp; 211)</span>
+    <span class="education-date">2023–2026</span>
+</div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Master's degree in Computer Science and Technology, School of Computer Science and Technology</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://acsa.ustc.edu.cn/">Advanced Computer Systems Architecture (ACSA) Laboratory</a>, led by <a href="https://cs.ustc.edu.cn/2020/0426/c23235a460072/page.htm">Professor Hong An</a></li>
 </ul>
 
-<strong><img src="/images/nwafu-circle_01.jpg" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&F University</strong> (Project 985 & 211) ⇒ From 2019 to 2023<br>
+<div class="education-heading">
+    <span><strong><img src="/images/nwafu-circle_01.jpg" alt="" style="width:20px; vertical-align:middle; margin-right:6px;">Northwest A&amp;F University</strong> (Project 985 &amp; 211)</span>
+    <span class="education-date">2019–2023</span>
+</div>
 <ul style="list-style-type: disc; margin-left: 20px; margin-top: 8px; margin-bottom: 20px;">
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Bachelor's degree in Computer Science and Technology, College of Information Engineering</li>
     <li style="margin-bottom: 12px; line-height: 2.2 !important;">Lab: <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Parallel and Visual Processing Laboratory</a>, led by <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Professor Bin Liu</a></li>
