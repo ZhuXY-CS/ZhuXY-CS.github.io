@@ -209,9 +209,10 @@
 
   .homepage .page__content .academic-prose,
   .homepage #internship :is(.experience-organization, .experience-note) {
-    text-align: start;
-    hyphens: none;
-    -webkit-hyphens: none;
+    text-align: justify;
+    text-align-last: left;
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
 }
 
