@@ -21,6 +21,34 @@
   });
   syncMenuState();
 
+  const homeLink = nav.querySelector('.masthead__menu-item--lg a');
+  const sectionLinks = [...nav.querySelectorAll('a[href]')]
+    .map(link => ({link, section: document.getElementById(link.hash.slice(1))}))
+    .filter(item => item.section);
+  let pendingHighlight;
+  const updateHighlight = () => {
+    const guide = nav.getBoundingClientRect().bottom + 32;
+    let selected;
+    for (const item of sectionLinks) {
+      if (item.section.getBoundingClientRect().top > guide) break;
+      selected = item;
+    }
+    if (selected) homeLink.removeAttribute('aria-current');
+    else homeLink.setAttribute('aria-current', 'page');
+    sectionLinks.forEach(({link}) => {
+      if (link === selected?.link) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    pendingHighlight = undefined;
+  };
+  const queueHighlight = () => {
+    if (pendingHighlight === undefined) pendingHighlight = requestAnimationFrame(updateHighlight);
+  };
+  addEventListener('scroll', queueHighlight, {passive: true});
+  addEventListener('resize', queueHighlight);
+  addEventListener('pageshow', queueHighlight);
+  queueHighlight();
+
   nav.addEventListener('click', event => {
     if (menuIsOpen() && event.target.closest('a')) navButton.click();
   });

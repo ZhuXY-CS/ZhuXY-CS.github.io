@@ -11,22 +11,22 @@ main:
   - title: "Education"
     url: /#education
 
-  - title: "Publication"
+  - title: "Publications"
     url: /#publication
 
-  - title: "Project"
+  - title: "Projects"
     url: /#project
 
   - title: "Experience"
     url: /#internship
 
-  - title: "Award"
+  - title: "Awards"
     url: /#award
 
-  - title: "Competition"
+  - title: "Competitions"
     url: /#competition
 
-  - title: "Skill"
+  - title: "Skills"
     url: /#skill    
 
   # - title: "Project"

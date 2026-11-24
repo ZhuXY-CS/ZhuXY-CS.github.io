@@ -1,0 +1,16 @@
+{
+  "name": "zhuxy-reader-geography",
+  "main": "worker.mjs",
+  "compatibility_date": "2025-11-24",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "vars": { "SITE_ORIGIN": "https://zhuxy-cs.github.io" },
+  "d1_databases": [
+    {
+      "binding": "VISITS",
+      "database_name": "zhuxy-reader-geography",
+      "database_id": "de8e84d4-a3e5-4113-8c1e-18b69e272827"
+    }
+  ]
+}

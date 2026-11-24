@@ -1,3 +1,42 @@
+.homepage #site-nav {
+  .visible-links a {
+    margin: 0;
+    padding: 0.625rem 0.75rem;
+
+    &::before {
+      inset-inline: 0.75rem;
+      width: auto;
+      height: 2px;
+      background: #3473a6;
+    }
+  }
+
+  .masthead__menu-item--lg {
+    padding-inline-end: 0.375rem;
+
+    a {
+      padding-inline-start: 0;
+      font-weight: 600 !important;
+
+      &::before { inset-inline-start: 0; }
+
+      &::after {
+        position: absolute;
+        inset-block: 27%;
+        inset-inline-end: 0;
+        border-inline-end: 1px solid #dce6ef;
+        content: "";
+      }
+    }
+  }
+
+  a[aria-current] {
+    color: #245f8f !important;
+
+    &::before { transform: scaleX(1); }
+  }
+}
+
 /* Put the compact homepage footer in the normal document flow. */
 body.homepage {
   padding-bottom: 0;
@@ -76,14 +115,6 @@ body.homepage {
   .homepage .masthead__inner-wrap {
     max-width: none;
     padding-inline: 1.5rem;
-  }
-
-  .homepage #site-nav .visible-links a {
-    margin-inline: 0.7rem;
-  }
-
-  .homepage #site-nav .masthead__menu-item--lg {
-    padding-inline-end: 1em;
   }
 
   .homepage #publication .paper-box {
@@ -282,4 +313,48 @@ body.homepage {
   html:has(body.homepage) { scroll-behavior: auto !important; }
 
   .homepage #main, .homepage .masthead { animation: none; }
+}
+
+.page__content .reader-geography {
+  max-width: 46rem;
+  margin: 2.75rem 0 0;
+  padding: 0;
+
+  .reader-geography-caption,
+  .reader-geography-status {
+    color: #526777 !important;
+    font-size: 0.875rem !important;
+    text-align: left;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1440 / 580;
+    background: #f7f9fb;
+    border: 1px solid #dce6ef;
+    border-radius: 6px;
+  }
+
+  .reader-geography-regions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    padding: 0 !important;
+    list-style: none;
+
+    &[hidden] { display: none; }
+
+    li {
+      display: flex;
+      gap: 0.4em;
+      padding: 0;
+      font-size: 0.825rem !important;
+    }
+
+    li span:last-child {
+      color: #526777;
+      font-variant-numeric: tabular-nums;
+    }
+  }
 }

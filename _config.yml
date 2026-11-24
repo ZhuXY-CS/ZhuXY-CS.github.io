@@ -149,6 +149,8 @@ social:
     - "https://www.linkedin.com/in/xianyu-zhu-a39b73377/"
 
 
+reader_geography_url: "https://zhuxy-reader-geography.zhuxycs.workers.dev"
+
 # Analytics
 analytics:
   provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"
@@ -163,6 +165,7 @@ include:
   - files
 exclude:
   - _private
+  - _reader-geography
   - "*.sublime-project"
   - "*.sublime-workspace"
   - .asset-cache
