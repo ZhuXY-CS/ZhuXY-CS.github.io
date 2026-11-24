@@ -234,7 +234,7 @@ My research interests lie at the intersection of <strong>high-performance comput
   <li class="experience-entry experience-entry--compact">
     <span class="experience-date">Aug 2023</span>
     <div class="experience-body">
-      <div class="experience-heading"><strong class="experience-role">Participant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization"><a href="https://dl.ccf.org.cn/albumList/getMeetingDetail6666263336028160">CCF HPC China 2023</a></span></div>
+      <div class="experience-heading"><strong class="experience-role">Participant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization"><a href="https://dl.ccf.org.cn/albumList/getMeetingDetail6666263336028160"><span class="affiliation-label"><img class="affiliation-logo" src="/images/ccf-logo.png" alt="">CCF</span> HPC China 2023</a></span></div>
     </div>
   </li>
   <li class="experience-entry experience-entry--compact">
