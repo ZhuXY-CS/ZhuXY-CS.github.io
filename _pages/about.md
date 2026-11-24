@@ -363,10 +363,10 @@ My research interests lie at the intersection of <strong>high-performance comput
 <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6;">
 
 <ul style="margin-bottom: 1.5em;">
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Languages:</strong> C/C++, Python, CUDA C, Java, Verilog, LaTeX, Assembly</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Machine Learning:</strong> PyTorch, TensorFlow, PaddlePaddle, DeepSpeed</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>High-Performance Computing:</strong> OpenMP, MPI, NCCL, CUDA Programming, SACA Programming</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Platform:</strong> Linux, NVIDIA Jetson Nano/TX2, NVIDIA DGX-H800</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Parallel &amp; Distributed Computing:</strong> CUDA C, MPI, NCCL, OpenMP, Sunway many-core programming (SACA)</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>ML Frameworks &amp; Libraries:</strong> PyTorch, DeepSpeed, TensorFlow, PaddlePaddle</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Languages:</strong> C/C++, Python</li>
+    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Computing Platforms:</strong> Linux, NVIDIA H800 GPUs, Sunway OceanLight</li>
 </ul>
 
 </div>
