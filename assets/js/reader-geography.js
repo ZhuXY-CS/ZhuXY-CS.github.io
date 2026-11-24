@@ -7,6 +7,10 @@
   const dialog = panel.querySelector('dialog');
   const viewport = dialog.querySelector('.reader-geography-viewport');
   const enlarged = viewport.querySelector('canvas');
+  const stage = dialog.querySelector('.reader-geography-stage');
+  const tooltip = stage.querySelector('.reader-geography-tooltip');
+  const tooltipName = tooltip.querySelector('strong');
+  const tooltipCount = tooltip.querySelector('span');
   const zoomControls = dialog.querySelector('.reader-geography-zoom');
   const zoomOut = zoomControls.querySelector('[data-zoom="out"]');
   const zoomIn = zoomControls.querySelector('[data-zoom="in"]');
@@ -15,8 +19,13 @@
   let zoom = 1;
   let map;
   let drag;
+  let enlargedDrawing;
+  let activeRegion;
   const endpoint = panel.dataset.endpoint;
-  const names = new Intl.DisplayNames('en', {type: 'region'});
+  const names = typeof Intl.DisplayNames === 'function'
+    ? new Intl.DisplayNames('en', {type: 'region'})
+    : {of: code => code};
+  const format = new Intl.NumberFormat('en');
 
   const fetchJson = async url => {
     const response = await fetch(url, {credentials: 'omit', referrerPolicy: 'no-referrer'});
@@ -39,42 +48,83 @@
   function drawMap(surface) {
     const width = Math.min(4096, Math.round(surface.clientWidth * (window.devicePixelRatio || 1)));
     if (!width || !map) return;
+    const height = Math.round(width * 580 / 1440);
     surface.width = width;
-    surface.height = Math.round(width * 580 / 1440);
+    surface.height = height;
     const context = surface.getContext('2d');
     if (!context) return;
     const margin = width / 62;
-    const mapWidth = width - margin * 2;
-    const mapHeight = surface.height - margin * 2;
     const project = ([longitude, latitude]) => [
-      margin + (longitude + 180) * mapWidth / 360,
-      margin + (85 - latitude) * mapHeight / 145
+      margin + (longitude + 180) * (width - margin * 2) / 360,
+      margin + (85 - latitude) * (height - margin * 2) / 145
     ];
-    context.lineWidth = Math.max(0.65, width / 950);
-    context.strokeStyle = '#f6f9fc';
+    const regions = [];
+    const marks = [];
+    const pixelScale = width / surface.clientWidth;
 
-    for (const [code, polygons] of map.outlines) {
-      context.fillStyle = map.visits.has(code) ? '#467ba4' : '#dce6ef';
-      for (const polygon of polygons) {
-        context.beginPath();
-        for (const ring of polygon) {
-          ring.forEach((position, i) => {
-            const [x, y] = project(position);
-            if (i === 0) context.moveTo(x, y);
-            else context.lineTo(x, y);
-          });
-          context.closePath();
-        }
-        context.fill('evenodd');
-        context.stroke();
+    for (const [code, polygons, position] of map.outlines) {
+      if (position && map.visits.has(code)) {
+        const [x, y] = project(position);
+        marks.push({code, x, y});
       }
+      if (!polygons.length) continue;
+
+      const path = new Path2D();
+      let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity;
+      for (const polygon of polygons) {
+        for (const ring of polygon) {
+          ring.forEach((point, i) => {
+            const [x, y] = project(point);
+            left = Math.min(left, x);
+            right = Math.max(right, x);
+            top = Math.min(top, y);
+            bottom = Math.max(bottom, y);
+            if (i === 0) path.moveTo(x, y);
+            else path.lineTo(x, y);
+          });
+          path.closePath();
+        }
+      }
+      regions.push({code, path, left, right, top, bottom});
     }
 
-    const marked = map.outlines.filter(([code, , position]) => position && map.visits.has(code));
-    const pixelScale = width / surface.clientWidth;
+    const drawing = {context, width, height, regions, marks, pixelScale, project};
+    if (surface === enlarged) enlargedDrawing = drawing;
+    paintMap(drawing, surface === enlarged);
+  }
+
+  function paintMap(drawing, interactive) {
+    const {context, width, height, regions, marks, pixelScale, project} = drawing;
+    context.clearRect(0, 0, width, height);
+    if (interactive) {
+      context.beginPath();
+      for (let lon = -150; lon <= 150; lon += 30) {
+        context.moveTo(...project([lon, 85]));
+        context.lineTo(...project([lon, -60]));
+      }
+      for (let lat = -30; lat <= 60; lat += 30) {
+        context.moveTo(...project([-180, lat]));
+        context.lineTo(...project([180, lat]));
+      }
+      context.lineWidth = 0.6 * pixelScale;
+      context.strokeStyle = '#dce7ee';
+      context.stroke();
+    }
+
+    context.lineWidth = Math.max(0.65, width / 950);
+    context.strokeStyle = '#f6f9fc';
+    for (const region of regions) {
+      const visited = map.visits.has(region.code);
+      context.fillStyle = visited ? '#467ba4' : '#dce6ef';
+      if (interactive && region.code === activeRegion) {
+        context.fillStyle = visited ? '#336893' : '#a9c6dc';
+      }
+      context.fill(region.path, 'evenodd');
+      context.stroke(region.path);
+    }
+
     const radius = 4 * pixelScale;
-    for (const [code, , position] of marked) {
-      const [x, y] = project(position);
+    for (const {code, x, y} of marks) {
       context.fillStyle = '#245f8f';
       context.strokeStyle = '#fff';
       context.lineWidth = 2 * pixelScale;
@@ -83,13 +133,13 @@
       context.fill();
       context.stroke();
 
-      if (marked.length === 1) {
+      if (marks.length === 1) {
         const label = names.of(code);
         const gap = radius + 5 * pixelScale;
         context.font = `600 ${11 * pixelScale}px "Trebuchet MS", sans-serif`;
         context.textBaseline = 'middle';
         const labelWidth = context.measureText(label).width;
-        context.textAlign = x + gap + labelWidth < width - margin ? 'left' : 'right';
+        context.textAlign = x + gap + labelWidth < width - gap ? 'left' : 'right';
         const labelX = context.textAlign === 'left' ? x + gap : x - gap;
         context.strokeText(label, labelX, y);
         context.fillText(label, labelX, y);
@@ -97,7 +147,60 @@
     }
   }
 
+  function clearInspection() {
+    tooltip.hidden = true;
+    if (!activeRegion) return;
+    activeRegion = undefined;
+    if (dialog.open && enlargedDrawing) paintMap(enlargedDrawing, true);
+  }
+
+  function inspectMap(event) {
+    if (drag || !enlargedDrawing) return;
+    const {context, width, height, regions, marks, pixelScale} = enlargedDrawing;
+    const canvasBox = enlarged.getBoundingClientRect();
+    const x = (event.clientX - canvasBox.left) * width / canvasBox.width;
+    const y = (event.clientY - canvasBox.top) * height / canvasBox.height;
+    const hit = marks.find(mark => Math.hypot(mark.x - x, mark.y - y) <= 9 * pixelScale) ??
+      regions.find(region => region.code && x >= region.left && x <= region.right &&
+        y >= region.top && y <= region.bottom && context.isPointInPath(region.path, x, y, 'evenodd'));
+    if (!hit) {
+      clearInspection();
+      return;
+    }
+
+    if (hit.code !== activeRegion) {
+      activeRegion = hit.code;
+      paintMap(enlargedDrawing, true);
+      tooltipName.textContent = names.of(hit.code);
+      const visits = map.visits.get(hit.code) ?? 0;
+      tooltipCount.textContent = map.hasSummary
+        ? `${format.format(visits)} ${visits === 1 ? 'visit' : 'visits'} recorded`
+        : 'Visit total unavailable';
+    }
+
+    tooltip.hidden = false;
+    const stageBox = stage.getBoundingClientRect();
+    const edge = 8;
+    const offset = 14;
+    const left = event.clientX - stageBox.left + offset;
+    const below = event.clientY - stageBox.top + offset;
+    const top = below + tooltip.offsetHeight < stageBox.height - edge
+      ? below : below - tooltip.offsetHeight - offset * 2;
+    tooltip.style.left = `${Math.max(edge, Math.min(stageBox.width - tooltip.offsetWidth - edge, left))}px`;
+    tooltip.style.top = `${Math.max(edge, top)}px`;
+  }
+
+  enlarged.addEventListener('pointermove', event => {
+    if (event.pointerType !== 'touch') inspectMap(event);
+  });
+  enlarged.addEventListener('click', inspectMap);
+  enlarged.addEventListener('pointerleave', event => {
+    if (event.pointerType !== 'touch') clearInspection();
+  });
+  viewport.addEventListener('scroll', clearInspection, {passive: true});
+
   function setZoom(next) {
+    clearInspection();
     const positionX = (viewport.scrollLeft + viewport.clientWidth / 2) / enlarged.clientWidth;
     const positionY = (viewport.scrollTop + viewport.clientHeight / 2) / enlarged.clientHeight;
     zoom = Math.max(1, Math.min(4, next));
@@ -114,7 +217,10 @@
 
   function resizeMaps() {
     drawMap(canvas);
-    if (dialog.open) drawMap(enlarged);
+    if (dialog.open) {
+      clearInspection();
+      drawMap(enlarged);
+    }
   }
 
   expand.addEventListener('click', () => {
@@ -122,7 +228,11 @@
     enlarged.style.width = '100%';
     setZoom(1);
   });
-  dialog.addEventListener('close', () => expand.focus());
+  dialog.addEventListener('close', () => {
+    clearInspection();
+    enlargedDrawing = undefined;
+    expand.focus();
+  });
   zoomOut.addEventListener('click', () => setZoom(zoom - 0.5));
   zoomIn.addEventListener('click', () => setZoom(zoom + 0.5));
   zoomReset.addEventListener('click', () => setZoom(1));
@@ -135,6 +245,7 @@
 
   viewport.addEventListener('pointerdown', event => {
     if (zoom === 1 || event.pointerType !== 'mouse' || event.button !== 0) return;
+    clearInspection();
     drag = {
       id: event.pointerId, x: event.clientX, y: event.clientY,
       left: viewport.scrollLeft, top: viewport.scrollTop
@@ -161,7 +272,7 @@
     const entries = summary.status === 'fulfilled' ? summary.value : [];
     const visits = new Map(entries.map(({country, views}) => [country, views]));
     if (outlines.status === 'fulfilled') {
-      map = {outlines: outlines.value, visits};
+      map = {outlines: outlines.value, visits, hasSummary: summary.status === 'fulfilled'};
       resizeMaps();
       window.addEventListener('resize', resizeMaps, {passive: true});
       expand.hidden = typeof dialog.showModal !== 'function';
@@ -178,7 +289,6 @@
       return;
     }
 
-    const format = new Intl.NumberFormat('en');
     const total = entries.reduce((sum, {views}) => sum + views, 0);
     const places = entries.length;
     const totalLabel = document.createElement('strong');

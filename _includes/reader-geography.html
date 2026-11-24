@@ -17,19 +17,34 @@
   <dialog class="reader-geography-dialog" aria-label="Expanded visitor map">
     <div class="reader-geography-toolbar">
       <div class="reader-geography-zoom" role="group" aria-label="Map zoom">
-        <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
-        <output aria-label="Zoom level">100%</output>
-        <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
-        <button type="button" data-zoom="reset" aria-label="Reset zoom">Reset</button>
+        <div class="reader-geography-zoom-step">
+          <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+          <output aria-label="Zoom level">100%</output>
+          <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+        </div>
+        <button type="button" data-zoom="reset" aria-label="Reset zoom" title="Reset zoom">
+          <i class="fas fa-arrows-rotate" aria-hidden="true"></i>
+        </button>
       </div>
       <form method="dialog">
-        <button type="submit" aria-label="Close map">×</button>
+        <button type="submit" aria-label="Close map" title="Close map">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
+        </button>
       </form>
     </div>
-    <div class="reader-geography-viewport" tabindex="0" aria-label="Scroll to pan the map">
-      <canvas width="1440" height="580" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+    <div class="reader-geography-stage">
+      <div class="reader-geography-viewport" tabindex="0" aria-label="Scroll to pan the map">
+        <canvas width="1440" height="580" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+      </div>
+      <div class="reader-geography-tooltip" aria-hidden="true" hidden>
+        <strong></strong><span></span>
+      </div>
+    </div>
+    <div class="reader-geography-map-footer">
+      <span class="reader-geography-map-hint">Hover or tap a country or region</span>
+      <span class="reader-geography-map-key">Visits recorded</span>
     </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=2" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=3" defer></script>
 {% endif %}
