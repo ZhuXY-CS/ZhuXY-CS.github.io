@@ -48,6 +48,7 @@
   @media (max-width: 600px) {
     .experience-entry { grid-template-columns: minmax(0, 1fr); row-gap: 7px; }
     .experience-date { padding-top: 0; font-size: 13px; }
+    .experience-heading .experience-role { font-size: 15px; }
 
     .experience-entry--compact {
       display: block;
@@ -60,7 +61,6 @@
 
       .experience-body { display: contents; }
       .experience-heading { display: inline; }
-      .experience-role { font-size: 15px; }
       .experience-organization { font-size: 14px; }
 
       .affiliation-logo--wordmark {

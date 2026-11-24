@@ -220,9 +220,8 @@ My research interests lie at the intersection of <strong>high-performance comput
   <li class="experience-entry">
     <span class="experience-date">Jul 2025 – Jan 2026</span>
     <div class="experience-body">
-      <strong class="experience-role">Research Assistant</strong>
+      <div class="experience-heading"><strong class="experience-role">Research Assistant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-note">Supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>.</span></div>
       <div class="experience-organization">Systems and Networking Lab, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/hku-logo-eps_01.jpg" alt="">The University</span> of Hong Kong</div>
-      <p class="experience-note">Supervised by <a href="https://i.cs.hku.hk/~heming/">Prof. Heming Cui</a>.</p>
     </div>
   </li>
   <li class="experience-entry">
