@@ -316,40 +316,77 @@ body.homepage {
 }
 
 .page__content .reader-geography {
-  max-width: 46rem;
+  max-width: 53rem;
   margin: 2.75rem 0 0;
   padding: 0;
 
-  .reader-geography-caption,
+  [hidden] { display: none; }
+
+  .reader-geography-card {
+    overflow: hidden;
+    border: 1px solid #dce6ef;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  canvas:not([hidden]) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1440 / 580;
+    background-color: #f6f9fc;
+  }
+
+  .reader-geography-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.375rem 0.75rem;
+    padding: 0.4rem 0.75rem;
+    border-top: 1px solid #e8eef4;
+  }
+
   .reader-geography-status {
+    margin: 0 !important;
     color: #526777 !important;
     font-size: 0.875rem !important;
     text-align: left;
   }
 
-  canvas {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1440 / 580;
-    background: #f7f9fb;
+  button {
+    min-height: 44px;
+    padding: 0 0.625rem;
     border: 1px solid #dce6ef;
-    border-radius: 6px;
+    border-radius: 4px;
+    background: #fff;
+    color: #245f8f;
+    font-size: 0.875rem;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) { background: #eaf2f8; }
+    &:disabled { opacity: 0.48; cursor: default; }
   }
 
-  .reader-geography-regions {
+  .reader-geography-expand {
+    flex-shrink: 0;
+
+    i { margin-inline-end: 0.25rem; }
+  }
+
+  .reader-geography-regions:not([hidden]) {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem 1rem;
-    padding: 0 !important;
+    gap: 0.25rem 0.85rem;
+    margin: 0 !important;
+    padding: 0 0.75rem 0.7rem !important;
     list-style: none;
-
-    &[hidden] { display: none; }
 
     li {
       display: flex;
-      gap: 0.4em;
+      gap: 0.35em;
       padding: 0;
-      font-size: 0.825rem !important;
+      font-size: 0.8125rem !important;
     }
 
     li span:last-child {
@@ -357,4 +394,58 @@ body.homepage {
       font-variant-numeric: tabular-nums;
     }
   }
+
+  .reader-geography-dialog {
+    width: calc(100% - 1.5rem);
+    max-width: 68rem;
+    max-height: calc(100% - 1.5rem);
+    margin: auto;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #dce6ef;
+    border-radius: 9px;
+    background: #fff;
+    color: #22384d;
+
+    &:not([open]) { display: none; }
+    &::backdrop { background: rgba(24, 43, 63, 0.62); }
+
+    button { min-width: 44px; }
+  }
+
+  .reader-geography-toolbar,
+  .reader-geography-zoom {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .reader-geography-toolbar {
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e8eef4;
+
+    form { margin: 0; }
+  }
+
+  .reader-geography-zoom output {
+    min-width: 3.2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .reader-geography-viewport {
+    max-height: calc(90vh - 4rem);
+    max-height: calc(90dvh - 4rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: #f6f9fc;
+
+    &[data-zoomed] { cursor: grab; }
+    &[data-dragging] { cursor: grabbing; }
+    canvas { max-width: none; }
+  }
 }
+
+body.homepage:has(.reader-geography-dialog[open]) { overflow: hidden; }

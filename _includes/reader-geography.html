@@ -1,15 +1,35 @@
 {% if site.reader_geography_url %}
-<section id="reader-geography" class="reader-geography" aria-labelledby="reader-geography-title"
+<section id="reader-geography" class="reader-geography" aria-label="Reader geography"
          data-endpoint="{{ site.reader_geography_url | escape }}"
          data-map="{{ '/assets/data/reader-countries.json' | relative_url }}">
-  <h2 id="reader-geography-title">Reader Geography</h2>
-  <p class="reader-geography-caption">Homepage visits by country or region</p>
-  <canvas width="1440" height="580" role="img"
-          aria-label="World map with countries and regions shaded where visits have been recorded">
-    Recorded visits are summarized below the map.
-  </canvas>
-  <p class="reader-geography-status" role="status">Loading visit totals…</p>
-  <ol class="reader-geography-regions" aria-label="Top regions by visits" hidden></ol>
+  <div class="reader-geography-card">
+    <canvas width="1440" height="580" role="img" aria-label="World map of recorded visits">
+      Recorded visits are summarized below the map.
+    </canvas>
+    <div class="reader-geography-summary">
+      <p class="reader-geography-status" role="status">Loading visit totals…</p>
+      <button type="button" class="reader-geography-expand" aria-haspopup="dialog" hidden>
+        <i class="fas fa-expand" aria-hidden="true"></i> Expand map
+      </button>
+    </div>
+    <ol class="reader-geography-regions" aria-label="Top regions by visits" hidden></ol>
+  </div>
+  <dialog class="reader-geography-dialog" aria-label="Expanded visitor map">
+    <div class="reader-geography-toolbar">
+      <div class="reader-geography-zoom" role="group" aria-label="Map zoom">
+        <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+        <output aria-label="Zoom level">100%</output>
+        <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+        <button type="button" data-zoom="reset" aria-label="Reset zoom">Reset</button>
+      </div>
+      <form method="dialog">
+        <button type="submit" aria-label="Close map">×</button>
+      </form>
+    </div>
+    <div class="reader-geography-viewport" tabindex="0" aria-label="Scroll to pan the map">
+      <canvas width="1440" height="580" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+    </div>
+  </dialog>
 </section>
 <script src="{{ '/assets/js/reader-geography.js' | relative_url }}" defer></script>
 {% endif %}
