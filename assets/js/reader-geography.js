@@ -45,19 +45,38 @@
   record();
   document.addEventListener('visibilitychange', record);
 
+  // Spherical Equal Earth projection by Šavrič, Patterson, and Jenny (2018).
+  function equalEarth(longitude, latitude) {
+    const radians = Math.PI / 180;
+    const halfRoot = Math.sqrt(3) / 2;
+    const angle = Math.asin(halfRoot * Math.sin(latitude * radians));
+    const square = angle * angle;
+    const sixth = square * square * square;
+    const x = longitude * radians * Math.cos(angle) /
+      (halfRoot * (1.340264 - 0.243318 * square + sixth * (0.006251 + 0.034164 * square)));
+    const y = angle * (1.340264 - 0.081106 * square + sixth * (0.000893 + 0.003796 * square));
+    return [x, y];
+  }
+
+  const east = equalEarth(180, 0)[0];
+  const north = equalEarth(0, 85)[1];
+  const south = equalEarth(0, -60)[1];
+
   function drawMap(surface) {
     const width = Math.min(4096, Math.round(surface.clientWidth * (window.devicePixelRatio || 1)));
     if (!width || !map) return;
-    const height = Math.round(width * 580 / 1440);
+    const height = Math.round(width * 630 / 1440);
     surface.width = width;
     surface.height = height;
     const context = surface.getContext('2d');
     if (!context) return;
-    const margin = width / 62;
-    const project = ([longitude, latitude]) => [
-      margin + (longitude + 180) * (width - margin * 2) / 360,
-      margin + (85 - latitude) * (height - margin * 2) / 145
-    ];
+    const margin = width * 0.03;
+    const scale = Math.min((width - margin * 2) / (east * 2), (height - margin * 2) / (north - south));
+    const verticalCenter = (north + south) / 2;
+    const project = ([longitude, latitude]) => {
+      const [x, y] = equalEarth(longitude, latitude);
+      return [width / 2 + scale * x, height / 2 - scale * (y - verticalCenter)];
+    };
     const regions = [];
     const marks = [];
     const pixelScale = width / surface.clientWidth;
@@ -99,25 +118,25 @@
     if (interactive) {
       context.beginPath();
       for (let lon = -150; lon <= 150; lon += 30) {
-        context.moveTo(...project([lon, 85]));
-        context.lineTo(...project([lon, -60]));
+        context.moveTo(...project([lon, -60]));
+        for (let lat = -55; lat <= 85; lat += 5) context.lineTo(...project([lon, lat]));
       }
       for (let lat = -30; lat <= 60; lat += 30) {
         context.moveTo(...project([-180, lat]));
         context.lineTo(...project([180, lat]));
       }
       context.lineWidth = 0.6 * pixelScale;
-      context.strokeStyle = '#dce7ee';
+      context.strokeStyle = '#e5dfd2';
       context.stroke();
     }
 
     context.lineWidth = Math.max(0.65, width / 950);
-    context.strokeStyle = '#f6f9fc';
+    context.strokeStyle = '#f6f3eb';
     for (const region of regions) {
       const visited = map.visits.has(region.code);
-      context.fillStyle = visited ? '#467ba4' : '#dce6ef';
+      context.fillStyle = visited ? '#437a70' : '#cfc7b8';
       if (interactive && region.code === activeRegion) {
-        context.fillStyle = visited ? '#336893' : '#a9c6dc';
+        context.fillStyle = visited ? '#326259' : '#9cb5a8';
       }
       context.fill(region.path, 'evenodd');
       context.stroke(region.path);
@@ -125,8 +144,8 @@
 
     const radius = 4 * pixelScale;
     for (const {code, x, y} of marks) {
-      context.fillStyle = '#245f8f';
-      context.strokeStyle = '#fff';
+      context.fillStyle = '#255d54';
+      context.strokeStyle = '#f9f6ef';
       context.lineWidth = 2 * pixelScale;
       context.beginPath();
       context.arc(x, y, radius, 0, 2 * Math.PI);

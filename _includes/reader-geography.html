@@ -3,16 +3,18 @@
          data-endpoint="{{ site.reader_geography_url | escape }}"
          data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=2">
   <div class="reader-geography-card">
-    <canvas width="1440" height="580" role="img" aria-label="World map of recorded visits">
+    <canvas width="1440" height="630" role="img" aria-label="World map of recorded visits">
       Recorded visits are summarized below the map.
     </canvas>
     <div class="reader-geography-summary">
-      <p class="reader-geography-status" role="status">Loading visit totals…</p>
+      <div class="reader-geography-readout">
+        <p class="reader-geography-status" role="status">Loading visit totals…</p>
+        <ol class="reader-geography-regions" aria-label="Top regions by visits" hidden></ol>
+      </div>
       <button type="button" class="reader-geography-expand" aria-haspopup="dialog" hidden>
-        <i class="fas fa-expand" aria-hidden="true"></i> Expand map
+        Open map <span aria-hidden="true">↗</span>
       </button>
     </div>
-    <ol class="reader-geography-regions" aria-label="Top regions by visits" hidden></ol>
   </div>
   <dialog class="reader-geography-dialog" aria-label="Expanded visitor map">
     <div class="reader-geography-toolbar">
@@ -23,7 +25,7 @@
           <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
         </div>
         <button type="button" data-zoom="reset" aria-label="Reset zoom" title="Reset zoom">
-          <i class="fas fa-arrows-rotate" aria-hidden="true"></i>
+          <i class="fas fa-rotate-left" aria-hidden="true"></i>
         </button>
       </div>
       <form method="dialog">
@@ -34,17 +36,17 @@
     </div>
     <div class="reader-geography-stage">
       <div class="reader-geography-viewport" tabindex="0" aria-label="Scroll to pan the map">
-        <canvas width="1440" height="580" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+        <canvas width="1440" height="630" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
       </div>
       <div class="reader-geography-tooltip" aria-hidden="true" hidden>
         <strong></strong><span></span>
       </div>
     </div>
     <div class="reader-geography-map-footer">
-      <span class="reader-geography-map-hint">Hover or tap a country or region</span>
+      <span class="reader-geography-map-hint">Hover or tap for details</span>
       <span class="reader-geography-map-key">Visits recorded</span>
     </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=3" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=4" defer></script>
 {% endif %}
