@@ -512,10 +512,12 @@ strong + br {
 
 .author__urls .author__notion-icon {
   width: 1.5em;
-  height: 1em;
+  height: 1.25em;
   margin-inline-end: 0.5em;
   object-fit: contain;
-  vertical-align: -0.1em;
+  /* Account for the padding inside the official Notion image. */
+  object-position: -0.14em center;
+  vertical-align: -0.225em;
 }
 
 /* Personal page entry: keep it last and visually distinct. */
