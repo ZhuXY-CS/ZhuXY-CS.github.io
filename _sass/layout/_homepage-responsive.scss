@@ -316,13 +316,12 @@ body.homepage {
 }
 
 .page__content .reader-geography {
-  --atlas-paper: #f6f3eb;
-  --atlas-border: #ded8cd;
-  --atlas-ink: #263c34;
-  --atlas-muted: #56635b;
-  --atlas-green: #255d54;
+  --map-ratio: 2.21;
+  --map-water: #f4f8fb;
+  --map-border: #dbe4eb;
+  --map-ink: #213e57;
+  --map-muted: #526778;
 
-  max-width: 49rem;
   margin: 2.75rem 0 0;
   padding: 0;
 
@@ -332,12 +331,11 @@ body.homepage {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 7;
   }
 
   .reader-geography-card > canvas {
     border-radius: 8px;
-    background: var(--atlas-paper);
+    background: var(--map-water);
   }
 
   .reader-geography-summary {
@@ -358,11 +356,11 @@ body.homepage {
 
   .reader-geography-status {
     margin: 0 !important;
-    color: var(--atlas-muted) !important;
+    color: var(--map-muted) !important;
     font-size: 0.875rem !important;
     text-align: left;
 
-    strong { color: var(--atlas-ink); }
+    strong { color: var(--map-ink); }
   }
 
   button {
@@ -371,14 +369,14 @@ body.homepage {
     border: 0;
     border-radius: 6px;
     background: transparent;
-    color: var(--atlas-green);
+    color: var(--map-ink);
     font-size: 0.875rem;
     cursor: pointer;
     white-space: nowrap;
 
-    &:hover:not(:disabled) { background: #e7e3d8; }
+    &:hover:not(:disabled) { background: #e9f0f6; }
     &:disabled { opacity: 0.4; cursor: default; }
-    &:focus-visible { outline-color: #538177 !important; }
+    &:focus-visible { outline-color: #527494 !important; }
   }
 
   .reader-geography-expand {
@@ -389,7 +387,6 @@ body.homepage {
 
     span { margin-inline-start: 0.15rem; }
 
-    &:hover:not(:disabled) { background: #f2f0e9; }
   }
 
   .reader-geography-regions:not([hidden]) {
@@ -405,12 +402,12 @@ body.homepage {
       align-items: baseline;
       gap: 0.3em;
       padding: 0;
-      color: var(--atlas-muted) !important;
+      color: var(--map-muted) !important;
       font-size: 0.8125rem !important;
     }
 
     li span:last-child {
-      color: var(--atlas-green);
+      color: var(--map-ink);
       font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
@@ -418,20 +415,21 @@ body.homepage {
 
   .reader-geography-dialog {
     position: fixed;
-    width: calc(100% - 1.5rem);
-    max-width: 69rem;
+    width: unquote("min(76rem, calc(100% - 1rem), calc((100vh - 4.5rem) * var(--map-ratio)))");
+    width: unquote("min(76rem, calc(100% - 1rem), calc((100dvh - 4.5rem) * var(--map-ratio)))");
+    max-width: none;
     max-height: calc(100% - 1.5rem);
     margin: auto;
     padding: 0;
     overflow: hidden;
     border: 0;
-    border-radius: 12px;
-    background: var(--atlas-paper);
-    color: var(--atlas-ink);
-    box-shadow: 0 22px 76px rgba(20, 34, 29, 0.32);
+    border-radius: 10px;
+    background: var(--map-water);
+    color: var(--map-ink);
+    box-shadow: 0 16px 60px rgba(22, 38, 55, 0.27);
 
     &:not([open]) { display: none; }
-    &::backdrop { background: rgba(25, 38, 33, 0.65); }
+    &::backdrop { background: rgba(20, 35, 50, 0.56); }
 
     button {
       min-width: 44px;
@@ -440,25 +438,15 @@ body.homepage {
   }
 
   .reader-geography-toolbar {
-    position: absolute;
-    inset: 0 0 2.75rem;
-    z-index: 2;
-    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem;
+    padding: 0.2rem 0.35rem;
+    border-top: 1px solid var(--map-border);
+    background: #fff;
 
-    form {
-      position: absolute;
-      top: 0.65rem;
-      right: 0.65rem;
-      margin: 0;
-      pointer-events: auto;
-    }
-
-    form button,
-    .reader-geography-zoom {
-      background: #fbf9f2;
-      border-radius: 7px;
-      box-shadow: 0 1px 7px rgba(42, 48, 39, 0.13);
-    }
+    form { margin: 0; }
   }
 
   .reader-geography-zoom,
@@ -467,18 +455,11 @@ body.homepage {
     align-items: center;
   }
 
-  .reader-geography-zoom {
-    position: absolute;
-    bottom: 0.65rem;
-    left: 0.65rem;
-    pointer-events: auto;
-  }
-
-  .reader-geography-zoom > button { border-inline-start: 1px solid var(--atlas-border); }
+  .reader-geography-zoom > button { border-inline-start: 1px solid var(--map-border); }
 
   .reader-geography-zoom output {
-    min-width: 3.25rem;
-    color: var(--atlas-muted);
+    min-width: 2.45rem;
+    color: var(--map-muted);
     text-align: center;
     font-size: 0.8125rem;
     font-variant-numeric: tabular-nums;
@@ -489,9 +470,7 @@ body.homepage {
   .reader-geography-viewport {
     display: flex;
     align-items: safe center;
-    height: clamp(14rem, 46vw, 35rem);
-    max-height: calc(93vh - 4.5rem);
-    max-height: calc(93dvh - 4.5rem);
+    aspect-ratio: var(--map-ratio);
     overflow: auto;
     overscroll-behavior: contain;
     scrollbar-width: thin;
@@ -509,36 +488,32 @@ body.homepage {
     padding: 0.5rem 0.7rem;
     pointer-events: none;
     border-radius: 6px;
-    background: var(--atlas-ink);
+    background: var(--map-ink);
     color: #fff;
-    box-shadow: 0 4px 14px rgba(38, 60, 52, 0.22);
+    box-shadow: 0 4px 14px rgba(22, 38, 55, 0.22);
     line-height: 1.35;
     overflow-wrap: anywhere;
 
     strong, span { display: block; }
     strong { font-size: 0.875rem; }
-    span { color: #e4eae1; font-size: 0.75rem; }
+    span { color: #e5edf5; font-size: 0.75rem; }
   }
 
-  .reader-geography-map-footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.25rem 0.75rem;
-    padding: 0.55rem 0.75rem;
-    border-top: 1px solid var(--atlas-border);
-    color: var(--atlas-muted);
-    font-size: 0.8125rem;
-  }
+  .reader-geography-map-key {
+    margin-inline: auto 0.25rem;
+    color: var(--map-muted);
+    font-size: 0.75rem;
+    text-align: end;
 
-  .reader-geography-map-key::before {
-    display: inline-block;
-    width: 0.6em;
-    height: 0.6em;
-    margin-inline-end: 0.35rem;
-    border-radius: 50%;
-    background: #437a70;
-    content: "";
+    &::before {
+      display: inline-block;
+      width: 0.6em;
+      height: 0.6em;
+      margin-inline-end: 0.35rem;
+      border-radius: 50%;
+      background: var(--map-ink);
+      content: "";
+    }
   }
 }
 

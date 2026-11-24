@@ -1,9 +1,9 @@
 {% if site.reader_geography_url %}
 <section id="reader-geography" class="reader-geography" aria-label="Reader geography"
          data-endpoint="{{ site.reader_geography_url | escape }}"
-         data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=2">
+         data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=3">
   <div class="reader-geography-card">
-    <canvas width="1440" height="630" role="img" aria-label="World map of recorded visits">
+    <canvas width="1440" height="652" role="img" aria-label="World map of recorded visits">
       Recorded visits are summarized below the map.
     </canvas>
     <div class="reader-geography-summary">
@@ -17,6 +17,14 @@
     </div>
   </div>
   <dialog class="reader-geography-dialog" aria-label="Expanded visitor map">
+    <div class="reader-geography-stage">
+      <div class="reader-geography-viewport" tabindex="0" aria-label="Hover or tap for country details. Zoom in to pan.">
+        <canvas width="1440" height="652" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+      </div>
+      <div class="reader-geography-tooltip" aria-hidden="true" hidden>
+        <strong></strong><span></span>
+      </div>
+    </div>
     <div class="reader-geography-toolbar">
       <div class="reader-geography-zoom" role="group" aria-label="Map zoom">
         <div class="reader-geography-zoom-step">
@@ -28,25 +36,14 @@
           <i class="fas fa-rotate-left" aria-hidden="true"></i>
         </button>
       </div>
+      <span class="reader-geography-map-key">Visits recorded</span>
       <form method="dialog">
-        <button type="submit" aria-label="Close map" title="Close map">
+        <button type="submit" aria-label="Close map" title="Close map" autofocus>
           <i class="fas fa-xmark" aria-hidden="true"></i>
         </button>
       </form>
     </div>
-    <div class="reader-geography-stage">
-      <div class="reader-geography-viewport" tabindex="0" aria-label="Scroll to pan the map">
-        <canvas width="1440" height="630" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
-      </div>
-      <div class="reader-geography-tooltip" aria-hidden="true" hidden>
-        <strong></strong><span></span>
-      </div>
-    </div>
-    <div class="reader-geography-map-footer">
-      <span class="reader-geography-map-hint">Hover or tap for details</span>
-      <span class="reader-geography-map-key">Visits recorded</span>
-    </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=4" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=5" defer></script>
 {% endif %}

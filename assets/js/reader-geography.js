@@ -58,30 +58,45 @@
     return [x, y];
   }
 
-  const east = equalEarth(180, 0)[0];
-  const north = equalEarth(0, 85)[1];
-  const south = equalEarth(0, -60)[1];
+  const palette = ['#a5bfd9', '#a9c8a9', '#deb6a3', '#e0cd91', '#c4b8d5', '#9fc6c8'];
+  const markerColor = '#213e57';
+  const inset = 0.012;
+
+  function prepareOutlines(outlines) {
+    let west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
+    const projected = outlines.map(([code, polygons, position, color]) => [
+      code,
+      polygons.map(polygon => polygon.map(ring => ring.map(([lon, lat]) => {
+        const [x, y] = equalEarth(lon, lat);
+        west = Math.min(west, x);
+        east = Math.max(east, x);
+        south = Math.min(south, y);
+        north = Math.max(north, y);
+        return [x, y];
+      }))),
+      position && equalEarth(...position),
+      color
+    ]);
+    const ratio = 1 / ((north - south) / (east - west) * (1 - 2 * inset) + 2 * inset);
+    return {projected, west, east, north, ratio};
+  }
 
   function drawMap(surface) {
     const width = Math.min(4096, Math.round(surface.clientWidth * (window.devicePixelRatio || 1)));
     if (!width || !map) return;
-    const height = Math.round(width * 630 / 1440);
+    const height = Math.round(width / map.ratio);
     surface.width = width;
     surface.height = height;
     const context = surface.getContext('2d');
     if (!context) return;
-    const margin = width * 0.03;
-    const scale = Math.min((width - margin * 2) / (east * 2), (height - margin * 2) / (north - south));
-    const verticalCenter = (north + south) / 2;
-    const project = ([longitude, latitude]) => {
-      const [x, y] = equalEarth(longitude, latitude);
-      return [width / 2 + scale * x, height / 2 - scale * (y - verticalCenter)];
-    };
+    const margin = width * inset;
+    const scale = (width - 2 * margin) / (map.east - map.west);
+    const project = ([x, y]) => [margin + (x - map.west) * scale, margin + (map.north - y) * scale];
     const regions = [];
     const marks = [];
     const pixelScale = width / surface.clientWidth;
 
-    for (const [code, polygons, position] of map.outlines) {
+    for (const [code, polygons, position, color] of map.projected) {
       if (position && map.visits.has(code)) {
         const [x, y] = project(position);
         marks.push({code, x, y});
@@ -104,48 +119,37 @@
           path.closePath();
         }
       }
-      regions.push({code, path, left, right, top, bottom});
+      regions.push({code, path, left, right, top, bottom, color});
     }
 
-    const drawing = {context, width, height, regions, marks, pixelScale, project};
+    const drawing = {context, width, height, regions, marks, pixelScale};
     if (surface === enlarged) enlargedDrawing = drawing;
     paintMap(drawing, surface === enlarged);
   }
 
   function paintMap(drawing, interactive) {
-    const {context, width, height, regions, marks, pixelScale, project} = drawing;
+    const {context, width, height, regions, marks, pixelScale} = drawing;
     context.clearRect(0, 0, width, height);
-    if (interactive) {
-      context.beginPath();
-      for (let lon = -150; lon <= 150; lon += 30) {
-        context.moveTo(...project([lon, -60]));
-        for (let lat = -55; lat <= 85; lat += 5) context.lineTo(...project([lon, lat]));
-      }
-      for (let lat = -30; lat <= 60; lat += 30) {
-        context.moveTo(...project([-180, lat]));
-        context.lineTo(...project([180, lat]));
-      }
-      context.lineWidth = 0.6 * pixelScale;
-      context.strokeStyle = '#e5dfd2';
-      context.stroke();
-    }
-
-    context.lineWidth = Math.max(0.65, width / 950);
-    context.strokeStyle = '#f6f3eb';
+    context.lineWidth = pixelScale * 0.85;
+    context.strokeStyle = '#f8fbfd';
     for (const region of regions) {
-      const visited = map.visits.has(region.code);
-      context.fillStyle = visited ? '#437a70' : '#cfc7b8';
-      if (interactive && region.code === activeRegion) {
-        context.fillStyle = visited ? '#326259' : '#9cb5a8';
-      }
+      context.fillStyle = palette[region.color] ?? '#c4ccd3';
       context.fill(region.path, 'evenodd');
       context.stroke(region.path);
+    }
+    const active = interactive && activeRegion && regions.find(region => region.code === activeRegion);
+    if (active) {
+      context.fillStyle = 'rgba(33, 62, 87, 0.15)';
+      context.strokeStyle = markerColor;
+      context.lineWidth = 1.2 * pixelScale;
+      context.fill(active.path, 'evenodd');
+      context.stroke(active.path);
     }
 
     const radius = 4 * pixelScale;
     for (const {code, x, y} of marks) {
-      context.fillStyle = '#255d54';
-      context.strokeStyle = '#f9f6ef';
+      context.fillStyle = markerColor;
+      context.strokeStyle = '#fff';
       context.lineWidth = 2 * pixelScale;
       context.beginPath();
       context.arc(x, y, radius, 0, 2 * Math.PI);
@@ -153,9 +157,9 @@
       context.stroke();
 
       if (marks.length === 1) {
-        const label = names.of(code);
+        const label = `${names.of(code)} · ${format.format(map.visits.get(code))}`;
         const gap = radius + 5 * pixelScale;
-        context.font = `600 ${11 * pixelScale}px "Trebuchet MS", sans-serif`;
+        context.font = `600 ${12 * pixelScale}px "Trebuchet MS", sans-serif`;
         context.textBaseline = 'middle';
         const labelWidth = context.measureText(label).width;
         context.textAlign = x + gap + labelWidth < width - gap ? 'left' : 'right';
@@ -291,7 +295,8 @@
     const entries = summary.status === 'fulfilled' ? summary.value : [];
     const visits = new Map(entries.map(({country, views}) => [country, views]));
     if (outlines.status === 'fulfilled') {
-      map = {outlines: outlines.value, visits, hasSummary: summary.status === 'fulfilled'};
+      map = {...prepareOutlines(outlines.value), visits, hasSummary: summary.status === 'fulfilled'};
+      panel.style.setProperty('--map-ratio', map.ratio);
       resizeMaps();
       window.addEventListener('resize', resizeMaps, {passive: true});
       expand.hidden = typeof dialog.showModal !== 'function';
