@@ -1,3 +1,26 @@
+/* Put the compact homepage footer in the normal document flow. */
+body.homepage {
+  padding-bottom: 0;
+  // Override the inline reserve added by the theme's sticky-footer script.
+  margin-bottom: 0 !important;
+}
+
+.homepage .page__footer {
+  position: static;
+  float: none;
+  margin-top: 1.5rem;
+  background: transparent;
+  border: 0;
+  animation: none;
+
+  footer {
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    color: #647381;
+    text-align: center;
+  }
+}
+
 /* Keep the academic homepage usable at tablet and phone widths. */
 .homepage .author__links-toggle {
   display: none;
