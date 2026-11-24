@@ -45,40 +45,26 @@
   record();
   document.addEventListener('visibilitychange', record);
 
-  // Spherical Equal Earth projection by Šavrič, Patterson, and Jenny (2018).
-  function equalEarth(longitude, latitude) {
-    const radians = Math.PI / 180;
-    const halfRoot = Math.sqrt(3) / 2;
-    const angle = Math.asin(halfRoot * Math.sin(latitude * radians));
-    const square = angle * angle;
-    const sixth = square * square * square;
-    const x = longitude * radians * Math.cos(angle) /
-      (halfRoot * (1.340264 - 0.243318 * square + sixth * (0.006251 + 0.034164 * square)));
-    const y = angle * (1.340264 - 0.081106 * square + sixth * (0.000893 + 0.003796 * square));
-    return [x, y];
-  }
-
   const palette = ['#a5bfd9', '#a9c8a9', '#deb6a3', '#e0cd91', '#c4b8d5', '#9fc6c8'];
   const markerColor = '#213e57';
   const inset = 0.012;
 
-  function prepareOutlines(outlines) {
+  function measureOutlines(outlines) {
     let west = Infinity, east = -Infinity, south = Infinity, north = -Infinity;
-    const projected = outlines.map(([code, polygons, position, color]) => [
-      code,
-      polygons.map(polygon => polygon.map(ring => ring.map(([lon, lat]) => {
-        const [x, y] = equalEarth(lon, lat);
-        west = Math.min(west, x);
-        east = Math.max(east, x);
-        south = Math.min(south, y);
-        north = Math.max(north, y);
-        return [x, y];
-      }))),
-      position && equalEarth(...position),
-      color
-    ]);
+    for (const [, polygons] of outlines) {
+      for (const polygon of polygons) {
+        for (const ring of polygon) {
+          for (const [longitude, latitude] of ring) {
+            west = Math.min(west, longitude);
+            east = Math.max(east, longitude);
+            south = Math.min(south, latitude);
+            north = Math.max(north, latitude);
+          }
+        }
+      }
+    }
     const ratio = 1 / ((north - south) / (east - west) * (1 - 2 * inset) + 2 * inset);
-    return {projected, west, east, north, ratio};
+    return {west, east, north, ratio};
   }
 
   function drawMap(surface) {
@@ -91,12 +77,16 @@
     if (!context) return;
     const margin = width * inset;
     const scale = (width - 2 * margin) / (map.east - map.west);
-    const project = ([x, y]) => [margin + (x - map.west) * scale, margin + (map.north - y) * scale];
+    // Equirectangular projection keeps the meridians vertical at every latitude.
+    const project = ([longitude, latitude]) => [
+      margin + (longitude - map.west) * scale,
+      margin + (map.north - latitude) * scale
+    ];
     const regions = [];
     const marks = [];
     const pixelScale = width / surface.clientWidth;
 
-    for (const [code, polygons, position, color] of map.projected) {
+    for (const [code, polygons, position, color] of map.outlines) {
       if (position && map.visits.has(code)) {
         const [x, y] = project(position);
         marks.push({code, x, y});
@@ -295,7 +285,12 @@
     const entries = summary.status === 'fulfilled' ? summary.value : [];
     const visits = new Map(entries.map(({country, views}) => [country, views]));
     if (outlines.status === 'fulfilled') {
-      map = {...prepareOutlines(outlines.value), visits, hasSummary: summary.status === 'fulfilled'};
+      map = {
+        ...measureOutlines(outlines.value),
+        outlines: outlines.value,
+        visits,
+        hasSummary: summary.status === 'fulfilled'
+      };
       panel.style.setProperty('--map-ratio', map.ratio);
       resizeMaps();
       window.addEventListener('resize', resizeMaps, {passive: true});

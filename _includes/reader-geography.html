@@ -3,7 +3,7 @@
          data-endpoint="{{ site.reader_geography_url | escape }}"
          data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=3">
   <div class="reader-geography-card">
-    <canvas width="1440" height="652" role="img" aria-label="World map of recorded visits">
+    <canvas width="1440" height="578" role="img" aria-label="World map of recorded visits">
       Recorded visits are summarized below the map.
     </canvas>
     <div class="reader-geography-summary">
@@ -19,7 +19,7 @@
   <dialog class="reader-geography-dialog" aria-label="Expanded visitor map">
     <div class="reader-geography-stage">
       <div class="reader-geography-viewport" tabindex="0" aria-label="Hover or tap for country details. Zoom in to pan.">
-        <canvas width="1440" height="652" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
+        <canvas width="1440" height="578" role="img" aria-label="Enlarged world map of recorded visits"></canvas>
       </div>
       <div class="reader-geography-tooltip" aria-hidden="true" hidden>
         <strong></strong><span></span>
@@ -45,5 +45,5 @@
     </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=5" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=6" defer></script>
 {% endif %}
