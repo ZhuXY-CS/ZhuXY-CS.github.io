@@ -1,7 +1,7 @@
 {% if site.reader_geography_url %}
 <section id="reader-geography" class="reader-geography" aria-label="Reader geography"
          data-endpoint="{{ site.reader_geography_url | escape }}"
-         data-map="{{ '/assets/data/reader-countries.json' | relative_url }}">
+         data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=2">
   <div class="reader-geography-card">
     <canvas width="1440" height="580" role="img" aria-label="World map of recorded visits">
       Recorded visits are summarized below the map.
@@ -31,5 +31,5 @@
     </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=2" defer></script>
 {% endif %}

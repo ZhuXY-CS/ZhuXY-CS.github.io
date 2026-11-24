@@ -16,6 +16,7 @@
   let map;
   let drag;
   const endpoint = panel.dataset.endpoint;
+  const names = new Intl.DisplayNames('en', {type: 'region'});
 
   const fetchJson = async url => {
     const response = await fetch(url, {credentials: 'omit', referrerPolicy: 'no-referrer'});
@@ -45,6 +46,10 @@
     const margin = width / 62;
     const mapWidth = width - margin * 2;
     const mapHeight = surface.height - margin * 2;
+    const project = ([longitude, latitude]) => [
+      margin + (longitude + 180) * mapWidth / 360,
+      margin + (85 - latitude) * mapHeight / 145
+    ];
     context.lineWidth = Math.max(0.65, width / 950);
     context.strokeStyle = '#f6f9fc';
 
@@ -53,9 +58,8 @@
       for (const polygon of polygons) {
         context.beginPath();
         for (const ring of polygon) {
-          ring.forEach(([longitude, latitude], i) => {
-            const x = margin + (longitude + 180) * mapWidth / 360;
-            const y = margin + (85 - latitude) * mapHeight / 145;
+          ring.forEach((position, i) => {
+            const [x, y] = project(position);
             if (i === 0) context.moveTo(x, y);
             else context.lineTo(x, y);
           });
@@ -63,6 +67,32 @@
         }
         context.fill('evenodd');
         context.stroke();
+      }
+    }
+
+    const marked = map.outlines.filter(([code, , position]) => position && map.visits.has(code));
+    const pixelScale = width / surface.clientWidth;
+    const radius = 4 * pixelScale;
+    for (const [code, , position] of marked) {
+      const [x, y] = project(position);
+      context.fillStyle = '#245f8f';
+      context.strokeStyle = '#fff';
+      context.lineWidth = 2 * pixelScale;
+      context.beginPath();
+      context.arc(x, y, radius, 0, 2 * Math.PI);
+      context.fill();
+      context.stroke();
+
+      if (marked.length === 1) {
+        const label = names.of(code);
+        const gap = radius + 5 * pixelScale;
+        context.font = `600 ${11 * pixelScale}px "Trebuchet MS", sans-serif`;
+        context.textBaseline = 'middle';
+        const labelWidth = context.measureText(label).width;
+        context.textAlign = x + gap + labelWidth < width - margin ? 'left' : 'right';
+        const labelX = context.textAlign === 'left' ? x + gap : x - gap;
+        context.strokeText(label, labelX, y);
+        context.fillText(label, labelX, y);
       }
     }
   }
@@ -148,18 +178,24 @@
       return;
     }
 
-    const names = new Intl.DisplayNames('en', {type: 'region'});
     const format = new Intl.NumberFormat('en');
     const total = entries.reduce((sum, {views}) => sum + views, 0);
     const places = entries.length;
-    status.textContent = `${format.format(total)} ${total === 1 ? 'visit' : 'visits'} · ${format.format(places)} ${places === 1 ? 'country or region' : 'countries and regions'}`;
+    const totalLabel = document.createElement('strong');
+    totalLabel.textContent = format.format(total);
+    const placeLabel = document.createElement('strong');
+    placeLabel.textContent = format.format(places);
+    status.replaceChildren(
+      totalLabel, total === 1 ? ' visit · ' : ' visits · ',
+      placeLabel, places === 1 ? ' country or region' : ' countries and regions'
+    );
     entries.slice(0, 5).forEach(({country, views}) => {
       const row = document.createElement('li');
       const name = document.createElement('span');
       const count = document.createElement('span');
       name.textContent = names.of(country);
       count.textContent = format.format(views);
-      row.append(name, count);
+      row.append(name, ' · ', count);
       ranking.append(row);
     });
     ranking.hidden = false;

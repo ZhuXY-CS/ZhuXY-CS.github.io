@@ -351,6 +351,8 @@ body.homepage {
     color: #526777 !important;
     font-size: 0.875rem !important;
     text-align: left;
+
+    strong { color: #245f8f; }
   }
 
   button {
@@ -384,13 +386,17 @@ body.homepage {
 
     li {
       display: flex;
+      align-items: center;
       gap: 0.35em;
-      padding: 0;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: #edf4fa;
       font-size: 0.8125rem !important;
     }
 
     li span:last-child {
-      color: #526777;
+      color: #245f8f;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
   }
