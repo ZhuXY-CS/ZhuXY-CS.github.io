@@ -2,5 +2,8 @@
 
 <!-- 单页面平滑滚动功能 -->
 <script src="{{ base_path }}/assets/js/smooth-scroll.js"></script>
+{% if page.url == "/" %}
+<script src="{{ '/assets/js/homepage.js' | relative_url }}"></script>
+{% endif %}
 
 {% include analytics.html %}

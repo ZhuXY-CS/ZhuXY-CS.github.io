@@ -1,0 +1,261 @@
+/* Keep the academic homepage usable at tablet and phone widths. */
+.homepage .author__links-toggle {
+  display: none;
+}
+
+@media (max-width: 1279px), (pointer: coarse) {
+  .homepage #site-nav {
+    min-width: 0;
+
+    button {
+      width: 44px;
+      height: 44px;
+      top: 0;
+    }
+
+    .hidden-links {
+      width: 19rem;
+      max-width: 100%;
+      max-height: calc(100vh - 5rem);
+      max-height: calc(100dvh - 5rem);
+      margin-top: 0.5rem;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+
+      &::before, &::after { display: none; }
+
+      a {
+        min-height: 44px;
+        padding: 0.625rem 0.875rem;
+      }
+    }
+  }
+
+  .homepage #publication .paper-box-text p:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.875rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3em;
+      margin: 0 !important;
+      min-height: 44px;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .homepage #main,
+  .homepage .masthead__inner-wrap {
+    max-width: none;
+    padding-inline: 1.5rem;
+  }
+
+  .homepage #site-nav .visible-links a {
+    margin-inline: 0.7rem;
+  }
+
+  .homepage #site-nav .masthead__menu-item--lg {
+    padding-inline-end: 1em;
+  }
+
+  .homepage #publication .paper-box {
+    flex-wrap: nowrap !important;
+  }
+
+  .homepage #publication .paper-box-image {
+    flex: 0 0 29%;
+    min-width: 0 !important;
+    max-width: 29% !important;
+  }
+
+  .homepage #publication .paper-box-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none !important;
+    padding-inline-start: 1.25rem !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .homepage .sidebar.sticky {
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .homepage .sidebar .author__avatar img { max-width: 144px; }
+
+  .homepage .page {
+    width: calc(100% - 184px) !important;
+    padding-inline: 1.25rem 0.5rem !important;
+  }
+}
+
+/* Portrait tablets use an in-flow profile header instead of a fixed rail. */
+@media (max-width: 1023px), (width: 1024px) and (orientation: portrait) {
+  .homepage .sidebar.sticky {
+    position: relative;
+    top: auto;
+    float: none;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0 0 0.75rem;
+    padding: 0.75rem 0;
+    overflow: visible;
+    z-index: 1;
+    border-bottom: 1px solid var(--global-border-color);
+  }
+
+  .homepage #about > h2 { margin-top: 0.35em !important; }
+
+  .homepage .page {
+    float: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .homepage .sidebar [itemtype="http://schema.org/Person"] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.75rem;
+  }
+
+  .homepage .sidebar {
+    .author__avatar {
+      display: block;
+      width: 3.5rem;
+
+      img {
+        aspect-ratio: 1;
+        object-fit: cover;
+        padding: 0;
+        border: 0;
+      }
+    }
+
+    .author__content {
+      display: block;
+      padding: 0;
+    }
+
+    .author__name {
+      margin: 0 !important;
+      overflow-wrap: anywhere;
+    }
+
+    .author__bio:empty { display: none; }
+
+    .author__links-toggle {
+      display: block;
+      min-height: 44px;
+      margin: 0;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #dce6ef;
+      background: #f1f6fa;
+      color: #245f8f;
+
+      &:hover, &[aria-expanded="true"] {
+        background: #e4eff7;
+        color: #1c4c74;
+      }
+    }
+
+    .author__urls-wrapper { grid-column: 1 / -1; }
+
+    .author__urls {
+      display: none !important;
+      position: static;
+      margin: 0.625rem 0 0;
+      padding: 0;
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 0.75rem;
+
+      &::before, &::after { display: none; }
+
+      li {
+        display: block;
+        margin: 0 !important;
+        white-space: normal;
+      }
+
+      a {
+        width: 100%;
+        min-height: 44px;
+        margin: 0;
+        padding: 0.625rem 0.25rem;
+        overflow-wrap: anywhere;
+      }
+
+      .author__personal-link {
+        grid-column: 1 / -1;
+        margin-top: 0.25rem !important;
+        padding-top: 0.25rem;
+      }
+    }
+
+    .author__links-toggle[aria-expanded="true"] + .author__urls-wrapper .author__urls {
+      display: grid !important;
+    }
+  }
+
+  .homepage .page__content .academic-prose,
+  .homepage #internship :is(.experience-organization, .experience-note) {
+    text-align: start;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .homepage .sidebar {
+    .author__avatar { width: 2.75rem; }
+
+    .author__name { font-size: 1.0625rem !important; }
+
+    .author__urls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .homepage #publication .paper-box {
+    row-gap: 0.5rem;
+    padding-block: 0.7rem !important;
+  }
+
+  .homepage #publication .paper-box-image {
+    justify-content: flex-start !important;
+
+    img {
+      max-width: 15rem !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .homepage #education .education-heading {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.125rem;
+  }
+
+  .homepage #education .education-date {
+    justify-self: start;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 359px) {
+  .homepage .sidebar .author__urls { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(body.homepage) { scroll-behavior: auto !important; }
+
+  .homepage #main, .homepage .masthead { animation: none; }
+}
