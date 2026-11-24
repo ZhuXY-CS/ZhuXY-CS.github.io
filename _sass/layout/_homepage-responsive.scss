@@ -333,25 +333,17 @@ body.homepage {
     height: auto;
   }
 
-  .reader-geography-card > canvas {
+  .reader-geography-card canvas {
     border-radius: 8px;
     background: var(--map-water);
   }
 
   .reader-geography-summary {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 0.5rem 0.75rem;
     padding-block: 0.375rem 0;
-  }
-
-  .reader-geography-readout {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.2rem 1.25rem;
-    padding-top: 0.55rem;
   }
 
   .reader-geography-status {
@@ -386,31 +378,6 @@ body.homepage {
     font-weight: 600;
 
     span { margin-inline-start: 0.15rem; }
-
-  }
-
-  .reader-geography-regions:not([hidden]) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.85rem;
-    margin: 0 !important;
-    padding: 0 !important;
-    list-style: none;
-
-    li {
-      display: flex;
-      align-items: baseline;
-      gap: 0.3em;
-      padding: 0;
-      color: var(--map-muted) !important;
-      font-size: 0.8125rem !important;
-    }
-
-    li span:last-child {
-      color: var(--map-ink);
-      font-weight: 600;
-      font-variant-numeric: tabular-nums;
-    }
   }
 
   .reader-geography-dialog {

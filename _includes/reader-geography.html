@@ -3,14 +3,16 @@
          data-endpoint="{{ site.reader_geography_url | escape }}"
          data-map="{{ '/assets/data/reader-countries.json' | relative_url }}?v=3">
   <div class="reader-geography-card">
-    <canvas width="1440" height="578" role="img" aria-label="World map of recorded visits">
-      Recorded visits are summarized below the map.
-    </canvas>
-    <div class="reader-geography-summary">
-      <div class="reader-geography-readout">
-        <p class="reader-geography-status" role="status">Loading visit totals…</p>
-        <ol class="reader-geography-regions" aria-label="Top regions by visits" hidden></ol>
+    <div class="reader-geography-stage">
+      <canvas width="1440" height="578" role="img" aria-label="World map of recorded visits">
+        Recorded visits are summarized below the map.
+      </canvas>
+      <div class="reader-geography-tooltip" aria-hidden="true" hidden>
+        <strong></strong><span></span>
       </div>
+    </div>
+    <div class="reader-geography-summary">
+      <p class="reader-geography-status" role="status">Loading visit totals…</p>
       <button type="button" class="reader-geography-expand" aria-haspopup="dialog" hidden>
         Open map <span aria-hidden="true">↗</span>
       </button>
@@ -45,5 +47,5 @@
     </div>
   </dialog>
 </section>
-<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=6" defer></script>
+<script src="{{ '/assets/js/reader-geography.js' | relative_url }}?v=7" defer></script>
 {% endif %}
