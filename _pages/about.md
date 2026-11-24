@@ -232,34 +232,30 @@ My research interests lie at the intersection of <strong>high-performance comput
       <div class="experience-organization">Hong Kong PhD Fellowship Summer Workshop, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/CUHK_logo_01.jpg" alt="">The Chinese</span> University of Hong Kong</div>
     </div>
   </li>
-  <li class="experience-entry">
+  <li class="experience-entry experience-entry--compact">
     <span class="experience-date">Aug 2023</span>
     <div class="experience-body">
-      <strong class="experience-role">Participant</strong>
-      <div class="experience-organization"><a href="https://dl.ccf.org.cn/albumList/getMeetingDetail6666263336028160">CCF HPC China 2023</a></div>
+      <div class="experience-heading"><strong class="experience-role">Participant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization"><a href="https://dl.ccf.org.cn/albumList/getMeetingDetail6666263336028160">CCF HPC China 2023</a></span></div>
     </div>
   </li>
-  <li class="experience-entry">
+  <li class="experience-entry experience-entry--compact">
     <span class="experience-date">Fall 2022</span>
     <div class="experience-body">
-      <strong class="experience-role">Teaching Assistant</strong>
-      <div class="experience-organization">Parallel Computing, <span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University</div>
-      <p class="experience-note">Assisted <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Prof. Bin Liu</a> with the course.</p>
+      <div class="experience-heading"><strong class="experience-role">Teaching Assistant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization">Parallel Computing</span></div>
+      <p class="experience-note"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--university" src="/images/nwafu-circle_01.jpg" alt="">Northwest</span> A&amp;F University &middot; Assisted <a href="https://cie.nwsuaf.edu.cn/szdw/js/2014110093/index.htm">Prof. Bin Liu</a></p>
     </div>
   </li>
-  <li class="experience-entry">
+  <li class="experience-entry experience-entry--compact">
     <span class="experience-date">Summer 2022</span>
     <div class="experience-body">
-      <strong class="experience-role">AI Trainee</strong>
-      <div class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/tedu-logo.png" alt="">Tedu</span> Group</div>
+      <div class="experience-heading"><strong class="experience-role">AI Trainee</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/tedu-logo.png" alt="">Tedu</span> Group</span></div>
       <p class="experience-note">Developed a multi-object image annotation platform.</p>
     </div>
   </li>
-  <li class="experience-entry">
+  <li class="experience-entry experience-entry--compact">
     <span class="experience-date">Summer 2021</span>
     <div class="experience-body">
-      <strong class="experience-role">Participant</strong>
-      <div class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/baidu-logo.png" alt="">Baidu</span> AI Talents Camp</div>
+      <div class="experience-heading"><strong class="experience-role">Participant</strong> <span class="experience-separator" aria-hidden="true">&middot;</span> <span class="experience-organization"><span class="affiliation-label"><img class="affiliation-logo affiliation-logo--wordmark" src="/images/baidu-logo.png" alt="">Baidu</span> AI Talents Camp</span></div>
       <p class="experience-note">Studied machine learning and PaddlePaddle.</p>
     </div>
   </li>

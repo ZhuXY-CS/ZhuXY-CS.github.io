@@ -35,9 +35,34 @@
     hyphens: auto;
     -webkit-hyphens: auto;
   }
+  .experience-heading {
+    line-height: 1.65;
+
+    .experience-role { display: inline; }
+  }
+
+  .experience-separator { color: #647381; }
+
+  .experience-entry--compact .experience-note { margin-top: 3px !important; }
+
   @media (max-width: 600px) {
     .experience-entry { grid-template-columns: minmax(0, 1fr); row-gap: 7px; }
     .experience-date { padding-top: 0; font-size: 13px; }
+
+    .experience-entry--compact {
+      display: block;
+
+      .experience-date {
+        display: inline;
+        margin-inline-end: 0.5em;
+        font-size: 12px;
+      }
+
+      .experience-body { display: contents; }
+      .experience-heading { display: inline; }
+      .experience-role { font-size: 15px; }
+      .experience-organization { font-size: 14px; }
+    }
   }
 }
 
