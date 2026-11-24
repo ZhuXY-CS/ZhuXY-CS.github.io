@@ -366,7 +366,6 @@ My research interests lie at the intersection of <strong>high-performance comput
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Parallel &amp; Distributed Computing:</strong> CUDA C, MPI, NCCL, OpenMP</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>ML Frameworks &amp; Libraries:</strong> PyTorch, DeepSpeed, TensorFlow, PaddlePaddle</li>
     <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Programming Languages:</strong> C/C++, Python</li>
-    <li style="margin-bottom: 12px; line-height: 2.0 !important;"><strong>Computing Platforms:</strong> Linux, NVIDIA H800 GPUs, Sunway OceanLight</li>
 </ul>
 
 </div>
